@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Bullets>
+   <Bullet name="NormalBullet"
+          mesh="sphere.mesh"
+          material="Glass/Test"
+          mass="1"
+          damage="10"
+          range="10"
+          ammo="100"
+          spell="normal"
+          />
+   <Bullet name="IceBullet"
+          mesh="sphere.mesh"
+          mass="1"
+          damage="10"
+          range="10"
+          ammo="10"
+          spell="ice"
+          />
+  </Bullets>
