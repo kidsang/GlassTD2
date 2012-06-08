@@ -59,11 +59,9 @@ Monster::~Monster(void)
 
 void Monster::go(float timeSinceLastFrame, Ogre::Vector3& direction)
 {
-	harmCheck(timeSinceLastFrame);
+	//harmCheck(timeSinceLastFrame);
 	mNode->setPosition(mNode->getPosition() + direction * timeSinceLastFrame * mSpeed);
-	int* mp = new int[256];
-	Ogre::Vector2* target = new Ogre::Vector2(Real(10), Real(10));
-	Ogre::Vector2* start = new Ogre::Vector2(Real(2), Real(1));
+
 	
 }
 
@@ -140,7 +138,7 @@ void Monster::harmCheck(float timeSinceLastFrame)
 	/// mHarmCheck->bulletHarm(mHarmList.h)
 	mHarmCheck->fireHarmCheck(mHarmList.fireHarm, mHarmList.fireHarmTime, mBlood, timeSinceLastFrame);
 	mHarmCheck->iceHarmCheck(mHarmList.iceHarm, mHarmList.iceHarmTime, mSpeed, mSpeedTemp, timeSinceLastFrame);
-	mHarmCheck->spikeweedHarmCheck(mHarmList.spikeweedHarm, mBlood, mHarmList.isOnSpikeweed);
+	mHarmCheck->spikeweedHarmCheck(mHarmList.spikeweedHarm, mBlood, mHarmList.isOnSpikeweed, timeSinceLastFrame);
 	mHarmCheck->swampHarmCheck(mHarmList.swampHarm, mSpeed, mSpeedTemp, mHarmList.isInSwamp);
 	/// ÅÐ¶ÏÊÇ·ñËÀÍö
 	mIsDead = mHarmCheck->checkIsDead(mBlood);
@@ -158,15 +156,11 @@ void Monster::setHitByFire(float harm, float time)
 	mHarmList.fireHarmTime = time;
 }
 
-
-
 void Monster::setHitByIce(float harm, float time)
 {
 	mHarmList.iceHarm = harm;
 	mHarmList.iceHarmTime = time;
 }
-
-
 
 void Monster::setBeCaughtByTrap()
 {
@@ -293,6 +287,7 @@ Monster* MonsterFactory::createInstance(SceneManager* sceneMgr)
 
 	if (mParams.find("spell") != mParams.end())
 		mon->setType((mParams["spell"].c_str()));
+	mon->setAnimate();
 	return mon;
 }
 
