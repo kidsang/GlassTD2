@@ -74,7 +74,7 @@ public:
 	/// @params pos 世界地图三维坐标指针
 	/// @params type 要显示的cell的类型
 	/// @note 该函数不会影响实际地图数组的信息，但记得要切换回去原来的状态
-	void showShadow(Ogre::Vector3* pos, CellType type);
+	void showShadow(Ogre::Vector3 pos, CellType type);
 	/// 地图编辑时，临时决定的地图
 	/// @params pos 世界地图三维坐标指针
 	/// @params type 要显示的cell的类型
