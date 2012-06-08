@@ -134,9 +134,11 @@
     <ClInclude Include="ParamParser.h" />
     <ClInclude Include="Position.h" />
     <ClInclude Include="res\Resource.h" />
+    <ClInclude Include="SceneManagerContainer.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="StageManager.h" />
     <ClInclude Include="StagePass1.h" />
+    <ClInclude Include="StagePass1Step1.h" />
     <ClInclude Include="Step.h" />
     <ClInclude Include="tinystr.h" />
     <ClInclude Include="tinyxml.h" />
@@ -164,10 +166,11 @@
     <ClCompile Include="ObjectFactory.cpp" />
     <ClCompile Include="ParamParser.cpp" />
     <ClCompile Include="Position.cpp" />
+    <ClCompile Include="SceneManagerContainer.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="StageManager.cpp" />
     <ClCompile Include="StagePass1.cpp" />
-    <ClCompile Include="Step.cpp" />
+    <ClCompile Include="StagePass1Step1.cpp" />
     <ClCompile Include="tinystr.cpp" />
     <ClCompile Include="tinyxml.cpp" />
     <ClCompile Include="tinyxmlerror.cpp" />
