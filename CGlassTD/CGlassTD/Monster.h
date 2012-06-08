@@ -88,6 +88,10 @@ struct HarmList
 class Monster
 {
 protected:
+	int mBeginPosIndex;
+	int mNextPosIndex;
+	Ogre::Vector3 mBeginPos;
+	Ogre::Vector3 mNextPos;
 	/// 怪兽的速度
 	float mSpeed;
 	/// 怪兽的速度备份，以便还原速度
@@ -113,10 +117,11 @@ protected:
 public:
 	Monster(){}
 	Monster(SceneNode* node);
+	Monster(SceneNode* node, Maze* maze);
 	//Monster(SceneNode* node, Maze* maze);
 	Monster(Ogre::SceneManager* sceneMgr, Ogre::SceneNode* parentNode);
 	~Monster(void);
-	void go(float timeSinceLastFrame, Ogre::Vector3& direction);
+	void go(float timeSinceLastFrame);
 	float getBlood(void);
 	void setBlood(int mBlood);
 	std::string getType(void);
@@ -214,6 +219,7 @@ public:
 	}
 
 	Monster* createInstance(SceneManager* sceneMgr);
+	Monster* createInstance(SceneManager* sceneMgr, Maze* maze);
 	
 	std::string getType();
 };

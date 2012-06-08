@@ -34,7 +34,7 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	}
 	// 炮台?
 	SceneNode* node1 = sceneManager->getRootSceneNode()->createChildSceneNode();
-	Entity* fort = sceneManager->createEntity("tire.mesh");
+	Entity* fort = sceneManager->createEntity("fort.mesh");
 	node1->attachObject((MovableObject*)fort);
 	node1->setPosition(0, 200, 550);
 
@@ -89,7 +89,7 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	mMaze = new Maze(sceneManager, map, mapWidth, mapHeight);
 
 	/// 新增一个monster管理器
-	mMonsterManager = MonsterManager::getMonsterManager();
+	mMonsterManager = MonsterManager::getMonsterManager(mMaze);
 
 	/// 改变镜头视角
 	//mCamera->lookAt(Vector3(0, 0, -100s));//lookat 貌似没用
@@ -163,4 +163,31 @@ void StagePass1::run( float timeSinceLastFrame )
 		timeSinceLastFrame,
 		mSceneManager
 		);
+}
+
+
+Cannon* StagePass1::getCannon()
+{
+	return mCannon;
+}
+
+
+Maze* StagePass1::getMaze()
+{
+	return mMaze;
+}
+
+MonsterManager* StagePass1::getMonsterManager()
+{
+	return mMonsterManager;
+}
+
+BulletManager& StagePass1::getBulletManager()
+{
+	return mBulletManager;
+}
+
+Vector3 StagePass1::getGravity()
+{
+	return mGravity;
 }

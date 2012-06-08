@@ -16,6 +16,19 @@ MonsterManager::MonsterManager()
 		mCurrentMonsterFactory = mMonsterFactoryList.at(0);
 }
 
+MonsterManager::MonsterManager( Maze* maze )
+{
+	ParamParser monsterParser = ParamParser("MonsterDefine.xml");
+	monsterParser.parse();
+	monsterParser.moveToFirst();
+	while (monsterParser.hasNext())
+		mMonsterFactoryList.push_back(new MonsterFactory(*monsterParser.getNext()));
+	if(mMonsterFactoryList.size() != 0)
+		mCurrentMonsterFactory = mMonsterFactoryList.at(0);
+
+	mMaze = maze;
+}
+
 MonsterManager::~MonsterManager(void)
 {
 	if(mMonsterMgr != NULL)
@@ -35,6 +48,12 @@ MonsterManager* MonsterManager::getMonsterManager(void)
 	return mMonsterMgr;
 }
 
+MonsterManager* MonsterManager::getMonsterManager(Maze* maze)
+{
+	if(mMonsterMgr == NULL)
+		mMonsterMgr = new MonsterManager(maze);
+	return mMonsterMgr;
+}
 
 //
 //void MonsterManager::monsterTimer(Ogre::SceneManager* sceneManager)
@@ -50,7 +69,7 @@ void MonsterManager::monsterGenerate(Ogre::SceneManager* sceneManager, float tim
 	/// std::list<Monster*> monsterList = mMonsterMgr->getMonstersList();
 	if(mMonsterMgr->getTimeCount() > NEW_MONSTER_TIME)
 	{
-		Monster* monster = mCurrentMonsterFactory->createInstance(sceneManager);
+		Monster* monster = mCurrentMonsterFactory->createInstance(sceneManager, mMaze);
 		/// monster->monsterScale(0.1, 0.1, 0.1);
 		monster->setAnimate();
 		mMonstersList.push_back(monster);
@@ -168,7 +187,7 @@ void MonsterManager::updateState( std::vector<NameValueList> explodedBullets, fl
 			/// (*iter2)->checkHitByBullet(bulletPos, bulletHarm, bulletAppendHarm, bulletEffectTime, bulletRadius, bulletType);
 		}
 		(*iter2)->addTimeToAnimation(timeSinceLastFrame);
-		(*iter2)->go(timeSinceLastFrame, Ogre::Vector3(10, 0, 0));
+		(*iter2)->go(timeSinceLastFrame);
 	}
 	
 }
