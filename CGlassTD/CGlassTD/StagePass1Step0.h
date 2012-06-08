@@ -1,15 +1,14 @@
-#ifndef __StagePass1Step1_h_
-#define __StagePass1Step1_h_
+#ifndef __StagePass1Step0_h_
+#define __StagePass1Step0_h_
 
 #include "Step.h"
 #include "StagePass1.h"
-#include "SceneManagerContainer.h"
 
-/// 第一关的打怪阶段
-class StagePass1Step1 : public Step
+/// 第一关的布阵阶段
+class StagePass1Step0 : public Step
 {
 public:
-	StagePass1Step1(StagePass1* stagePass1);
+	StagePass1Step0(StagePass1* stagePass1);
 
 	// 实现父类的函数
 	void init();
