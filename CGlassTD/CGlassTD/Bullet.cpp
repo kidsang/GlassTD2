@@ -4,7 +4,7 @@
 Bullet::Bullet(SceneManager* manager, SceneNode* node, Entity* entity)
 	: mSceneManager(manager), mNode(node), mEntity(entity),
 	mIsFired(false),
-	mMass(1), mDamage(0), mRange(0), mSpell("normal")
+	mMass(1), mDamage(0), mRange(0), mSpell("normal"), mEffectTime(0)
 {
 }
 
@@ -53,11 +53,17 @@ Bullet* BulletFactory::createInstance( SceneManager* mgr )
 	if (mParams.find("damage") != mParams.end())
 		bullet->setDamage((float)atof(mParams["damage"].c_str()));
 
+	if (mParams.find("appendDamage") != mParams.end())
+		bullet->setAppendDamage((float)atof(mParams["appendDamage"].c_str()));
+
 	if (mParams.find("range") != mParams.end())
 		bullet->setRange((float)atof(mParams["range"].c_str()));
 
 	if (mParams.find("spell") != mParams.end())
 		bullet->setSpell(mParams["spell"]);
+
+	if (mParams.find("time") != mParams.end())
+		bullet->setEffectTime((float)atof(mParams["time"].c_str()));
 
 	return bullet;
 }

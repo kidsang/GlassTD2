@@ -37,8 +37,10 @@ std::vector<NameValueList> BulletManager::getAndRemoveExplodedBullets(float floo
 			Bullet* bul = mBulletList.getData();
 			// 将爆炸节点的信息储存
 			NameValueList nvl;
+			nvl.insert(std::make_pair("appendDamage", convertToString(bul->getAppendDamage())));
 			nvl.insert(std::make_pair("damage", convertToString(bul->getDamage())));
-			nvl.insert(std::make_pair("range", convertToString(bul->getDamage())));
+			nvl.insert(std::make_pair("range", convertToString(bul->getRange())));
+			nvl.insert(std::make_pair("time", convertToString(bul->getEffectTime())));
 			nvl.insert(std::make_pair("spell", bul->getSpell()));
 			nvl.insert(std::make_pair("position",
 				convertToString(bul->getPosition().x)
