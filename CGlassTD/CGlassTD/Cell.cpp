@@ -68,3 +68,10 @@ float Cell::getHarmValue()
 {
 	return this->mHarmValue;
 }
+
+void Cell::setCellType( CellType type, Entity* entity )
+{
+	this->mSceneNode->detachAllObjects();
+	this->mEntity = entity;
+	this->mSceneNode->attachObject(this->mEntity);
+}

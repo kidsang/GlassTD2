@@ -37,6 +37,8 @@ public:
 	~Cell(void);
 	/// 获取空间的类型
 	CellType getCellType();
+	/// 设置空间类型
+	void setCellType(CellType type, Entity* entity);
 	/// 获取空间的高度
 	float getHeight();
 	/// 获取伤害值
