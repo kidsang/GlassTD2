@@ -25,6 +25,7 @@ private:
 	/// 怪物管理器，单一
 	static MonsterManager* mMonsterMgr;
 
+	MonsterManager(Maze* maze);
 	MonsterManager(Ogre::SceneManager* sceneManager);
 	MonsterManager();
 	
@@ -56,6 +57,7 @@ public:
 
 	/// 获取怪物管理器
 	static MonsterManager* getMonsterManager(void);
+	static MonsterManager* getMonsterManager(Maze* maze);
 
 	/// void monsterTimer(Ogre::SceneManager* sceneManager);
 

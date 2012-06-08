@@ -15,11 +15,34 @@ Monster::Monster(SceneNode* node)
 	mRadius(1),
 	mType(),
 	mHarmList(),
-	mIsDead(false)
+	mIsDead(false),
+	mBeginPosIndex(0),
+    mNextPosIndex(1)
 {
 	mNode = node;
 	mHarmCheck = new HarmCheck();
+	
 }
+
+Monster::Monster(SceneNode* node, Maze* maze)
+	:mSpeed(1),
+	mSpeedTemp(1),
+	/*mPos(Ogre::Vector3(BEGIN_POS_X, 10, BEGIN_POS_Y)),*/
+	mBlood(0),
+	mFace(Ogre::Vector3(0, 0, 1)),
+	mRadius(1),
+	mType(),
+	mHarmList(),
+	mIsDead(false),
+	mBeginPosIndex(0),
+	mNextPosIndex(1)
+{
+	mNode = node;
+	mMaze = maze;
+	mHarmCheck = new HarmCheck();
+
+}
+
 ////
 ////Monster::Monster( SceneNode* node, Maze* maze )
 ////	:mSpeed(1),
@@ -57,12 +80,23 @@ Monster::~Monster(void)
 //	
 //}
 
-void Monster::go(float timeSinceLastFrame, Ogre::Vector3& direction)
+void Monster::go(float timeSinceLastFrame)
 {
-	harmCheck(timeSinceLastFrame);
-	mNode->setPosition(mNode->getPosition() + direction * timeSinceLastFrame * mSpeed);
-
 	
+	/*if(ogrePath[mNextPosIndex] - mNode->getPosition() < Ogre::Vector3(1, 1, 1))
+	{
+	mNode->setPosition(ogrePath[mNextPosIndex]);
+	if(ogrePath[ogrePath.size()-1] != mNode->getPosition())
+	{
+	mBeginPosIndex++;
+	mNextPosIndex++;
+	}
+	}
+	harmCheck(timeSinceLastFrame);
+	mNode->setPosition(mNode->getPosition() + (ogrePath[mNextPosIndex] - ogrePath[mBeginPosIndex]) * timeSinceLastFrame * mSpeed);
+	*/
+	mNode->setPosition(mNode->getPosition() + Ogre::Vector3(20, 0, 0) * timeSinceLastFrame * mSpeed);
+
 }
 
 float Monster::getBlood(void)
@@ -511,6 +545,28 @@ Monster* MonsterFactory::createInstance(SceneManager* sceneMgr)
 	monsterNode->attachObject(entity);
 	Monster* mon;
 	mon = new Monster(monsterNode);
+	if (mParams.find("radius") != mParams.end())
+		mon->setRadius((float)atof(mParams["radius"].c_str()));
+
+	if (mParams.find("blood") != mParams.end())
+		mon->setBlood((float)atof(mParams["blood"].c_str()));
+
+	if (mParams.find("speed") != mParams.end())
+		mon->setSpeed((float)atof(mParams["speed"].c_str()));
+
+	if (mParams.find("spell") != mParams.end())
+		mon->setType((mParams["spell"].c_str()));
+	mon->setAnimate();
+	return mon;
+}
+
+Monster* MonsterFactory::createInstance(SceneManager* sceneMgr, Maze* maze)
+{
+	Ogre::SceneNode* monsterNode = sceneMgr->getRootSceneNode()->createChildSceneNode();
+	Ogre::Entity* entity = sceneMgr->createEntity(mParams["mesh"]);
+	monsterNode->attachObject(entity);
+	Monster* mon;
+	mon = new Monster(monsterNode, maze);
 	if (mParams.find("radius") != mParams.end())
 		mon->setRadius((float)atof(mParams["radius"].c_str()));
 
