@@ -28,7 +28,7 @@ private:
 	MonsterManager(Maze* maze);
 	MonsterManager(Ogre::SceneManager* sceneManager);
 	MonsterManager();
-	
+	int i ;
 
 //protected:
 //	
@@ -70,7 +70,7 @@ public:
 	void updateState(std::vector<NameValueList> explodedBullets, float timeSinceLastFrame, Ogre::SceneManager* sceneManager);
 };
 /// 新增怪物的时间间隔
-const float NEW_MONSTER_TIME = 6.0;
+const float NEW_MONSTER_TIME = 0.0f;
 
 
 #endif // MonsterManager_h__

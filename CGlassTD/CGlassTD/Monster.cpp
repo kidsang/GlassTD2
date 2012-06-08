@@ -16,8 +16,9 @@ Monster::Monster(SceneNode* node)
 	mType(),
 	mHarmList(),
 	mIsDead(false),
-	mBeginPosIndex(0),
-    mNextPosIndex(1)
+	mBeginPosIndex(-1),
+    mNextPosIndex(0),
+	mDistance(-0.1f)
 {
 	mNode = node;
 	mHarmCheck = new HarmCheck();
@@ -29,22 +30,72 @@ Monster::Monster(SceneNode* node, Maze* maze)
 	mSpeedTemp(1),
 	/*mPos(Ogre::Vector3(BEGIN_POS_X, 10, BEGIN_POS_Y)),*/
 	mBlood(0),
-	mFace(Ogre::Vector3(0, 0, 1)),
+	mFace(Ogre::Vector3(0, 0, 0)),
 	mRadius(1),
 	mType(),
 	mHarmList(),
 	mIsDead(false),
-	mBeginPosIndex(0),
-	mNextPosIndex(1)
+	mBeginPosIndex(-1),
+	mNextPosIndex(0),
+	mDistance(-0.1f)
 {
+	j = 0;
 	mNode = node;
 	mMaze = maze;
 	mHarmCheck = new HarmCheck();
-	ogrePath.push_back(Ogre::Vector3(0, 0, 0));
-	ogrePath.push_back(Ogre::Vector3(10, 0, 0));
-	ogrePath.push_back(Ogre::Vector3(10, 0, 10));
-	ogrePath.push_back(Ogre::Vector3(15, 0, 15));
-	ogrePath.push_back(Ogre::Vector3(20, 0, 30));
+	/*makeMap(mMaze->getMazeInfo());
+	findPath(startPos[0]);
+	this->transPos();*/
+	
+	path.push_back(Pos(12, 0));
+	path.push_back(Pos(12, 1));
+	path.push_back(Pos(12, 2));
+	path.push_back(Pos(12, 3));
+	path.push_back(Pos(12, 4));
+	path.push_back(Pos(12, 5));
+	path.push_back(Pos(12, 6));
+	path.push_back(Pos(12, 7));
+	path.push_back(Pos(11, 7));
+	path.push_back(Pos(10, 7));
+	path.push_back(Pos(9, 7));
+	path.push_back(Pos(8, 7));
+	path.push_back(Pos(7, 7));
+	path.push_back(Pos(6, 7));
+	path.push_back(Pos(5, 7));
+	path.push_back(Pos(4, 7));
+	path.push_back(Pos(3, 7));
+    path.push_back(Pos(3, 8));
+    path.push_back(Pos(3, 9));
+    path.push_back(Pos(4, 9));
+	path.push_back(Pos(4, 10));
+	path.push_back(Pos(5, 10));
+	path.push_back(Pos(5, 9));
+	path.push_back(Pos(6, 9));
+	path.push_back(Pos(6, 10));
+	path.push_back(Pos(7, 10));
+	path.push_back(Pos(7, 9));
+	path.push_back(Pos(8, 9));
+	path.push_back(Pos(8, 10));
+	path.push_back(Pos(9, 10));
+	path.push_back(Pos(9, 9));
+	path.push_back(Pos(10, 9));
+	path.push_back(Pos(10, 10));
+	path.push_back(Pos(11, 10));
+	path.push_back(Pos(11, 9));
+	path.push_back(Pos(12, 9));
+	path.push_back(Pos(12, 10));
+	path.push_back(Pos(13, 10));
+	path.push_back(Pos(13, 11));
+	path.push_back(Pos(13, 12));
+	path.push_back(Pos(12, 12));
+	path.push_back(Pos(12, 13));
+	path.push_back(Pos(11, 13));
+	path.push_back(Pos(10, 13));
+	path.push_back(Pos(9, 13));
+	path.push_back(Pos(8, 13));
+	path.push_back(Pos(8, 14));
+	path.push_back(Pos(8, 15));
+	this->transPos();
 }
 
 ////
@@ -87,19 +138,43 @@ Monster::~Monster(void)
 void Monster::go(float timeSinceLastFrame)
 {
 	
-	/*if(ogrePath[mNextPosIndex] - mNode->getPosition() < Ogre::Vector3(1, 1, 1))
+	if(mDistance < 0.0f || mDistance == 0.0f)
 	{
-	mNode->setPosition(ogrePath[mNextPosIndex]);
-	if(ogrePath[ogrePath.size()-1] != mNode->getPosition())
+		int size = ogrePath.size();
+		mNode->setPosition(ogrePath[mNextPosIndex]);
+		if(ogrePath[ogrePath.size()-1] != mNode->getPosition())
+		{
+			mBeginPosIndex++;
+			mNextPosIndex++;
+			mDistance = distance(ogrePath[mNextPosIndex], ogrePath[mBeginPosIndex]);
+			if(j == 1)
+			{	
+				mFace = (ogrePath[mNextPosIndex] - ogrePath[mBeginPosIndex]);
+				mFace.normalise();
+				j++;
+			}
+			else {
+				
+				mFace = (ogrePath[mNextPosIndex] - ogrePath[mBeginPosIndex]);
+				mFace.normalise();
+			}
+			j++;
+		}
+	}
+	///harmCheck(timeSinceLastFrame);
+	float moveDistance =  timeSinceLastFrame * mSpeed;
+	mNode->translate(mFace * moveDistance);
+
+	/*if(mDistance - moveDistance <= 0)
 	{
-	mBeginPosIndex++;
-	mNextPosIndex++;
+		mDistance = 0;
 	}
-	}
-	harmCheck(timeSinceLastFrame);
-	mNode->setPosition(mNode->getPosition() + (ogrePath[mNextPosIndex] - ogrePath[mBeginPosIndex]) * timeSinceLastFrame * mSpeed);
-	*/
-	mNode->setPosition(mNode->getPosition() + Ogre::Vector3(20, 0, 0) * timeSinceLastFrame * mSpeed);
+	else
+	{*/
+		mDistance -= moveDistance;
+	//}
+
+	///mNode->translate(Ogre::Vector3(20, 0, 0) * timeSinceLastFrame * mSpeed);
 
 }
 
@@ -277,6 +352,14 @@ void Monster::checkHitBySpecialBullet(std::string bulletSpell, float bulletTime,
 	}
 }
 
+float Monster::distance( Ogre::Vector3 pos1, Ogre::Vector3 pos2 )
+{
+	float tempX, tempY;
+	tempX = pos1[0] - pos2[0];
+	tempY = pos1[2] - pos2[2];
+	return sqrt((tempX * tempX + tempY * tempY));
+}
+
 
 bool Monster::isHitByBullet( float* bulletPos, float bulletRadius )
 {
@@ -300,9 +383,9 @@ void Monster::makeMap( Cell* cells )
 {
 	this->mMapHeight = mMaze->getMapHeight();
 	this->mMapWidth = mMaze->getMapWidth();
-	/*Ogre::Vector3* t = mMaze->getTargetPos();
-	finalPos.x = (int)t->x;
-	finalPos.y = (int)t->z;*/
+	Ogre::Vector3 t = mMaze->getFinalPos();
+	finalPos.x = (int)t.x;
+	finalPos.y = (int)t.z;
 	startPos = std::vector<Pos>();
 	ogrePath = std::vector<Ogre::Vector3>();
 	path = std::vector<Pos>();

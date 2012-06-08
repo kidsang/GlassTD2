@@ -13,7 +13,7 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	NameValueList* cannonParams = cannonParser.getNext(); 
 	SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
 	Entity* cannon = sceneManager->createEntity((*cannonParams)["mesh"]);
-	node->attachObject((MovableObject*)cannon);
+	//node->attachObject((MovableObject*)cannon);
 	mCannon = new Cannon(node, cannon);
 	if (cannonParams->find("material") != cannonParams->end())
 		cannon->setMaterialName((*cannonParams)["material"]);
@@ -32,11 +32,11 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 		nums = mysplit((*cannonParams)["offset"]);
 		mCannon->setFireOffset(Vector3((float)atof(nums[0].c_str()), (float)atof(nums[1].c_str()), (float)atof(nums[2].c_str())));
 	}
-	// 炮台?
-	SceneNode* node1 = sceneManager->getRootSceneNode()->createChildSceneNode();
-	Entity* fort = sceneManager->createEntity("fort.mesh");
-	node1->attachObject((MovableObject*)fort);
-	node1->setPosition(0, 200, 550);
+	//// 炮台?
+	//SceneNode* node1 = sceneManager->getRootSceneNode()->createChildSceneNode();
+	//Entity* fort = sceneManager->createEntity("fort.mesh");
+	//node1->attachObject((MovableObject*)fort);
+	//node1->setPosition(0, 200, 550);
 
 	// 给cannon增加炮弹
 	ParamParser bulletParser = ParamParser("BulletDefine.xml");

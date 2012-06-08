@@ -3,7 +3,7 @@
    <Monster name="NormalMonster"
           mesh="robot.mesh"
           blood="100"
-          speed="10"
+          speed="200"
           radius="10"
           spell="normal"
           />

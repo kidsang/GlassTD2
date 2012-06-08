@@ -27,6 +27,7 @@ MonsterManager::MonsterManager( Maze* maze )
 		mCurrentMonsterFactory = mMonsterFactoryList.at(0);
 
 	mMaze = maze;
+	i = 1;
 }
 
 MonsterManager::~MonsterManager(void)
@@ -67,7 +68,7 @@ void MonsterManager::monsterGenerate(Ogre::SceneManager* sceneManager, float tim
 	//::CreateThread(NULL, 0, createMonstersThread, sceneManager, NULL, NULL);
 	mMonsterMgr->setTimeCount(mMonsterMgr->getTimeCount() + timeSinceLastFrame);
 	/// std::list<Monster*> monsterList = mMonsterMgr->getMonstersList();
-	if(mMonsterMgr->getTimeCount() > NEW_MONSTER_TIME)
+	if(mMonsterMgr->getTimeCount() > NEW_MONSTER_TIME || mMonsterMgr->getTimeCount() == NEW_MONSTER_TIME)
 	{
 		Monster* monster = mCurrentMonsterFactory->createInstance(sceneManager, mMaze);
 		/// monster->monsterScale(0.1, 0.1, 0.1);
@@ -144,7 +145,10 @@ void MonsterManager::MonsterNumPlus(void)
 
 void MonsterManager::updateState( std::vector<NameValueList> explodedBullets, float timeSinceLastFrame, Ogre::SceneManager* sceneManager )
 {
-	mMonsterMgr->monsterGenerate(sceneManager, timeSinceLastFrame);
+	if(i == 1)
+	{
+		mMonsterMgr->monsterGenerate(sceneManager, timeSinceLastFrame);i++;
+	}
 	NameValueList params;
 	std::string bulletType;
 	float bulletHarm;
