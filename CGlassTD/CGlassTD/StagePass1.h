@@ -59,6 +59,13 @@ public:
 	/// @param timeSinceLastFrame 从上一帧到现在流逝的时间
 	virtual void run( float timeSinceLastFrame );
 
+
+	Cannon* getCannon();
+	Maze* getMaze();
+	MonsterManager* getMonsterManager();
+	BulletManager& getBulletManager();
+	Vector3 getGravity();
+
 };
 
 #endif // StagePass1_h__
