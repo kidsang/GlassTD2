@@ -243,6 +243,8 @@ bool BaseApplication::setup(void)
     // Create the scene
     createScene();
 
+	MyGUI::VectorWidgetPtr asdf = MyGUI::LayoutManager::getInstance().loadLayout("Wallpaper.layout");
+
     createFrameListener();
     
 	return true;

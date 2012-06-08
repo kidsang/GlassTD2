@@ -98,6 +98,10 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 
 	/// ÉèÖÃÌì¿ÕºÐ
 	//mSceneManager->setSkyBox(true, "Examples/EveSpaceSkyBox");
+
+	// MyGUI
+	//MyGUI::LayoutManager::getInstance().loadLayout("");
+
 }
 
 
