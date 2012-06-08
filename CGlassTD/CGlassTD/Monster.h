@@ -157,6 +157,7 @@ private:
 	std::vector<Pos> startPos;
 	/// 怪兽要走的路径
 	std::vector<Pos> path;
+	std::vector<Ogre::Vector3> ogrePath;
 	/// 构造寻路地图
 	void makeMap(Cell* cells);
 	/// 判定坐标是否有效
@@ -170,7 +171,7 @@ private:
 	void pushPos(Pos pos, std::stack<CellNode>& st);
 	bool findPath(Pos sour);
 	Pos getStep();
-
+	void transPos();
 
 	/// 设置怪兽收到的火属性伤害
 	void setHitByFire(float harm, float time);

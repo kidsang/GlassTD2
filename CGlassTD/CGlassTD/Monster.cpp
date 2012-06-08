@@ -266,6 +266,7 @@ void Monster::makeMap( Cell* cells )
 	finalPos.x = (int)t->x;
 	finalPos.y = (int)t->z;*/
 	startPos = std::vector<Pos>();
+	ogrePath = std::vector<Ogre::Vector3>();
 	path = std::vector<Pos>();
 	std::vector<Ogre::Vector3> temp = mMaze->getStartPos();
 	for(auto iter = temp.begin();iter != temp.end(); ++iter)
@@ -482,6 +483,14 @@ Pos Monster::getStep()
 		}
 	}
 
+}
+
+void Monster::transPos()
+{
+	for(auto it = path.begin(); it != path.end(); ++it)
+	{
+		ogrePath.push_back((*mMaze->translatePos(new Ogre::Vector3(Real((*it).x), Real(0), Real((*it).y)))));
+	}
 }
 
 //Ogre::String Monster::getName()

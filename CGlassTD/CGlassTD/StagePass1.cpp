@@ -34,7 +34,7 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	}
 	// езл╗?
 	SceneNode* node1 = sceneManager->getRootSceneNode()->createChildSceneNode();
-	Entity* fort = sceneManager->createEntity("fort.mesh");
+	Entity* fort = sceneManager->createEntity("tire.mesh");
 	node1->attachObject((MovableObject*)fort);
 	node1->setPosition(0, 200, 550);
 
