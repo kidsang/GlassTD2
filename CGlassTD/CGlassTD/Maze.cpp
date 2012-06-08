@@ -23,6 +23,8 @@ Maze::Maze(SceneManager* sceneManager, int* map, int width, int height)
 		}
 	}
 	this->horizon = this->pZones[1].getHeight() / 2.0f;
+	this->startPos.clear();
+	this->startPos.push_back(Ogre::Vector3(Real(0), Real(0), Real(12)));
 }
 
 
@@ -59,7 +61,7 @@ int Maze::getMapHeight()
 
 Ogre::Vector3* Maze::translatePos( Ogre::Vector3* pos )
 {
-	return new Ogre::Vector3(Real((pos->x - this->mWidth / 2.0f) * 100),Real(0),Real((pos->y - this->mHeight / 2.0f) * 100 + 50));
+	return new Ogre::Vector3(Real((pos->z - (int)(this->mHeight / 2.0f)) * 100),Real(0),Real((pos->x - (int)(this->mWidth / 2.0f)) * 100));
 }
 
 void Maze::addStartPos( Ogre::Vector3 pos )
@@ -94,6 +96,11 @@ bool Maze::TempEdit( Ogre::Vector3* pos, CellType type )
 bool Maze::saveEdit()
 {
 	return true;
+}
+
+Ogre::Vector3 Maze::getFinalPos()
+{
+	return this->finalPos;
 }
 
 Ogre::Vector3 Maze::getFinalPos()

@@ -29,6 +29,12 @@ struct Pos
 {
 	int x;
 	int y;
+	Pos(int x1, int y1)
+	{
+		x = x1;
+		y = y1;
+	}
+	Pos(){}
 };
 
 struct CellNode
@@ -113,7 +119,10 @@ protected:
     bool mIsDead;
 	/// 伤害检测类
 	HarmCheck* mHarmCheck;
-	
+	/// 怪物与下一个目的坐标的距离
+	float mDistance;
+	///  两个坐标点的距离
+	int j ;
 public:
 	Monster(){}
 	Monster(SceneNode* node);
@@ -132,6 +141,8 @@ public:
 	void setType(std::string type);
 	void setSpeed(float speed);
 	void setRadius(float radius);
+	///两点之间的距离
+	float distance(Ogre::Vector3 pos1, Ogre::Vector3 pos2);
 	/// 设置动画
 	void setAnimate();
 	/// 根据时间刷新动画状态

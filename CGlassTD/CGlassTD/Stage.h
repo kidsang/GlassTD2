@@ -48,6 +48,9 @@ public:
 	/// @param id 哪个按键
 	virtual void onMouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id) = 0;
 
+	/// 获取摄像头
+	Ogre::Camera* getCamera();
+
 protected:
 	/// 跳转到下一个舞台，内部调用
 	/// @param pNextStage 下一个舞台的指针

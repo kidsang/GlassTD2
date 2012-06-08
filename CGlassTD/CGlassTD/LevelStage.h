@@ -19,9 +19,8 @@ public:
 	/// @note Step类由外部创建，但是外部不需要释放它们，该类销毁时会释放这些Step
 	void pushStep(Step* step);
 
-	/// 设置第i个步骤为开始步骤
-	/// @note 应该只由框架调用
-	void setStartStep(unsigned i);
+	/// 跳到第i个步骤
+	void jumpToStep(unsigned i);
 
 	/// 场景的运行逻辑
 	/// @param timeSinceLastFrame 从上一帧到现在流逝的时间
@@ -51,11 +50,6 @@ public:
 	/// @param id 哪个按键
 	/// @note 应该只由框架调用
 	void onMouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
-
-
-protected:
-	/// 跳到第i个步骤
-	void jumpToStep(unsigned i);
 
 protected:
 	unsigned mCurrentStep;

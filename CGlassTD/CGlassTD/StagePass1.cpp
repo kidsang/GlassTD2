@@ -1,9 +1,11 @@
 #include "StagePass1.h"
+#include "StagePass1Step1.h"
+#include "StagePass1Step0.h"
 #include <OgreLogManager.h>
 #include "ParamParser.h"
 
 StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageManager)
-	: Stage(sceneManager, stageManager),
+	: LevelStage(sceneManager, stageManager),
 	mGravity(Vector3(0, -200, 0))
 {
 	// 新增cannon
@@ -13,7 +15,7 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	NameValueList* cannonParams = cannonParser.getNext(); 
 	SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
 	Entity* cannon = sceneManager->createEntity((*cannonParams)["mesh"]);
-	node->attachObject((MovableObject*)cannon);
+	//node->attachObject((MovableObject*)cannon);
 	mCannon = new Cannon(node, cannon);
 	if (cannonParams->find("material") != cannonParams->end())
 		cannon->setMaterialName((*cannonParams)["material"]);
@@ -32,11 +34,11 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 		nums = mysplit((*cannonParams)["offset"]);
 		mCannon->setFireOffset(Vector3((float)atof(nums[0].c_str()), (float)atof(nums[1].c_str()), (float)atof(nums[2].c_str())));
 	}
-	// 炮台?
-	SceneNode* node1 = sceneManager->getRootSceneNode()->createChildSceneNode();
-	Entity* fort = sceneManager->createEntity("tire.mesh");
-	node1->attachObject((MovableObject*)fort);
-	node1->setPosition(0, 200, 1550);
+	//// 炮台?
+	//SceneNode* node1 = sceneManager->getRootSceneNode()->createChildSceneNode();
+	//Entity* fort = sceneManager->createEntity("fort.mesh");
+	//node1->attachObject((MovableObject*)fort);
+	//node1->setPosition(0, 200, 550);
 
 	// 给cannon增加炮弹
 	ParamParser bulletParser = ParamParser("BulletDefine.xml");
@@ -93,11 +95,15 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 
 	/// 改变镜头视角
 	//mCamera->lookAt(Vector3(0, 0, -100s));//lookat 貌似没用
-	mCamera->setPosition(Vector3(0, 3000, 3000));
+	mCamera->setPosition(Vector3(0, 2000, 2000));
 	mCamera->setDirection(-mCamera->getPosition());
 
 	/// 设置天空盒
 	//mSceneManager->setSkyBox(true, "Examples/EveSpaceSkyBox");
+
+	this->pushStep(new StagePass1Step0(this));
+	this->pushStep(new StagePass1Step1(this));
+	this->jumpToStep(0);
 }
 
 
@@ -109,60 +115,6 @@ StagePass1::~StagePass1(void)
 	//mBulletList.clear();
 	// 删除迷宫
 	delete mMaze;
-}
-
-void StagePass1::onKeyPressed( const OIS::KeyEvent &arg )
-{
-	if (arg.key == OIS::KC_SPACE)
-	{
-		Bullet* bullet = mCannon->fire(mSceneManager);
-		if (bullet)
-			mBulletManager.add(bullet);
-	}
-}
-
-void StagePass1::onMouseMoved( const OIS::MouseEvent &arg )
-{
-	mCannon->rotate(-arg.state.X.rel, arg.state.Y.rel);
-	//char buffX[255], buffY[255];
-	//LogManager::getSingletonPtr()->logMessage(std::string("--->") + itoa(arg.state.X.rel,buffX,10) + "," + itoa(arg.state.Y.rel,buffY,10));
-}
-
-void StagePass1::onMousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
-{
-}
-
-void StagePass1::onMouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
-{
-}
-
-void StagePass1::run( float timeSinceLastFrame )
-{/*
-	/// MonsterManager* monsterMgr = MonsterManager::getMonsterManager();
-	/// 产生怪物
-	mMonsterManager->monsterGenerate(mSceneManager, timeSinceLastFrame);
-	/// 遍历怪物列表
-	MyList<Monster*>* monsterList = mMonsterManager->getMonstersList();
-	monsterList->start();
-	while (monsterList->forward())
-	{
-		Monster* monster = monsterList->getData();
-		
-		monster->addTimeToAnimation(timeSinceLastFrame);
-		monster->go(timeSinceLastFrame, Vector3(4, 0, 0));
-	}
-	/// 使炮弹飞行
-	mBulletList.start();
-	while (mBulletList.forward())
-	{
-		mBulletList.getData()->fly(timeSinceLastFrame, Vector3(0, -200, 0));
-	}*/
-	mBulletManager.fly(timeSinceLastFrame, mGravity);
-	mMonsterManager->updateState(
-		mBulletManager.getAndRemoveExplodedBullets(mMaze->getHorizon()),
-		timeSinceLastFrame,
-		mSceneManager
-		);
 }
 
 
