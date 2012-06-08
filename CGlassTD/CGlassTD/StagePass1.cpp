@@ -101,7 +101,7 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	/// ÉèÖÃÌì¿ÕºÐ
 	//mSceneManager->setSkyBox(true, "Examples/EveSpaceSkyBox");
 
-	this->pushStep(new StagePass1Step0(this));
+	//this->pushStep(new StagePass1Step0(this));
 	this->pushStep(new StagePass1Step1(this));
 	this->jumpToStep(0);
 }
