@@ -137,7 +137,8 @@ Monster::~Monster(void)
 
 void Monster::go(float timeSinceLastFrame)
 {
-	
+	///harmCheck(timeSinceLastFrame);
+
 	if(mDistance < 0.0f || mDistance == 0.0f)
 	{
 		int size = ogrePath.size();
@@ -147,35 +148,22 @@ void Monster::go(float timeSinceLastFrame)
 			mBeginPosIndex++;
 			mNextPosIndex++;
 			mDistance = distance(ogrePath[mNextPosIndex], ogrePath[mBeginPosIndex]);
-			if(j == 1)
-			{	
-				mFace = (ogrePath[mNextPosIndex] - ogrePath[mBeginPosIndex]);
-				mFace.normalise();
-				j++;
-			}
-			else {
-				
-				mFace = (ogrePath[mNextPosIndex] - ogrePath[mBeginPosIndex]);
-				mFace.normalise();
-			}
-			j++;
+			/// 面向，方向向量
+			mFace = (ogrePath[mNextPosIndex] - ogrePath[mBeginPosIndex]);
+			mFace.normalise();
+			
+			/// 旋转面向角度
+			Ogre::Vector3 src = mNode->getOrientation() * Vector3::UNIT_X; 
+			Ogre::Quaternion quat = src.getRotationTo(mFace);
+			mNode->rotate(quat);
 		}
 	}
-	///harmCheck(timeSinceLastFrame);
+	
+	/// 平移所需要走的路
 	float moveDistance =  timeSinceLastFrame * mSpeed;
 	mNode->translate(mFace * moveDistance);
-
-	/*if(mDistance - moveDistance <= 0)
-	{
-		mDistance = 0;
-	}
-	else
-	{*/
-		mDistance -= moveDistance;
-	//}
-
-	///mNode->translate(Ogre::Vector3(20, 0, 0) * timeSinceLastFrame * mSpeed);
-
+	mDistance -= moveDistance;
+	
 }
 
 float Monster::getBlood(void)
