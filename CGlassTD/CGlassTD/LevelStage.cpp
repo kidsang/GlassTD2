@@ -24,9 +24,9 @@ void LevelStage::pushStep(Step* step)
 	mSteps.push_back(step);
 }
 
-void LevelStage::setStartStep(unsigned i)
+void LevelStage::jumpToStep(unsigned i)
 {
-	this->jumpToStep(i);
+	mCurrentStep = i;
 }
 
 void LevelStage::run(float timeSinceLastFrame)
@@ -52,10 +52,4 @@ void LevelStage::onMousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID i
 void LevelStage::onMouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
 {
 	mSteps[mCurrentStep]->onMouseReleased(arg, id);
-}
-
-
-void LevelStage::jumpToStep(unsigned i)
-{
-	mCurrentStep = i;
 }
