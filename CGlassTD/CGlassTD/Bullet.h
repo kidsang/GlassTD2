@@ -34,10 +34,14 @@ private:
 	float mMass;
 	/// 炮弹的伤害值
 	float mDamage;
+	/// 炮弹的附加伤害值
+	float mAppendDamage;
 	/// 炮弹的伤害范围
 	float mRange;
 	/// 炮弹的元素类型
 	std::string mSpell;
+	/// 炮弹效果持续时间
+	float mEffectTime;
 
 	/// 炮弹删除自己需要用到，真tmd蛋疼
 	SceneManager* mSceneManager;
@@ -63,6 +67,18 @@ public:
 
 	// Get/Set
 public:
+	/// 获取炮弹效果持续时间
+	float getEffectTime()
+	{
+		return mEffectTime;
+	}
+
+	/// 设置炮弹效果持续时间
+	void setEffectTime(float time)
+	{
+		mEffectTime = time;
+	}
+
 	/// 获取炮弹的元素类型
 	const std::string& getSpell()
 	{
@@ -103,6 +119,18 @@ public:
 	void setDamage(float damage)
 	{
 		mDamage = damage;
+	}
+
+	/// 获取炮弹的附加伤害值
+	const float getAppendDamage()
+	{
+		return mAppendDamage;
+	}
+
+	/// 设置炮弹的附加伤害值
+	void setAppendDamage(float appendDamage)
+	{
+		mAppendDamage = appendDamage;
 	}
 
 	/// 获取炮弹的爆炸半径

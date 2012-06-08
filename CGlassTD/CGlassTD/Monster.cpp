@@ -134,6 +134,9 @@ void Monster::monsterScale( float x, float y, float z )
 
 void Monster::harmCheck(float timeSinceLastFrame)
 {
+	/// 先检查地形，更新怪物信息
+	checkCellType();
+	
 	/// mHarmCheck->bulletHarm(mHarmList.h)
 	mHarmCheck->fireHarmCheck(mHarmList.fireHarm, mHarmList.fireHarmTime, mBlood, timeSinceLastFrame);
 	mHarmCheck->iceHarmCheck(mHarmList.iceHarm, mHarmList.iceHarmTime, mSpeed, mSpeedTemp, timeSinceLastFrame);
@@ -149,15 +152,21 @@ bool Monster::isMonsterDead()
 	return mIsDead;
 }
 
-void Monster::setHitByFire()
+void Monster::setHitByFire(float harm, float time)
 {
-	mHarmList.fireHarm = FIRE_HARM_BLOOD;
+	mHarmList.fireHarm = harm;
+	mHarmList.fireHarmTime = time;
 }
 
-void Monster::setHitByIce()
+
+
+void Monster::setHitByIce(float harm, float time)
 {
-	mHarmList.iceHarm = ICE_HARM_SPEED;
+	mHarmList.iceHarm = harm;
+	mHarmList.iceHarmTime = time;
 }
+
+
 
 void Monster::setBeCaughtByTrap()
 {
@@ -209,6 +218,50 @@ void Monster::checkCellType()
 	case SWAMP: setInsideSwamp(); setOutsideSpikeweed(); break;
 	default: setOutsideSpikeweed(); setOutsideSwamp(); break;
 	}
+}
+
+void Monster::checkHitBySpecialBullet(std::string bulletSpell, float bulletTime, float bulletHarm, float bulletAppendHarm)
+{
+	if(bulletSpell == "ice")
+	{
+		if(mType == "fire")
+		{	
+			mBlood -= bulletHarm;
+			setHitByIce(bulletAppendHarm, bulletTime);
+		}
+		if(mType == "normal")
+		{
+			setHitByIce(bulletAppendHarm, bulletTime);
+		}
+	}
+	
+	if(bulletSpell == "fire")
+	{
+		
+		if(mType != "fire")
+		{
+			setHitByFire(bulletAppendHarm, bulletTime);
+		}
+	}
+}
+
+
+bool Monster::isHitByBullet( float* bulletPos, float bulletRadius )
+{
+	float tempX, tempY;
+	tempX = bulletPos[0] - mNode->getPosition()[0];
+	tempY = bulletPos[2] - mNode->getPosition()[2];
+	if(sqrt((tempX * tempX + tempY * tempY)) < bulletRadius + mRadius)
+		return true;
+	else 
+		return false;
+}
+
+void Monster::checkHitByBullet( float* bulletPos, float bulletHarm, float bulletAppendHarm, float bulletTime, float bulletRadius, std::string bulletSpell )
+{
+	if(isHitByBullet(bulletPos, bulletRadius))
+		mBlood -= bulletHarm;
+	checkHitBySpecialBullet(bulletSpell, bulletTime, bulletHarm, bulletAppendHarm);
 }
 
 //Ogre::String Monster::getName()

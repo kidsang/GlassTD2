@@ -128,6 +128,9 @@ public:
 	void harmCheck(float timeSinceLastFrame);
 	/// 怪兽死掉
 	bool isMonsterDead();
+	/// 检查被炮弹集中
+	void checkHitByBullet(float* bulletPos, float bulletHarm, float bulletAppendHarm, float bulletTime, float bulletRadius, std::string bulletSpell);
+
 private:
 	/// 地图
 	Maze* mMaze;
@@ -142,10 +145,11 @@ private:
 	bool findPath(Pos, Pos);
 	bool isTarget(Pos& pos);
 
+
 	/// 设置怪兽收到的火属性伤害
-	void setHitByFire();
+	void setHitByFire(float harm, float time);
 	/// 设置怪兽收到的冰属性伤害
-	void setHitByIce();
+	void setHitByIce(float harm, float time);
 	/// 设置被捕兽器捉住
 	void setBeCaughtByTrap();
 	/// 设置在地刺上
@@ -158,6 +162,11 @@ private:
 	void setOutsideSwamp();
 	/// 检查怪兽所在的cell的类型，根据类型修改参数
 	void checkCellType();
+	///检查被特殊炮弹集中
+	void checkHitBySpecialBullet(std::string bulletSpell, float bulletTime, float bulletHarm, float bulletAppendHarm);
+	///是否被炮弹击中
+	bool isHitByBullet(float* bulletPos, float bulletRadius);
+
 };
 
 
@@ -170,7 +179,7 @@ public:
 	MonsterFactory(NameValueList params)
 		:mParams(params)
 	{
-		mType = params["name"];
+		mType = params["spell"];
 	}
 	~MonsterFactory()
 	{

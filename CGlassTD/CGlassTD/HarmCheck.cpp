@@ -16,6 +16,8 @@ void HarmCheck::fireHarmCheck( float harm, float& time, float& blood, float time
 		blood -= harm;
 		time -= timeSinceLastFrame;
 	}
+	else 
+		harm = 0;
 }
 
 void HarmCheck::iceHarmCheck( float harm, float& time, float& speed, float speedTemp, float timeSinceLastFrame )
@@ -26,8 +28,11 @@ void HarmCheck::iceHarmCheck( float harm, float& time, float& speed, float speed
 		speed = speedTemp * harm;
 		time -= timeSinceLastFrame;
 	}
-	else 
+	else if(time < 0 || time == 0)
+	{
 		speed = speedTemp;
+		harm = 0;
+	}
 }
 
 void HarmCheck::spikeweedHarmCheck( float harm, float& blood, bool isOnSpikeweed )
