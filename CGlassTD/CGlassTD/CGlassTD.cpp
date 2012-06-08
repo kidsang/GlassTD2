@@ -15,6 +15,14 @@ CGlassTD::~CGlassTD(void)
 	}
 }
 
+//------------------------------------------------------
+void CGlassTD::chooseSceneManager(void)
+{
+	BaseApplication::chooseSceneManager();
+
+	SceneManagerContainer::setup(mSceneMgr);
+}
+
 //-------------------------------------------------------------------------------------
 void CGlassTD::createScene(void)
 {

@@ -6,6 +6,7 @@
 #include "BaseApplication.h"
 #include "../res/resource.h"
 #include "StageManager.h"
+#include "SceneManagerContainer.h"
 
 /**
  * 文件：CGlassTD
@@ -22,6 +23,8 @@ public:
 
 protected:
     virtual void createScene(void);
+
+	virtual void chooseSceneManager(void);
 
 	// 帧消息
 	virtual bool frameRenderingQueued( const Ogre::FrameEvent& evt );
