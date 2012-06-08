@@ -17,7 +17,9 @@ BaseApplication::BaseApplication(void)
     mShutDown(false),
     mInputManager(0),
     mMouse(0),
-    mKeyboard(0)
+    mKeyboard(0),
+	mGui(0),
+	mGuiPlatform(0)
 {
 }
 
@@ -26,6 +28,18 @@ BaseApplication::~BaseApplication(void)
 {
     if (mTrayMgr) delete mTrayMgr;
     //if (mCameraMan) delete mCameraMan;
+	if (mGui)
+	{
+		mGui->shutdown();
+		delete mGui;
+		mGui = 0;
+	}
+	if (mGuiPlatform)
+	{
+		mGuiPlatform->shutdown();
+		delete mGuiPlatform;
+		mGuiPlatform = 0;
+	}
 
     //Remove ourself as a Window listener
     Ogre::WindowEventUtilities::removeWindowEventListener(mWindow, this);
@@ -219,6 +233,12 @@ bool BaseApplication::setup(void)
     createResourceListener();
     // Load resources
     loadResources();
+
+	// MyGui
+	mGuiPlatform = new MyGUI::OgrePlatform();
+	mGuiPlatform->initialise(mWindow, mSceneMgr);
+	mGui = new MyGUI::Gui();
+	mGui->initialise();
 
     // Create the scene
     createScene();

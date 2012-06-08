@@ -18,6 +18,9 @@
 #include <SdkTrays.h>
 #include <SdkCameraMan.h>
 
+#include <MyGUI/MyGUI.h>
+#include <MyGUI/MyGUI_OgrePlatform.h>
+
 class BaseApplication : public Ogre::FrameListener, public Ogre::WindowEventListener, public OIS::KeyListener, public OIS::MouseListener, OgreBites::SdkTrayListener
 {
 public:
@@ -74,6 +77,10 @@ protected:
     OIS::InputManager* mInputManager;
     OIS::Mouse*    mMouse;
     OIS::Keyboard* mKeyboard;
+
+	//MyGUI
+	MyGUI::Gui* mGui;
+	MyGUI::OgrePlatform* mGuiPlatform;
 };
 
 #endif // #ifndef __BaseApplication_h_
