@@ -14,7 +14,7 @@ void StagePass1Step1::run(float timeSinceLastFrame)
 
 	MonsterManager* monsterManager = mStagePass1->getMonsterManager();
 	Maze* maze = mStagePass1->getMaze();
-	std::vector<Bullet> explodedBullets = bulletManager.getAndRemoveExplodedBullets(maze->getHorizon());
+	std::vector<NameValueList> explodedBullets = bulletManager.getAndRemoveExplodedBullets(maze->getHorizon());
 	monsterManager->updateState(
 		explodedBullets,
 		timeSinceLastFrame,
