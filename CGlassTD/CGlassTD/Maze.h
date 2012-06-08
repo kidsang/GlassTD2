@@ -64,7 +64,7 @@ public:
 	int getMapHeight();
 	/// 获取飞碟目标的位置
 	/// @return 返回飞碟的二维坐标
-	Ogre::Vector3* getTargetPos();
+	Ogre::Vector3 getFinalPos();
 	/// 增加开始位置
 	void addStartPos(Ogre::Vector3 pos);
 	/// 设置结束位置

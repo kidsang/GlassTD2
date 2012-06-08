@@ -82,6 +82,22 @@ Cell* Maze::getCellByPos( Ogre::Vector3 pos )
 void Maze::showShadow( Ogre::Vector3 pos, CellType type )
 {
 	Cell* cell = this->getCellByPos(pos);
-	
+	//cell->setCellType(type, );
+}
+
+bool Maze::TempEdit( Ogre::Vector3* pos, CellType type )
+{
+	/*this->mSceneNode->*/
+	return true;
+}
+
+bool Maze::saveEdit()
+{
+	return true;
+}
+
+Ogre::Vector3 Maze::getFinalPos()
+{
+	return this->finalPos;
 }
 

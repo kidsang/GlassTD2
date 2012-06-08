@@ -2,7 +2,7 @@
 <Cannons>
    <Cannon name="NormalBullet"
           mesh="cannon.mesh"
-          position="0 200 550"
+          position="0 200 1550"
           strength="500"
           offset="0 0 0"
           colddown="0.5"

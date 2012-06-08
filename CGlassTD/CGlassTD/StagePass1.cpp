@@ -34,9 +34,9 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	}
 	// 炮台?
 	SceneNode* node1 = sceneManager->getRootSceneNode()->createChildSceneNode();
-	Entity* fort = sceneManager->createEntity("fort.mesh");
+	Entity* fort = sceneManager->createEntity("tire.mesh");
 	node1->attachObject((MovableObject*)fort);
-	node1->setPosition(0, 200, 550);
+	node1->setPosition(0, 200, 1550);
 
 	// 给cannon增加炮弹
 	ParamParser bulletParser = ParamParser("BulletDefine.xml");
@@ -93,7 +93,7 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 
 	/// 改变镜头视角
 	//mCamera->lookAt(Vector3(0, 0, -100s));//lookat 貌似没用
-	mCamera->setPosition(Vector3(0, 2000, 2000));
+	mCamera->setPosition(Vector3(0, 3000, 3000));
 	mCamera->setDirection(-mCamera->getPosition());
 
 	/// 设置天空盒

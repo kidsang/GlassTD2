@@ -300,9 +300,9 @@ void Monster::makeMap( Cell* cells )
 {
 	this->mMapHeight = mMaze->getMapHeight();
 	this->mMapWidth = mMaze->getMapWidth();
-	/*Ogre::Vector3* t = mMaze->getTargetPos();
-	finalPos.x = (int)t->x;
-	finalPos.y = (int)t->z;*/
+	Ogre::Vector3 t = mMaze->getFinalPos();
+	finalPos.x = (int)t.x;
+	finalPos.y = (int)t.z;
 	startPos = std::vector<Pos>();
 	ogrePath = std::vector<Ogre::Vector3>();
 	path = std::vector<Pos>();
