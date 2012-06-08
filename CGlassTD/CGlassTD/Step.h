@@ -11,6 +11,9 @@
 class Step
 {
 public:
+	/// 初始化操作，如更改摄像头位置等
+	virtual void init() = 0;
+
 	/// 场景的运行逻辑
 	/// @param timeSinceLastFrame 从上一帧到现在流逝的时间
 	/// @note 这个函数每一帧调用，处理的是每一帧的逻辑

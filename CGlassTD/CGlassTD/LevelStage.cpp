@@ -27,6 +27,7 @@ void LevelStage::pushStep(Step* step)
 void LevelStage::jumpToStep(unsigned i)
 {
 	mCurrentStep = i;
+	mSteps[mCurrentStep]->init();
 }
 
 void LevelStage::run(float timeSinceLastFrame)
