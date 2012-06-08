@@ -59,7 +59,7 @@ int Maze::getMapHeight()
 
 Ogre::Vector3* Maze::translatePos( Ogre::Vector3* pos )
 {
-	return new Ogre::Vector3(Real((pos->x - this->mWidth / 2.0f) * 100),Real(0),Real((pos->y - this->mHeight / 2.0f) * 100));
+	return new Ogre::Vector3(Real((pos->x - this->mWidth / 2.0f) * 100),Real(0),Real((pos->y - this->mHeight / 2.0f) * 100 + 50));
 }
 
 void Maze::addStartPos( Ogre::Vector3 pos )
@@ -78,3 +78,9 @@ Cell* Maze::getCellByPos( Ogre::Vector3 pos )
 	int y = (int)pos.y / this->mHeight;
 	return &this->pZones[y * mHeight + x];
 }
+
+void Maze::showShadow( Ogre::Vector3* pos, CellType type )
+{
+
+}
+
