@@ -40,7 +40,11 @@ Monster::Monster(SceneNode* node, Maze* maze)
 	mNode = node;
 	mMaze = maze;
 	mHarmCheck = new HarmCheck();
-
+	ogrePath.push_back(Ogre::Vector3(0, 0, 0));
+	ogrePath.push_back(Ogre::Vector3(10, 0, 0));
+	ogrePath.push_back(Ogre::Vector3(10, 0, 10));
+	ogrePath.push_back(Ogre::Vector3(15, 0, 15));
+	ogrePath.push_back(Ogre::Vector3(20, 0, 30));
 }
 
 ////
