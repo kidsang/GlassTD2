@@ -4,6 +4,7 @@
 #include <OgreSceneNode.h>
 #include <OgreEntity.h>
 #include <vector>
+#include "CellType.h"
 using namespace Ogre;
 
 class Cell;
@@ -68,6 +69,11 @@ public:
 	void addStartPos(Ogre::Vector3 pos);
 	/// 设置结束位置
 	void setFinalPos(Ogre::Vector3 pos);
+	/************************************** 地图编辑接口 ******************************/
+	void showShadow(Ogre::Vector3* pos, CellType type);
+	bool TempEdit(Ogre::Vector3* pos, CellType type);
+	bool saveEdit();
+	/************************************** end: 地图编辑接口 ******************************/
 	/// 析构函数
 	~Maze(void);
 };
