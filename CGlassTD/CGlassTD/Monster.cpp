@@ -4,7 +4,7 @@
 #define CAN_STEP 0
 #define NOT_STEP 1
 #define HAS_STEP 2
-#define SET_STEP 3
+#define SET_MARK 3
 
 Monster::Monster(SceneNode* node)
 	:mSpeed(1),
@@ -209,6 +209,232 @@ void Monster::checkCellType()
 	case SWAMP: setInsideSwamp(); setOutsideSpikeweed(); break;
 	default: setOutsideSpikeweed(); setOutsideSwamp(); break;
 	}
+}
+
+void Monster::makeMap( Cell* cells )
+{
+	this->mMapHeight = mMaze->getMapHeight();
+	this->mMapWidth = mMaze->getMapWidth();
+	/*Ogre::Vector3* t = mMaze->getTargetPos();
+	finalPos.x = (int)t->x;
+	finalPos.y = (int)t->z;*/
+	startPos = std::vector<Pos>();
+	path = std::vector<Pos>();
+	std::vector<Ogre::Vector3> temp = mMaze->getStartPos();
+	for(auto iter = temp.begin();iter != temp.end(); ++iter)
+	{
+		Ogre::Vector3 v3 = (*iter);
+		Pos p;
+		p.x = (int)v3.x;
+		p.y = (int)v3.z;
+		startPos.push_back(p);
+	}
+	map = new int *[mMapHeight];
+	for(int j = 0; j < mMapHeight; ++j)
+	{
+		map[j] = new int[mMapWidth];
+	}
+	for(int i = 0; i < mMapWidth * mMapHeight; ++i)
+	{
+		if(cells[i].getCellType() == FREE)
+		{
+			map[i / mMapHeight][i % mMapHeight] = CAN_STEP;
+		}
+		else
+		{
+			map[i / mMapHeight][i % mMapHeight] = NOT_STEP;
+		}
+	}
+}
+
+bool Monster::isValid( Pos pos )
+{
+	if((pos.x>=0) && (pos.x<mMapWidth) && (pos.y>=0) && (pos.y<mMapHeight))
+		return true;
+	else
+		return false;
+}
+
+bool Monster::isFinal( Pos pos )
+{
+	if((finalPos.x == pos.x) && (finalPos.y == pos.y))
+		return true;
+	else
+		return false;
+}
+
+void Monster::markIt( Pos pos )
+{
+	map[pos.x][pos.y] = SET_MARK;
+}
+
+void Monster::stepTo( Pos pos )
+{
+	map[pos.x][pos.y] = HAS_STEP;
+}
+
+void Monster::pushPos( Pos pos, stack<CellNode>& st )
+{
+	Vect vect[4];                       //上下左右4个方向向量
+	vect[0].dx = 0;  vect[0].dy = 1;    //vect[0] = {0, 1};
+	vect[1].dx = 1;  vect[1].dy = 0;    //vect[1] = {1, 0};
+	vect[2].dx = -1; vect[2].dy = 0;    //vect[2] = {-1, 0};
+	vect[3].dx = 0;  vect[3].dy = -1;   //vect[3] = {0, -1};
+
+	//判断在这4个方向向量中哪几个可以步进
+	Judge* head = NULL;
+	Judge* ptr = NULL;
+	Judge* tmp = NULL;
+	bool lock = false;
+	Pos now;
+	int dist;
+	for(int i=0; i<4; i++)
+	{
+		now.x = pos.x + vect[i].dx;
+		now.y = pos.y + vect[i].dy;
+		//检测当前位置是否越界且可步进
+		if(isValid(now))
+			if(map[now.x][now.y]==CAN_STEP)
+			{
+				//对当前节点进行评估
+				dist = abs(now.x-finalPos.x) + abs(now.y-finalPos.y);
+
+				Judge* judge = new Judge();
+				judge->node.pare = pos;
+				judge->node.self = now;
+				judge->node.dist = dist;
+				judge->next = NULL;
+				if(!lock)
+				{
+					//第一个节点作表头
+					head = judge;
+					lock = true;
+				}
+				else
+				{
+					//如果当前位置到终点的距离最大则作为新表头
+					if(judge->node.dist >= head->node.dist)
+					{
+						judge->next = head;
+						head = judge;
+					}
+					else
+					{
+						//如果当前位置到终点的距离不是最大则插入到表中的合适位置
+						bool in = false;
+						ptr = head;
+						while(ptr != NULL)
+						{
+							if(judge->node.dist >= ptr->node.dist)
+							{
+								judge->next = ptr;
+								tmp->next = judge;
+								in = true;
+							}
+							tmp = ptr;
+							ptr = ptr->next;
+						}
+						//如果当前位置到终点的距离最小则插入到表尾
+						if(!in)
+						{
+							tmp->next = judge;
+						}
+					}
+				}
+			}
+	}
+
+	/// 将表中存储的位置信息压入堆栈
+	ptr = head;
+	while(ptr != NULL)
+	{
+		st.push(ptr->node);
+		tmp = ptr;
+		ptr = ptr->next;
+	}
+}
+
+bool Monster::findPath( Pos sour )
+{
+	Pos** record;
+	record = new Pos *[mMapHeight];
+	for(int i = 0; i < mMapHeight; ++i)
+	{
+		record[i] = new Pos[mMapWidth];
+	}
+	stack<CellNode> st = stack<CellNode>();
+	CellNode node;
+	node.self = sour;
+	st.push(node);
+
+	//判断从起点到终点之间是否有通路
+	CellNode temp;
+	while(true)
+	{
+		if(!st.empty())
+		{
+			temp = st.top();
+			st.pop();
+		}
+		else
+		{
+			return false;
+		}
+		if(isFinal(temp.self))
+		{
+			if(isValid(temp.self))
+			{
+				markIt(temp.self);
+				record[temp.self.x][temp.self.y] = temp.pare;
+			}
+			break;
+		}
+		else
+		{
+			if(isValid(temp.self))
+			{
+				markIt(temp.self);
+				record[temp.self.x][temp.self.y] = temp.pare;
+				pushPos(temp.self, st);
+			}
+		}
+	}
+
+	//// 如果有通路则寻找合适的路径
+	Pos parent = finalPos;
+	bool success = false;
+	while(isValid(parent) && !success)
+	{
+		stepTo(parent);
+		path.push_back(getStep());
+		markIt(parent);
+		parent = record[parent.x][parent.y];
+		if(parent.x==sour.x && parent.y==sour.y)
+		{
+			success = true;
+		}
+	}
+	path.push_back(finalPos);
+	return true;
+}
+
+Pos Monster::getStep()
+{
+	for(int i=0; i<mMapHeight; i++)
+	{
+		for(int j=0; j<mMapWidth; j++)
+		{
+
+			if(map[i][j] == 2)
+			{
+				Pos p;
+				p.x = j;
+				p.y = i;
+				return p;
+			}
+		}
+	}
+
 }
 
 //Ogre::String Monster::getName()

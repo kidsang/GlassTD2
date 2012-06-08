@@ -24,6 +24,33 @@ const float FIRE_HARM_BLOOD = 0.01f;  /// 火属性伤害的血量值
 const float SPIKEWEED_HARM_BLOOD = 1.0f;  /// 地刺伤害的血量值
 const float SWAMP_HARM_SPEED = 0.4f;  /// 沼泽影响的速度值
 
+
+struct Pos
+{
+	int x;
+	int y;
+};
+
+struct CellNode
+{
+	Pos pare;
+	Pos self;
+	int dist;
+};
+
+struct Judge
+{
+	CellNode node;
+	Judge* next;
+};
+
+struct Vect
+{
+	int dx;
+	int dy;
+};
+
+
 struct HarmList
 {
 	/// 冰属性伤害
@@ -56,22 +83,6 @@ struct HarmList
 		isInSwamp(false),
 		iceHarmTime(ICE_HARM_TIME),
 		fireHarmTime(FIRE_HARM_TIME){};
-};
-struct Pos
-{
-	int x;
-	int y;
-};
-struct CellNode
-{
-	Pos parent;
-	Pos self;
-	int dist;
-};
-struct Judge
-{
-	CellNode node;
-	Judge* next;
 };
 
 class Monster
@@ -129,18 +140,33 @@ public:
 	/// 怪兽死掉
 	bool isMonsterDead();
 private:
-	/// 地图
+	/// 地图指针
 	Maze* mMaze;
-
-	int* map;
-	void makeMap(Cell* cell);
-	bool isValid(Pos& pos);
-	bool isFinal(Pos& pos);
-	void MarkIt(Pos&);
-	void stepTo(Pos& pos);
-	void pushPos(Pos&, std::stack<Pos>&);
-	bool findPath(Pos, Pos);
-	bool isTarget(Pos& pos);
+	/// 地图的二维数组
+	int** map;
+	/// 地图的宽
+	int mMapWidth;
+	/// 地图的高
+	int mMapHeight;
+	/// 终点的坐标
+	Pos finalPos;
+	/// 入口坐标
+	std::vector<Pos> startPos;
+	/// 怪兽要走的路径
+	std::vector<Pos> path;
+	/// 构造寻路地图
+	void makeMap(Cell* cells);
+	/// 判定坐标是否有效
+	/// @param pos 要判定的坐标
+	/// @return 返回true表示有效，反之无效
+	bool isValid(Pos pos);
+	/// 判定坐标是否是终点坐标
+	bool isFinal(Pos pos);
+	void markIt(Pos pos);
+	void stepTo(Pos pos);
+	void pushPos(Pos pos, std::stack<CellNode>& st);
+	bool findPath(Pos sour);
+	Pos getStep();
 
 	/// 设置怪兽收到的火属性伤害
 	void setHitByFire();
