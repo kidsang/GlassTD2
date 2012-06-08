@@ -164,3 +164,30 @@ void StagePass1::run( float timeSinceLastFrame )
 		mSceneManager
 		);
 }
+
+
+Cannon* StagePass1::getCannon()
+{
+	return mCannon;
+}
+
+
+Maze* StagePass1::getMaze()
+{
+	return mMaze;
+}
+
+MonsterManager* StagePass1::getMonsterManager()
+{
+	return mMonsterManager;
+}
+
+BulletManager& StagePass1::getBulletManager()
+{
+	return mBulletManager;
+}
+
+Vector3 StagePass1::getGravity()
+{
+	return mGravity;
+}
