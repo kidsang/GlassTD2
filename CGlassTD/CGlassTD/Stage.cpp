@@ -10,6 +10,11 @@ Stage::~Stage(void)
 {
 }
 
+Ogre::Camera* Stage::getCamera()
+{
+	return mCamera;
+}
+
 void Stage::jumpToNextStage(Stage* nextStage)
 {
 	mStageManager->setStage(nextStage);

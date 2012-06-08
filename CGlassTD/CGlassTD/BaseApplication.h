@@ -18,6 +18,9 @@
 #include <SdkTrays.h>
 #include <SdkCameraMan.h>
 
+#include <MyGUI/MyGUI.h>
+#include <MyGUI/MyGUI_OgrePlatform.h>
+
 class BaseApplication : public Ogre::FrameListener, public Ogre::WindowEventListener, public OIS::KeyListener, public OIS::MouseListener, OgreBites::SdkTrayListener
 {
 public:
@@ -63,17 +66,21 @@ protected:
     Ogre::String mResourcesCfg;
     Ogre::String mPluginsCfg;
 
-    // OgreBites
-    OgreBites::SdkTrayManager* mTrayMgr;
+    //OgreBites
+    //OgreBites::SdkTrayManager* mTrayMgr;
     //OgreBites::SdkCameraMan* mCameraMan;     // basic camera controller
-    OgreBites::ParamsPanel* mDetailsPanel;   // sample details panel
-    bool mCursorWasVisible;                  // was cursor visible before dialog appeared
-    bool mShutDown;
+    //OgreBites::ParamsPanel* mDetailsPanel;   // sample details panel
+    //bool mCursorWasVisible;                  // was cursor visible before dialog appeared
+    //bool mShutDown;
 
     //OIS Input devices
     OIS::InputManager* mInputManager;
     OIS::Mouse*    mMouse;
     OIS::Keyboard* mKeyboard;
+
+	//MyGUI
+	MyGUI::Gui* mGui;
+	MyGUI::OgrePlatform* mGuiPlatform;
 };
 
 #endif // #ifndef __BaseApplication_h_

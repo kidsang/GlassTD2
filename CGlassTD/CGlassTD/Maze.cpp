@@ -81,9 +81,10 @@ Cell* Maze::getCellByPos( Ogre::Vector3 pos )
 	return &this->pZones[y * mHeight + x];
 }
 
-void Maze::showShadow( Ogre::Vector3* pos, CellType type )
+void Maze::showShadow( Ogre::Vector3 pos, CellType type )
 {
-
+	Cell* cell = this->getCellByPos(pos);
+	
 }
 
 Ogre::Vector3 Maze::getFinalPos()
