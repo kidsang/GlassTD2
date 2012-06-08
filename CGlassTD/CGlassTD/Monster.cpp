@@ -59,7 +59,7 @@ Monster::~Monster(void)
 
 void Monster::go(float timeSinceLastFrame, Ogre::Vector3& direction)
 {
-	//harmCheck(timeSinceLastFrame);
+	harmCheck(timeSinceLastFrame);
 	mNode->setPosition(mNode->getPosition() + direction * timeSinceLastFrame * mSpeed);
 
 	

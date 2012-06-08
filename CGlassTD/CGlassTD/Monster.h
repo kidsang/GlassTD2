@@ -88,6 +88,8 @@ struct HarmList
 class Monster
 {
 protected:
+	Ogre::Vector3 mBeginPos;
+	Ogre::Vector3 mNextPos;
 	/// 怪兽的速度
 	float mSpeed;
 	/// 怪兽的速度备份，以便还原速度
