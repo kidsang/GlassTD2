@@ -103,8 +103,4 @@ Ogre::Vector3 Maze::getFinalPos()
 	return this->finalPos;
 }
 
-Ogre::Vector3 Maze::getFinalPos()
-{
-	return this->finalPos;
-}
 
