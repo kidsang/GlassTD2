@@ -1,6 +1,6 @@
 #include "Monster.h"
 #include "Cell.h"
-
+#include <algorithm>
 #define CAN_STEP 0
 #define NOT_STEP 1
 #define HAS_STEP 2
@@ -43,11 +43,11 @@ Monster::Monster(SceneNode* node, Maze* maze)
 	mNode = node;
 	mMaze = maze;
 	mHarmCheck = new HarmCheck();
-	/*makeMap(mMaze->getMazeInfo());
+	makeMap(mMaze->getMazeInfo());
 	findPath(startPos[0]);
-	this->transPos();*/
+	this->transPos();
 	
-	path.push_back(Pos(12, 0));
+	/*path.push_back(Pos(12, 0));
 	path.push_back(Pos(12, 1));
 	path.push_back(Pos(12, 2));
 	path.push_back(Pos(12, 3));
@@ -64,9 +64,9 @@ Monster::Monster(SceneNode* node, Maze* maze)
 	path.push_back(Pos(5, 7));
 	path.push_back(Pos(4, 7));
 	path.push_back(Pos(3, 7));
-    path.push_back(Pos(3, 8));
-    path.push_back(Pos(3, 9));
-    path.push_back(Pos(4, 9));
+	path.push_back(Pos(3, 8));
+	path.push_back(Pos(3, 9));
+	path.push_back(Pos(4, 9));
 	path.push_back(Pos(4, 10));
 	path.push_back(Pos(5, 10));
 	path.push_back(Pos(5, 9));
@@ -94,7 +94,7 @@ Monster::Monster(SceneNode* node, Maze* maze)
 	path.push_back(Pos(9, 13));
 	path.push_back(Pos(8, 13));
 	path.push_back(Pos(8, 14));
-	path.push_back(Pos(8, 15));
+	path.push_back(Pos(8, 15));*/
 	this->transPos();
 }
 
@@ -321,7 +321,7 @@ void Monster::checkCellType()
 	switch(mMaze->getCellByPos(mNode->getPosition())->getCellType())
 	{
 	case SPIKEWEED: setInsideSpikeweed(); setOutsideSwamp(); break;
-	case TRAP:  setBeCaughtByTrap(); break;
+	case THORM:  setBeCaughtByTrap(); break;
 	case SWAMP: setInsideSwamp(); setOutsideSpikeweed(); break;
 	default: setOutsideSpikeweed(); setOutsideSwamp(); break;
 	}
@@ -434,12 +434,12 @@ bool Monster::isFinal( Pos pos )
 
 void Monster::markIt( Pos pos )
 {
-	map[pos.x][pos.y] = SET_MARK;
+	map[pos.y][pos.x] = SET_MARK;
 }
 
 void Monster::stepTo( Pos pos )
 {
-	map[pos.x][pos.y] = HAS_STEP;
+	map[pos.y][pos.x] = HAS_STEP;
 }
 
 void Monster::pushPos( Pos pos, stack<CellNode>& st )
@@ -463,7 +463,7 @@ void Monster::pushPos( Pos pos, stack<CellNode>& st )
 		now.y = pos.y + vect[i].dy;
 		//检测当前位置是否越界且可步进
 		if(isValid(now))
-			if(map[now.x][now.y]==CAN_STEP)
+			if(map[now.y][now.x]==CAN_STEP)
 			{
 				//对当前节点进行评估
 				dist = abs(now.x-finalPos.x) + abs(now.y-finalPos.y);
@@ -554,7 +554,7 @@ bool Monster::findPath( Pos sour )
 			if(isValid(temp.self))
 			{
 				markIt(temp.self);
-				record[temp.self.x][temp.self.y] = temp.pare;
+				record[temp.self.y][temp.self.x] = temp.pare;
 			}
 			break;
 		}
@@ -563,7 +563,7 @@ bool Monster::findPath( Pos sour )
 			if(isValid(temp.self))
 			{
 				markIt(temp.self);
-				record[temp.self.x][temp.self.y] = temp.pare;
+				record[temp.self.y][temp.self.x] = temp.pare;
 				pushPos(temp.self, st);
 			}
 		}
@@ -577,13 +577,14 @@ bool Monster::findPath( Pos sour )
 		stepTo(parent);
 		path.push_back(getStep());
 		markIt(parent);
-		parent = record[parent.x][parent.y];
+		parent = record[parent.y][parent.x];
 		if(parent.x==sour.x && parent.y==sour.y)
 		{
 			success = true;
 		}
 	}
-	path.push_back(finalPos);
+	path.push_back(startPos[0]);
+	std::reverse(path.begin(),path.end());
 	return true;
 }
 
@@ -610,7 +611,7 @@ void Monster::transPos()
 {
 	for(auto it = path.begin(); it != path.end(); ++it)
 	{
-		ogrePath.push_back((*mMaze->translatePos(new Ogre::Vector3(Real((*it).x), Real(0), Real((*it).y)))));
+		ogrePath.push_back((mMaze->translatePos(Ogre::Vector3(Real((*it).x), Real(0), Real((*it).y)))));
 	}
 }
 

@@ -13,6 +13,8 @@ using namespace Ogre;
 class Cell
 {
 private:
+	Ogre::SceneManager* mSceneManager;
+	Ogre::SceneNode* mParentNode;
 	/// 此空间的位置坐标
 	Ogre::Vector2* pPos;
 	/// 此空间的实体指针
@@ -32,13 +34,16 @@ public:
 	/// @param state 此空间的当前容量属性
 	/// @param maxContain 此空间的最大容量属性
 	/// @param pos 此空间的坐标值引用
-	Cell(Ogre::SceneManager* sceneManager,Ogre::SceneNode* parentNode,Ogre::Vector2* pos,CellType type, float harmValue);
-	Cell(Ogre::SceneManager* sceneManager,Ogre::SceneNode* parentNode,Ogre::Vector2* pos,int type, float harmValue);
+	Cell(Ogre::SceneManager* sceneManager,Ogre::SceneNode* parentNode,Ogre::String mesh,Ogre::Vector2* pos,CellType type, float harmValue);
+	Cell(Ogre::SceneManager* sceneManager,Ogre::SceneNode* parentNode,Ogre::String mesh,Ogre::Vector2* pos,int type, float harmValue);
+	/// 构造函数
+	/// @param pos 此空间的坐标值引用
+	Cell(Ogre::SceneManager* sceneManager,Ogre::SceneNode* parentNode,Ogre::Vector2* pos);
 	~Cell(void);
 	/// 获取空间的类型
 	CellType getCellType();
 	/// 设置空间类型
-	void setCellType(CellType type, Entity* entity);
+	bool setCellType(CellType type, Ogre::String mesh, float harmValue);
 	/// 获取空间的高度
 	float getHeight();
 	/// 获取伤害值
