@@ -145,10 +145,12 @@ void MonsterManager::MonsterNumPlus(void)
 
 void MonsterManager::updateState( std::vector<NameValueList> explodedBullets, float timeSinceLastFrame, Ogre::SceneManager* sceneManager )
 {
-	if(i == 1)
+	/*if(i == 1)
 	{
 		mMonsterMgr->monsterGenerate(sceneManager, timeSinceLastFrame);i++;
-	}
+	}*/
+	mMonsterMgr->monsterGenerate(sceneManager, timeSinceLastFrame);
+
 	NameValueList params;
 	std::string bulletType;
 	float bulletHarm;
@@ -159,6 +161,15 @@ void MonsterManager::updateState( std::vector<NameValueList> explodedBullets, fl
 	std::vector<std::string> bulletPosStrings;
 	for(auto iter2 = mMonstersList.begin(); iter2 != mMonstersList.end(); ++iter2)
 	{
+		/// 如果怪物死亡，就销毁节点
+		if((*iter2)->isMonsterDead())
+		{
+			(*iter2)->destroyItself();
+			mMonstersList.erase(iter2++);
+
+		}
+
+		/// 遍历子弹
 		for(auto iter = explodedBullets.begin(); iter != explodedBullets.end(); ++iter)
 		{
 			/// 获取炮弹数据，将其转换成应有类型
@@ -192,6 +203,7 @@ void MonsterManager::updateState( std::vector<NameValueList> explodedBullets, fl
 		}
 		
 		(*iter2)->go(timeSinceLastFrame);
+		
 		///(*iter2)->harmCheck(timeSinceLastFrame);
 	}
 

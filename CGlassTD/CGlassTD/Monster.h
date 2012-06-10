@@ -157,7 +157,8 @@ public:
 	bool isMonsterDead();
 	/// 检查被炮弹集中
 	void checkHitByBullet(float* bulletPos, float bulletHarm, float bulletAppendHarm, float bulletTime, float bulletRadius, std::string bulletSpell);
-
+	/// 毁灭自己，将绑定的模型去掉
+	void destroyItself();
 private:
 	/// 地图指针
 	Maze* mMaze;

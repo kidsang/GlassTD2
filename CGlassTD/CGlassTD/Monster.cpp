@@ -95,7 +95,7 @@ Monster::Monster(SceneNode* node, Maze* maze)
 	path.push_back(Pos(8, 13));
 	path.push_back(Pos(8, 14));
 	path.push_back(Pos(8, 15));*/
-	this->transPos();
+	//this->transPos();
 }
 
 ////
@@ -165,6 +165,10 @@ void Monster::go(float timeSinceLastFrame)
 	float moveDistance =  timeSinceLastFrame * mSpeed;
 	mNode->translate(mFace * moveDistance);
 	mDistance -= moveDistance;
+
+	///ÓÃÓÚ²âÊÔ¹ÖÎïËÀÍö
+	mBlood -= 10 * timeSinceLastFrame * (rand()%3);
+	mIsDead = mCheckMethod->checkIsDead(mBlood);
 	
 }
 
@@ -627,6 +631,11 @@ void Monster::setNotHitByIce( )
 {
 	mHarmList.iceHarm = 0.0f;
 	mHarmList.iceHarmTime = 0.0f;
+}
+
+void Monster::destroyItself()
+{
+	mNode->detachAllObjects();
 }
 
 //Ogre::String Monster::getName()
