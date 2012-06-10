@@ -50,7 +50,7 @@ void CheckMethod::swampHarmCheck( float harm, float& speed, float speedTemp, boo
 
 bool CheckMethod::checkIsDead( float blood )
 {
-	if(blood < 0 || blood == 0)
+	if(blood < 0.0f || blood == 0.0f)
 		return true;
 	else 
 		return false;
@@ -72,5 +72,11 @@ bool CheckMethod::isAttributeRestriction( std::string strongType, std::string we
 		return true;
 
 	return false;
+}
+
+void CheckMethod::CaughtByTrapCheck( float& blood, bool isCaught )
+{
+	if(isCaught)
+		blood = 0.0f;
 }
 

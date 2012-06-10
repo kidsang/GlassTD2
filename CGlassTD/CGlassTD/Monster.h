@@ -21,7 +21,7 @@ const float FIRE_HARM_TIME = 1.0f;    ///火属性伤害持续时间
 const float ICE_HARM_TIME = 1.0f;     /// 冰属性伤害持续时间
 const float ICE_HARM_SPEED = 0.4f;    /// 冰属性影响的速度值
 const float FIRE_HARM_BLOOD = 0.01f;  /// 火属性伤害的血量值
-const float SPIKEWEED_HARM_BLOOD = 1.0f;  /// 地刺伤害的血量值
+const float SPIKEWEED_HARM_BLOOD = 20.0f;  /// 地刺伤害的血量值
 const float SWAMP_HARM_SPEED = 0.4f;  /// 沼泽影响的速度值
 
 

@@ -95,7 +95,6 @@ Monster::Monster(SceneNode* node, Maze* maze)
 	path.push_back(Pos(8, 13));
 	path.push_back(Pos(8, 14));
 	path.push_back(Pos(8, 15));*/
-	//this->transPos();
 }
 
 ////
@@ -167,7 +166,8 @@ void Monster::go(float timeSinceLastFrame)
 	mDistance -= moveDistance;
 
 	///ÓÃÓÚ²âÊÔ¹ÖÎïËÀÍö
-	mBlood -= 10 * timeSinceLastFrame * (rand()%3);
+	mBlood -= 10 * timeSinceLastFrame;
+
 	mIsDead = mCheckMethod->checkIsDead(mBlood);
 	
 }
@@ -247,6 +247,12 @@ void Monster::harmCheck(float timeSinceLastFrame)
 	mCheckMethod->iceHarmCheck(mHarmList.iceHarm, mHarmList.iceHarmTime, mSpeed, mSpeedTemp, timeSinceLastFrame);
 	mCheckMethod->spikeweedHarmCheck(mHarmList.spikeweedHarm, mBlood, mHarmList.isOnSpikeweed, timeSinceLastFrame);
 	mCheckMethod->swampHarmCheck(mHarmList.swampHarm, mSpeed, mSpeedTemp, mHarmList.isInSwamp);
+	mCheckMethod->CaughtByTrapCheck(mBlood, mHarmList.beCaught);
+	/*/// ÓÃÓÚ²âÊÔ
+	if(mHarmList.isInSwamp)
+		mSpeed = mSpeedTemp * mHarmList.swampHarm;
+	else 
+		mSpeed = mSpeedTemp;*/
 	/// ÅÐ¶ÏÊÇ·ñËÀÍö
 	mIsDead = mCheckMethod->checkIsDead(mBlood);
 
@@ -286,7 +292,7 @@ void Monster::setOutsideSpikeweed()
 
 void Monster::setInsideSwamp()
 {
-	mHarmList.isInSwamp = false;
+	mHarmList.isInSwamp = true;
 }
 
 void Monster::setOutsideSwamp()
@@ -312,6 +318,20 @@ void Monster::setType( std::string type )
 
 void Monster::checkCellType()
 {
+	/*if(mNode->getPosition().x < -(mMaze->getMapWidth() / 2) || mNode->getPosition().x > (mMaze->getMapWidth() / 2) 
+		|| mNode->getPosition().z < -(mMaze->getMapHeight() / 2) || mNode->getPosition().z < -(mMaze->getMapHeight() / 2))
+	{
+		setOutsideSpikeweed(); 
+		setOutsideSwamp();
+		return;
+	}*/
+	if(mNode->getPosition().x < -800 || mNode->getPosition().x > 800 
+		|| mNode->getPosition().z < -800 || mNode->getPosition().z < -800)
+	{
+		setOutsideSpikeweed(); 
+		setOutsideSwamp();
+		return;
+	}
 	switch(mMaze->getCellByPos(mNode->getPosition())->getCellType())
 	{
 	case SPIKEWEED: setInsideSpikeweed(); setOutsideSwamp(); break;

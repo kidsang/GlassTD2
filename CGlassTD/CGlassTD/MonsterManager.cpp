@@ -201,10 +201,9 @@ void MonsterManager::updateState( std::vector<NameValueList> explodedBullets, fl
 		
 			///(*iter2)->checkHitByBullet(bulletPos, bulletHarm, bulletAppendHarm, bulletEffectTime, bulletRadius, bulletType);
 		}
-		
+		(*iter2)->harmCheck(timeSinceLastFrame);
 		(*iter2)->go(timeSinceLastFrame);
 		
-		///(*iter2)->harmCheck(timeSinceLastFrame);
 	}
 
 
