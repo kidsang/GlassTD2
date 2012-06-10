@@ -5,25 +5,34 @@ Cell::Cell(void)
 
 }
 
-
-Cell::Cell( Ogre::SceneManager* sceneManager,Ogre::SceneNode* parentNode,Ogre::Vector2* pos, CellType type, float harmValue)
+Cell::Cell(Ogre::SceneManager* sceneManager,Ogre::SceneNode* parentNode,Ogre::Vector2* pos)
 {
+	this->mSceneManager = sceneManager;
+	this->mParentNode = parentNode;
+	this->mHarmValue = 0.0f;
+	this->mType = FREE;
+	this->mSceneNode = NULL;
+	this->mEntity = NULL;
+}
+
+Cell::Cell( Ogre::SceneManager* sceneManager,Ogre::SceneNode* parentNode,Ogre::String mesh,Ogre::Vector2* pos, CellType type, float harmValue)
+{
+	this->mSceneManager = sceneManager;
+	this->mParentNode = parentNode;
 	this->mHarmValue = harmValue;
-	this->mEntity = ObjectFactory::createEntity(sceneManager,"cubess.mesh");
+	this->mEntity = ObjectFactory::createEntity(sceneManager,mesh);
 	float x = this->mEntity->getBoundingBox().getSize().x;
 	float z = this->mEntity->getBoundingBox().getSize().z;
 	this->mSceneNode = ObjectFactory::createSceneNode(parentNode,this->mEntity, Vector3(x * pos->x,Real(0), z * pos->y));
 	this->mType = type;
-	if(this->mType == FREE)
-	{
-		this->mSceneNode->setVisible(false);
-	}
 }
 
-Cell::Cell( Ogre::SceneManager* sceneManager,Ogre::SceneNode* parentNode,Ogre::Vector2* pos,int type, float harmValue)
+Cell::Cell( Ogre::SceneManager* sceneManager,Ogre::SceneNode* parentNode,Ogre::String mesh,Ogre::Vector2* pos,int type, float harmValue)
 {
+	this->mSceneManager = sceneManager;
+	this->mParentNode = parentNode;
 	this->mHarmValue = harmValue;
-	this->mEntity = ObjectFactory::createEntity(sceneManager,"cubess.mesh");
+	this->mEntity = ObjectFactory::createEntity(sceneManager,mesh);
 	float x = this->mEntity->getBoundingBox().getSize().x;
 	float z = this->mEntity->getBoundingBox().getSize().z;
 	this->mSceneNode = ObjectFactory::createSceneNode(parentNode,this->mEntity, Vector3(x * pos->x,Real(0), z * pos->y));
@@ -42,10 +51,6 @@ Cell::Cell( Ogre::SceneManager* sceneManager,Ogre::SceneNode* parentNode,Ogre::V
 		break;
 	default:
 		this->mType = FREE;
-	}
-	if(this->mType == FREE)
-	{
-		this->mSceneNode->setVisible(false);
 	}
 }
 
@@ -69,9 +74,27 @@ float Cell::getHarmValue()
 	return this->mHarmValue;
 }
 
-void Cell::setCellType( CellType type, Entity* entity )
+bool Cell::setCellType( CellType type, Ogre::String mesh, float harmValue )
 {
-	this->mSceneNode->detachAllObjects();
-	this->mEntity = entity;
-	this->mSceneNode->attachObject(this->mEntity);
+	if(this->getCellType() != FREE)
+	{
+		return false;
+	}
+	if(this->mSceneNode != NULL)
+	{
+		this->mSceneNode->detachAllObjects();
+		this->mEntity = ObjectFactory::createEntity(mSceneManager,mesh);
+		this->mSceneNode->attachObject(this->mEntity);
+	}
+	else
+	{
+		this->mEntity = ObjectFactory::createEntity(mSceneManager,mesh);
+		float x = this->mEntity->getBoundingBox().getSize().x;
+		float z = this->mEntity->getBoundingBox().getSize().z;
+		this->mSceneNode = ObjectFactory::createSceneNode(mParentNode,this->mEntity, Vector3(x * this->pPos->x,Real(0), z * this->pPos->y));
+		this->mSceneNode->attachObject(this->mEntity);
+	}
+	this->mType = type;
+	this->mHarmValue = harmValue;
+	return true;
 }

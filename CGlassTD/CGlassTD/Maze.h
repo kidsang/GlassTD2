@@ -51,7 +51,7 @@ public:
 	/// 转换坐标：地图坐标-> 世界坐标
 	/// @params pos 地图坐标
 	/// @reutrn 世界坐标
-	Ogre::Vector3* translatePos(Ogre::Vector3* pos);
+	Ogre::Vector3 translatePos(Ogre::Vector3 pos);
 	/// 通过世界坐标获取指定的Cell
 	/// @params pos 世界坐标的Ogre::Vector3 指针
 	/// @return 指定的Cell
@@ -70,20 +70,11 @@ public:
 	/// 设置结束位置
 	void setFinalPos(Ogre::Vector3 pos);
 	/************************************** 地图编辑接口 ******************************/
-	/// 地图编辑时，浮在地图的阴影
-	/// @params pos 世界地图三维坐标指针
-	/// @params type 要显示的cell的类型
-	/// @note 该函数不会影响实际地图数组的信息，但记得要切换回去原来的状态
-	void showShadow(Ogre::Vector3 pos, CellType type);
 	/// 地图编辑时，临时决定的地图
 	/// @params pos 世界地图三维坐标指针
 	/// @params type 要显示的cell的类型
 	/// @return true 表示成功，反之不成功
-	/// @note 该函数不会影响实际地图数组的信息，要调用save函数才能写入地图数组信息
-	bool TempEdit(Ogre::Vector3* pos, CellType type);
-	/// 保存地图数组信息
-	/// @return true表示保存成功，反之不成功
-	bool saveEdit();
+	bool editMaze(Ogre::Vector3 pos, CellType type);
 	/************************************** end: 地图编辑接口 ******************************/
 	/// 析构函数
 	~Maze(void);
