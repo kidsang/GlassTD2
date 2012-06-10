@@ -125,7 +125,7 @@
     <ClInclude Include="CGlassTD.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="Direction.h" />
-    <ClInclude Include="HarmCheck.h" />
+    <ClInclude Include="CheckMethod.h" />
     <ClInclude Include="LevelStage.h" />
     <ClInclude Include="Maze.h" />
     <ClInclude Include="Monster.h" />
@@ -159,7 +159,7 @@
     <ClCompile Include="Cell.cpp" />
     <ClCompile Include="CGlassTD.cpp" />
     <ClCompile Include="Common.cpp" />
-    <ClCompile Include="HarmCheck.cpp" />
+    <ClCompile Include="CheckMethod.cpp" />
     <ClCompile Include="LevelStage.cpp" />
     <ClCompile Include="Maze.cpp" />
     <ClCompile Include="Monster.cpp" />

@@ -21,7 +21,7 @@ Monster::Monster(SceneNode* node)
 	mDistance(-0.1f)
 {
 	mNode = node;
-	mHarmCheck = new HarmCheck();
+	mCheckMethod = new CheckMethod();
 	
 }
 
@@ -42,7 +42,7 @@ Monster::Monster(SceneNode* node, Maze* maze)
 	j = 0;
 	mNode = node;
 	mMaze = maze;
-	mHarmCheck = new HarmCheck();
+	mCheckMethod = new CheckMethod();
 	/*makeMap(mMaze->getMazeInfo());
 	findPath(startPos[0]);
 	this->transPos();*/
@@ -111,7 +111,7 @@ Monster::Monster(SceneNode* node, Maze* maze)
 ////	mIsDead(false)
 ////{
 ////	mNode = node;
-////	mHarmCheck = new HarmCheck();
+////	mCheckMethod = new CheckMethod();
 ////	mMaze = maze;
 ////}
 
@@ -125,7 +125,7 @@ Monster::~Monster(void)
 {
 	/*if(mNode != NULL)
 		delete mNode;*/
-	delete mHarmCheck;
+	delete mCheckMethod;
 	delete mMaze;
 }
 
@@ -138,6 +138,8 @@ Monster::~Monster(void)
 void Monster::go(float timeSinceLastFrame)
 {
 	///harmCheck(timeSinceLastFrame);
+	/// 给动画增加时间
+	addTimeToAnimation(timeSinceLastFrame);
 
 	if(mDistance < 0.0f || mDistance == 0.0f)
 	{
@@ -236,13 +238,13 @@ void Monster::harmCheck(float timeSinceLastFrame)
 	/// 先检查地形，更新怪物信息
 	checkCellType();
 	
-	/// mHarmCheck->bulletHarm(mHarmList.h)
-	mHarmCheck->fireHarmCheck(mHarmList.fireHarm, mHarmList.fireHarmTime, mBlood, timeSinceLastFrame);
-	mHarmCheck->iceHarmCheck(mHarmList.iceHarm, mHarmList.iceHarmTime, mSpeed, mSpeedTemp, timeSinceLastFrame);
-	mHarmCheck->spikeweedHarmCheck(mHarmList.spikeweedHarm, mBlood, mHarmList.isOnSpikeweed, timeSinceLastFrame);
-	mHarmCheck->swampHarmCheck(mHarmList.swampHarm, mSpeed, mSpeedTemp, mHarmList.isInSwamp);
+	/// mCheckMethod->bulletHarm(mHarmList.h)
+	mCheckMethod->fireHarmCheck(mHarmList.fireHarm, mHarmList.fireHarmTime, mBlood, timeSinceLastFrame);
+	mCheckMethod->iceHarmCheck(mHarmList.iceHarm, mHarmList.iceHarmTime, mSpeed, mSpeedTemp, timeSinceLastFrame);
+	mCheckMethod->spikeweedHarmCheck(mHarmList.spikeweedHarm, mBlood, mHarmList.isOnSpikeweed, timeSinceLastFrame);
+	mCheckMethod->swampHarmCheck(mHarmList.swampHarm, mSpeed, mSpeedTemp, mHarmList.isInSwamp);
 	/// 判断是否死亡
-	mIsDead = mHarmCheck->checkIsDead(mBlood);
+	mIsDead = mCheckMethod->checkIsDead(mBlood);
 
 }
 
@@ -317,27 +319,28 @@ void Monster::checkCellType()
 
 void Monster::checkHitBySpecialBullet(std::string bulletSpell, float bulletTime, float bulletHarm, float bulletAppendHarm)
 {
+	if(mCheckMethod->isAttributeImmune(bulletSpell, mType))    /// 如果属性免疫
+		return;
+	else if(mCheckMethod->isAttributeRestriction(bulletSpell, mType))  /// 如果属性克制
+	{
+		mBlood -= bulletHarm * 2;
+	}
+	else
+		mBlood -= bulletHarm;
+
 	if(bulletSpell == "ice")
 	{
-		if(mType == "fire")
-		{	
-			mBlood -= bulletHarm;
-			setHitByIce(bulletAppendHarm, bulletTime);
-		}
-		if(mType == "normal")
-		{
-			setHitByIce(bulletAppendHarm, bulletTime);
-		}
+		setHitByIce(bulletAppendHarm, bulletTime);
+		setNotHitByFire();
 	}
-	
+
 	if(bulletSpell == "fire")
 	{
-		
-		if(mType != "fire")
-		{
-			setHitByFire(bulletAppendHarm, bulletTime);
-		}
+		setHitByFire(bulletAppendHarm, bulletTime);
+		setNotHitByIce();
 	}
+
+	
 }
 
 float Monster::distance( Ogre::Vector3 pos1, Ogre::Vector3 pos2 )
@@ -360,11 +363,22 @@ bool Monster::isHitByBullet( float* bulletPos, float bulletRadius )
 		return false;
 }
 
+bool Monster::notSpecialBullet( std::string bulletSpell )
+{
+	if(bulletSpell == "normal")
+		return true;
+	return false;
+}
+
 void Monster::checkHitByBullet( float* bulletPos, float bulletHarm, float bulletAppendHarm, float bulletTime, float bulletRadius, std::string bulletSpell )
 {
 	if(isHitByBullet(bulletPos, bulletRadius))
-		mBlood -= bulletHarm;
-	checkHitBySpecialBullet(bulletSpell, bulletTime, bulletHarm, bulletAppendHarm);
+	{
+		if(notSpecialBullet(bulletSpell))
+			mBlood -= bulletHarm;
+		else
+			checkHitBySpecialBullet(bulletSpell, bulletTime, bulletHarm, bulletAppendHarm);
+	}
 }
 
 void Monster::makeMap( Cell* cells )
@@ -600,6 +614,18 @@ void Monster::transPos()
 	{
 		ogrePath.push_back((*mMaze->translatePos(new Ogre::Vector3(Real((*it).x), Real(0), Real((*it).y)))));
 	}
+}
+
+void Monster::setNotHitByFire( )
+{
+	mHarmList.fireHarm = 0.0f;
+	mHarmList.fireHarmTime = 0.0f;
+}
+
+void Monster::setNotHitByIce( )
+{
+	mHarmList.iceHarm = 0.0f;
+	mHarmList.iceHarmTime = 0.0f;
 }
 
 //Ogre::String Monster::getName()

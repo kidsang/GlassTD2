@@ -5,7 +5,7 @@
 #include "BaseApplication.h"
 #include "ObjectFactory.h"
 #include "Common.h"
-#include "HarmCheck.h"
+#include "CheckMethod.h"
 #include "Maze.h"
 #include <stack>
 using namespace Ogre;
@@ -118,7 +118,7 @@ protected:
 	/// 怪兽是否死亡
     bool mIsDead;
 	/// 伤害检测类
-	HarmCheck* mHarmCheck;
+	CheckMethod* mCheckMethod;
 	/// 怪物与下一个目的坐标的距离
 	float mDistance;
 	///  两个坐标点的距离
@@ -193,6 +193,10 @@ private:
 	void setHitByFire(float harm, float time);
 	/// 设置怪兽收到的冰属性伤害
 	void setHitByIce(float harm, float time);
+	/// 设置怪兽收到的火属性伤害
+	void setNotHitByFire();
+	/// 设置怪兽收到的冰属性伤害
+	void setNotHitByIce();
 	/// 设置被捕兽器捉住
 	void setBeCaughtByTrap();
 	/// 设置在地刺上
@@ -209,6 +213,7 @@ private:
 	void checkHitBySpecialBullet(std::string bulletSpell, float bulletTime, float bulletHarm, float bulletAppendHarm);
 	///是否被炮弹击中
 	bool isHitByBullet(float* bulletPos, float bulletRadius);
+	bool notSpecialBullet(std::string bulletSpell);
 
 };
 
