@@ -411,7 +411,7 @@ void Monster::makeMap( Cell* cells )
 	}
 	for(int i = 0; i < mMapWidth * mMapHeight; ++i)
 	{
-		if(cells[i].getCellType() == FREE)
+		if(cells[i].getCellType() != WALL)
 		{
 			map[i / mMapHeight][i % mMapHeight] = CAN_STEP;
 		}
