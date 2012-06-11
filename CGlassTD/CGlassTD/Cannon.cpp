@@ -36,7 +36,8 @@ Bullet* Cannon::fire(SceneManager* mgr)
 		return NULL;
 	// 根据当前所选类型创建炮弹
 	Bullet* bul = bf->createInstance(mgr);
-	bul->fire(mNode->getPosition() + mFireOffset,zAxis * mFireStrength);
+	//bul->fire(mNode->getPosition() + mFireOffset,zAxis * mFireStrength);
+	bul->fire(Ogre::Vector3(-397,100,400),zAxis * mFireStrength);
 
 	mLastTime = clock();
 	bf->setAmmoCount(bf->getAmmoCount() - 1);
