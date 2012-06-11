@@ -59,7 +59,7 @@ Maze::Maze(SceneManager* sceneManager, int* map, int width, int height, Ogre::Ve
 			}
 		}
 	}
-	this->horizon = this->mCellLength / 2; 
+	this->horizon = this->mCellLength / 2.0f; 
 	this->startPos.clear();
 	this->startPos.push_back(start1);
 	this->startPos.push_back(start2);
@@ -173,5 +173,16 @@ Ogre::Vector3 Maze::getFinalPos()
 {
 	return this->finalPos;
 }
+
+int Maze::getEntityHeight()
+{
+	return this->mCellHeight;
+}
+
+int Maze::getEntityWidth()
+{
+	return this->mCellWidth;
+}
+
 
 
