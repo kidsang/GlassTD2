@@ -36,6 +36,14 @@ private:
 	int cellWidth;
 	/// cell的高
 	int cellHeight;
+	Ogre::String mFree;
+	Ogre::String mWall;
+	Ogre::String mSwamp;
+	Ogre::String mSpikeweed;
+	Ogre::String mTrap;
+	Ogre::String mShadowSwamp;
+	Ogre::String mShadowSpikeweed;
+	Ogre::String mShadowTrap;
 public:
 	Maze(void);
 	/// 构造函数
