@@ -9,7 +9,7 @@ StagePass1Step1::StagePass1Step1(StagePass1* stagePass1)
 void StagePass1Step1::init()
 {
 	
-	mStagePass1->getCamera()->setPosition(Vector3(0, 2000, 2000));
+	mStagePass1->getCamera()->setPosition(Vector3(0, 3000, 3000));
 	mStagePass1->getCamera()->setDirection(-mStagePass1->getCamera()->getPosition());
 }
 

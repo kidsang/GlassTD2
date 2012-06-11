@@ -15,7 +15,7 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	NameValueList* cannonParams = cannonParser.getNext(); 
 	SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
 	Entity* cannon = sceneManager->createEntity((*cannonParams)["mesh"]);
-	//node->attachObject((MovableObject*)cannon);
+	node->attachObject((MovableObject*)cannon);
 	mCannon = new Cannon(node, cannon);
 	if (cannonParams->find("material") != cannonParams->end())
 		cannon->setMaterialName((*cannonParams)["material"]);
@@ -118,7 +118,7 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 
 	/// 改变镜头视角
 	//mCamera->lookAt(Vector3(0, 0, -100s));//lookat 貌似没用
-	mCamera->setPosition(Vector3(0, 2000, 2000));
+	mCamera->setPosition(Vector3(0, 3000, 3000));
 	mCamera->setDirection(-mCamera->getPosition());
 
 	/// 设置天空盒
