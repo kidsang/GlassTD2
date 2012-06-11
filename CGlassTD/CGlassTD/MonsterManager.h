@@ -28,7 +28,6 @@ private:
 	MonsterManager(Maze* maze);
 	MonsterManager(Ogre::SceneManager* sceneManager);
 	MonsterManager();
-	int i ;
 
 //protected:
 //	

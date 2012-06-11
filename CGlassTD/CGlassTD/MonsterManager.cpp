@@ -27,7 +27,6 @@ MonsterManager::MonsterManager( Maze* maze )
 		mCurrentMonsterFactory = mMonsterFactoryList.at(0);
 
 	mMaze = maze;
-	i = 1;
 }
 
 MonsterManager::~MonsterManager(void)
@@ -145,10 +144,6 @@ void MonsterManager::MonsterNumPlus(void)
 
 void MonsterManager::updateState( std::vector<NameValueList> explodedBullets, float timeSinceLastFrame, Ogre::SceneManager* sceneManager )
 {
-	/*if(i == 1)
-	{
-		mMonsterMgr->monsterGenerate(sceneManager, timeSinceLastFrame);i++;
-	}*/
 	mMonsterMgr->monsterGenerate(sceneManager, timeSinceLastFrame);
 
 	NameValueList params;
@@ -201,7 +196,9 @@ void MonsterManager::updateState( std::vector<NameValueList> explodedBullets, fl
 		
 			///(*iter2)->checkHitByBullet(bulletPos, bulletHarm, bulletAppendHarm, bulletEffectTime, bulletRadius, bulletType);
 		}
+		/// ÏÝÚåÉËº¦¼ì²â
 		(*iter2)->harmCheck(timeSinceLastFrame);
+		/// ¹ÖÎï×ß
 		(*iter2)->go(timeSinceLastFrame);
 		
 	}

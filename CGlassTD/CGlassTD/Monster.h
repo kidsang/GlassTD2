@@ -196,18 +196,18 @@ private:
 	void setHitByFire(float harm, float time);
 	/// 设置怪兽收到的冰属性伤害
 	void setHitByIce(float harm, float time);
-	/// 设置怪兽收到的火属性伤害
+	/// 设置怪兽不受到的火属性伤害
 	void setNotHitByFire();
-	/// 设置怪兽收到的冰属性伤害
+	/// 设置怪兽不受到的冰属性伤害
 	void setNotHitByIce();
 	/// 设置被捕兽器捉住
 	void setBeCaughtByTrap();
 	/// 设置在地刺上
-	void setInsideSpikeweed();
+	void setInsideSpikeweed(float harm);
 	/// 设置在地刺外
 	void setOutsideSpikeweed();
 	/// 设置在沼泽里
-	void setInsideSwamp();
+	void setInsideSwamp(float harm);
 	/// 设置在沼泽外
 	void setOutsideSwamp();
 	/// 检查怪兽所在的cell的类型，根据类型修改参数

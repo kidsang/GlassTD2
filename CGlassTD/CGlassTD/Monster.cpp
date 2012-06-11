@@ -284,9 +284,10 @@ void Monster::setBeCaughtByTrap()
 	mMaze->editMaze(mNode->getPosition(), FREE);
 }
 
-void Monster::setInsideSpikeweed()
+void Monster::setInsideSpikeweed(float harm)
 {
     mHarmList.isOnSpikeweed = true;
+	mHarmList.spikeweedHarm = harm;
 }
 
 void Monster::setOutsideSpikeweed()
@@ -294,9 +295,10 @@ void Monster::setOutsideSpikeweed()
 	mHarmList.isOnSpikeweed = false;
 }
 
-void Monster::setInsideSwamp()
+void Monster::setInsideSwamp(float harm)
 {
 	mHarmList.isInSwamp = true;
+	mHarmList.swampHarm = harm;
 }
 
 void Monster::setOutsideSwamp()
@@ -329,18 +331,23 @@ void Monster::checkCellType()
 		setOutsideSwamp();
 		return;
 	}*/
-	if(mNode->getPosition().x < -800 || mNode->getPosition().x > 800 
-		|| mNode->getPosition().z < -800 || mNode->getPosition().z < -800)
+	float halfWidth = mMaze->getEntityWidth() * mMapWidth / 2;
+	float halfHeight = mMaze->getEntityHeight() * mMapHeight / 2;
+	if(mNode->getPosition().x < -halfWidth || mNode->getPosition().x > halfWidth 
+		|| mNode->getPosition().z < -halfHeight || mNode->getPosition().z > halfHeight)
 	{
 		setOutsideSpikeweed(); 
 		setOutsideSwamp();
 		return;
 	}
-	switch(mMaze->getCellByPos(mNode->getPosition())->getCellType())
+	/// cell的临时变量，用来储存现在怪兽所在的cell的指针
+	Cell* cellTemp;
+	cellTemp = mMaze->getCellByPos(mNode->getPosition());
+	switch(cellTemp->getCellType())
 	{
-	case SPIKEWEED: setInsideSpikeweed(); setOutsideSwamp(); break;
+	case SPIKEWEED: setInsideSpikeweed(cellTemp->getHarmValue()); setOutsideSwamp(); break;
 	case TRAP:  setBeCaughtByTrap(); break;
-	case SWAMP: setInsideSwamp(); setOutsideSpikeweed(); break;
+	case SWAMP: setInsideSwamp(cellTemp->getHarmValue()); setOutsideSpikeweed(); break;
 	default: setOutsideSpikeweed(); setOutsideSwamp(); break;
 	}
 }
@@ -634,6 +641,7 @@ Pos Monster::getStep()
 			}
 		}
 	}
+	return Pos(0,0);
 
 }
 
