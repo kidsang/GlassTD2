@@ -69,6 +69,8 @@ public:
 	void addStartPos(Ogre::Vector3 pos);
 	/// 设置结束位置
 	void setFinalPos(Ogre::Vector3 pos);
+	int getEntityHeight();
+	int getEntityWidth();
 	/************************************** 地图编辑接口 ******************************/
 	/// 地图编辑时，临时决定的地图
 	/// @params pos 世界地图三维坐标指针
