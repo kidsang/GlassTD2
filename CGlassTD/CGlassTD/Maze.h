@@ -32,6 +32,10 @@ private:
 	std::vector<Ogre::Vector3> startPos;
 	/// 结束位置
 	Ogre::Vector3 finalPos;
+	/// cell的宽
+	int cellWidth;
+	/// cell的高
+	int cellHeight;
 public:
 	Maze(void);
 	/// 构造函数
@@ -69,7 +73,11 @@ public:
 	void addStartPos(Ogre::Vector3 pos);
 	/// 设置结束位置
 	void setFinalPos(Ogre::Vector3 pos);
+	/// 获取cell的高度
+	/// @return 返回cell的高度
 	int getEntityHeight();
+	/// 获取cell的宽度
+	/// @return 返回cell的宽度
 	int getEntityWidth();
 	/************************************** 地图编辑接口 ******************************/
 	/// 地图编辑时，临时决定的地图

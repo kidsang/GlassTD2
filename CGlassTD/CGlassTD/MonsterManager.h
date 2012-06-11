@@ -70,7 +70,7 @@ public:
 	void updateState(std::vector<NameValueList> explodedBullets, float timeSinceLastFrame, Ogre::SceneManager* sceneManager);
 };
 /// 新增怪物的时间间隔
-const float NEW_MONSTER_TIME = 1.0f;
+const float NEW_MONSTER_TIME = 2.0f;
 
 
 #endif // MonsterManager_h__
