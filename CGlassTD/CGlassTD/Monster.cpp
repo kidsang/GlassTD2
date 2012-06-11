@@ -39,12 +39,12 @@ Monster::Monster(SceneNode* node, Maze* maze)
 	mNextPosIndex(0),
 	mDistance(-0.1f)
 {
-	j = 0;
 	mNode = node;
 	mMaze = maze;
 	mCheckMethod = new CheckMethod();
 	makeMap(mMaze->getMazeInfo());
-	fromPos = startPos[0];
+	int i = rand() % startPos.size();
+	fromPos = startPos[i];
 	findPath(fromPos);
 	this->transPos();
 	

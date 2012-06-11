@@ -121,8 +121,9 @@ protected:
 	CheckMethod* mCheckMethod;
 	/// 怪物与下一个目的坐标的距离
 	float mDistance;
-	///  两个坐标点的距离
-	int j ;
+   /* /// 用于测试用
+	int j ;*/
+	std::vector<std::vector<Ogre::Vector3>> mMonsterPaths;
 public:
 	Monster(){}
 	Monster(SceneNode* node);
