@@ -88,7 +88,30 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 		for (int i=0; i<size; i++)
 			map[i] = atoi(nums[i].c_str());
 	}	
-	mMaze = new Maze(sceneManager, map, mapWidth, mapHeight);
+	Ogre::Vector3 start1 = Ogre::Vector3();
+	Ogre::Vector3 start2 = Ogre::Vector3();
+	Ogre::Vector3 end = Ogre::Vector3();
+
+	if(mazeParams->find("startPos") != mazeParams->end())
+	{
+		nums = mysplit((*mazeParams)["startPos"]);
+		start1.x = atoi(nums[0].c_str());
+		start1.y = atoi(nums[1].c_str());
+		start1.z = atoi(nums[2].c_str());
+		start2.x = atoi(nums[3].c_str());
+		start2.y = atoi(nums[4].c_str());
+		start2.z = atoi(nums[5].c_str());
+	}
+	if(mazeParams->find("finalPos") != mazeParams->end())
+	{
+		nums = mysplit((*mazeParams)["finalPos"]);
+		end.x = atoi(nums[0].c_str());
+		end.y = atoi(nums[1].c_str());
+		end.z = atoi(nums[2].c_str());
+
+	}
+	
+	mMaze = new Maze(sceneManager, map, mapWidth, mapHeight,start1, start2, end);
 
 	/// 新增一个monster管理器
 	mMonsterManager = MonsterManager::getMonsterManager(mMaze);

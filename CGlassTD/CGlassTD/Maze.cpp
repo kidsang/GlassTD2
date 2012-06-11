@@ -1,49 +1,70 @@
 #include "Maze.h"
 #include "Cell.h"
-
+#include "ParamParser.h"
 Maze::Maze(void)
 {
 }
 
-Maze::Maze(SceneManager* sceneManager, int* map, int width, int height)
+Maze::Maze(SceneManager* sceneManager, int* map, int width, int height, Ogre::Vector3 start1, Ogre::Vector3 start2, Ogre::Vector3 final)
 	: mWidth(width), mHeight(height), mSceneManager(sceneManager), 
 	mMap(0)
 {	
+	ParamParser cellParser = ParamParser("CellDefine.xml");
+	cellParser.parse();
+	cellParser.moveToFirst();
+	NameValueList* cellParams = cellParser.getNext();
+	this->mWall = (*cellParams)["wall"];
+	this->mSwamp = (*cellParams)["swamp"];
+	this->mSpikeweed = (*cellParams)["spikeweed"];
+	this->mTrap = (*cellParams)["trap"];
+	this->mShadowSwamp = (*cellParams)["shadowSwamp"];
+	this->mShadowSpikeweed = (*cellParams)["shadowSpikeweed"];
+	this->mShadowTrap = (*cellParams)["shadowTrap"];
+	cellParams = cellParser.getNext();
+	this->mCellWidth = (int)(atoi((*cellParams)["width"].c_str()));	
+	this->mCellHeight = (int)(atoi((*cellParams)["width"].c_str()));	
+	this->mCellLength = (int)(atoi((*cellParams)["width"].c_str()));	
+	cellParams = cellParser.getNext();
+	this->mHarmSpikeweed = (float)(atof((*cellParams)["spikeweed"].c_str()));	
+	this->mHarmSwamp = (float)(atof((*cellParams)["swamp"].c_str()));	
+
+
 	this->mSceneNode = sceneManager->getRootSceneNode()->createChildSceneNode("mapSenenNode");
 	this->pZones = new Cell[mWidth * mHeight];
 	this->pMapInfo = new int[mWidth * mHeight];
 	this->startPos = std::vector<Ogre::Vector3>();
-	/// 说明，这里的模型大小参数化，，，，，，，，即100是模型的长和高，这里是一样的，实际上是可以不一样的。。。。。。。。
-	this->mSceneNode->setPosition(Ogre::Vector3(-mWidth / 2.0f * 100, 0, -mHeight / 2.0f * 100));
+	this->mSceneNode->setPosition(Ogre::Vector3(-mWidth / 2.0f * this->mCellWidth, 0, -mHeight / 2.0f * this->mCellHeight));
 
 	for(int j = 0; j < width; ++j)
 	{
 		for(int i = 0; i < height; ++i)
 		{
-			if(map[j * width + i] == 0)
+			switch(map[j * width + i])
 			{
+			case 0:
 				this->pZones[j * width + i] = Cell(sceneManager, mSceneNode, new Ogre::Vector2(Real(i),Real(j)));
-			}
-			else if(map[j * width + i] == 4)
-			{
-				this->pZones[j * width + i] = Cell(sceneManager, mSceneNode,"trap.mesh", new Ogre::Vector2(Real(i),Real(j)), map[j * width + i], 0.1f );
-
-			}
-			else
-			{
-				/// 说明，由于还没有模型出来，故所有的陷阱都用墙来表示，，，，注意了，，，，，，
-				/// 这里还要参数化模型的名字，暂时就用cubess.mesh了，，，，，，，
-				/// 由于伤害值也要参数化，这里的伤害值是一样的，留意了，各位:w
-				this->pZones[j * width + i] = Cell(sceneManager, mSceneNode,"cubess.mesh", new Ogre::Vector2(Real(i),Real(j)), map[j * width + i], 0.1f );
+				break;
+			case 1:
+				this->pZones[j * width + i] = Cell(sceneManager, mSceneNode,this->mWall, new Ogre::Vector2(Real(i),Real(j)), map[j * width + i], 0.0f );
+				break;
+			case 2:
+				this->pZones[j * width + i] = Cell(sceneManager, mSceneNode,this->mSpikeweed, new Ogre::Vector2(Real(i),Real(j)), map[j * width + i], this->mHarmSpikeweed );
+				break;
+			case 3:
+				this->pZones[j * width + i] = Cell(sceneManager, mSceneNode,this->mSwamp, new Ogre::Vector2(Real(i),Real(j)), map[j * width + i],this->mHarmSwamp );
+				break;
+			case 4:
+				this->pZones[j * width + i] = Cell(sceneManager, mSceneNode,this->mTrap, new Ogre::Vector2(Real(i),Real(j)), map[j * width + i], 0.0f );
+				break;
 			}
 		}
 	}
-	this->horizon = this->pZones[1].getHeight() / 2.0f;
+	this->horizon = this->mCellLength / 2; 
 	this->startPos.clear();
 	/// 这里也要参数化，，，，即开始坐标是有两个的,结束坐标有一个，通过读xml文件来写入
-	this->startPos.push_back(Ogre::Vector3(Real(0), Real(0), Real(12)));
-	this->startPos.push_back(Ogre::Vector3(Real(0), Real(0), Real(4)));
-	this->finalPos = Ogre::Vector3(15,0,8);
+	this->startPos.push_back(start1);
+	this->startPos.push_back(start2);
+	this->finalPos = final; 
 }
 
 
@@ -123,15 +144,28 @@ Cell* Maze::getCellByPos( Ogre::Vector3 pos )
 bool Maze::editMaze( Ogre::Vector3 pos, CellType type )
 {
 	Cell* cell = this->getCellByPos(pos);
-	/// 参数化标记
 	switch(type)
 	{
 	case FREE:
 		return cell->setCellType(type);
 		break;
 	case TRAP:
-		return cell->setCellType(type,"trap.mesh",0.1f);
+		return cell->setCellType(type,this->mTrap,0.0f);
 		break;
+	case WALL:
+		return cell->setCellType(type,this->mWall, 0.0f);
+		break;
+	case SPIKEWEED:
+		return cell->setCellType(type,this->mSpikeweed, this->mHarmSpikeweed);
+		break;
+	case SHADOW_SPIKEWEED:
+		return cell->setCellType(type,this->mShadowSpikeweed, 0.0f);
+		break;
+	case SHADOW_SWAMP:
+		return cell->setCellType(type,this->mShadowSwamp, 0.0f);
+		break;
+	case SHADOW_TRAP:
+		return cell->setCellType(type,this->mShadowTrap,0.0f);
 	}
 }
 

@@ -33,10 +33,11 @@ private:
 	/// 结束位置
 	Ogre::Vector3 finalPos;
 	/// cell的宽
-	int cellWidth;
+	int mCellWidth;
 	/// cell的高
-	int cellHeight;
-	Ogre::String mFree;
+	int mCellHeight;
+	/// cell的长
+	int mCellLength;
 	Ogre::String mWall;
 	Ogre::String mSwamp;
 	Ogre::String mSpikeweed;
@@ -44,6 +45,8 @@ private:
 	Ogre::String mShadowSwamp;
 	Ogre::String mShadowSpikeweed;
 	Ogre::String mShadowTrap;
+	float mHarmSwamp;
+	float mHarmSpikeweed;
 public:
 	Maze(void);
 	/// 构造函数
@@ -51,7 +54,7 @@ public:
 	/// @param map 地图数组指针
 	/// @param width 地图的宽
 	/// @param height 地图的高
-	Maze(SceneManager* sceneManager, int* map, int width, int height);
+	Maze(SceneManager* sceneManager, int* map, int width, int height, Ogre::Vector3 start1, Ogre::Vector3 start2,Ogre::Vector3 end);
 	/// 获取当前地图的信息
 	/// @return 返回一维数组
 	Cell* getMazeInfo();
