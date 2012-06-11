@@ -10,6 +10,8 @@ MonsterManager::MonsterManager()
 	ParamParser monsterParser = ParamParser("MonsterDefine.xml");
 	monsterParser.parse();
 	monsterParser.moveToFirst();
+	NameValueList* monsterParams = monsterParser.getNext();
+	this->mNewMonsterTime = atof((*monsterParams)["Time"].c_str());
 	while (monsterParser.hasNext())
 		mMonsterFactoryList.push_back(new MonsterFactory(*monsterParser.getNext()));
 	if(mMonsterFactoryList.size() != 0)
@@ -21,6 +23,8 @@ MonsterManager::MonsterManager( Maze* maze )
 	ParamParser monsterParser = ParamParser("MonsterDefine.xml");
 	monsterParser.parse();
 	monsterParser.moveToFirst();
+	NameValueList* monsterParams = monsterParser.getNext();
+	this->mNewMonsterTime = atof((*monsterParams)["newMonsterTime"].c_str());
 	while (monsterParser.hasNext())
 		mMonsterFactoryList.push_back(new MonsterFactory(*monsterParser.getNext()));
 	if(mMonsterFactoryList.size() != 0)
@@ -68,7 +72,7 @@ void MonsterManager::monsterGenerate(Ogre::SceneManager* sceneManager, float tim
 	//::CreateThread(NULL, 0, createMonstersThread, sceneManager, NULL, NULL);
 	mMonsterMgr->setTimeCount(mMonsterMgr->getTimeCount() + timeSinceLastFrame);
 	/// std::list<Monster*> monsterList = mMonsterMgr->getMonstersList();
-	if(mMonsterMgr->getTimeCount() > NEW_MONSTER_TIME || mMonsterMgr->getTimeCount() == NEW_MONSTER_TIME)
+	if(mMonsterMgr->getTimeCount() > mNewMonsterTime || mMonsterMgr->getTimeCount() == mNewMonsterTime)
 	{
 		Monster* monster = mCurrentMonsterFactory->createInstance(sceneManager, mMaze);
 		/// monster->monsterScale(0.1, 0.1, 0.1);

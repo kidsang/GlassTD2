@@ -61,7 +61,6 @@ Maze::Maze(SceneManager* sceneManager, int* map, int width, int height, Ogre::Ve
 	}
 	this->horizon = this->mCellLength / 2; 
 	this->startPos.clear();
-	/// 这里也要参数化，，，，即开始坐标是有两个的,结束坐标有一个，通过读xml文件来写入
 	this->startPos.push_back(start1);
 	this->startPos.push_back(start2);
 	this->finalPos = final; 

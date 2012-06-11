@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Monsters>
+  <Time
+    newMonsterTime="1.0"
+     />
+   <Monster name="NormalMonster"
+          mesh="robot.mesh"
+          blood="100"
+          speed="200"
+          radius="10"
+          spell="normal"
+          />
+   <Monster name="NormalMonster"
+          mesh="robot.mesh"
+          blood="100"
+          speed="200"
+          radius="10"
+          spell="normal"
+          />
    <Monster name="NormalMonster"
           mesh="robot.mesh"
           blood="100"
