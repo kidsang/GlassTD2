@@ -15,7 +15,7 @@ MonsterManager::MonsterManager()
 	while (monsterParser.hasNext())
 		mMonsterFactoryList.push_back(new MonsterFactory(*monsterParser.getNext()));
 	if(mMonsterFactoryList.size() != 0)
-		mCurrentMonsterFactory = mMonsterFactoryList.at(0);
+		mCurrentMonsterFactory = mMonsterFactoryList.at(1);
 }
 
 MonsterManager::MonsterManager( Maze* maze )
