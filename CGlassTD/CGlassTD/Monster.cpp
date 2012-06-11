@@ -44,7 +44,8 @@ Monster::Monster(SceneNode* node, Maze* maze)
 	mCheckMethod = new CheckMethod();
 	makeMap(mMaze->getMazeInfo());
 	int i = rand() % startPos.size();
-	findPath(startPos[i]);
+	fromPos = startPos[i];
+	findPath(fromPos);
 	this->transPos();
 	
 	/*path.push_back(Pos(12, 0));
@@ -609,7 +610,7 @@ bool Monster::findPath( Pos sour )
 			success = true;
 		}
 	}
-	path.push_back(startPos[0]);
+	path.push_back(fromPos);
 	std::reverse(path.begin(),path.end());
 	return true;
 }

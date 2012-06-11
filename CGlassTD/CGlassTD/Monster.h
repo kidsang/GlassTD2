@@ -173,6 +173,7 @@ private:
 	Pos finalPos;
 	/// 入口坐标
 	std::vector<Pos> startPos;
+	Pos fromPos;
 	/// 怪兽要走的路径
 	std::vector<Pos> path;
 	std::vector<Ogre::Vector3> ogrePath;
