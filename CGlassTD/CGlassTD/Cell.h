@@ -44,6 +44,7 @@ public:
 	CellType getCellType();
 	/// 设置空间类型
 	bool setCellType(CellType type, Ogre::String mesh, float harmValue);
+	bool setCellType(CellType type);
 	/// 获取空间的高度
 	float getHeight();
 	/// 获取伤害值

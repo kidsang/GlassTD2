@@ -44,7 +44,7 @@ Monster::Monster(SceneNode* node, Maze* maze)
 	mCheckMethod = new CheckMethod();
 	makeMap(mMaze->getMazeInfo());
 	int i = rand() % startPos.size();
-	fromPos = startPos[i];
+	fromPos = startPos[1];
 	findPath(fromPos);
 	this->transPos();
 	
@@ -167,7 +167,7 @@ void Monster::go(float timeSinceLastFrame)
 	mDistance -= moveDistance;
 
 	///ÓÃÓÚ²âÊÔ¹ÖÎïËÀÍö
-	mBlood -= 10 * timeSinceLastFrame;
+	//mBlood -= 10 * timeSinceLastFrame;
 
 	mIsDead = mCheckMethod->checkIsDead(mBlood);
 	
@@ -279,6 +279,7 @@ void Monster::setHitByIce(float harm, float time)
 void Monster::setBeCaughtByTrap()
 {
 	mHarmList.beCaught = true;
+	mMaze->editMaze(mNode->getPosition(), FREE);
 }
 
 void Monster::setInsideSpikeweed()
@@ -336,7 +337,7 @@ void Monster::checkCellType()
 	switch(mMaze->getCellByPos(mNode->getPosition())->getCellType())
 	{
 	case SPIKEWEED: setInsideSpikeweed(); setOutsideSwamp(); break;
-	case THORM:  setBeCaughtByTrap(); break;
+	case TRAP:  setBeCaughtByTrap(); break;
 	case SWAMP: setInsideSwamp(); setOutsideSpikeweed(); break;
 	default: setOutsideSpikeweed(); setOutsideSwamp(); break;
 	}

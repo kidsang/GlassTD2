@@ -34,7 +34,7 @@ Cell::Cell( Ogre::SceneManager* sceneManager,Ogre::SceneNode* parentNode,Ogre::S
 	this->mHarmValue = harmValue;
 	this->mEntity = ObjectFactory::createEntity(sceneManager,mesh);
 	float x = this->mEntity->getBoundingBox().getSize().x;
-	float z = this->mEntity->getBoundingBox().getSize().z;
+	float z = this->mEntity->getBoundingBox().getSize().y;
 	this->mSceneNode = ObjectFactory::createSceneNode(parentNode,this->mEntity, Vector3(x * pos->x,Real(0), z * pos->y));
 	switch(type){
 	case 0:
@@ -50,7 +50,7 @@ Cell::Cell( Ogre::SceneManager* sceneManager,Ogre::SceneNode* parentNode,Ogre::S
 		this->mType = SWAMP;
 		break;
 	case 4:
-		this->mType = THORM;
+		this->mType = TRAP;
 		break;
 	default:
 		this->mType = FREE;
@@ -79,10 +79,7 @@ float Cell::getHarmValue()
 
 bool Cell::setCellType( CellType type, Ogre::String mesh, float harmValue )
 {
-	if(this->getCellType() != FREE)
-	{
-		return false;
-	}
+	
 	if(this->mSceneNode != NULL)
 	{
 		this->mSceneNode->detachAllObjects();
@@ -100,4 +97,16 @@ bool Cell::setCellType( CellType type, Ogre::String mesh, float harmValue )
 	this->mType = type;
 	this->mHarmValue = harmValue;
 	return true;
+}
+
+bool Cell::setCellType( CellType type )
+{
+	if(this->mSceneNode != NULL)
+	{
+		this->mSceneNode->detachAllObjects();
+	}
+	this->mType = type;
+	this->mHarmValue = 0.0f;
+	return true;
+
 }

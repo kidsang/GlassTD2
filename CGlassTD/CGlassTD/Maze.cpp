@@ -24,6 +24,11 @@ Maze::Maze(SceneManager* sceneManager, int* map, int width, int height)
 			{
 				this->pZones[j * width + i] = Cell(sceneManager, mSceneNode, new Ogre::Vector2(Real(i),Real(j)));
 			}
+			else if(map[j * width + i] == 4)
+			{
+				this->pZones[j * width + i] = Cell(sceneManager, mSceneNode,"trap.mesh", new Ogre::Vector2(Real(i),Real(j)), map[j * width + i], 0.1f );
+
+			}
 			else
 			{
 				/// 说明，由于还没有模型出来，故所有的陷阱都用墙来表示，，，，注意了，，，，，，
@@ -37,7 +42,7 @@ Maze::Maze(SceneManager* sceneManager, int* map, int width, int height)
 	this->startPos.clear();
 	/// 这里也要参数化，，，，即开始坐标是有两个的,结束坐标有一个，通过读xml文件来写入
 	this->startPos.push_back(Ogre::Vector3(Real(0), Real(0), Real(12)));
-	//this->startPos.push_back(Ogre::Vector3(Real(0), Real(0), Real(12)));
+	this->startPos.push_back(Ogre::Vector3(Real(0), Real(0), Real(4)));
 	this->finalPos = Ogre::Vector3(15,0,8);
 }
 
@@ -119,7 +124,15 @@ bool Maze::editMaze( Ogre::Vector3 pos, CellType type )
 {
 	Cell* cell = this->getCellByPos(pos);
 	/// 参数化标记
-	return cell->setCellType(type,"cubess.mesh",0.1f);
+	switch(type)
+	{
+	case FREE:
+		return cell->setCellType(type);
+		break;
+	case TRAP:
+		return cell->setCellType(type,"trap.mesh",0.1f);
+		break;
+	}
 }
 
 
