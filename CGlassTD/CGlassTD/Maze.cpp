@@ -37,7 +37,7 @@ Maze::Maze(SceneManager* sceneManager, int* map, int width, int height)
 	this->startPos.clear();
 	/// 这里也要参数化，，，，即开始坐标是有两个的,结束坐标有一个，通过读xml文件来写入
 	this->startPos.push_back(Ogre::Vector3(Real(0), Real(0), Real(12)));
-	//this->startPos.push_back(Ogre::Vector3(Real(0), Real(0), Real(12)));
+	this->startPos.push_back(Ogre::Vector3(Real(0), Real(0), Real(4)));
 	this->finalPos = Ogre::Vector3(15,0,8);
 }
 
