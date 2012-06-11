@@ -49,6 +49,9 @@ Cell::Cell( Ogre::SceneManager* sceneManager,Ogre::SceneNode* parentNode,Ogre::S
 	case 3:
 		this->mType = SWAMP;
 		break;
+	case 4:
+		this->mType = THORM;
+		break;
 	default:
 		this->mType = FREE;
 	}

@@ -90,27 +90,8 @@ void Maze::setFinalPos( Ogre::Vector3 pos )
 
 Cell* Maze::getCellByPos( Ogre::Vector3 pos )
 {
-	/// 将世界坐标转换成地图坐标，注意边界部分越界
-	int x = ((int)pos.x / 100);
-	if(x < 0)
-	{
-		x += (mWidth / 2 - 1);
-		x<0? 0:x;
-		x>15? 15:x;
-	}
-	else 
-		x += (mWidth / 2);
-
-	int y = (int)pos.z / 100;
-	if(y < 0)
-	{
-		y += (mHeight / 2 - 1);
-		y<0? 0:y;
-		y>15? 15:y;
-	}
-	else 
-		y += (mHeight / 2);
-
+	int x = (int)pos.x / this->mWidth;
+	int y = (int)pos.y / this->mHeight;
 	return &this->pZones[y * mHeight + x];
 }
 
@@ -126,6 +107,16 @@ bool Maze::editMaze( Ogre::Vector3 pos, CellType type )
 Ogre::Vector3 Maze::getFinalPos()
 {
 	return this->finalPos;
+}
+
+int Maze::getEntityHeight()
+{
+	return 100;
+}
+
+int Maze::getEntityWidth()
+{
+	return 100;
 }
 
 
