@@ -159,6 +159,8 @@ void Monster::go(float timeSinceLastFrame)
 			Ogre::Quaternion quat = src.getRotationTo(mFace);
 			mNode->rotate(quat);
 		}
+		else
+			setBlood(0);
 	}
 	
 	/// 平移所需要走的路
