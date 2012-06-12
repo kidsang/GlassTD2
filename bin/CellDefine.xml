@@ -2,8 +2,8 @@
 <Cells>
   <mesh
     wall="cubess.mesh"
-    swamp="cubess.mesh"
-    spikeweed="cubess.mesh"
+    swamp="swamp.mesh"
+    spikeweed="spikeweed.mesh"
     trap="trap.mesh"
     shadowSwamp="cubess.mesh"
     shadowSpikeweed="cubess.mesh"
@@ -16,6 +16,6 @@
     />
   <harmValue
     swamp="0.4"
-    spikeweed="10.0"
+    spikeweed="50.0"
     />
 </Cells>
