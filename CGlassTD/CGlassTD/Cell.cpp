@@ -35,7 +35,10 @@ Cell::Cell( Ogre::SceneManager* sceneManager,Ogre::SceneNode* parentNode,Ogre::S
 	this->mHarmValue = harmValue;
 	this->mEntity = ObjectFactory::createEntity(sceneManager,mesh);
 	float x = this->mEntity->getBoundingBox().getSize().x;
-	float z = this->mEntity->getBoundingBox().getSize().y;
+	float z = this->mEntity->getBoundingBox().getSize().z;
+	float y = this->mEntity->getBoundingBox().getSize().y;
+	//float x = 100.0f;
+	//float z = 100.0f;
 	this->mSceneNode = ObjectFactory::createSceneNode(parentNode,this->mEntity, Vector3(x * pos->x,Real(0), z * pos->y));
 	switch(type){
 	case 0:

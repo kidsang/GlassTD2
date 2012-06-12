@@ -130,6 +130,7 @@
     <ClInclude Include="Maze.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="MonsterManager.h" />
+    <ClInclude Include="MonsterState.h" />
     <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="ParamParser.h" />
     <ClInclude Include="Position.h" />

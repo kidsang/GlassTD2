@@ -13,17 +13,20 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	cannonParser.parse();
 	cannonParser.moveToFirst();
 	NameValueList* cannonParams = cannonParser.getNext(); 
-	SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
-	Entity* cannon = sceneManager->createEntity((*cannonParams)["mesh"]);
-	node->attachObject((MovableObject*)cannon);
-	mCannon = new Cannon(node, cannon);
-	if (cannonParams->find("material") != cannonParams->end())
-		cannon->setMaterialName((*cannonParams)["material"]);
+	SceneNode* tireNode = sceneManager->getRootSceneNode()->createChildSceneNode();
+	SceneNode* gunNode = tireNode->createChildSceneNode();
+	Entity* gun = sceneManager->createEntity((*cannonParams)["gunMesh"]);
+	Entity* tire = sceneManager->createEntity((*cannonParams)["tireMesh"]);
+	gunNode->attachObject((MovableObject*)gun);
+	tireNode->attachObject((MovableObject*)tire);
+	mCannon = new Cannon(gunNode, gun, tireNode, tire);
+	/*if (cannonParams->find("material") != cannonParams->end())
+		gun->setMaterialName((*cannonParams)["material"]);*/
 	std::vector<std::string> nums;
 	if (cannonParams->find("position") != cannonParams->end())
 	{
 		nums = mysplit((*cannonParams)["position"]);
-		node->setPosition((float)atof(nums[0].c_str()), (float)atof(nums[1].c_str()), (float)atof(nums[2].c_str()));
+		tireNode->setPosition((float)atof(nums[0].c_str()), (float)atof(nums[1].c_str()), (float)atof(nums[2].c_str()));
 	}
 	if (cannonParams->find("strength") != cannonParams->end())
 		mCannon->setFireStrength((float)(atof((*cannonParams)["strength"].c_str())));
@@ -33,6 +36,11 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	{
 		nums = mysplit((*cannonParams)["offset"]);
 		mCannon->setFireOffset(Vector3((float)atof(nums[0].c_str()), (float)atof(nums[1].c_str()), (float)atof(nums[2].c_str())));
+	}
+	if (cannonParams->find("angle") != cannonParams->end())
+	{
+		nums = mysplit((*cannonParams)["angle"]);
+		mCannon->setFireAngle(Vector2((float)atof(nums[0].c_str()), (float)atof(nums[1].c_str())));
 	}
 	//// 炮台?
 	//SceneNode* node1 = sceneManager->getRootSceneNode()->createChildSceneNode();
@@ -46,30 +54,8 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	bulletParser.moveToFirst();
 	while (bulletParser.hasNext())
 		mCannon->addBulletFactory(new BulletFactory(*bulletParser.getNext()));
-	//mCannon->addBulletFactory(new BulletFactory());
 
 	/// 加载迷宫地图
-	/*const int mapWidth = 16;
-	const int mapHeight = 16;
-	int iMap[mapHeight *mapWidth] =
-	{
-		1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
-		1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
-		1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 
-		1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 
-		0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 
-		0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 
-		0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 
-		1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 
-		1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 
-		1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 
-		1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 
-		0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 
-		0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 
-		1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 
-		1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 
-		1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 
-		};*/
 	ParamParser mazeParser = ParamParser("MazeDefine.xml");
 	mazeParser.parse();
 	mazeParser.moveToFirst();
@@ -116,10 +102,6 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	/// 新增一个monster管理器
 	mMonsterManager = MonsterManager::getMonsterManager(mMaze);
 
-	/// 改变镜头视角
-	//mCamera->lookAt(Vector3(0, 0, -100s));//lookat 貌似没用
-	mCamera->setPosition(Vector3(0, 3000, 3000));
-	mCamera->setDirection(-mCamera->getPosition());
 
 	/// 设置天空盒
 	//mSceneManager->setSkyBox(true, "Examples/EveSpaceSkyBox");
