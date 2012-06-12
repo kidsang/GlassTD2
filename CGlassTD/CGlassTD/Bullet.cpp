@@ -31,7 +31,7 @@ void Bullet::fly(float t, const Vector3& gravity)
 		return;
 
 	// ¸üÐÂÅÚµ¯Î»ÖÃ
-	mVelocity += gravity / getMass() * t;
+	mVelocity += gravity * getMass() * t;
 	mPosition += mVelocity * t;
 	mNode->setPosition(mPosition);
 }
