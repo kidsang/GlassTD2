@@ -135,7 +135,10 @@ Cell* Maze::getCellByPos( Ogre::Vector3 pos )
 	}
 	else 
 		y += (mHeight / 2);
-
+	if(y < 0 || y >= mHeight || x < 0 || x >= mWidth)
+	{
+		return NULL;
+	}
 	return &this->pZones[y * mHeight + x];
 }
 
@@ -143,6 +146,10 @@ Cell* Maze::getCellByPos( Ogre::Vector3 pos )
 bool Maze::editMaze( Ogre::Vector3 pos, CellType type )
 {
 	Cell* cell = this->getCellByPos(pos);
+	if(cell->getCellType() != FREE)
+	{
+		return false;
+	}
 	switch(type)
 	{
 	case FREE:
