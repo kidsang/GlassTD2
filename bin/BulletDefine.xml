@@ -2,7 +2,7 @@
 <Bullets>
 	<Bullet name="FireBullet"
           mesh="sphere.mesh"
-		  material="Glass/Blue"
+		  material="Glass/Red"
           mass="1"
           damage="10"
 		  appendDamage="10"
@@ -13,7 +13,7 @@
           />
 	<Bullet name="IceBullet"
           mesh="sphere.mesh"
-		  material="Glass/Red"
+		  material="Glass/Blue"
           mass="1"
           damage="10"
 		  appendDamage="10"

@@ -39,7 +39,7 @@ void Bullet::fly(float t, const Vector3& gravity)
 Bullet* BulletFactory::createInstance( SceneManager* mgr )
 {
 	SceneNode* node = mgr->getRootSceneNode()->createChildSceneNode();
-	node->setScale(0.1f, 0.1f, 0.1f);
+	node->setScale(0.25f, 0.25f, 0.25f);
 	Entity* entity = mgr->createEntity(mParams["mesh"]);
 	if (mParams.find("material") != mParams.end())
 		entity->setMaterialName(mParams["material"]);
