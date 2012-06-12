@@ -24,17 +24,27 @@ private:
 	Vector3 mFireOffset;
 	/// 大炮的发射间隔,按秒计算
 	float mColdDown;
+	/// 大炮的射角限制
+	Vector2 mFireAngle;
 
 	/// 上次发射的时间
 	clock_t mLastTime;
+	/// 大炮当前射角
+	Vector2 mCurrentFireAngle;
 
-	/// 大炮的节点
-	SceneNode* mNode;
-	/// 大炮的模型
-	Entity* mEntity;
+	/// 炮管的节点
+	SceneNode* mGunNode;
+	/// 炮管的模型
+	Entity* mGun;
+	/// 炮台的节点
+	SceneNode* mTireNode;
+	/// 炮台的模型
+	Entity* mTire;
+	/// 炮口节点
+	SceneNode* mFirePositionNode;
 
 public:
-	Cannon(SceneNode* node, Entity* entity);
+	Cannon(SceneNode* gunNode, Entity* gun, SceneNode* swampNode, Entity* tire);
 	~Cannon();
 
 	/// 向炮台增加一个炮弹工厂
@@ -63,6 +73,18 @@ public:
 
 	// Get/Set
 public:
+	/// 返回大炮的射角限制
+	const Vector2& getFireAngle()
+	{
+		return mFireAngle;
+	}
+
+	/// 设置大炮的射角限制
+	void setFireAngle(const Vector2& angle)
+	{
+		mFireAngle = angle;
+	}
+
 	/// 返回大炮发射力度
 	const float getFireStrenth()
 	{
@@ -78,13 +100,15 @@ public:
 	/// 返回炮弹发射位置的偏移量(即炮口位置)
 	const Vector3& getFireOffset()
 	{
-		return mFireOffset;
+		//return mFireOffset;
+		return mFirePositionNode->getPosition();
 	}
 
 	/// 设置炮弹发射位置的偏移量(即炮口位置)
 	void setFireOffset(const Vector3& offset)
 	{
-		mFireOffset = offset;
+		//mFireOffset = offset;
+		mFirePositionNode->setPosition(offset);
 	}
 
 	/// 返回大炮发射间隔

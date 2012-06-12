@@ -40,9 +40,9 @@ void StagePass1Step1::onKeyPressed(const OIS::KeyEvent& arg)
 	}
 	// »»ÅÚµ¯
 	else if (arg.key == OIS::KC_TAB)
-	{
 		mStagePass1->getCannon()->changeBullet();
-	}
+	else if (arg.key >= OIS::KC_1 && arg.key <= OIS::KC_9)
+		mStagePass1->getCannon()->changeBullet(arg.key - OIS::KC_1);
 }
 
 void StagePass1Step1::onMouseMoved(const OIS::MouseEvent& arg)

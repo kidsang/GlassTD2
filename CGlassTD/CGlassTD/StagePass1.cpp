@@ -13,17 +13,20 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	cannonParser.parse();
 	cannonParser.moveToFirst();
 	NameValueList* cannonParams = cannonParser.getNext(); 
-	SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
-	Entity* cannon = sceneManager->createEntity((*cannonParams)["mesh"]);
-	node->attachObject((MovableObject*)cannon);
-	mCannon = new Cannon(node, cannon);
-	if (cannonParams->find("material") != cannonParams->end())
-		cannon->setMaterialName((*cannonParams)["material"]);
+	SceneNode* tireNode = sceneManager->getRootSceneNode()->createChildSceneNode();
+	SceneNode* gunNode = tireNode->createChildSceneNode();
+	Entity* gun = sceneManager->createEntity((*cannonParams)["gunMesh"]);
+	Entity* tire = sceneManager->createEntity((*cannonParams)["tireMesh"]);
+	gunNode->attachObject((MovableObject*)gun);
+	tireNode->attachObject((MovableObject*)tire);
+	mCannon = new Cannon(gunNode, gun, tireNode, tire);
+	/*if (cannonParams->find("material") != cannonParams->end())
+		gun->setMaterialName((*cannonParams)["material"]);*/
 	std::vector<std::string> nums;
 	if (cannonParams->find("position") != cannonParams->end())
 	{
 		nums = mysplit((*cannonParams)["position"]);
-		node->setPosition((float)atof(nums[0].c_str()), (float)atof(nums[1].c_str()), (float)atof(nums[2].c_str()));
+		tireNode->setPosition((float)atof(nums[0].c_str()), (float)atof(nums[1].c_str()), (float)atof(nums[2].c_str()));
 	}
 	if (cannonParams->find("strength") != cannonParams->end())
 		mCannon->setFireStrength((float)(atof((*cannonParams)["strength"].c_str())));
@@ -33,6 +36,11 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	{
 		nums = mysplit((*cannonParams)["offset"]);
 		mCannon->setFireOffset(Vector3((float)atof(nums[0].c_str()), (float)atof(nums[1].c_str()), (float)atof(nums[2].c_str())));
+	}
+	if (cannonParams->find("angle") != cannonParams->end())
+	{
+		nums = mysplit((*cannonParams)["angle"]);
+		mCannon->setFireAngle(Vector2((float)atof(nums[0].c_str()), (float)atof(nums[1].c_str())));
 	}
 	//// езл╗?
 	//SceneNode* node1 = sceneManager->getRootSceneNode()->createChildSceneNode();
