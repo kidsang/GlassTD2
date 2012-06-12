@@ -31,11 +31,17 @@ void StagePass1Step1::run(float timeSinceLastFrame)
 
 void StagePass1Step1::onKeyPressed(const OIS::KeyEvent& arg)
 {
+	// ·¢ÅÚ
 	if (arg.key == OIS::KC_SPACE)
 	{
 		Bullet* bullet = mStagePass1->getCannon()->fire(SceneManagerContainer::getSceneManager());
 		if (bullet)
 			mStagePass1->getBulletManager().add(bullet);
+	}
+	// »»ÅÚµ¯
+	else if (arg.key == OIS::KC_TAB)
+	{
+		mStagePass1->getCannon()->changeBullet();
 	}
 }
 

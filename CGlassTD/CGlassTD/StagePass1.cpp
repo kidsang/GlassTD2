@@ -46,30 +46,8 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	bulletParser.moveToFirst();
 	while (bulletParser.hasNext())
 		mCannon->addBulletFactory(new BulletFactory(*bulletParser.getNext()));
-	//mCannon->addBulletFactory(new BulletFactory());
 
 	/// ¼ÓÔØÃÔ¹¬µØÍ¼
-	/*const int mapWidth = 16;
-	const int mapHeight = 16;
-	int iMap[mapHeight *mapWidth] =
-	{
-		1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
-		1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
-		1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 
-		1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 
-		0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 
-		0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 
-		0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 
-		1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 
-		1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 
-		1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 
-		1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 
-		0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 
-		0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 
-		1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 
-		1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 
-		1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 
-		};*/
 	ParamParser mazeParser = ParamParser("MazeDefine.xml");
 	mazeParser.parse();
 	mazeParser.moveToFirst();
@@ -124,6 +102,7 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	/// ÉèÖÃÌì¿ÕºÐ
 	//mSceneManager->setSkyBox(true, "Examples/EveSpaceSkyBox");
 
+	// step
 	//this->pushStep(new StagePass1Step0(this));
 	this->pushStep(new StagePass1Step1(this));
 	this->jumpToStep(0);

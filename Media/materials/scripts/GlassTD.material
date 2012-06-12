@@ -1,10 +1,32 @@
-material Glass/Test
+material Glass/Red
 {
     technique
     {
         pass
         {
             ambient 1 0 0
+        }
+    }
+}
+
+material Glass/Blue
+{
+    technique
+    {
+        pass
+        {
+            ambient 0 0 1
+        }
+    }
+}
+
+material Glass/White
+{
+    technique
+    {
+        pass
+        {
+            ambient 1 1 1
         }
     }
 }
