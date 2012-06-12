@@ -154,6 +154,9 @@ bool Maze::editMaze( Ogre::Vector3 pos, CellType type )
 	case WALL:
 		return cell->setCellType(type,this->mWall, 0.0f);
 		break;
+	case SWAMP:
+		return cell->setCellType(type,this->mSwamp, this->mHarmSwamp);
+		break;
 	case SPIKEWEED:
 		return cell->setCellType(type,this->mSpikeweed, this->mHarmSpikeweed);
 		break;
@@ -165,6 +168,9 @@ bool Maze::editMaze( Ogre::Vector3 pos, CellType type )
 		break;
 	case SHADOW_TRAP:
 		return cell->setCellType(type,this->mShadowTrap,0.0f);
+		break;
+	default:
+		return false;
 	}
 }
 

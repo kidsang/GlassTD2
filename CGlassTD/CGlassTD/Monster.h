@@ -161,6 +161,7 @@ public:
 	/// 毁灭自己，将绑定的模型去掉
 	void destroyItself();
 private:
+	Pos parent;
 	/// 地图指针
 	Maze* mMaze;
 	/// 地图的二维数组

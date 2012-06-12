@@ -44,7 +44,7 @@ Monster::Monster(SceneNode* node, Maze* maze)
 	mCheckMethod = new CheckMethod();
 	makeMap(mMaze->getMazeInfo());
 	int i = rand() % startPos.size();
-	fromPos = startPos[1];
+	fromPos = startPos[i];
 	findPath(fromPos);
 	this->transPos();
 	
@@ -484,11 +484,15 @@ void Monster::stepTo( Pos pos )
 
 void Monster::pushPos( Pos pos, stack<CellNode>& st )
 {
-	Vect vect[4];                       //上下左右4个方向向量
+	Vect vect[8];                       //上下左右4个方向向量
 	vect[0].dx = 0;  vect[0].dy = 1;    //vect[0] = {0, 1};
 	vect[1].dx = 1;  vect[1].dy = 0;    //vect[1] = {1, 0};
 	vect[2].dx = -1; vect[2].dy = 0;    //vect[2] = {-1, 0};
 	vect[3].dx = 0;  vect[3].dy = -1;   //vect[3] = {0, -1};
+	vect[4].dx = 1;	 vect[4].dy = -1;
+	vect[5].dx = -1; vect[5].dy = 1;
+	vect[6].dx = 1;	 vect[6].dy = 1;
+	vect[7].dx = -1; vect[7].dy = -1;
 
 	//判断在这4个方向向量中哪几个可以步进
 	Judge* head = NULL;
@@ -499,14 +503,26 @@ void Monster::pushPos( Pos pos, stack<CellNode>& st )
 	int dist;
 	for(int i=0; i<4; i++)
 	{
+		dist = 10;
 		now.x = pos.x + vect[i].dx;
 		now.y = pos.y + vect[i].dy;
+		Pos tt = Pos(5,5);
+		
+		if(parent.x != 0 || parent.y != 0)
+		{
+			tt.x = pos.x - parent.x;
+			tt.y = pos.y - parent.y;
+		}
+		if(tt.x == vect[i].dx && tt.y == vect[i].dy)
+		{
+			dist -= 1;
+		}
 		//检测当前位置是否越界且可步进
 		if(isValid(now))
 			if(map[now.y][now.x]==CAN_STEP)
 			{
 				//对当前节点进行评估
-				dist = abs(now.x-finalPos.x) + abs(now.y-finalPos.y);
+				dist += abs(now.x-finalPos.x) + abs(now.y-finalPos.y);
 
 				Judge* judge = new Judge();
 				judge->node.pare = pos;
@@ -565,6 +581,7 @@ void Monster::pushPos( Pos pos, stack<CellNode>& st )
 
 bool Monster::findPath( Pos sour )
 {
+	this->parent = Pos(sour.x + 1, sour.y);
 	Pos** record;
 	record = new Pos *[mMapHeight];
 	for(int i = 0; i < mMapHeight; ++i)
@@ -595,6 +612,7 @@ bool Monster::findPath( Pos sour )
 			{
 				markIt(temp.self);
 				record[temp.self.y][temp.self.x] = temp.pare;
+				parent = temp.pare;
 			}
 			break;
 		}
@@ -604,6 +622,7 @@ bool Monster::findPath( Pos sour )
 			{
 				markIt(temp.self);
 				record[temp.self.y][temp.self.x] = temp.pare;
+				parent = temp.pare;
 				pushPos(temp.self, st);
 			}
 		}
