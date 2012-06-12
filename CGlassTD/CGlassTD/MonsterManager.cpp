@@ -15,7 +15,7 @@ MonsterManager::MonsterManager()
 	while (monsterParser.hasNext())
 		mMonsterFactoryList.push_back(new MonsterFactory(*monsterParser.getNext()));
 	if(mMonsterFactoryList.size() != 0)
-		mCurrentMonsterFactory = mMonsterFactoryList.at(1);
+		mCurrentMonsterFactory = mMonsterFactoryList.at(3);
 }
 
 MonsterManager::MonsterManager( Maze* maze )
@@ -161,12 +161,16 @@ void MonsterManager::updateState( std::vector<NameValueList> explodedBullets, fl
 	for(auto iter2 = mMonstersList.begin(); iter2 != mMonstersList.end(); ++iter2)
 	{
 		/// 如果怪物死亡，就销毁节点
-		if((*iter2)->isMonsterDead())
+		while((*iter2)->isMonsterDead())
 		{
 			(*iter2)->destroyItself();
 			mMonstersList.erase(iter2++);
+			if(iter2 == mMonstersList.end())
+				break;
 
 		}
+		if(iter2 == mMonstersList.end())
+			break;
 
 		/// 遍历子弹
 		for(auto iter = explodedBullets.begin(); iter != explodedBullets.end(); ++iter)
@@ -204,6 +208,7 @@ void MonsterManager::updateState( std::vector<NameValueList> explodedBullets, fl
 		(*iter2)->harmCheck(timeSinceLastFrame);
 		/// 怪物走
 		(*iter2)->go(timeSinceLastFrame);
+		
 		
 	}
 

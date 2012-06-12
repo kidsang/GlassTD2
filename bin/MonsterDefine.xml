@@ -10,20 +10,21 @@
           radius="10"
           spell="normal"
           />
+	<Monster name="SmallIceMonster"
+          mesh="robot.mesh"
+          blood="100"
+          speed="200"
+          radius="10"
+          spell="ice"
+          />
    <Monster name="SmallFireMonster"
           mesh="robot.mesh"
           blood="100"
           speed="200"
           radius="10"
-          spell="normal"
+          spell="fire"
           />
-   <Monster name="SmallIceMonster"
-          mesh="robot.mesh"
-          blood="100"
-          speed="200"
-          radius="10"
-          spell="normal"
-          />
+   
    <Monster name="BigNormalMonster"
           mesh="robot.mesh"
           blood="100"
@@ -36,13 +37,13 @@
           blood="100"
           speed="200"
           radius="10"
-          spell="normal"
+          spell="ice"
           />
    <Monster name="BigFireMonster"
           mesh="robot.mesh"
           blood="100"
           speed="200"
           radius="10"
-          spell="normal"
+          spell="fire"
           />
 </Monsters>
