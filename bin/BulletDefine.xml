@@ -2,6 +2,7 @@
 <Bullets>
 	<Bullet name="FireBullet"
           mesh="sphere.mesh"
+          scale="0.25"
 		  material="Glass/Red"
           mass="1"
           damage="10"
@@ -13,6 +14,7 @@
           />
 	<Bullet name="IceBullet"
           mesh="sphere.mesh"
+          scale="0.25"
 		  material="Glass/Blue"
           mass="1"
           damage="10"
@@ -24,6 +26,7 @@
           />
 	<Bullet name="NormalBullet"
           mesh="sphere.mesh"
+          scale="0.25"
           material="Glass/White"
           mass="1"
           damage="1000"
@@ -38,4 +41,4 @@
 	
    
    
-  </Bullets>
+</Bullets>
