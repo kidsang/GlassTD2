@@ -33,16 +33,14 @@ void CheckMethod::iceHarmCheck( float& harm, float& time, float& speed, float sp
 	}
 }
 
-void CheckMethod::spikeweedHarmCheck( float& harm, float& blood, bool isOnSpikeweed, float timeSinceLastFrame )
+void CheckMethod::spikeweedHarmCheck( float& harm, float& blood, float timeSinceLastFrame )
 {
-	if(isOnSpikeweed)
-		blood -= harm * timeSinceLastFrame;
+	blood -= harm * timeSinceLastFrame;
 }
 
-void CheckMethod::swampHarmCheck( float& harm, float& speed, float speedTemp, bool isInSwamp )
+void CheckMethod::swampHarmCheck( float& harm, float& speed, float speedTemp )
 {
-	if(isInSwamp)
-		speed = speedTemp * harm;
+	speed = speedTemp * harm;
 }
 
 bool CheckMethod::checkIsDead( float blood )
@@ -55,7 +53,7 @@ bool CheckMethod::checkIsDead( float blood )
 
 bool CheckMethod::isAttributeImmune( std::string type1, std::string type2 )
 {
-	if(type1 == type2)
+	if(type1 == type2 && type1 != "normal")
 		return true;
 	return false;
 }
@@ -71,14 +69,41 @@ bool CheckMethod::isAttributeRestriction( std::string strongType, std::string we
 	return false;
 }
 
-void CheckMethod::caughtByTrapCheck( float& blood, bool isCaught )
+void CheckMethod::caughtByTrapCheck( float& blood )
 {
-	if(isCaught)
-		blood = 0.0f;
+	blood = 0.0f;
 }
 
 void CheckMethod::speedRecover( float& speed, float speedTemp )
 {
 	speed = speedTemp;
+}
+
+void CheckMethod::bulletHarmCheck( std::string bulletType, float harm, float& time, float& blood, float& speed, float speedTemp, float timeSinceLastFrame )
+{
+	if(bulletType == "normal" || bulletType == "attributeImmune")
+	{
+		return;
+	}
+	if(bulletType == "ice")
+	{
+		iceHarmCheck(harm, time, speed, speedTemp, timeSinceLastFrame);
+	}
+	if(bulletType == "fire")
+	{
+		fireHarmCheck(harm, time, blood, timeSinceLastFrame);
+	}
+}
+
+void CheckMethod::terrainHarmCheck( int terrainType, float harm, float& blood, float& speed, float speedTemp, float timeSinceLastFrame )
+{
+	switch(terrainType)
+	{
+	case FREE: return;
+	case SPIKEWEED: spikeweedHarmCheck(harm, blood, timeSinceLastFrame); break;
+	case SWAMP: swampHarmCheck(harm, speed, speedTemp); break;
+	case TRAP: caughtByTrapCheck(blood); break;
+	default: break;
+	}
 }
 
