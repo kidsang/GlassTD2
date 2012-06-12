@@ -165,6 +165,7 @@ void Monster::go(float timeSinceLastFrame)
 	
 	/// 平移所需要走的路
 	float moveDistance =  timeSinceLastFrame * mSpeed;
+
 	mNode->translate(mFace * moveDistance);
 	mDistance -= moveDistance;
 
@@ -247,10 +248,12 @@ void Monster::harmCheck(float timeSinceLastFrame)
 	
 	/// mCheckMethod->bulletHarm(mHarmList.h)
 	mCheckMethod->fireHarmCheck(mHarmList.fireHarm, mHarmList.fireHarmTime, mBlood, timeSinceLastFrame);
-	mCheckMethod->iceHarmCheck(mHarmList.iceHarm, mHarmList.iceHarmTime, mSpeed, mSpeedTemp, timeSinceLastFrame);
+	mCheckMethod->iceHarmCheck(mHarmList.iceHarm, mHarmList.iceHarmTime, this->mSpeed, mSpeedTemp, timeSinceLastFrame);
 	mCheckMethod->spikeweedHarmCheck(mHarmList.spikeweedHarm, mBlood, mHarmList.isOnSpikeweed, timeSinceLastFrame);
 	mCheckMethod->swampHarmCheck(mHarmList.swampHarm, mSpeed, mSpeedTemp, mHarmList.isInSwamp);
-	mCheckMethod->CaughtByTrapCheck(mBlood, mHarmList.beCaught);
+	mCheckMethod->caughtByTrapCheck(mBlood, mHarmList.beCaught);
+	if(!mHarmList.isInSwamp && (mHarmList.iceHarmTime < 0 || mHarmList.iceHarmTime == 0))
+		mCheckMethod->speedRecover(mSpeed, mSpeedTemp);
 	/*/// 用于测试
 	if(mHarmList.isInSwamp)
 		mSpeed = mSpeedTemp * mHarmList.swampHarm;
@@ -390,8 +393,8 @@ float Monster::distance( Ogre::Vector3 pos1, Ogre::Vector3 pos2 )
 bool Monster::isHitByBullet( float* bulletPos, float bulletRadius )
 {
 	float tempX, tempY;
-	tempX = bulletPos[0] - mNode->getPosition()[0];
-	tempY = bulletPos[2] - mNode->getPosition()[2];
+	tempX = bulletPos[0] - mNode->getPosition().x;
+	tempY = bulletPos[2] - mNode->getPosition().z;
 	if(sqrt((tempX * tempX + tempY * tempY)) < bulletRadius + mRadius)
 		return true;
 	else 
@@ -409,7 +412,7 @@ void Monster::checkHitByBullet( float* bulletPos, float bulletHarm, float bullet
 {
 	if(isHitByBullet(bulletPos, bulletRadius))
 	{
-		if(notSpecialBullet(bulletSpell))
+  		if(notSpecialBullet(bulletSpell))
 			mBlood -= bulletHarm;
 		else
 			checkHitBySpecialBullet(bulletSpell, bulletTime, bulletHarm, bulletAppendHarm);

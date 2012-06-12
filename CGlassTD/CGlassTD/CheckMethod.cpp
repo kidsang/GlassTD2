@@ -6,7 +6,7 @@ void CheckMethod::bulletHarm( float harm, float& blood )
 }
 
 
-void CheckMethod::fireHarmCheck( float harm, float& time, float& blood, float timeSinceLastFrame )
+void CheckMethod::fireHarmCheck( float& harm, float& time, float& blood, float timeSinceLastFrame )
 {
 	
 	/// 火属性伤害运作
@@ -19,7 +19,7 @@ void CheckMethod::fireHarmCheck( float harm, float& time, float& blood, float ti
 		harm = 0;
 }
 
-void CheckMethod::iceHarmCheck( float harm, float& time, float& speed, float speedTemp, float timeSinceLastFrame )
+void CheckMethod::iceHarmCheck( float& harm, float& time, float& speed, float speedTemp, float timeSinceLastFrame )
 {
 	/// 冰属性伤害运作
 	if(harm != 0 && time > 0)
@@ -27,25 +27,22 @@ void CheckMethod::iceHarmCheck( float harm, float& time, float& speed, float spe
 		speed = speedTemp * harm;
 		time -= timeSinceLastFrame;
 	}
-	else if(time < 0 || time == 0)
+	else
 	{
-		speed = speedTemp;
 		harm = 0;
 	}
 }
 
-void CheckMethod::spikeweedHarmCheck( float harm, float& blood, bool isOnSpikeweed, float timeSinceLastFrame )
+void CheckMethod::spikeweedHarmCheck( float& harm, float& blood, bool isOnSpikeweed, float timeSinceLastFrame )
 {
 	if(isOnSpikeweed)
 		blood -= harm * timeSinceLastFrame;
 }
 
-void CheckMethod::swampHarmCheck( float harm, float& speed, float speedTemp, bool isInSwamp )
+void CheckMethod::swampHarmCheck( float& harm, float& speed, float speedTemp, bool isInSwamp )
 {
 	if(isInSwamp)
 		speed = speedTemp * harm;
-	else 
-		speed = speedTemp;
 }
 
 bool CheckMethod::checkIsDead( float blood )
@@ -74,9 +71,14 @@ bool CheckMethod::isAttributeRestriction( std::string strongType, std::string we
 	return false;
 }
 
-void CheckMethod::CaughtByTrapCheck( float& blood, bool isCaught )
+void CheckMethod::caughtByTrapCheck( float& blood, bool isCaught )
 {
 	if(isCaught)
 		blood = 0.0f;
+}
+
+void CheckMethod::speedRecover( float& speed, float speedTemp )
+{
+	speed = speedTemp;
 }
 
