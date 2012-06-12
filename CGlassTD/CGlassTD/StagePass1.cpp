@@ -102,10 +102,6 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	/// 新增一个monster管理器
 	mMonsterManager = MonsterManager::getMonsterManager(mMaze);
 
-	/// 改变镜头视角
-	//mCamera->lookAt(Vector3(0, 0, -100s));//lookat 貌似没用
-	mCamera->setPosition(Vector3(0, 3000, 3000));
-	mCamera->setDirection(-mCamera->getPosition());
 
 	/// 设置天空盒
 	//mSceneManager->setSkyBox(true, "Examples/EveSpaceSkyBox");

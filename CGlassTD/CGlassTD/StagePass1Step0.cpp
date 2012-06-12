@@ -8,7 +8,8 @@ StagePass1Step0::StagePass1Step0(StagePass1* stagePass1)
 
 void StagePass1Step0::init()
 {
-	mStagePass1->getCamera()->setPosition(Vector3(0, 2500, 1000));
+	/// 改变镜头视角
+	mStagePass1->getCamera()->setPosition(Vector3(0, 2000, 1000));
 	mStagePass1->getCamera()->setDirection(-mStagePass1->getCamera()->getPosition());
 }
 

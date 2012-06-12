@@ -46,6 +46,14 @@ void CGlassTD::createScene(void)
 	//mpStageManager->setStage(new TestStage(mSceneMgr, mpStageManager));
 	mpStageManager->setStage(new StagePass1(mSceneMgr, mpStageManager));
 
+	// MyGui
+	mGuiPlatform = new MyGUI::OgrePlatform();
+	mGuiPlatform->initialise(mWindow, mSceneMgr);
+	mGui = new MyGUI::Gui();
+	mGui->initialise();
+
+	MyGUI::ButtonPtr button = mGui->createWidget<MyGUI::Button>("Button", 10, 10, 300, 26, MyGUI::Align::Default, "Main");
+	button->setCaption("exit");
 	
 	//// ²âÊÔby kid
 	// ²âÊÔby kid
@@ -72,28 +80,28 @@ bool CGlassTD::frameRenderingQueued( const Ogre::FrameEvent& evt )
 
 bool CGlassTD::keyPressed(const OIS::KeyEvent &arg)
 {
-	BaseApplication::keyPressed(arg);
+	MyGUI::InputManager::getInstance().injectKeyPress(MyGUI::KeyCode::Enum(arg.key), arg.text);
 	mpStageManager->getStage()->onKeyPressed(arg);
 	return true;
 }
 
 bool CGlassTD::mouseMoved(const OIS::MouseEvent &arg)
 {
-	//BaseApplication::mouseMoved(arg);
+	MyGUI::InputManager::getInstance().injectMouseMove(arg.state.X.abs, arg.state.Y.abs, arg.state.Z.abs);
 	mpStageManager->getStage()->onMouseMoved(arg);
 	return true;
 }
 
 bool CGlassTD::mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
 {
-	BaseApplication::mousePressed(arg, id);
+	MyGUI::InputManager::getInstance().injectMousePress(arg.state.X.abs, arg.state.Y.abs, MyGUI::MouseButton::Enum(id));
 	mpStageManager->getStage()->onMousePressed(arg, id);
 	return true;
 }
 
 bool CGlassTD::mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
 {
-	BaseApplication::mouseReleased(arg, id);
+	MyGUI::InputManager::getInstance().injectMouseRelease(arg.state.X.abs, arg.state.Y.abs, MyGUI::MouseButton::Enum(id));
 	mpStageManager->getStage()->onMouseReleased(arg, id);
 	return true;
 }
