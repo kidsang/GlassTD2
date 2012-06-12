@@ -14,11 +14,14 @@ Monster::Monster(SceneNode* node)
     mFace(Ogre::Vector3(0, 0, 1)),
 	mRadius(1),
 	mType(),
-	mHarmList(),
+	//mHarmList(),
 	mIsDead(false),
 	mBeginPosIndex(-1),
     mNextPosIndex(0),
-	mDistance(-0.1f)
+	mDistance(-0.1f),
+	mBulletHarmTime(0),
+	mBulletHarmValue(0),
+	mTerrainHarmvalue(0)
 {
 	mNode = node;
 	mCheckMethod = new CheckMethod();
@@ -33,15 +36,20 @@ Monster::Monster(SceneNode* node, Maze* maze)
 	mFace(Ogre::Vector3(0, 0, 0)),
 	mRadius(1),
 	mType(),
-	mHarmList(),
+	//mHarmList(),
 	mIsDead(false),
 	mBeginPosIndex(-1),
 	mNextPosIndex(0),
-	mDistance(-0.1f)
+	mDistance(-0.1f),
+	mBulletHarmTime(0),
+	mBulletHarmValue(0),
+	mTerrainHarmvalue(0)
 {
 	mNode = node;
 	mMaze = maze;
 	mCheckMethod = new CheckMethod();
+	mMonsterState = new MonsterState();
+
 	makeMap(mMaze->getMazeInfo());
 	int i = rand() % startPos.size();
 	fromPos = startPos[1];
@@ -127,6 +135,7 @@ Monster::~Monster(void)
 		delete mNode;*/
 	delete mCheckMethod;
 	delete mMaze;
+	delete mMonsterState;
 }
 
 //Ogre::SceneNode* Monster::getNode(Ogre::String mesh, Ogre::String name)
@@ -247,67 +256,71 @@ void Monster::harmCheck(float timeSinceLastFrame)
 	checkCellType();
 	
 	/// mCheckMethod->bulletHarm(mHarmList.h)
-	mCheckMethod->fireHarmCheck(mHarmList.fireHarm, mHarmList.fireHarmTime, mBlood, timeSinceLastFrame);
+	mCheckMethod->bulletHarmCheck(mMonsterState->getBulletState(), mBulletHarmValue, mBulletHarmTime, mBlood, mSpeed, mSpeedTemp, timeSinceLastFrame);
+	mCheckMethod->terrainHarmCheck(mMonsterState->getTerrainState(), mTerrainHarmvalue, mBlood, mSpeed, mSpeedTemp, timeSinceLastFrame);
+	/*mCheckMethod->fireHarmCheck(mHarmList.fireHarm, mHarmList.fireHarmTime, mBlood, timeSinceLastFrame);
 	mCheckMethod->iceHarmCheck(mHarmList.iceHarm, mHarmList.iceHarmTime, this->mSpeed, mSpeedTemp, timeSinceLastFrame);
 	mCheckMethod->spikeweedHarmCheck(mHarmList.spikeweedHarm, mBlood, mHarmList.isOnSpikeweed, timeSinceLastFrame);
 	mCheckMethod->swampHarmCheck(mHarmList.swampHarm, mSpeed, mSpeedTemp, mHarmList.isInSwamp);
 	mCheckMethod->caughtByTrapCheck(mBlood, mHarmList.beCaught);
 	if(!mHarmList.isInSwamp && (mHarmList.iceHarmTime < 0 || mHarmList.iceHarmTime == 0))
+		mCheckMethod->speedRecover(mSpeed, mSpeedTemp);*/
+
+	/// 状态恢复
+	stateRecover();
+	/// 速度恢复
+	if(mMonsterState->getBulletState() != "ice" && mMonsterState->getTerrainState() != SWAMP)
 		mCheckMethod->speedRecover(mSpeed, mSpeedTemp);
-	/*/// 用于测试
-	if(mHarmList.isInSwamp)
-		mSpeed = mSpeedTemp * mHarmList.swampHarm;
-	else 
-		mSpeed = mSpeedTemp;*/
 	/// 判断是否死亡
 	mIsDead = mCheckMethod->checkIsDead(mBlood);
-
+	/// 根据地形改地图
+	changeMazeByTerrain(mMonsterState->getTerrainState());
 }
 
 bool Monster::isMonsterDead()
 {
 	return mIsDead;
 }
-
-void Monster::setHitByFire(float harm, float time)
-{
-	mHarmList.fireHarm = harm;
-	mHarmList.fireHarmTime = time;
-}
-
-void Monster::setHitByIce(float harm, float time)
-{
-	mHarmList.iceHarm = harm;
-	mHarmList.iceHarmTime = time;
-}
-
-void Monster::setBeCaughtByTrap()
-{
-	mHarmList.beCaught = true;
-	mMaze->editMaze(mNode->getPosition(), FREE);
-}
-
-void Monster::setInsideSpikeweed(float harm)
-{
-    mHarmList.isOnSpikeweed = true;
-	mHarmList.spikeweedHarm = harm;
-}
-
-void Monster::setOutsideSpikeweed()
-{
-	mHarmList.isOnSpikeweed = false;
-}
-
-void Monster::setInsideSwamp(float harm)
-{
-	mHarmList.isInSwamp = true;
-	mHarmList.swampHarm = harm;
-}
-
-void Monster::setOutsideSwamp()
-{
-	mHarmList.isInSwamp = false;
-}
+//
+//void Monster::setHitByFire(float harm, float time)
+//{
+//	mHarmList.fireHarm = harm;
+//	mHarmList.fireHarmTime = time;
+//}
+//
+//void Monster::setHitByIce(float harm, float time)
+//{
+//	mHarmList.iceHarm = harm;
+//	mHarmList.iceHarmTime = time;
+//}
+//
+//void Monster::setBeCaughtByTrap()
+//{
+//	mHarmList.beCaught = true;
+//	mMaze->editMaze(mNode->getPosition(), FREE);
+//}
+//
+//void Monster::setInsideSpikeweed(float harm)
+//{
+//    mHarmList.isOnSpikeweed = true;
+//	mHarmList.spikeweedHarm = harm;
+//}
+//
+//void Monster::setOutsideSpikeweed()
+//{
+//	mHarmList.isOnSpikeweed = false;
+//}
+//
+//void Monster::setInsideSwamp(float harm)
+//{
+//	mHarmList.isInSwamp = true;
+//	mHarmList.swampHarm = harm;
+//}
+//
+//void Monster::setOutsideSwamp()
+//{
+//	mHarmList.isInSwamp = false;
+//}
 
 void Monster::setSpeed( float speed )
 {
@@ -334,39 +347,49 @@ void Monster::checkCellType()
 		setOutsideSwamp();
 		return;
 	}*/
+	/// 判断是否超出地图
 	float halfWidth = mMaze->getEntityWidth() * mMapWidth / 2;
 	float halfHeight = mMaze->getEntityHeight() * mMapHeight / 2;
 	if(mNode->getPosition().x < -halfWidth || mNode->getPosition().x > halfWidth 
 		|| mNode->getPosition().z < -halfHeight || mNode->getPosition().z > halfHeight)
 	{
-		setOutsideSpikeweed(); 
-		setOutsideSwamp();
+		mMonsterState->setTerrainState(FREE);
 		return;
 	}
 	/// cell的临时变量，用来储存现在怪兽所在的cell的指针
 	Cell* cellTemp;
 	cellTemp = mMaze->getCellByPos(mNode->getPosition());
-	switch(cellTemp->getCellType())
+	mMonsterState->setTerrainState(cellTemp->getCellType());
+	/// 设置地图伤害
+	setTerrainHarm(cellTemp->getHarmValue(), 0);
+	/*switch(cellTemp->getCellType())
 	{
 	case SPIKEWEED: setInsideSpikeweed(cellTemp->getHarmValue()); setOutsideSwamp(); break;
 	case TRAP:  setBeCaughtByTrap(); break;
 	case SWAMP: setInsideSwamp(cellTemp->getHarmValue()); setOutsideSpikeweed(); break;
 	default: setOutsideSpikeweed(); setOutsideSwamp(); break;
-	}
+	}*/
 }
 
 void Monster::checkHitBySpecialBullet(std::string bulletSpell, float bulletTime, float bulletHarm, float bulletAppendHarm)
 {
 	if(mCheckMethod->isAttributeImmune(bulletSpell, mType))    /// 如果属性免疫
-		return;
+	{
+		mMonsterState->setBulletState("attributeImmune");
+	}
 	else if(mCheckMethod->isAttributeRestriction(bulletSpell, mType))  /// 如果属性克制
 	{
 		mBlood -= bulletHarm * 2;
+		mMonsterState->setBulletState(bulletSpell);
+		setBulletHarm(bulletAppendHarm, bulletTime);
 	}
 	else
+	{
 		mBlood -= bulletHarm;
-
-	if(bulletSpell == "ice")
+		mMonsterState->setBulletState(bulletSpell);
+		setBulletHarm(bulletAppendHarm, bulletTime);
+	}
+	/*if(bulletSpell == "ice")
 	{
 		setHitByIce(bulletAppendHarm, bulletTime);
 		setNotHitByFire();
@@ -376,7 +399,7 @@ void Monster::checkHitBySpecialBullet(std::string bulletSpell, float bulletTime,
 	{
 		setHitByFire(bulletAppendHarm, bulletTime);
 		setNotHitByIce();
-	}
+	}*/
 
 	
 }
@@ -656,21 +679,47 @@ void Monster::transPos()
 	}
 }
 
-void Monster::setNotHitByFire( )
-{
-	mHarmList.fireHarm = 0.0f;
-	mHarmList.fireHarmTime = 0.0f;
-}
-
-void Monster::setNotHitByIce( )
-{
-	mHarmList.iceHarm = 0.0f;
-	mHarmList.iceHarmTime = 0.0f;
-}
+//void Monster::setNotHitByFire( )
+//{
+//	mHarmList.fireHarm = 0.0f;
+//	mHarmList.fireHarmTime = 0.0f;
+//}
+//
+//void Monster::setNotHitByIce( )
+//{
+//	mHarmList.iceHarm = 0.0f;
+//	mHarmList.iceHarmTime = 0.0f;
+//}
 
 void Monster::destroyItself()
 {
 	mNode->detachAllObjects();
+}
+
+void Monster::changeMazeByTerrain( int terrainType )
+{
+	switch(terrainType)
+	{
+	case TRAP: mMaze->editMaze(mNode->getPosition(), FREE); break;
+	default: break;
+	}
+}
+
+void Monster::setTerrainHarm( float harm, float time )
+{
+	mTerrainHarmvalue = harm;
+}
+
+void Monster::setBulletHarm( float harm, float time )
+{
+	mBulletHarmValue = harm;
+	mBulletHarmTime = time;
+}
+
+void Monster::stateRecover()
+{
+	if(mBulletHarmTime < 0 || mBulletHarmTime == 0)
+		mMonsterState->setBulletState("normal");
 }
 
 //Ogre::String Monster::getName()

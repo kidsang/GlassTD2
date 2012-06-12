@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Bullets>
+	<Bullet name="FireBullet"
+          mesh="sphere.mesh"
+		  material="Glass/Test"
+          mass="1"
+          damage="10"
+		  appendDamage="10"
+          range="100"
+          ammo="100"
+          spell="fire"
+		  time="8"
+          />
 	<Bullet name="IceBullet"
           mesh="sphere.mesh"
 		  material="Glass/Test"
@@ -9,20 +20,9 @@
           range="100"
           ammo="100"
           spell="ice"
-		  time="6"
+		  time="2"
           />
-	<Bullet name="FireBullet"
-          mesh="sphere.mesh"
-		  material="Glass/Test"
-          mass="1"
-          damage="20"
-		  appendDamage="20"
-          range="100"
-          ammo="100"
-          spell="fire"
-		  time="6"
-          />
-   <Bullet name="NormalBullet"
+	<Bullet name="NormalBullet"
           mesh="sphere.mesh"
           material="Glass/Test"
           mass="1"
@@ -33,5 +33,9 @@
           spell="normal"
 		  time="0"
           />
+	
+	
+	
+   
    
   </Bullets>

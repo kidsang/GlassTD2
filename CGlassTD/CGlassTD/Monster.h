@@ -7,6 +7,7 @@
 #include "Common.h"
 #include "CheckMethod.h"
 #include "Maze.h"
+#include "MonsterState.h"
 #include <stack>
 using namespace Ogre;
 
@@ -57,39 +58,39 @@ struct Vect
 };
 
 
-struct HarmList
-{
-	/// 冰属性伤害
-	float iceHarm;
-	/// 冰属性伤害持续时间
-	float iceHarmTime;
-	/// 火属性伤害
-	float fireHarm;
-	/// 火属性伤害持续时间
-	float fireHarmTime;
-
-	/// 是否被捕兽器捉到
-	bool beCaught;
-	/// 地刺伤害
-	float spikeweedHarm;
-	/// 是否站在地刺上
-	bool isOnSpikeweed;
-	/// 沼泽伤害
-	float swampHarm;
-	/// 是否在沼泽里
-	bool isInSwamp;
-
-	HarmList()
-		:iceHarm(0), 
-		fireHarm(0),
-		spikeweedHarm(SPIKEWEED_HARM_BLOOD),
-		swampHarm(SWAMP_HARM_SPEED),
-		isOnSpikeweed(false),
-		beCaught(false),
-		isInSwamp(false),
-		iceHarmTime(ICE_HARM_TIME),
-		fireHarmTime(FIRE_HARM_TIME){};
-};
+//struct HarmList
+//{
+//	/// 冰属性伤害
+//	float iceHarm;
+//	/// 冰属性伤害持续时间
+//	float iceHarmTime;
+//	/// 火属性伤害
+//	float fireHarm;
+//	/// 火属性伤害持续时间
+//	float fireHarmTime;
+//
+//	/// 是否被捕兽器捉到
+//	bool beCaught;
+//	/// 地刺伤害
+//	float spikeweedHarm;
+//	/// 是否站在地刺上
+//	bool isOnSpikeweed;
+//	/// 沼泽伤害
+//	float swampHarm;
+//	/// 是否在沼泽里
+//	bool isInSwamp;
+//
+//	HarmList()
+//		:iceHarm(0), 
+//		fireHarm(0),
+//		spikeweedHarm(SPIKEWEED_HARM_BLOOD),
+//		swampHarm(SWAMP_HARM_SPEED),
+//		isOnSpikeweed(false),
+//		beCaught(false),
+//		isInSwamp(false),
+//		iceHarmTime(ICE_HARM_TIME),
+//		fireHarmTime(FIRE_HARM_TIME){};
+//};
 
 class Monster
 {
@@ -98,6 +99,14 @@ protected:
 	int mNextPosIndex;
 	Ogre::Vector3 mBeginPos;
 	Ogre::Vector3 mNextPos;
+	/// 怪物的状态，包括子弹状态和地形状态，，
+	MonsterState* mMonsterState;
+	/// 子弹的附加伤害持续时间
+	float mBulletHarmTime;
+	/// 子弹的附加伤害持续值
+	float mBulletHarmValue;
+	/// 地形的伤害值
+	float mTerrainHarmvalue;
 	/// 怪兽的速度
 	float mSpeed;
 	/// 怪兽的速度备份，以便还原速度
@@ -114,7 +123,7 @@ protected:
 	/// 怪兽的半径范围
 	float mRadius;
 	/// 伤害列表
-	HarmList mHarmList;
+	//HarmList mHarmList;
 	/// 怪兽是否死亡
     bool mIsDead;
 	/// 伤害检测类
@@ -160,6 +169,14 @@ public:
 	void checkHitByBullet(float* bulletPos, float bulletHarm, float bulletAppendHarm, float bulletTime, float bulletRadius, std::string bulletSpell);
 	/// 毁灭自己，将绑定的模型去掉
 	void destroyItself();
+	/// 根据地形的持续时间或持续次数改变地图
+	void changeMazeByTerrain(int terrainType);
+	/// 设置地图伤害
+	void setTerrainHarm(float harm, float time);
+	/// 设置子弹伤害
+	void setBulletHarm(float harm, float time);
+	/// 状态恢复
+	void stateRecover();
 private:
 	/// 地图指针
 	Maze* mMaze;
@@ -192,7 +209,7 @@ private:
 	Pos getStep();
 	void transPos();
 
-	/// 设置怪兽收到的火属性伤害
+	/*/// 设置怪兽收到的火属性伤害
 	void setHitByFire(float harm, float time);
 	/// 设置怪兽收到的冰属性伤害
 	void setHitByIce(float harm, float time);
@@ -209,7 +226,7 @@ private:
 	/// 设置在沼泽里
 	void setInsideSwamp(float harm);
 	/// 设置在沼泽外
-	void setOutsideSwamp();
+	void setOutsideSwamp();*/
 	/// 检查怪兽所在的cell的类型，根据类型修改参数
 	void checkCellType();
 	///检查被特殊炮弹集中
