@@ -136,16 +136,15 @@ Cell* Maze::getCellByPos( Ogre::Vector3 pos )
 		return NULL;
 	}*/
 
-	double xInput = pos.x;
-	xInput += 801;
+	// 先做偏移
+	double xInput = pos.x + mWidth / 2 * 100 + 1;
+	double zInput = pos.z + mHeight / 2 * 100 + 1;
+	// 再做裁剪
 	if( xInput < 0 ) xInput = 0;
-	if( xInput > 1599 ) xInput = 1599;
-
-	double zInput = pos.z;
-	zInput += 801;
+	if( xInput > mWidth * 100 - 1 ) xInput = mWidth * 100 - 1;
 	if( zInput < 0 ) zInput = 0;
-	if( zInput > 1599 ) zInput = 1599;
-
+	if( zInput > mHeight * 100 - 1 ) zInput = mHeight * 100 - 1;
+	// 算出坐标
 	int x = (int)xInput / 100;
 	int y = (int)zInput / 100;
 

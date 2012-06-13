@@ -130,6 +130,25 @@ void StagePass1Step0::onMouseMoved(const OIS::MouseEvent& arg)
 
 void StagePass1Step0::onMousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
 {
+	if (id != OIS::MB_Left) return;
+	if (mCurrentState == NOTHING) return;
+
+	Ogre::Vector3 position;
+	if (!this->convert(arg, position)) return;
+	
+	Maze* maze = mStagePass1->getMaze();
+	switch (mCurrentState)
+	{
+	case WITH_SWAMP:
+		maze->editMaze(position, SWAMP);
+		break;
+	case WITH_SPIKEWEED:
+		maze->editMaze(position, SPIKEWEED);
+		break;
+	case WITH_TRAP:
+		maze->editMaze(position, TRAP);
+		break;
+	}
 }
 
 void StagePass1Step0::onMouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
