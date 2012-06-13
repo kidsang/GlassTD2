@@ -33,7 +33,9 @@ material Glass/White
 
 fragment_program Glass/testglsl
 {
-    source test.glsl
+    source test.hlsl
+    entry_point main
+    target vs_2_0
 }
 
 material Glass/FireBall
@@ -43,6 +45,12 @@ material Glass/FireBall
         pass
         {
             ambient 1 1 1 
+
+            fragment_program_ref Glass/testglsl
+            {
+                param_named diffuseMap int 0
+            }
+
             texture_unit
             {
                 texture sphere.jpg

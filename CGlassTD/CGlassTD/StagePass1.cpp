@@ -4,8 +4,8 @@
 #include <OgreLogManager.h>
 #include "ParamParser.h"
 
-StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageManager)
-	: LevelStage(sceneManager, stageManager),
+StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui)
+	: LevelStage(sceneManager, stageManager, gui),
 	mGravity(Vector3(0, -200, 0))
 {
 	// ĞÂÔöcannon
