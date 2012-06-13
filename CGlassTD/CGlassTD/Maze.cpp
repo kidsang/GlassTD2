@@ -209,5 +209,11 @@ int Maze::getEntityWidth()
 	return this->mCellWidth;
 }
 
+bool Maze::setCellFree( Ogre::Vector3 pos )
+{
+	Cell* cell = this->getCellByPos(pos);
+	return cell->setCellType(FREE);
+}
+
 
 

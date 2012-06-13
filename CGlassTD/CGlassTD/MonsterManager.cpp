@@ -157,6 +157,10 @@ void MonsterManager::updateState( std::vector<NameValueList> explodedBullets, fl
 {
 	mMonsterMgr->monsterGenerate(sceneManager, timeSinceLastFrame);
 
+	/// 储存子弹信息
+	storeExplodedBullets(explodedBullets);
+
+	/// 遍历怪物
 	for(auto iter2 = mMonstersList.begin(); iter2 != mMonstersList.end(); ++iter2)
 	{
 		/// 如果怪物死亡，就销毁节点
@@ -197,6 +201,9 @@ void MonsterManager::setMaze( Maze* maze )
 
 void MonsterManager::storeExplodedBullets(std::vector<NameValueList> explodedBullets)
 {
+	/// 清空上次所有炮弹的信息
+	mExplodeBulletsLists.clear();
+
 	/// 用于利用空格分解坐标信息的临时变量
 	std::vector<std::string> bulletPosStrings;
 

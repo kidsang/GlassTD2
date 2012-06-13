@@ -7,7 +7,6 @@
 #include "Bullet.h"
 #include "Maze.h"
 
-<<<<<<< HEAD
 
 struct Wave
 {
@@ -21,7 +20,7 @@ struct Wave
 	int bigFireMonster;
 	float timeInteval1;
 	float timeInteval2;
-=======
+};
 /// 用于记录爆炸的炮弹的结构体
 struct ExplodedBulletsStruct
 {
@@ -31,7 +30,6 @@ struct ExplodedBulletsStruct
 	float bulletRadius;
 	float bulletEffectTime;
 	float bulletPos[3];
->>>>>>> 10fd96726cceb6c0d2b3907304e95d4d6c2b6188
 };
 
 
@@ -39,13 +37,9 @@ class MonsterManager
 {
 private:
 	/// 地图
-<<<<<<< HEAD
 	static Maze* mMaze;
-=======
-	Maze* mMaze;
 	/// 用于记录所有爆炸子弹信息的结构体
 	std::vector<ExplodedBulletsStruct*> mExplodeBulletsLists;
->>>>>>> 10fd96726cceb6c0d2b3907304e95d4d6c2b6188
 	/// 时间计数器
 	static float mTimeCount;
 	/// std::list<SceneNode*> mMonsterNodes;

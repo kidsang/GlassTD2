@@ -130,12 +130,11 @@ protected:
 	CheckMethod* mCheckMethod;
 	/// 怪物与下一个目的坐标的距离
 	float mDistance;
-   /* /// 用于测试用
-	int j ;*/
+
 	std::vector<std::vector<Ogre::Vector3>> mMonsterPaths;
 public:
-	Monster(){}
-	Monster(SceneNode* node);
+	//Monster(){}
+	//Monster(SceneNode* node);
 	Monster(SceneNode* node, Maze* maze);
 	//Monster(SceneNode* node, Maze* maze);
 	Monster(Ogre::SceneManager* sceneMgr, Ogre::SceneNode* parentNode);
@@ -261,7 +260,7 @@ public:
 
 	}
 
-	Monster* createInstance(SceneManager* sceneMgr);
+	//Monster* createInstance(SceneManager* sceneMgr);
 	Monster* createInstance(SceneManager* sceneMgr, Maze* maze);
 	
 	std::string getType();

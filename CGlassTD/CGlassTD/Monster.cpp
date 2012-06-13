@@ -6,27 +6,30 @@
 #define HAS_STEP 2
 #define SET_MARK 3
 
-Monster::Monster(SceneNode* node)
-	:mSpeed(1),
-	mSpeedTemp(1),
-	/*mPos(Ogre::Vector3(BEGIN_POS_X, 10, BEGIN_POS_Y)),*/
-	mBlood(0),
-    mFace(Ogre::Vector3(0, 0, 1)),
-	mRadius(1),
-	mType(),
-	//mHarmList(),
-	mIsDead(false),
-	mBeginPosIndex(-1),
-    mNextPosIndex(0),
-	mDistance(-0.1f),
-	mBulletHarmTime(0),
-	mBulletHarmValue(0),
-	mTerrainHarmvalue(0)
-{
-	mNode = node;
-	mCheckMethod = new CheckMethod();
-	
-}
+//Monster::Monster(SceneNode* node)
+//	:mSpeed(1),
+//	mSpeedTemp(1),
+//	//mPos(Ogre::Vector3(BEGIN_POS_X, 10, BEGIN_POS_Y)),
+//	mBlood(0),
+//    mFace(Ogre::Vector3(0, 0, 1)),
+//	mRadius(1),
+//	mType(),
+//	//mHarmList(),
+//	mIsDead(false),
+//	mBeginPosIndex(-1),
+//    mNextPosIndex(0),
+//	mDistance(-0.1f),
+//	mBulletHarmTime(0),
+//	mBulletHarmValue(0),
+//	mTerrainHarmvalue(0)
+//{
+//	mNode = node;
+//	mNode->setOrientation(0, 0, 1, 0);
+//	mCheckMethod = new CheckMethod();
+//	
+//	
+//
+//}
 
 Monster::Monster(SceneNode* node, Maze* maze)
 	:mSpeed(1),
@@ -50,6 +53,7 @@ Monster::Monster(SceneNode* node, Maze* maze)
 	mCheckMethod = new CheckMethod();
 	mMonsterState = new MonsterState();
 
+	//mNode->setOrientation(0, 0, 1, 0);
 	makeMap(mMaze->getMazeInfo());
 	int i = rand() % startPos.size();
 	fromPos = startPos[i];
@@ -106,28 +110,6 @@ Monster::Monster(SceneNode* node, Maze* maze)
 	path.push_back(Pos(8, 15));*/
 }
 
-////
-////Monster::Monster( SceneNode* node, Maze* maze )
-////	:mSpeed(1),
-////	mSpeedTemp(1),
-////	/*mPos(Ogre::Vector3(BEGIN_POS_X, 10, BEGIN_POS_Y)),*/
-////	mBlood(0),
-////	mFace(Ogre::Vector3(0, 0, 1)),
-////	mRadius(1),
-////	mType(),
-////	mHarmList(),
-////	mIsDead(false)
-////{
-////	mNode = node;
-////	mCheckMethod = new CheckMethod();
-////	mMaze = maze;
-////}
-
-//
-//Monster::Monster( Ogre::SceneManager* sceneMgr, Ogre::SceneNode* parentNode, Position& pos)
-//{	
-//	
-//}
 
 Monster::~Monster(void)
 {
@@ -138,11 +120,7 @@ Monster::~Monster(void)
 	delete mMonsterState;
 }
 
-//Ogre::SceneNode* Monster::getNode(Ogre::String mesh, Ogre::String name)
-//{
-//	
-//	
-//}
+
 
 void Monster::go(float timeSinceLastFrame)
 {
@@ -721,7 +699,7 @@ void Monster::changeMazeByTerrain( int terrainType )
 {
 	switch(terrainType)
 	{
-	case TRAP: mMaze->editMaze(mNode->getPosition(), FREE); break;
+	case TRAP: mMaze->setCellFree(mNode->getPosition()); break;
 	default: break;
 	}
 }
@@ -754,27 +732,27 @@ void Monster::stateRecover()
 //}
 
 
-Monster* MonsterFactory::createInstance(SceneManager* sceneMgr)
-{
-	Ogre::SceneNode* monsterNode = sceneMgr->getRootSceneNode()->createChildSceneNode();
-	Ogre::Entity* entity = sceneMgr->createEntity(mParams["mesh"]);
-	monsterNode->attachObject(entity);
-	Monster* mon;
-	mon = new Monster(monsterNode);
-	if (mParams.find("radius") != mParams.end())
-		mon->setRadius((float)atof(mParams["radius"].c_str()));
-
-	if (mParams.find("blood") != mParams.end())
-		mon->setBlood((float)atof(mParams["blood"].c_str()));
-
-	if (mParams.find("speed") != mParams.end())
-		mon->setSpeed((float)atof(mParams["speed"].c_str()));
-
-	if (mParams.find("spell") != mParams.end())
-		mon->setType((mParams["spell"].c_str()));
-	mon->setAnimate();
-	return mon;
-}
+//Monster* MonsterFactory::createInstance(SceneManager* sceneMgr)
+//{
+//	Ogre::SceneNode* monsterNode = sceneMgr->getRootSceneNode()->createChildSceneNode();
+//	Ogre::Entity* entity = sceneMgr->createEntity(mParams["mesh"]);
+//	monsterNode->attachObject(entity);
+//	Monster* mon;
+//	mon = new Monster(monsterNode);
+//	if (mParams.find("radius") != mParams.end())
+//		mon->setRadius((float)atof(mParams["radius"].c_str()));
+//
+//	if (mParams.find("blood") != mParams.end())
+//		mon->setBlood((float)atof(mParams["blood"].c_str()));
+//
+//	if (mParams.find("speed") != mParams.end())
+//		mon->setSpeed((float)atof(mParams["speed"].c_str()));
+//
+//	if (mParams.find("spell") != mParams.end())
+//		mon->setType((mParams["spell"].c_str()));
+//	mon->setAnimate();
+//	return mon;
+//}
 
 Monster* MonsterFactory::createInstance(SceneManager* sceneMgr, Maze* maze)
 {

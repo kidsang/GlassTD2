@@ -90,6 +90,7 @@ public:
 	/// 获取cell的宽度
 	/// @return 返回cell的宽度
 	int getEntityWidth();
+	bool setCellFree(Ogre::Vector3 pos);
 	/************************************** 地图编辑接口 ******************************/
 	/// 地图编辑时，临时决定的地图
 	/// @params pos 世界地图三维坐标指针
