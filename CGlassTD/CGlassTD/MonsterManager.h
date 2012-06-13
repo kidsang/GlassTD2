@@ -6,12 +6,12 @@
 #include "ParamParser.h"
 #include "Bullet.h"
 #include "Maze.h"
-
+#include <vector>
 
 struct Wave
 {
 	float newWaveTime;
-	int tatalMonster;
+	int totalMonster;
 	int smallNormalMonster;
 	int smallIceMonster;
 	int smallFireMonster;
@@ -65,12 +65,12 @@ private:
 	MonsterManager();
 
 
-	std::vector<Wave> mMonsterWave;
+	static std::vector<Wave> mMonsterWave ;
 
 //protected:
 //	
 //	static DWORD WINAPI createMonstersThread(PVOID pVoid); 
-		
+
 public:
 	static void initialize(Maze* maze);
 

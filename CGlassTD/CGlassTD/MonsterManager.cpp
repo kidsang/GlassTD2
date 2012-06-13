@@ -13,6 +13,7 @@ MonsterFactory* MonsterManager::mCurrentMonsterFactory = 0;
 std::vector<MonsterFactory*> MonsterManager::mMonsterFactoryList = std::vector<MonsterFactory*>();
 std::list<Monster*> MonsterManager::mMonstersList = std::list<Monster*>();
 float MonsterManager::mNewMonsterTime = 0;
+std::vector<Wave> MonsterManager::mMonsterWave = std::vector<Wave>();
 
 MonsterManager::MonsterManager()
 {
@@ -258,5 +259,25 @@ void MonsterManager::initialize( Maze* maze )
 
 void MonsterManager::setMonsterWave( String fileName )
 {
-	ParamPamParser
+	ParamParser monsterWave = ParamParser(fileName);
+	mMonsterWave.clear();
+	monsterWave.parse();
+	monsterWave.moveToFirst();
+	NameValueList* waveParams ;
+	while(monsterWave.hasNext())
+	{
+		waveParams = monsterWave.getNext();
+		Wave wave;
+		wave.newWaveTime = (atof((*waveParams)["newWaveTime"].c_str()));
+		wave.totalMonster = (atoi((*waveParams)["total"].c_str()));
+		wave.smallNormalMonster = (atoi((*waveParams)["smallNormalMonster"].c_str()));
+		wave.smallIceMonster = (atoi((*waveParams)["smallIceMonster"].c_str()));
+		wave.smallFireMonster = (atoi((*waveParams)["smallFireMonster"].c_str()));
+		wave.bigNormalMonster = (atoi((*waveParams)["bigNormalMonster"].c_str()));
+		wave.bigIceMonster = (atoi((*waveParams)["bigIceMonster"].c_str()));
+		wave.bigFireMonster = (atoi((*waveParams)["smallFireMonster"].c_str()));
+		wave.timeInteval1 = (atof((*waveParams)["timeInterval1"].c_str()));
+		wave.timeInteval2  = (atof((*waveParams)["timeInterval2"].c_str()));
+		mMonsterWave.push_back(wave);
+	}
 }
