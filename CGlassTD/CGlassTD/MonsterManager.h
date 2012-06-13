@@ -6,12 +6,13 @@
 #include "ParamParser.h"
 #include "Bullet.h"
 #include "Maze.h"
+#include <vector>
 
 
 struct Wave
 {
 	float newWaveTime;
-	int tatalMonster;
+	int totalMonster;
 	int smallNormalMonster;
 	int smallIceMonster;
 	int smallFireMonster;
@@ -64,10 +65,13 @@ private:
 	//MonsterManager(Ogre::SceneManager* sceneManager);
 	MonsterManager();
 
+
+	static std::vector<Wave> mMonsterWave ;
+
 //protected:
 //	
 //	static DWORD WINAPI createMonstersThread(PVOID pVoid); 
-		
+
 public:
 	static void initialize(Maze* maze);
 
@@ -107,6 +111,9 @@ public:
 
 	/// 更新怪物信息
 	void updateState(std::vector<NameValueList> explodedBullets, float timeSinceLastFrame, Ogre::SceneManager* sceneManager);
+	
+	/// 设置怪兽波数
+	void setMonsterWave(String fileName);
 };
 
 
