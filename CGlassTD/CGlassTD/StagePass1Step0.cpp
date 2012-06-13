@@ -2,6 +2,7 @@
 #include "SceneManagerContainer.h"
 #include "CellType.h"
 #include <OgreMath.h>
+#include <sstream>
 
 
 bool equal(Cell* firstCell, Cell* secondCell)
@@ -26,6 +27,11 @@ void StagePass1Step0::init()
 	/// 改变镜头视角
 	mStagePass1->getCamera()->setPosition(Vector3(0, 2000, 1000));
 	mStagePass1->getCamera()->setDirection(-mStagePass1->getCamera()->getPosition());
+
+	// debug text
+	debugText = mStagePass1->getGUI()->createWidget<MyGUI::StaticText>("TextBox", 10, 40, 300, 300, MyGUI::Align::Default, "Main");
+	debugText->setTextColour(MyGUI::Colour::White);
+	debugText->setCaption("no");
 }
 
 void StagePass1Step0::run(float timeSinceLastFrame)
@@ -52,6 +58,47 @@ void StagePass1Step0::onMouseMoved(const OIS::MouseEvent& arg)
 	Maze* maze = mStagePass1->getMaze();
 	Cell* cell = maze->getCellByPos(position);
 	if (cell == NULL) return;
+
+	std::ostringstream x;
+	std::ostringstream y;
+	std::ostringstream positionX;
+	std::ostringstream positionY;
+	std::ostringstream positionZ;
+	std::ostringstream pcell;
+	std::ostringstream poldcell;
+	x << arg.state.X.abs;
+	y << arg.state.Y.abs;
+	positionX << position[0];
+	positionY << position[1];
+	positionZ << position[2];
+	pcell << cell;
+	poldcell << mCurrentCell;
+
+	double xInput = position.x;
+	xInput += 801;
+	if( xInput < 0 ) xInput = 0;
+	if( xInput > 1599 ) xInput = 1599;
+
+	double zInput = position.z;
+	zInput += 801;
+	if( zInput < 0 ) zInput = 0;
+	if( zInput > 1599 ) zInput = 1599;
+
+	int xx = (int)xInput / 100;
+	int yt = (int)zInput / 100;
+
+	std::ostringstream xxx;
+	std::ostringstream yyy;
+	xxx << xx;
+	yyy << yt;
+
+	std::string display = x.str() + ' ' + y.str() + '\n';
+	display += positionX.str() + ' ' + positionY.str() + ' ' + positionZ.str() + '\n';
+	display += pcell.str() + ' ' + poldcell.str() + '\n';
+	display += xxx.str() + ' ' + yyy.str() + '\n';
+
+	debugText->setCaption(display.c_str());
+	//debugText->setCaption("no");
 	
 	if (cell != mCurrentCell)
 	{
@@ -83,6 +130,25 @@ void StagePass1Step0::onMouseMoved(const OIS::MouseEvent& arg)
 
 void StagePass1Step0::onMousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
 {
+	if (id != OIS::MB_Left) return;
+	if (mCurrentState == NOTHING) return;
+
+	Ogre::Vector3 position;
+	if (!this->convert(arg, position)) return;
+	
+	Maze* maze = mStagePass1->getMaze();
+	switch (mCurrentState)
+	{
+	case WITH_SWAMP:
+		maze->editMaze(position, SWAMP);
+		break;
+	case WITH_SPIKEWEED:
+		maze->editMaze(position, SPIKEWEED);
+		break;
+	case WITH_TRAP:
+		maze->editMaze(position, TRAP);
+		break;
+	}
 }
 
 void StagePass1Step0::onMouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id)

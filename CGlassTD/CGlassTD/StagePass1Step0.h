@@ -37,6 +37,9 @@ private:
 	Cell* mCurrentCell;
 	Ogre::Vector3 mLastPos;
 	Ogre::RaySceneQuery* mRaySceneQuery;
+
+	// debug
+	MyGUI::StaticTextPtr debugText;
 };
 
 

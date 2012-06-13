@@ -116,12 +116,8 @@ void Maze::setFinalPos( Ogre::Vector3 pos )
 Cell* Maze::getCellByPos( Ogre::Vector3 pos )
 {
 	/// 将世界坐标转换成地图坐标，注意边界部分越界
-	int x = ((int)pos.x / 100);
-	if(x == -8)
-		x = 0;
-	else if(x == 8)
-	    x = 15;
-	else if(x < 0)
+	/*int x = ((int)pos.x / 100);
+	if(x < 0)
 	{
 		x += (mWidth / 2 - 1);
 	}
@@ -129,11 +125,7 @@ Cell* Maze::getCellByPos( Ogre::Vector3 pos )
 		x += (mWidth / 2);
 
 	int y = (int)pos.z / 100;
-	if(y == -8)
-		y = 0;
-	else if(y == 8)
-		y = 15;
-	else if(y < 0)
+	if(y < 0)
 	{
 		y += (mHeight / 2 - 1);
 	}
@@ -142,7 +134,20 @@ Cell* Maze::getCellByPos( Ogre::Vector3 pos )
 	if(y < 0 || y >= mHeight || x < 0 || x >= mWidth)
 	{
 		return NULL;
-	}
+	}*/
+
+	// 先做偏移
+	double xInput = pos.x + mWidth / 2 * 100 + 1;
+	double zInput = pos.z + mHeight / 2 * 100 + 1;
+	// 再做裁剪
+	if( xInput < 0 ) xInput = 0;
+	if( xInput > mWidth * 100 - 1 ) xInput = mWidth * 100 - 1;
+	if( zInput < 0 ) zInput = 0;
+	if( zInput > mHeight * 100 - 1 ) zInput = mHeight * 100 - 1;
+	// 算出坐标
+	int x = (int)xInput / 100;
+	int y = (int)zInput / 100;
+
 	return &this->pZones[y * mHeight + x];
 }
 
