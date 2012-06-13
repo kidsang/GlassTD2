@@ -8,7 +8,7 @@
 #include <OISInputManager.h>
 #include <OISKeyboard.h>
 #include <OISMouse.h>
-
+#include <MyGUI/MyGUI.h>
 
 /// 舞台抽象类，负责场景的管理
 /// @author: LiaoNanhao
@@ -19,7 +19,7 @@ public:
 	/// @param pSceneManager 场景管理器的指针
 	/// @param pStageManager 舞台管理器的指针
 	/// @note 在构造函数中完成该舞台的场景相关的所有初始化操作，例如场景树的重建，资源的加载等
-	Stage(Ogre::SceneManager* sceneManager, StageManager* stageManager);
+	Stage(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui);
 
 	/// 析构函数
 	virtual ~Stage(void);
@@ -51,6 +51,12 @@ public:
 	/// 获取摄像头
 	Ogre::Camera* getCamera();
 
+	/// 获取GUI
+	MyGUI::Gui* getGUI()
+	{
+		return mGui;
+	}
+
 protected:
 	/// 跳转到下一个舞台，内部调用
 	/// @param pNextStage 下一个舞台的指针
@@ -62,6 +68,8 @@ protected:
 	StageManager* mStageManager; 
 	/// 摄像机
 	Ogre::Camera* mCamera;
+	/// MyGUI
+	MyGUI::Gui* mGui;
 };
 
 

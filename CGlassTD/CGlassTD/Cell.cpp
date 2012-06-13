@@ -13,6 +13,7 @@ Cell::Cell(Ogre::SceneManager* sceneManager,Ogre::SceneNode* parentNode,Ogre::Ve
 	this->mType = FREE;
 	this->mSceneNode = NULL;
 	this->mEntity = NULL;
+	this->pPos = new Ogre::Vector2(pos->x,pos->y);
 }
 
 Cell::Cell( Ogre::SceneManager* sceneManager,Ogre::SceneNode* parentNode,Ogre::String mesh,Ogre::Vector2* pos, CellType type, float harmValue)
@@ -94,8 +95,12 @@ bool Cell::setCellType( CellType type, Ogre::String mesh, float harmValue )
 		this->mEntity = ObjectFactory::createEntity(mSceneManager,mesh);
 		float x = this->mEntity->getBoundingBox().getSize().x;
 		float z = this->mEntity->getBoundingBox().getSize().z;
+		void* p = mParentNode;
+		p = this->mEntity;
+		double a = this->pPos->x;
+		a = this->pPos->y;
 		this->mSceneNode = ObjectFactory::createSceneNode(mParentNode,this->mEntity, Vector3(x * this->pPos->x,Real(0), z * this->pPos->y));
-		this->mSceneNode->attachObject(this->mEntity);
+		//this->mSceneNode->attachObject(this->mEntity);
 	}
 	this->mType = type;
 	this->mHarmValue = harmValue;

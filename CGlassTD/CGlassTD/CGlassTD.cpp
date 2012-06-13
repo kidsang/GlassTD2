@@ -26,51 +26,27 @@ void CGlassTD::chooseSceneManager(void)
 //-------------------------------------------------------------------------------------
 void CGlassTD::createScene(void)
 {
-	/*MonsterManager* monsterMgr = MonsterManager::getMonsterManager();
-	monsterMgr->monsterGenerate(mSceneMgr);*/
- /*   Ogre::Entity* ogreHead = mSceneMgr->createEntity("Head", "ogrehead.mesh");
-
-    Ogre::SceneNode* headNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-    headNode->attachObject(ogreHead);
-
-    // Set ambient light
-    mSceneMgr->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
-
-    // Create a light
-    Ogre::Light* l = mSceneMgr->createLight("MainLight");
-    l->setPosition(20,80,50);
-	*/
-
-	//mpStageManager = new StageManager(mSceneMgr);
-	mpStageManager = new StageManager(mSceneMgr);
-	//mpStageManager->setStage(new TestStage(mSceneMgr, mpStageManager));
-	mpStageManager->setStage(new StagePass1(mSceneMgr, mpStageManager));
-
 	// MyGui
 	mGuiPlatform = new MyGUI::OgrePlatform();
 	mGuiPlatform->initialise(mWindow, mSceneMgr);
 	mGui = new MyGUI::Gui();
 	mGui->initialise();
 
+	// test gui
 	MyGUI::ButtonPtr button = mGui->createWidget<MyGUI::Button>("Button", 10, 10, 300, 26, MyGUI::Align::Default, "Main");
 	button->setCaption("exit");
-	
-	//// 测试by kid
-	// 测试by kid
-	//BulletFactory* bf;
-	//BulletFactory* bf;
-	//bf = new TestBulletFactory();
-	//bf = new TestBulletFactory();
-	//mBulletFactoryMap.insert(std::make_pair(bf->getType(), bf));
-	//mBulletFactoryMap.insert(std::make_pair(bf->getType(), bf));
 
+	// 创建场景
+	mpStageManager = new StageManager(mSceneMgr);
+	mpStageManager->setStage(new StagePass1(mSceneMgr, mpStageManager, mGui));
 
 }
 
 bool CGlassTD::frameRenderingQueued( const Ogre::FrameEvent& evt )
 {
 	//
-	BaseApplication::frameRenderingQueued(evt);
+	if (!BaseApplication::frameRenderingQueued(evt))
+		return false;
 
 	// 运行当前场景的逻辑
 	mpStageManager->getStage()->run(evt.timeSinceLastFrame);

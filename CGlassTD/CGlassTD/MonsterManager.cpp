@@ -157,14 +157,6 @@ void MonsterManager::updateState( std::vector<NameValueList> explodedBullets, fl
 {
 	mMonsterMgr->monsterGenerate(sceneManager, timeSinceLastFrame);
 
-	NameValueList params;
-	std::string bulletType;
-	float bulletHarm;
-	float bulletAppendHarm;
-	float bulletRadius;
-	float bulletEffectTime;
-	float bulletPos[3];
-	std::vector<std::string> bulletPosStrings;
 	for(auto iter2 = mMonstersList.begin(); iter2 != mMonstersList.end(); ++iter2)
 	{
 		/// 如果怪物死亡，就销毁节点
@@ -180,36 +172,11 @@ void MonsterManager::updateState( std::vector<NameValueList> explodedBullets, fl
 			break;
 
 		/// 遍历子弹
-		for(auto iter = explodedBullets.begin(); iter != explodedBullets.end(); ++iter)
+		for(auto iter = mExplodeBulletsLists.begin(); iter != mExplodeBulletsLists.end(); ++iter)
 		{
-			/// 获取炮弹数据，将其转换成应有类型
-			/// 炮弹伤害
-			if ((*iter).find("damage") != (*iter).end())
-				bulletHarm = (float)atof((*iter)["damage"].c_str());
-			/// 炮弹附加伤害
-			if ((*iter).find("appendDamage") != (*iter).end())
-				bulletAppendHarm = (float)atof((*iter)["appendDamage"].c_str());
-			/// 炮弹半径范围
-			if ((*iter).find("range") != (*iter).end())
-				bulletRadius = (float)atof((*iter)["range"].c_str());
-			/// 炮弹属性
-			if ((*iter).find("spell") != (*iter).end())
-				bulletType = ((*iter)["spell"].c_str());
-			/// 炮弹效果持续时间
-			if ((*iter).find("time") != (*iter).end())
-				bulletEffectTime = (float)atof((*iter)["time"].c_str());
-			/// 炮弹中心点位置
-			if ((*iter).find("position") != (*iter).end())
-			{	
-				bulletPosStrings = mysplit((*iter)["position"]);
-				bulletPos[0] = (float)atof(bulletPosStrings[0].c_str());
-				bulletPos[1] = (float)atof(bulletPosStrings[1].c_str());
-				bulletPos[2] = (float)atof(bulletPosStrings[2].c_str());
-
-			}
-		
-		
-			(*iter2)->checkHitByBullet(bulletPos, bulletHarm, bulletAppendHarm, bulletEffectTime, bulletRadius, bulletType);
+			/// 对怪物进行每个炮弹的遍历
+			(*iter2)->checkHitByBullet((*iter)->bulletPos, (*iter)->bulletHarm, (*iter)->bulletAppendHarm, 
+				(*iter)->bulletEffectTime, (*iter)->bulletRadius, (*iter)->bulletType);
 		}
 		/// 伤害检测
 		(*iter2)->harmCheck(timeSinceLastFrame);
@@ -226,6 +193,48 @@ void MonsterManager::updateState( std::vector<NameValueList> explodedBullets, fl
 void MonsterManager::setMaze( Maze* maze )
 {
 	mMaze = maze;
+}
+
+void MonsterManager::storeExplodedBullets(std::vector<NameValueList> explodedBullets)
+{
+	/// 用于利用空格分解坐标信息的临时变量
+	std::vector<std::string> bulletPosStrings;
+
+	/// 用于储存单个炮弹信息的临时变量
+	ExplodedBulletsStruct* explodedBulletsTemp;
+
+	/// 遍历子弹,储存所有炮弹信息
+	for(auto iter = explodedBullets.begin(); iter != explodedBullets.end(); ++iter)
+	{
+		explodedBulletsTemp = new ExplodedBulletsStruct();
+		/// 获取炮弹数据，将其转换成应有类型
+		/// 炮弹伤害
+		if ((*iter).find("damage") != (*iter).end())
+			explodedBulletsTemp->bulletHarm = (float)atof((*iter)["damage"].c_str());
+		/// 炮弹附加伤害
+		if ((*iter).find("appendDamage") != (*iter).end())
+			explodedBulletsTemp->bulletAppendHarm = (float)atof((*iter)["appendDamage"].c_str());
+		/// 炮弹半径范围
+		if ((*iter).find("range") != (*iter).end())
+			explodedBulletsTemp->bulletRadius = (float)atof((*iter)["range"].c_str());
+		/// 炮弹属性
+		if ((*iter).find("spell") != (*iter).end())
+			explodedBulletsTemp->bulletType = ((*iter)["spell"].c_str());
+		/// 炮弹效果持续时间
+		if ((*iter).find("time") != (*iter).end())
+			explodedBulletsTemp->bulletEffectTime = (float)atof((*iter)["time"].c_str());
+		/// 炮弹中心点位置
+		if ((*iter).find("position") != (*iter).end())
+		{	
+			bulletPosStrings = mysplit((*iter)["position"]);
+			explodedBulletsTemp->bulletPos[0] = (float)atof(bulletPosStrings[0].c_str());
+			explodedBulletsTemp->bulletPos[1] = (float)atof(bulletPosStrings[1].c_str());
+			explodedBulletsTemp->bulletPos[2] = (float)atof(bulletPosStrings[2].c_str());
+
+		}
+		mExplodeBulletsLists.push_back(explodedBulletsTemp);
+	}
+
 }
 
 void MonsterManager::initialize( Maze* maze )

@@ -4,7 +4,12 @@ material Glass/Red
     {
         pass
         {
-            ambient 1 0 0
+            ambient 1 1 1
+
+            texture_unit
+            {
+                sphere.jpg
+            }
         }
     }
 }
