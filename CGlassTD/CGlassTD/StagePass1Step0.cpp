@@ -44,7 +44,7 @@ void StagePass1Step0::onKeyPressed(const OIS::KeyEvent& arg)
 
 void StagePass1Step0::onMouseMoved(const OIS::MouseEvent& arg)
 {
-	if (mCurrentState == NOTHING) return;
+	if (mCurrentState == NOTHING) return;  // 用户并没有选中陷阱，也就是
 	
 	Ogre::Vector3 position;
 	if (!this->convert(arg, position)) return;
