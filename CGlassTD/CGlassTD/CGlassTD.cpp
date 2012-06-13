@@ -45,7 +45,8 @@ void CGlassTD::createScene(void)
 bool CGlassTD::frameRenderingQueued( const Ogre::FrameEvent& evt )
 {
 	//
-	BaseApplication::frameRenderingQueued(evt);
+	if (!BaseApplication::frameRenderingQueued(evt))
+		return false;
 
 	// 运行当前场景的逻辑
 	mpStageManager->getStage()->run(evt.timeSinceLastFrame);
