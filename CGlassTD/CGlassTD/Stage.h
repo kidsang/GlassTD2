@@ -51,6 +51,12 @@ public:
 	/// 获取摄像头
 	Ogre::Camera* getCamera();
 
+	/// 获取GUI
+	MyGUI::Gui* getGUI()
+	{
+		return mGui;
+	}
+
 protected:
 	/// 跳转到下一个舞台，内部调用
 	/// @param pNextStage 下一个舞台的指针
