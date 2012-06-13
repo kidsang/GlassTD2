@@ -30,3 +30,24 @@ material Glass/White
         }
     }
 }
+
+fragment_program Glass/testglsl
+{
+    source test.glsl
+}
+
+material Glass/FireBall
+{
+    technique
+    {
+        pass
+        {
+            ambient 1 1 1 
+            texture_unit
+            {
+                texture sphere.jpg
+            }
+        }
+    }
+}
+
