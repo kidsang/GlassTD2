@@ -359,6 +359,8 @@ void Monster::checkCellType()
 	/// cell的临时变量，用来储存现在怪兽所在的cell的指针
 	Cell* cellTemp;
 	cellTemp = mMaze->getCellByPos(mNode->getPosition());
+   /* if(cellTemp == NULL)
+		return;*/
 	mMonsterState->setTerrainState(cellTemp->getCellType());
 	/// 设置地图伤害
 	setTerrainHarm(cellTemp->getHarmValue(), 0);

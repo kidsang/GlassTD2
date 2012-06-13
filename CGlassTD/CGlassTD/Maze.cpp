@@ -117,7 +117,11 @@ Cell* Maze::getCellByPos( Ogre::Vector3 pos )
 {
 	/// 将世界坐标转换成地图坐标，注意边界部分越界
 	int x = ((int)pos.x / 100);
-	if(x < 0)
+	if(x == -8)
+		x = 0;
+	else if(x == 8)
+	    x = 15;
+	else if(x < 0)
 	{
 		x += (mWidth / 2 - 1);
 	}
@@ -125,7 +129,11 @@ Cell* Maze::getCellByPos( Ogre::Vector3 pos )
 		x += (mWidth / 2);
 
 	int y = (int)pos.z / 100;
-	if(y < 0)
+	if(y == -8)
+		y = 0;
+	else if(y == 8)
+		y = 15;
+	else if(y < 0)
 	{
 		y += (mHeight / 2 - 1);
 	}
