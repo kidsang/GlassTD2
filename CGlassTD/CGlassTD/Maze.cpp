@@ -120,8 +120,6 @@ Cell* Maze::getCellByPos( Ogre::Vector3 pos )
 	if(x < 0)
 	{
 		x += (mWidth / 2 - 1);
-		x<0? 0:x;
-		x>15? 15:x;
 	}
 	else 
 		x += (mWidth / 2);
@@ -130,8 +128,6 @@ Cell* Maze::getCellByPos( Ogre::Vector3 pos )
 	if(y < 0)
 	{
 		y += (mHeight / 2 - 1);
-		y<0? 0:y;
-		y>15? 15:y;
 	}
 	else 
 		y += (mHeight / 2);
@@ -146,7 +142,10 @@ Cell* Maze::getCellByPos( Ogre::Vector3 pos )
 bool Maze::editMaze( Ogre::Vector3 pos, CellType type )
 {
 	Cell* cell = this->getCellByPos(pos);
-	if(cell->getCellType() != FREE)
+	if(cell->getCellType() == WALL || 
+		cell->getCellType() == TRAP ||
+		cell->getCellType() == SWAMP ||
+		cell->getCellType() == SPIKEWEED)
 	{
 		return false;
 	}

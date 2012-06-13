@@ -1,6 +1,7 @@
 #include "StagePass1Step0.h"
 #include "SceneManagerContainer.h"
 #include "CellType.h"
+#include <OgreMath.h>
 
 
 bool equal(Cell* firstCell, Cell* secondCell)
@@ -96,6 +97,23 @@ bool StagePass1Step0::convert(const OIS::MouseEvent& arg, Ogre::Vector3& output)
 	float height = (float)arg.state.height;
 	
 	Ogre::Ray mouseRay = mStagePass1->getCamera()->getCameraToViewportRay(x/width, y/height);
+	
+	Vector3 normal = Vector3(0, 1, 0);
+	Real distance = mStagePass1->getMaze()->getHorizon();
+	
+	Plane plane = Plane(normal, distance);
+	std::pair<bool, Real> result = Math::intersects(mouseRay, plane);
+	if (result.first == true)
+	{
+		output = mouseRay.getOrigin() + mouseRay.getDirection() * result.second;
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+	
+	/*
 	mRaySceneQuery->setRay(mouseRay);
 	
 	Ogre::RaySceneQueryResult& result = mRaySceneQuery->execute();
@@ -104,10 +122,10 @@ bool StagePass1Step0::convert(const OIS::MouseEvent& arg, Ogre::Vector3& output)
 	{
 		if (itr->movable)
 		{
-			MovableObject* obj = itr->movable;
-			output = obj->getParentNode()->getPosition();
+			Entity* obj = (Entity*)itr->movable;
+			output = obj->getParentNode()->_getDerivedPosition();
 			return true;
 		}
 	}
-	return false;
+	return false;*/
 }
