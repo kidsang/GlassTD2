@@ -4,8 +4,8 @@
 #include <OgreLogManager.h>
 #include "ParamParser.h"
 
-StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageManager)
-	: LevelStage(sceneManager, stageManager),
+StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui)
+	: LevelStage(sceneManager, stageManager, gui),
 	mGravity(Vector3(0, -200, 0))
 {
 	// 新增cannon
@@ -106,8 +106,7 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	/// 设置天空盒
 	//mSceneManager->setSkyBox(true, "Examples/EveSpaceSkyBox");
 
-	// step
-	//this->pushStep(new StagePass1Step0(this));
+	this->pushStep(new StagePass1Step0(this));
 	this->pushStep(new StagePass1Step1(this));
 	this->jumpToStep(0);
 }

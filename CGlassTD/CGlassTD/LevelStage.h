@@ -10,7 +10,7 @@ class LevelStage : public Stage
 {
 public:
 	/// 构造函数
-	LevelStage(Ogre::SceneManager* sceneManager, StageManager* stageManager);
+	LevelStage(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui);
 
 	/// 析构函数
 	virtual ~LevelStage();

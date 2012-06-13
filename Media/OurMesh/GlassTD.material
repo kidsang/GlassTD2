@@ -30,3 +30,32 @@ material Glass/White
         }
     }
 }
+
+fragment_program Glass/testglsl
+{
+    source test.hlsl
+    entry_point main
+    target vs_2_0
+}
+
+material Glass/FireBall
+{
+    technique
+    {
+        pass
+        {
+            ambient 1 1 1 
+
+            fragment_program_ref Glass/testglsl
+            {
+                param_named diffuseMap int 0
+            }
+
+            texture_unit
+            {
+                texture sphere.jpg
+            }
+        }
+    }
+}
+
