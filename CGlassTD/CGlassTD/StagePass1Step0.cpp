@@ -44,6 +44,7 @@ void StagePass1Step0::onKeyPressed(const OIS::KeyEvent& arg)
 	{
 	// 按 G 结束布局阶段，开始打怪阶段
 	case OIS::KC_G:
+		mStagePass1->getMaze()->clearShadow();
 		mStagePass1->jumpToStep(1);
 		break;
 	// 暂时

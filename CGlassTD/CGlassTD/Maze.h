@@ -97,6 +97,7 @@ public:
 	/// @params type 要显示的cell的类型
 	/// @return true 表示成功，反之不成功
 	bool editMaze(Ogre::Vector3 pos, CellType type);
+	void clearShadow();
 	/************************************** end: 地图编辑接口 ******************************/
 	/// 析构函数
 	~Maze(void);

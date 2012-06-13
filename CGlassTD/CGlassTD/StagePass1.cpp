@@ -2,6 +2,7 @@
 #include "StagePass1Step1.h"
 #include "StagePass1Step0.h"
 #include <OgreLogManager.h>
+#include "UFO.h"
 #include "ParamParser.h"
 
 StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui)
@@ -104,7 +105,8 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	mMonsterManager = MonsterManager::getMonsterManager();
 	mMonsterManager->setMonsterWave("monsterWave.xml");
 
-
+	/// ¼ÓÔØ·É´¬
+	UFO ufo = UFO(sceneManager, sceneManager->getRootSceneNode()->createChildSceneNode(),"ship.mesh", Ogre::Vector3(900,0,-50), 100);
 	/// ÉèÖÃÌì¿ÕºÐ
 	//mSceneManager->setSkyBox(true, "Examples/EveSpaceSkyBox");
 

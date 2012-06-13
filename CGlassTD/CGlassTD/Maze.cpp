@@ -214,6 +214,17 @@ bool Maze::setCellFree( Ogre::Vector3 pos )
 	Cell* cell = this->getCellByPos(pos);
 	return cell->setCellType(FREE);
 }
+void Maze::clearShadow()
+{
+	for(int i = 0; i < mWidth * mHeight; ++i)
+	{
+		Cell cell = this->pZones[i];
+		if(cell.getCellType() == SHADOW_SPIKEWEED || cell.getCellType() == SHADOW_SWAMP || cell.getCellType() == SHADOW_TRAP)
+		{
+			this->pZones[i].setCellType(FREE);
+		}
+	}
+}
 
 
 
