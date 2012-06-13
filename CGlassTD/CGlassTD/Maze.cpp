@@ -116,7 +116,7 @@ void Maze::setFinalPos( Ogre::Vector3 pos )
 Cell* Maze::getCellByPos( Ogre::Vector3 pos )
 {
 	/// 将世界坐标转换成地图坐标，注意边界部分越界
-	int x = ((int)pos.x / 100);
+	/*int x = ((int)pos.x / 100);
 	if(x < 0)
 	{
 		x += (mWidth / 2 - 1);
@@ -134,7 +134,21 @@ Cell* Maze::getCellByPos( Ogre::Vector3 pos )
 	if(y < 0 || y >= mHeight || x < 0 || x >= mWidth)
 	{
 		return NULL;
-	}
+	}*/
+
+	double xInput = pos.x;
+	xInput += 801;
+	if( xInput < 0 ) xInput = 0;
+	if( xInput > 1599 ) xInput = 1599;
+
+	double zInput = pos.z;
+	zInput += 801;
+	if( zInput < 0 ) zInput = 0;
+	if( zInput > 1599 ) zInput = 1599;
+
+	int x = (int)xInput / 100;
+	int y = (int)zInput / 100;
+
 	return &this->pZones[y * mHeight + x];
 }
 
