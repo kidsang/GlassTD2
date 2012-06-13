@@ -40,21 +40,36 @@ void StagePass1Step0::run(float timeSinceLastFrame)
 
 void StagePass1Step0::onKeyPressed(const OIS::KeyEvent& arg)
 {
-	// 按 G 结束布局阶段，开始打怪阶段
-	if (arg.key == OIS::KC_G)
+	switch (arg.key)
 	{
+	// 按 G 结束布局阶段，开始打怪阶段
+	case OIS::KC_G:
 		mStagePass1->jumpToStep(1);
+		break;
+	// 暂时
+	// 按 A 键地刺, 按 B 键沼泽， 按 C 键捕兽夹
+	case OIS::KC_A:
+		mCurrentState = WITH_SPIKEWEED;
+		break;
+	case OIS::KC_B:
+		mCurrentState = WITH_SWAMP;
+		break;
+	case OIS::KC_C:
+		mCurrentState = WITH_TRAP;
+		break;
 	}
 }
 
 
 void StagePass1Step0::onMouseMoved(const OIS::MouseEvent& arg)
 {
-	if (mCurrentState == NOTHING) return;  // 用户并没有选中陷阱，也就是
+	if (mCurrentState == NOTHING) return;  // 用户并没有选中要布置的陷阱
 	
+	// 将屏幕坐标转换成场景中的三维坐标
 	Ogre::Vector3 position;
 	if (!this->convert(arg, position)) return;
 	
+	// 根据转换后的坐标获得该位置的cell
 	Maze* maze = mStagePass1->getMaze();
 	Cell* cell = maze->getCellByPos(position);
 	if (cell == NULL) return;
@@ -98,10 +113,11 @@ void StagePass1Step0::onMouseMoved(const OIS::MouseEvent& arg)
 	display += xxx.str() + ' ' + yyy.str() + '\n';
 
 	debugText->setCaption(display.c_str());
-	//debugText->setCaption("no");
 	
+	// 如果该cell与上次设置的cell是同一个，则不作处理，否则进入下面的if
 	if (cell != mCurrentCell)
 	{
+		// 让地图在该位置显示一个虚影，记录下该位置，并撤销上次的虚影
 		bool result = false;
 		switch (mCurrentState)
 		{
@@ -114,7 +130,8 @@ void StagePass1Step0::onMouseMoved(const OIS::MouseEvent& arg)
 		case WITH_TRAP:
 			result = maze->editMaze(position, SHADOW_TRAP);
 			break;
-		}
+		} 
+		// ...如果设置虚影失败，即该位置不能放置陷阱，则不作处理，否则进入下面的if，完成记录和撤销
 		if (result)
 		{
 			if (mCurrentCell != NULL)
@@ -130,8 +147,8 @@ void StagePass1Step0::onMouseMoved(const OIS::MouseEvent& arg)
 
 void StagePass1Step0::onMousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
 {
-	if (id != OIS::MB_Left) return;
-	if (mCurrentState == NOTHING) return;
+	if (id != OIS::MB_Left) return;  // 暂时让只有左键才会生效
+	if (mCurrentState == NOTHING) return;  // 用户没有选中任何陷阱
 
 	Ogre::Vector3 position;
 	if (!this->convert(arg, position)) return;
@@ -162,12 +179,15 @@ bool StagePass1Step0::convert(const OIS::MouseEvent& arg, Ogre::Vector3& output)
 	float width = (float)arg.state.width;
 	float height = (float)arg.state.height;
 	
+	// 获得从摄像机到鼠标的一条射线
 	Ogre::Ray mouseRay = mStagePass1->getCamera()->getCameraToViewportRay(x/width, y/height);
 	
+	// 根据迷宫的地板高度生成一个平面
 	Vector3 normal = Vector3(0, 1, 0);
 	Real distance = mStagePass1->getMaze()->getHorizon();
-	
 	Plane plane = Plane(normal, distance);
+
+	// 求出射线和平面的交点
 	std::pair<bool, Real> result = Math::intersects(mouseRay, plane);
 	if (result.first == true)
 	{
@@ -178,20 +198,4 @@ bool StagePass1Step0::convert(const OIS::MouseEvent& arg, Ogre::Vector3& output)
 	{
 		return false;
 	}
-	
-	/*
-	mRaySceneQuery->setRay(mouseRay);
-	
-	Ogre::RaySceneQueryResult& result = mRaySceneQuery->execute();
-	Ogre::RaySceneQueryResult::iterator itr = result.begin();
-	if (itr != result.end())
-	{
-		if (itr->movable)
-		{
-			Entity* obj = (Entity*)itr->movable;
-			output = obj->getParentNode()->_getDerivedPosition();
-			return true;
-		}
-	}
-	return false;*/
 }
