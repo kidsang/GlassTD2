@@ -1,4 +1,7 @@
 #include "MonsterManager.h"
+#include "ParamParser.h"
+
+
 
 MonsterManager* MonsterManager::mMonsterMgr = NULL;
 int MonsterManager::mMonsterNum = 0;
@@ -251,4 +254,9 @@ void MonsterManager::initialize( Maze* maze )
 
 	mMaze = maze;
 	isInitialized = true;
+}
+
+void MonsterManager::setMonsterWave( String fileName )
+{
+	ParamPamParser
 }

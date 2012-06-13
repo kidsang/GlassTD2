@@ -101,7 +101,7 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 
 	/// 新增一个monster管理器
 	MonsterManager::initialize(mMaze);
-	//mMonsterManager = MonsterManager::getMonsterManager(mMaze);
+	mMonsterManager = MonsterManager::getMonsterManager();
 
 
 	/// 设置天空盒
