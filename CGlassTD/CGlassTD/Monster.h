@@ -165,16 +165,22 @@ public:
 	void harmCheck(float timeSinceLastFrame);
 	/// 怪兽死掉
 	bool isMonsterDead();
-	/// 检查被炮弹集中
+
+	/// 检查被炮弹击中
 	void checkHitByBullet(float* bulletPos, float bulletHarm, float bulletAppendHarm, float bulletTime, float bulletRadius, std::string bulletSpell);
+	
 	/// 毁灭自己，将绑定的模型去掉
 	void destroyItself();
+	
 	/// 根据地形的持续时间或持续次数改变地图
 	void changeMazeByTerrain(int terrainType);
+
 	/// 设置地图伤害
 	void setTerrainHarm(float harm, float time);
+
 	/// 设置子弹伤害
 	void setBulletHarm(float harm, float time);
+
 	/// 状态恢复
 	void stateRecover();
 private:
