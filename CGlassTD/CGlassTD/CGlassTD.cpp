@@ -52,8 +52,10 @@ void CGlassTD::createScene(void)
 	mGui = new MyGUI::Gui();
 	mGui->initialise();
 
-	MyGUI::ButtonPtr button = mGui->createWidget<MyGUI::Button>("Button", 10, 10, 300, 26, MyGUI::Align::Default, "Main");
-	button->setCaption("exit");
+	/*MyGUI::ButtonPtr button = mGui->createWidget<MyGUI::Button>("Button", 10, 10, 300, 26, MyGUI::Align::Default, "Main");
+	button->setCaption("exit");*/
+	MyGUI::LayoutManager::getInstance().loadLayout("my.layout");
+	//MyGUI::ButtonPtr button = mGui->findWidget<MyGUI::Button>("MyFirstButton");
 	
 	//// ²âÊÔby kid
 	// ²âÊÔby kid
