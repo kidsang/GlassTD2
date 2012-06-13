@@ -1,24 +1,34 @@
 #include "MonsterManager.h"
+#include "ParamParser.h"
+
+
 
 MonsterManager* MonsterManager::mMonsterMgr = NULL;
 int MonsterManager::mMonsterNum = 0;
 float MonsterManager::mTimeCount = 0.0f;
 
+bool MonsterManager::isInitialized = false;
+Maze* MonsterManager::mMaze = 0;
+MonsterFactory* MonsterManager::mCurrentMonsterFactory = 0;
+std::vector<MonsterFactory*> MonsterManager::mMonsterFactoryList = std::vector<MonsterFactory*>();
+std::list<Monster*> MonsterManager::mMonstersList = std::list<Monster*>();
+float MonsterManager::mNewMonsterTime = 0;
+std::vector<Wave> MonsterManager::mMonsterWave = std::vector<Wave>();
 
 MonsterManager::MonsterManager()
 {
-	ParamParser monsterParser = ParamParser("MonsterDefine.xml");
-	monsterParser.parse();
-	monsterParser.moveToFirst();
-	NameValueList* monsterParams = monsterParser.getNext();
-	this->mNewMonsterTime = atof((*monsterParams)["Time"].c_str());
-	while (monsterParser.hasNext())
-		mMonsterFactoryList.push_back(new MonsterFactory(*monsterParser.getNext()));
-	if(mMonsterFactoryList.size() != 0)
-		mCurrentMonsterFactory = mMonsterFactoryList.at(3);
+//	ParamParser monsterParser = ParamParser("MonsterDefine.xml");
+//	monsterParser.parse();
+//	monsterParser.moveToFirst();
+//	NameValueList* monsterParams = monsterParser.getNext();
+//	this->mNewMonsterTime = atof((*monsterParams)["Time"].c_str());
+//	while (monsterParser.hasNext())
+//		mMonsterFactoryList.push_back(new MonsterFactory(*monsterParser.getNext()));
+//	if(mMonsterFactoryList.size() != 0)
+//		mCurrentMonsterFactory = mMonsterFactoryList.at(3);
 }
 
-MonsterManager::MonsterManager( Maze* maze )
+/*MonsterManager::MonsterManager( Maze* maze )
 {
 	ParamParser monsterParser = ParamParser("MonsterDefine.xml");
 	monsterParser.parse();
@@ -31,7 +41,7 @@ MonsterManager::MonsterManager( Maze* maze )
 		mCurrentMonsterFactory = mMonsterFactoryList.at(0);
 
 	mMaze = maze;
-}
+}*/
 
 MonsterManager::~MonsterManager(void)
 {
@@ -41,25 +51,24 @@ MonsterManager::~MonsterManager(void)
 		delete (*iter);
 	for (auto iter = mMonsterFactoryList.begin(); iter != mMonsterFactoryList.end(); ++iter)
 		delete (*iter);
-	for (auto iter = mExplodeBulletsLists.begin(); iter != mExplodeBulletsLists.end(); ++iter)
-		delete (*iter);
 	delete mCurrentMonsterFactory;
 	delete mMaze;
 }
 
 MonsterManager* MonsterManager::getMonsterManager(void)
 {
+	assert(isInitialized);
 	if(mMonsterMgr == NULL)
 		mMonsterMgr = new MonsterManager();
 	return mMonsterMgr;
 }
 
-MonsterManager* MonsterManager::getMonsterManager(Maze* maze)
+/*MonsterManager* MonsterManager::getMonsterManager(Maze* maze)
 {
 	if(mMonsterMgr == NULL)
 		mMonsterMgr = new MonsterManager(maze);
 	return mMonsterMgr;
-}
+}*/
 
 //
 //void MonsterManager::monsterTimer(Ogre::SceneManager* sceneManager)
@@ -150,15 +159,8 @@ void MonsterManager::MonsterNumPlus(void)
 
 void MonsterManager::updateState( std::vector<NameValueList> explodedBullets, float timeSinceLastFrame, Ogre::SceneManager* sceneManager )
 {
-	/// 根据时间信息判断是否生成怪物，，
 	mMonsterMgr->monsterGenerate(sceneManager, timeSinceLastFrame);
 
-	/// 清空上次update时mExplodeBulletsLists储存的所有爆炸炮弹信息
-	mExplodeBulletsLists.clear();
-	
-	/// 
-	storeExplodedBullets(explodedBullets);
-	
 	for(auto iter2 = mMonstersList.begin(); iter2 != mMonstersList.end(); ++iter2)
 	{
 		/// 如果怪物死亡，就销毁节点
@@ -237,4 +239,45 @@ void MonsterManager::storeExplodedBullets(std::vector<NameValueList> explodedBul
 		mExplodeBulletsLists.push_back(explodedBulletsTemp);
 	}
 
+}
+
+void MonsterManager::initialize( Maze* maze )
+{
+	ParamParser monsterParser = ParamParser("MonsterDefine.xml");
+	monsterParser.parse();
+	monsterParser.moveToFirst();
+	NameValueList* monsterParams = monsterParser.getNext();
+	mNewMonsterTime = atof((*monsterParams)["newMonsterTime"].c_str());
+	while (monsterParser.hasNext())
+		mMonsterFactoryList.push_back(new MonsterFactory(*monsterParser.getNext()));
+	if(mMonsterFactoryList.size() != 0)
+		mCurrentMonsterFactory = mMonsterFactoryList.at(0);
+
+	mMaze = maze;
+	isInitialized = true;
+}
+
+void MonsterManager::setMonsterWave( String fileName )
+{
+	ParamParser monsterWave = ParamParser(fileName);
+	mMonsterWave.clear();
+	monsterWave.parse();
+	monsterWave.moveToFirst();
+	NameValueList* waveParams ;
+	while(monsterWave.hasNext())
+	{
+		waveParams = monsterWave.getNext();
+		Wave wave;
+		wave.newWaveTime = (atof((*waveParams)["newWaveTime"].c_str()));
+		wave.totalMonster = (atoi((*waveParams)["total"].c_str()));
+		wave.smallNormalMonster = (atoi((*waveParams)["smallNormalMonster"].c_str()));
+		wave.smallIceMonster = (atoi((*waveParams)["smallIceMonster"].c_str()));
+		wave.smallFireMonster = (atoi((*waveParams)["smallFireMonster"].c_str()));
+		wave.bigNormalMonster = (atoi((*waveParams)["bigNormalMonster"].c_str()));
+		wave.bigIceMonster = (atoi((*waveParams)["bigIceMonster"].c_str()));
+		wave.bigFireMonster = (atoi((*waveParams)["smallFireMonster"].c_str()));
+		wave.timeInteval1 = (atof((*waveParams)["timeInterval1"].c_str()));
+		wave.timeInteval2  = (atof((*waveParams)["timeInterval2"].c_str()));
+		mMonsterWave.push_back(wave);
+	}
 }

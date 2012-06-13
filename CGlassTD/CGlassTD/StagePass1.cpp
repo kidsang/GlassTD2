@@ -100,7 +100,9 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	mMaze = new Maze(sceneManager, map, mapWidth, mapHeight,start1, start2, end);
 
 	/// 新增一个monster管理器
-	mMonsterManager = MonsterManager::getMonsterManager(mMaze);
+	MonsterManager::initialize(mMaze);
+	mMonsterManager = MonsterManager::getMonsterManager();
+	mMonsterManager->setMonsterWave("monsterWave.xml");
 
 
 	/// 设置天空盒
