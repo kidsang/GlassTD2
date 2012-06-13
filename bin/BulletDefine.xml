@@ -27,7 +27,7 @@
 	<Bullet name="NormalBullet"
           mesh="sphere.mesh"
           scale="0.25"
-          material="Glass/White"
+          material="Glass/FireBall"
           mass="4"
           damage="1000"
 		  appendDamage="0"

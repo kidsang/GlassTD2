@@ -1,7 +1,7 @@
 #include "LevelStage.h"
 
-LevelStage::LevelStage(Ogre::SceneManager* sceneManager, StageManager* stageManager)
-	: Stage(sceneManager, stageManager), mCurrentStep(-1)
+LevelStage::LevelStage(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui)
+	: Stage(sceneManager, stageManager, gui), mCurrentStep(-1)
 {
 	mSteps.clear();
 }
