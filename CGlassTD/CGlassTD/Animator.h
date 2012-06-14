@@ -7,11 +7,14 @@
  * 作者：kid
  */
 
+#include <vector>
+
 /// 动画模板类
 template <typename T>
 class Animator
 {
-	typedef void(*AnimatorCallback)(void);
+	typedef void(*AnimatorCallback)(T* object);
+	typedef std::vector<AnimatorCallback> CallbackList;
 private:
 	/// 两次动画触发的时间间隔，以秒计算
 	float mTimeInterval;
@@ -20,6 +23,11 @@ private:
 
 	/// 动画是否已播放
 	bool mIsStarted;
+
+	/// 在start时执行的回调函数列表
+	CallbackList mOnStartCallbacks;
+	/// 在stop时执行的回调函数列表
+	CallbackList mOnStopCallbacks;
 	
 public:
 	/// 构造函数
@@ -35,17 +43,53 @@ public:
 
 	}
 
+	/// 增加一个on start回调函数
+	/// @param cb on start 回调函数
+	void addOnStartCallback(AnimatorCallback cb)
+	{
+		mOnStartCallbacks.push_back(cb);
+	}
+
+	/// 移除一个on start回调函数
+	/// @param cb on start 回调函数
+	void removeOnStartCallback(AnimatorCallback cb)
+	{
+		auto iter = std::find(mOnStartCallbacks.begin(), mOnStartCallbacks.end(), cb);
+		if (iter != mOnStartCallbacks.end())
+			mOnStartCallbacks.erase(iter);
+	}
+
+	/// 增加一个on stop回调函数
+	/// @param cb on stop 回调函数
+	void addOnStopCallback(AnimatorCallback cb)
+	{
+		mOnStopCallbacks.push_back(cb);
+	}
+
+	/// 移除一个on stop回调函数
+	/// @param cb on stop 回调函数
+	void removeOnStopCallback(AnimatorCallback cb)
+	{
+		auto iter = std::find(mOnStopCallbacks.begin(), mOnStopCallbacks.end(), cb);
+		if (iter != mOnStopCallbacks.end())
+			mOnStopCallbacks.erase(iter);
+	}
+
 	/// 开始一个动画
-	void start()
+	void start(T* object)
 	{
 		mIsStarted = true;
+		for (auto iter = mOnStartCallbacks.begin(); iter != mOnStartCallbacks.end(); ++iter)
+			(*iter)(object);
 	}
 
 	/// 结束一个动画
-	void stop()
+	void stop(T* object)
 	{
 		mIsStarted = false;
 		mLastTime = 0;
+		for (auto iter = mOnStopCallbacks.begin(); iter != mOnStopCallbacks.end(); ++iter)
+			(*iter)(object);
 	}
 
 	/// 运行动画

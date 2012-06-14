@@ -1,9 +1,15 @@
 #include "MonsterHurtAnimator.h"
 
+void MonsterDead(Monster* monster)
+{
+	SceneNode* node = monster->getNode();
+}
 
 MonsterHurtAnimator::MonsterHurtAnimator(float timeInterval)
 	: Animator(timeInterval)
 {
+	//addOnStartCallback(MonsterDead);
+	addOnStopCallback(MonsterDead);
 }
 
 

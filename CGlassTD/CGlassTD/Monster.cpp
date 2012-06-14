@@ -276,8 +276,9 @@ void Monster::harmCheck(float timeSinceLastFrame)
 
 	// test -kid
 	MonsterHurtAnimator* mha = new MonsterHurtAnimator(0);
-	mha->start();
+	mha->start(this);
 	mAnimatorList.push_back(mha);
+	mha->stop(this);
 }
 
 bool Monster::isMonsterDead()
