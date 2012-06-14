@@ -31,11 +31,16 @@ material Glass/White
     }
 }
 
-fragment_program Glass/testglsl
+
+material Glass/Billboard
 {
-    source test.hlsl
-    entry_point main
-    target vs_2_0
+    technique
+    {
+        pass
+        {
+            lighting off
+        }
+    }
 }
 
 material Glass/FireBall

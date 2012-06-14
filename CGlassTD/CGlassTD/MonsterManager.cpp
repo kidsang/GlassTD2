@@ -14,6 +14,7 @@ std::vector<MonsterFactory*> MonsterManager::mMonsterFactoryList = std::vector<M
 std::list<Monster*> MonsterManager::mMonstersList = std::list<Monster*>();
 float MonsterManager::mNewMonsterTime = 0;
 std::vector<Wave> MonsterManager::mMonsterWave = std::vector<Wave>();
+Wave MonsterManager::mCurrentWave = Wave();
 
 MonsterManager::MonsterManager()
 {
@@ -59,7 +60,11 @@ MonsterManager* MonsterManager::getMonsterManager(void)
 {
 	assert(isInitialized);
 	if(mMonsterMgr == NULL)
+	{
 		mMonsterMgr = new MonsterManager();
+		/// 初始化一波一波怪物的参数
+		mMonsterMgr->setMonsterWave("monsterWave.xml");
+	}
 	return mMonsterMgr;
 }
 
@@ -90,7 +95,7 @@ void MonsterManager::monsterGenerate(Ogre::SceneManager* sceneManager, float tim
 		mMonstersList.push_back(monster);
 		mMonsterMgr->MonsterNumPlus();
 		mMonsterMgr->setTimeCount(0.0f);
-
+		
 	}
 }
 std::list<Monster*> MonsterManager::getMonstersList( void )
@@ -259,7 +264,7 @@ void MonsterManager::initialize( Maze* maze )
 		mMonsterFactoryList.push_back(new MonsterFactory(*monsterParser.getNext()));
 	if(mMonsterFactoryList.size() != 0)
 		mCurrentMonsterFactory = mMonsterFactoryList.at(0);
-
+	
 	mMaze = maze;
 	isInitialized = true;
 }
@@ -287,4 +292,9 @@ void MonsterManager::setMonsterWave( String fileName )
 		wave.timeInteval2  = (atof((*waveParams)["timeInterval2"].c_str()));
 		mMonsterWave.push_back(wave);
 	}
+}
+
+void MonsterManager::setUFO( UFO& ufo )
+{
+	mUFO = ufo;
 }
