@@ -7,6 +7,7 @@
 #include "Bullet.h"
 #include "Maze.h"
 #include <vector>
+#include "UFO.h"
 
 
 struct Wave
@@ -68,6 +69,11 @@ private:
 
 	static std::vector<Wave> mMonsterWave ;
 
+	static Wave mCurrentWave;
+
+	UFO mUFO;
+
+
 //protected:
 //	
 //	static DWORD WINAPI createMonstersThread(PVOID pVoid); 
@@ -114,6 +120,8 @@ public:
 	
 	/// …Ë÷√π÷ ﬁ≤® ˝
 	void setMonsterWave(String fileName);
+
+	void setUFO(UFO& ufo);
 };
 
 

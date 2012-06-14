@@ -134,6 +134,7 @@
     <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="ParamParser.h" />
     <ClInclude Include="Position.h" />
+    <ClInclude Include="QuestBank.h" />
     <ClInclude Include="res\Resource.h" />
     <ClInclude Include="SceneManagerContainer.h" />
     <ClInclude Include="Stage.h" />
@@ -169,6 +170,7 @@
     <ClCompile Include="ObjectFactory.cpp" />
     <ClCompile Include="ParamParser.cpp" />
     <ClCompile Include="Position.cpp" />
+    <ClCompile Include="QuestBank.cpp" />
     <ClCompile Include="SceneManagerContainer.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="StageManager.cpp" />
