@@ -39,7 +39,12 @@ void CGlassTD::createScene(void)
 	// ´´½¨³¡¾°
 	mpStageManager = new StageManager(mSceneMgr);
 	mpStageManager->setStage(new StagePass1(mSceneMgr, mpStageManager, mGui));
-
+	BillboardSet* bs = mSceneMgr->createBillboardSet(200);
+	bs->setMaterialName("Glass/Billboard");
+	mSceneMgr->getRootSceneNode()->attachObject(bs);
+	Billboard* b = bs->createBillboard(0, 200, 0);
+	b->setColour(ColourValue(0, 0.75f, 0));
+	bs->setDefaultHeight(40);
 }
 
 bool CGlassTD::frameRenderingQueued( const Ogre::FrameEvent& evt )
