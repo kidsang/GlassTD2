@@ -9,6 +9,7 @@
 #include "Maze.h"
 #include "MonsterState.h"
 #include <stack>
+#include "Animator.h"
 using namespace Ogre;
 
 class Cell;
@@ -113,6 +114,8 @@ protected:
 	float mSpeedTemp;
 	/// 怪物的血量
 	float mBlood;
+	/// 怪物最大血量
+	float mMaxBlood;
 	/// 怪物的面向（一个三维向量)
 	Ogre::Vector3 mFace;
 	/// 怪物的种类
@@ -130,8 +133,13 @@ protected:
 	CheckMethod* mCheckMethod;
 	/// 怪物与下一个目的坐标的距离
 	float mDistance;
+	/// 怪物头顶血条
+	BillboardSet* mHealthHUD;
+	/// 怪物动画列表
+	typedef std::deque<Animator<Monster>*> AnimatorList;
+	AnimatorList mAnimatorList;
 
-	std::vector<std::vector<Ogre::Vector3>> mMonsterPaths;
+	std::vector<std::vector<Ogre::Vector3> > mMonsterPaths;
 public:
 	Monster(){}
 	//Monster(SceneNode* node);
@@ -142,6 +150,26 @@ public:
 	void go(float timeSinceLastFrame);
 	float getBlood(void);
 	void setBlood(int mBlood);
+	float getMaxBlood(void)
+	{
+		return mMaxBlood;
+	}
+	void setMaxBlood(int blood)
+	{
+		mMaxBlood = blood;
+	}
+	BillboardSet* getHealthHUD()
+	{
+		return mHealthHUD;
+	}
+	void setHealthHUD(BillboardSet* health)
+	{
+		mHealthHUD = health;
+	}
+	SceneNode* getNode()
+	{
+		return mNode;
+	}
 	std::string getType(void);
 	Ogre::Vector3 getFace(void);
 	void setFace(Ogre::Vector3& mFace);

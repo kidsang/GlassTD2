@@ -1,6 +1,7 @@
 #include "Monster.h"
 #include "Cell.h"
 #include <algorithm>
+#include "MonsterHurtAnimator.h"
 #define CAN_STEP 0
 #define NOT_STEP 1
 #define HAS_STEP 2
@@ -36,6 +37,7 @@ Monster::Monster(SceneNode* node, Maze* maze)
 	mSpeedTemp(1),
 	/*mPos(Ogre::Vector3(BEGIN_POS_X, 10, BEGIN_POS_Y)),*/
 	mBlood(0),
+	mMaxBlood(0),
 	mFace(Ogre::Vector3(0, 0, 0)),
 	mRadius(1),
 	mType(),
@@ -46,7 +48,8 @@ Monster::Monster(SceneNode* node, Maze* maze)
 	mDistance(-0.1f),
 	mBulletHarmTime(0),
 	mBulletHarmValue(0),
-	mTerrainHarmvalue(0)
+	mTerrainHarmvalue(0),
+	mHealthHUD(0)
 {
 	mNode = node;
 	mMaze = maze;
@@ -118,6 +121,11 @@ Monster::~Monster(void)
 	delete mCheckMethod;
 	delete mMaze;
 	delete mMonsterState;
+	if (mHealthHUD)
+	{
+		mHealthHUD->clear();
+		delete mHealthHUD;
+	}
 }
 
 
@@ -157,6 +165,10 @@ void Monster::go(float timeSinceLastFrame)
 
 	///用于测试怪物死亡
 	//mBlood -= 10 * timeSinceLastFrame;
+
+	// 执行怪物动画列表
+	for (auto iter = mAnimatorList.begin(); iter != mAnimatorList.end(); ++iter)
+		(*iter)->run(timeSinceLastFrame, this);
 
 	mIsDead = mCheckMethod->checkIsDead(mBlood);
 	
@@ -252,6 +264,21 @@ void Monster::harmCheck(float timeSinceLastFrame)
 	mIsDead = mCheckMethod->checkIsDead(mBlood);
 	/// 根据地形改地图
 	changeMazeByTerrain(mMonsterState->getTerrainState());
+	/// 改变头顶血量显示
+	Billboard* health = mHealthHUD->getBillboard(0);
+	float healthPer = mBlood / mMaxBlood;
+	float healthLength = healthPer * mHealthHUD->getDefaultWidth();
+	health->setDimensions(healthLength, mHealthHUD->getDefaultHeight());
+	ColourValue maxHealthCol = ColourValue(0, 0.8f, 0);
+	ColourValue minHealthCol = ColourValue(1, 0, 0);
+	ColourValue currHealthCol = maxHealthCol * healthPer + minHealthCol * (1 - healthPer);
+	health->setColour(currHealthCol);
+
+	// test -kid
+	MonsterHurtAnimator* mha = new MonsterHurtAnimator(0);
+	mha->start(this);
+	mAnimatorList.push_back(mha);
+	mha->stop(this);
 }
 
 bool Monster::isMonsterDead()
@@ -764,7 +791,10 @@ Monster* MonsterFactory::createInstance(SceneManager* sceneMgr, Maze* maze)
 		mon->setRadius((float)atof(mParams["radius"].c_str()));
 
 	if (mParams.find("blood") != mParams.end())
+	{
 		mon->setBlood((float)atof(mParams["blood"].c_str()));
+		mon->setMaxBlood(mon->getBlood());
+	}
 
 	if (mParams.find("speed") != mParams.end())
 		mon->setSpeed((float)atof(mParams["speed"].c_str()));
@@ -772,6 +802,20 @@ Monster* MonsterFactory::createInstance(SceneManager* sceneMgr, Maze* maze)
 	if (mParams.find("spell") != mParams.end())
 		mon->setType((mParams["spell"].c_str()));
 	mon->setAnimate();
+
+	// 创建怪物头顶血条
+	BillboardSet* healthHUD = sceneMgr->createBillboardSet();
+	healthHUD->setMaterialName("Glass/Billboard");
+	healthHUD->setDefaultWidth(100);
+	healthHUD->setDefaultHeight(14);
+	SceneNode* hudNode = monsterNode->createChildSceneNode();
+	hudNode->attachObject(healthHUD);
+	/*Billboard* b2 = healthHUD->createBillboard(0, entity->getBoundingBox().getSize().y, 0);
+	b2->setColour(ColourValue::Black);*/
+	Billboard* b = healthHUD->createBillboard(0, entity->getBoundingBox().getSize().y, 0);
+	//b->setColour(ColourValue(0, 0.75f, 0));
+	//b->setDimensions(96, 12);
+	mon->setHealthHUD(healthHUD);
 	return mon;
 }
 
