@@ -133,7 +133,7 @@ protected:
 
 	std::vector<std::vector<Ogre::Vector3>> mMonsterPaths;
 public:
-	//Monster(){}
+	Monster(){}
 	//Monster(SceneNode* node);
 	Monster(SceneNode* node, Maze* maze);
 	//Monster(SceneNode* node, Maze* maze);

@@ -36,16 +36,5 @@
         timeInterval="0.5"
         timeInterval2="1.0"
         />
-    <wave
-        newWaveTime="8"
-        total="100"
-        smallNormalMonster="40"
-        smallIceMonster="10"
-        smallFireMonster="10"
-        bigNormalMonster="20"
-        bigIceMonster="10"
-        bigFireMonste="10"
-        timeInterval="0.2"
-        timeInterval2="0.5"
-        />
+  
   </waves>

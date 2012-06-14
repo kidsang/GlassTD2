@@ -103,6 +103,8 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	/// 新增一个monster管理器
 	MonsterManager::initialize(mMaze);
 	mMonsterManager = MonsterManager::getMonsterManager();
+	/// 初始化一波一波怪物的参数,每层的波数不一样
+	mMonsterManager->setMonsterWave("monsterWave.xml");
 
 	/// 加载飞船
 	UFO ufo = UFO(sceneManager, sceneManager->getRootSceneNode()->createChildSceneNode(),"ship.mesh", Ogre::Vector3(900,0,-50), 100);

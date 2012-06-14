@@ -69,9 +69,18 @@ private:
 
 	static std::vector<Wave> mMonsterWave ;
 
+	/// 当前一波的号码
+	static int mCurrentWaveNum;
+	/// 当前一波
 	static Wave mCurrentWave;
+	/// 工厂随机号，用来储存还需要生产该怪物的工厂
+	static std::vector<int> mMonsterFactoryRandom;
+	/// 现在的工厂号
+	static int mCurrentMonsterFactoryNum;
 
 	UFO mUFO;
+	/// 是否停止产生怪物
+	static bool mIsStopGenerateMonster;
 
 
 //protected:
@@ -88,6 +97,8 @@ public:
 
 	/// 设置怪物数量
 	void setMonsterNum(int num);
+
+	void removeNumByFactoryType(std::string type);
 
 	/// 怪物数量+1
 	void MonsterNumPlus(void);
@@ -120,6 +131,9 @@ public:
 	
 	/// 设置怪兽波数
 	void setMonsterWave(String fileName);
+
+	/// 波数开始
+	void waveBegin();
 
 	void setUFO(UFO& ufo);
 };
