@@ -13,7 +13,7 @@ void StagePass1Step1::init()
 	mStagePass1->getCamera()->setDirection(Vector3(0, -500, -1000));
 }
 
-void StagePass1Step1::run(float timeSinceLastFrame)
+bool StagePass1Step1::run(float timeSinceLastFrame)
 {
 	BulletManager& bulletManager = mStagePass1->getBulletManager();
 	Vector3 gravity = mStagePass1->getGravity();
@@ -27,9 +27,11 @@ void StagePass1Step1::run(float timeSinceLastFrame)
 		timeSinceLastFrame,
 		SceneManagerContainer::getSceneManager()
 		);
+		
+	return true;
 }
 
-void StagePass1Step1::onKeyPressed(const OIS::KeyEvent& arg)
+bool StagePass1Step1::onKeyPressed(const OIS::KeyEvent& arg)
 {
 	// ·¢ÅÚ
 	if (arg.key == OIS::KC_SPACE)
@@ -43,17 +45,23 @@ void StagePass1Step1::onKeyPressed(const OIS::KeyEvent& arg)
 		mStagePass1->getCannon()->changeBullet();
 	else if (arg.key >= OIS::KC_1 && arg.key <= OIS::KC_9)
 		mStagePass1->getCannon()->changeBullet(arg.key - OIS::KC_1);
+		
+	return true;
 }
 
-void StagePass1Step1::onMouseMoved(const OIS::MouseEvent& arg)
+bool StagePass1Step1::onMouseMoved(const OIS::MouseEvent& arg)
 {
 	mStagePass1->getCannon()->rotate(-arg.state.X.rel, arg.state.Y.rel);
+	
+	return true;
 }
 
-void StagePass1Step1::onMousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
+bool StagePass1Step1::onMousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
 {
+	return true;
 }
 
-void StagePass1Step1::onMouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
+bool StagePass1Step1::onMouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
 {
+	return true;
 }

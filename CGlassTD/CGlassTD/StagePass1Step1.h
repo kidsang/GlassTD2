@@ -13,11 +13,11 @@ public:
 
 	// 实现父类的函数
 	void init();
-	void run(float timeSinceLastFrame);
-	void onKeyPressed(const OIS::KeyEvent &arg);
-	void onMouseMoved(const OIS::MouseEvent &arg);
-	void onMousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
-	void onMouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
+	bool run(float timeSinceLastFrame);
+	bool onKeyPressed(const OIS::KeyEvent &arg);
+	bool onMouseMoved(const OIS::MouseEvent &arg);
+	bool onMousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
+	bool onMouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 
 private:
 	StagePass1* mStagePass1;
