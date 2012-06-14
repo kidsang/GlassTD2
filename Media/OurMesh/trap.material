@@ -1,4 +1,4 @@
-material 02-Default
+material 022
 {
 	technique
 	{
@@ -14,7 +14,7 @@ material 02-Default
 
 
 
-material Material#40
+material 023
 {
 	technique
 	{
