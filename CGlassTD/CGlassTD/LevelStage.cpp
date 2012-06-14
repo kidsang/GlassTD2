@@ -4,6 +4,7 @@ LevelStage::LevelStage(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	: Stage(sceneManager, stageManager, gui), mCurrentStep(-1)
 {
 	mSteps.clear();
+
 }
 
 LevelStage::~LevelStage()
