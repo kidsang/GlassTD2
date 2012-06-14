@@ -1,57 +1,46 @@
 #include "LevelStage.h"
 
 LevelStage::LevelStage(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui)
-	: Stage(sceneManager, stageManager, gui), mCurrentStep(-1)
+	: Stage(sceneManager, stageManager, gui), mCurrentStep(NULL)
 {
-	mSteps.clear();
-
 }
 
 LevelStage::~LevelStage()
 {
-	unsigned size = mSteps.size();
-	for (unsigned i = 0; i < size; ++i )
+	if (mCurrentStep != NULL)
 	{
-		if (mSteps[i] != NULL)
-		{
-			delete mSteps[i];
-			mSteps[i] = NULL;
-		}
+		delete mCurrentStep;
 	}
 }
 
-void LevelStage::pushStep(Step* step)
+void LevelStage::jumpToStep(Step* step)
 {
-	mSteps.push_back(step);
+	delete mCurrentStep;
+	mCurrentStep = step;
+	step->init();
 }
 
-void LevelStage::jumpToStep(unsigned i)
+bool LevelStage::run(float timeSinceLastFrame)
 {
-	mCurrentStep = i;
-	mSteps[mCurrentStep]->init();
+	return mCurrentStep->run(timeSinceLastFrame);
 }
 
-void LevelStage::run(float timeSinceLastFrame)
+bool LevelStage::onKeyPressed(const OIS::KeyEvent &arg)
 {
-	mSteps[mCurrentStep]->run(timeSinceLastFrame);
+	return mCurrentStep->onKeyPressed(arg);
 }
 
-void LevelStage::onKeyPressed(const OIS::KeyEvent &arg)
+bool LevelStage::onMouseMoved(const OIS::MouseEvent &arg)
 {
-	mSteps[mCurrentStep]->onKeyPressed(arg);
+	return mCurrentStep->onMouseMoved(arg);
 }
 
-void LevelStage::onMouseMoved(const OIS::MouseEvent &arg)
+bool LevelStage::onMousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
 {
-	mSteps[mCurrentStep]->onMouseMoved(arg);
+	return mCurrentStep->onMousePressed(arg, id);
 }
 
-void LevelStage::onMousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
+bool LevelStage::onMouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
 {
-	mSteps[mCurrentStep]->onMousePressed(arg, id);
-}
-
-void LevelStage::onMouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
-{
-	mSteps[mCurrentStep]->onMouseReleased(arg, id);
+	return mCurrentStep->onMouseReleased(arg, id);
 }
