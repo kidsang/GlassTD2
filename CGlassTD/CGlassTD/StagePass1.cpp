@@ -108,10 +108,9 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	UFO ufo = UFO(sceneManager, sceneManager->getRootSceneNode()->createChildSceneNode(),"ship.mesh", Ogre::Vector3(900,0,-50), 100);
 	/// ÉèÖÃÌì¿ÕºĞ
 	//mSceneManager->setSkyBox(true, "Examples/EveSpaceSkyBox");
-
-	this->pushStep(new StagePass1Step0(this));
-	this->pushStep(new StagePass1Step1(this));
-	this->jumpToStep(0);
+	
+	mCurrentStep = new StagePass1Step0(this);
+	mCurrentStep->init();
 }
 
 

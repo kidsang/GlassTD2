@@ -56,29 +56,25 @@ bool CGlassTD::frameRenderingQueued( const Ogre::FrameEvent& evt )
 bool CGlassTD::keyPressed(const OIS::KeyEvent &arg)
 {
 	MyGUI::InputManager::getInstance().injectKeyPress(MyGUI::KeyCode::Enum(arg.key), arg.text);
-	mpStageManager->getStage()->onKeyPressed(arg);
-	return true;
+	return mpStageManager->getStage()->onKeyPressed(arg);
 }
 
 bool CGlassTD::mouseMoved(const OIS::MouseEvent &arg)
 {
 	MyGUI::InputManager::getInstance().injectMouseMove(arg.state.X.abs, arg.state.Y.abs, arg.state.Z.abs);
-	mpStageManager->getStage()->onMouseMoved(arg);
-	return true;
+	return mpStageManager->getStage()->onMouseMoved(arg);
 }
 
 bool CGlassTD::mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
 {
 	MyGUI::InputManager::getInstance().injectMousePress(arg.state.X.abs, arg.state.Y.abs, MyGUI::MouseButton::Enum(id));
-	mpStageManager->getStage()->onMousePressed(arg, id);
-	return true;
+	return mpStageManager->getStage()->onMousePressed(arg, id);
 }
 
 bool CGlassTD::mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
 {
 	MyGUI::InputManager::getInstance().injectMouseRelease(arg.state.X.abs, arg.state.Y.abs, MyGUI::MouseButton::Enum(id));
-	mpStageManager->getStage()->onMouseReleased(arg, id);
-	return true;
+	return mpStageManager->getStage()->onMouseReleased(arg, id);
 }
 
 

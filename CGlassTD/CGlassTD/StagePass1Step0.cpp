@@ -1,6 +1,7 @@
 #include "StagePass1Step0.h"
 #include "SceneManagerContainer.h"
 #include "CellType.h"
+#include "StagePass1Step1.h"
 #include <OgreMath.h>
 #include <sstream>
 
@@ -34,18 +35,19 @@ void StagePass1Step0::init()
 	debugText->setCaption("no");
 }
 
-void StagePass1Step0::run(float timeSinceLastFrame)
+bool StagePass1Step0::run(float timeSinceLastFrame)
 {
+	return true;
 }
 
-void StagePass1Step0::onKeyPressed(const OIS::KeyEvent& arg)
+bool StagePass1Step0::onKeyPressed(const OIS::KeyEvent& arg)
 {
 	switch (arg.key)
 	{
 	// 按 G 结束布局阶段，开始打怪阶段
 	case OIS::KC_G:
 		mStagePass1->getMaze()->clearShadow();
-		mStagePass1->jumpToStep(1);
+		mStagePass1->jumpToStep(new StagePass1Step1(mStagePass1));
 		break;
 	// 暂时
 	// 按 A 键地刺, 按 B 键沼泽， 按 C 键捕兽夹
@@ -59,21 +61,23 @@ void StagePass1Step0::onKeyPressed(const OIS::KeyEvent& arg)
 		mCurrentState = WITH_TRAP;
 		break;
 	}
+	
+	return true;
 }
 
 
-void StagePass1Step0::onMouseMoved(const OIS::MouseEvent& arg)
+bool StagePass1Step0::onMouseMoved(const OIS::MouseEvent& arg)
 {
-	if (mCurrentState == NOTHING) return;  // 用户并没有选中要布置的陷阱
+	if (mCurrentState == NOTHING) return true;  // 用户并没有选中要布置的陷阱
 	
 	// 将屏幕坐标转换成场景中的三维坐标
 	Ogre::Vector3 position;
-	if (!this->convert(arg, position)) return;
+	if (!this->convert(arg, position)) return true;
 	
 	// 根据转换后的坐标获得该位置的cell
 	Maze* maze = mStagePass1->getMaze();
 	Cell* cell = maze->getCellByPos(position);
-	if (cell == NULL) return;
+	if (cell == NULL) return true;
 
 	std::ostringstream x;
 	std::ostringstream y;
@@ -144,15 +148,17 @@ void StagePass1Step0::onMouseMoved(const OIS::MouseEvent& arg)
 			mLastPos = position;
 		}
 	}
+	
+	return true;
 }
 
-void StagePass1Step0::onMousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
+bool StagePass1Step0::onMousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
 {
-	if (id != OIS::MB_Left) return;  // 暂时让只有左键才会生效
-	if (mCurrentState == NOTHING) return;  // 用户没有选中任何陷阱
+	if (id != OIS::MB_Left) return true;  // 暂时让只有左键才会生效
+	if (mCurrentState == NOTHING) return true;  // 用户没有选中任何陷阱
 
 	Ogre::Vector3 position;
-	if (!this->convert(arg, position)) return;
+	if (!this->convert(arg, position)) return true;
 	
 	Maze* maze = mStagePass1->getMaze();
 	switch (mCurrentState)
@@ -167,10 +173,13 @@ void StagePass1Step0::onMousePressed(const OIS::MouseEvent &arg, OIS::MouseButto
 		maze->editMaze(position, TRAP);
 		break;
 	}
+	
+	return true;
 }
 
-void StagePass1Step0::onMouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
+bool StagePass1Step0::onMouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
 {
+	return true;
 }
 
 bool StagePass1Step0::convert(const OIS::MouseEvent& arg, Ogre::Vector3& output)

@@ -1,0 +1,47 @@
+material 31
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.478431 0.156863 0.219608 1
+			diffuse 0.478431 0.156863 0.219608 1
+			specular 0 0 0 1 10
+			scene_blend add
+
+			texture_unit
+			{
+				colour_op_ex blend_manual src_manual src_current 0.1 1 1 1
+				colour_op_multipass_fallback dest_colour zero
+				alpha_op_ex source1 src_manual src_current 0.1
+			}
+		}
+
+	}
+
+}
+
+
+
+material 30
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.32549 0.301961 0.784314 1
+			diffuse 0.32549 0.301961 0.784314 1
+			specular 0 0 0 1 10
+			scene_blend add
+
+			texture_unit
+			{
+				colour_op_ex blend_manual src_manual src_current 0.1 1 1 1
+				colour_op_multipass_fallback dest_colour zero
+				alpha_op_ex source1 src_manual src_current 0.1
+			}
+		}
+
+	}
+
+}
