@@ -131,7 +131,6 @@ Monster::~Monster(void)
 
 void Monster::go(float timeSinceLastFrame)
 {
-	///harmCheck(timeSinceLastFrame);
 	/// 给动画增加时间
 	addTimeToAnimation(timeSinceLastFrame);
 
