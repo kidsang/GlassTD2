@@ -228,7 +228,7 @@ void MonsterManager::updateState( std::vector<NameValueList> explodedBullets, fl
 		delete (*iter);
 		mMonstersList.erase(std::find(mMonstersList.begin(), mMonstersList.end(), (*iter)));
 	}
-	mMonstersList.clear();
+	mMonsterRemoveList.clear();
 
 
 	

@@ -18,3 +18,10 @@ MonsterDeadAnimator::MonsterDeadAnimator(float timeInterval)
 MonsterDeadAnimator::~MonsterDeadAnimator(void)
 {
 }
+
+void MonsterDeadAnimator::runImpl( float timeSinceLastFrame, Monster* object )
+{
+	// 在此调用播放死亡动画
+
+	stop(object);
+}

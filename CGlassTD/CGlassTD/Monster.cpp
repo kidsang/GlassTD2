@@ -125,16 +125,12 @@ Monster::~Monster(void)
 	}
 	if(mNode)
 	{
-		auto iter = mNode->getAttachedObjectIterator().begin();
-		while (iter != mNode->getAttachedObjectIterator().end())
-		{
-			delete (*iter).second;
-			++iter;
-		}
+		MovableObject* obj = mNode->getAttachedObject(0);
+		delete obj;
 		mNode->getParentSceneNode()->removeAndDestroyChild(mNode->getName());
 	}
 	delete mCheckMethod;
-	delete mMaze;
+	//delete mMaze;
 	delete mMonsterState;
 }
 

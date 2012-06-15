@@ -13,12 +13,7 @@ public:
 	MonsterDeadAnimator(float timeInterval);
 	~MonsterDeadAnimator(void);
 
-	virtual void runImpl(float timeSinceLastFrame, Monster* object)
-	{
-		// 在此调用播放死亡动画
-
-		stop(object);
-	}
+	virtual void runImpl(float timeSinceLastFrame, Monster* object);
 };
 
 #endif // MonsterDeadAnimator_h__
