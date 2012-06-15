@@ -129,7 +129,9 @@
     <ClInclude Include="CheckMethod.h" />
     <ClInclude Include="LevelStage.h" />
     <ClInclude Include="Maze.h" />
+    <ClInclude Include="Money.h" />
     <ClInclude Include="Monster.h" />
+    <ClInclude Include="MonsterDeadAnimator.h" />
     <ClInclude Include="MonsterHurtAnimator.h" />
     <ClInclude Include="MonsterManager.h" />
     <ClInclude Include="MonsterState.h" />
@@ -169,7 +171,9 @@
     <ClCompile Include="CheckMethod.cpp" />
     <ClCompile Include="LevelStage.cpp" />
     <ClCompile Include="Maze.cpp" />
+    <ClCompile Include="Money.cpp" />
     <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="MonsterDeadAnimator.cpp" />
     <ClCompile Include="MonsterHurtAnimator.cpp" />
     <ClCompile Include="MonsterManager.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
