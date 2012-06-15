@@ -138,6 +138,7 @@
     <ClInclude Include="ParamParser.h" />
     <ClInclude Include="Position.h" />
     <ClInclude Include="QuestBank.h" />
+    <ClInclude Include="Questions.h" />
     <ClInclude Include="res\Resource.h" />
     <ClInclude Include="SceneManagerContainer.h" />
     <ClInclude Include="Score.h" />
@@ -178,6 +179,7 @@
     <ClCompile Include="ParamParser.cpp" />
     <ClCompile Include="Position.cpp" />
     <ClCompile Include="QuestBank.cpp" />
+    <ClCompile Include="Questions.cpp" />
     <ClCompile Include="SceneManagerContainer.cpp" />
     <ClCompile Include="Score.cpp" />
     <ClCompile Include="Stage.cpp" />

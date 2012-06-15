@@ -1,6 +1,7 @@
 #include "CGlassTD.h"
 #include "StagePass1.h"
 #include "startStage.h"
+#include "Questions.h"
 
 //-------------------------------------------------------------------------------------
 CGlassTD::CGlassTD(void)
@@ -31,6 +32,8 @@ void CGlassTD::createScene(void)
 	mGuiPlatform->initialise(mWindow, mSceneMgr);
 	mGui = new MyGUI::Gui();
 	mGui->initialise();
+	
+	Questions.init(mGui);
 
 	// test gui
 	MyGUI::ButtonPtr button = mGui->createWidget<MyGUI::Button>("Button", 10, 10, 300, 26, MyGUI::Align::Default, "Main");
