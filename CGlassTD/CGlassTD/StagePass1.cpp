@@ -98,7 +98,6 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 
 	}
 	
-	MyGUI::LayoutManager::getInstance().loadLayout("start.layout");
 	mMaze = new Maze(sceneManager, map, mapWidth, mapHeight,start1, start2, end);
 
 	/// 新增一个monster管理器

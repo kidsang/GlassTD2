@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="Widget" skin="skin_Default" position="0 0 800 600" layer="Back" name="_Main">
+        <Property key="Enable" value="true"/>
+        <Widget type="Button" skin="Button" position="60 65 205 100" name="stage1">
+            <Property key="Caption" value="stage1"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="305 205 205 100" name="stage2">
+            <Property key="Caption" value="stage2"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="480 380 250 105" name="stage3">
+            <Property key="Caption" value="stage3"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="570 40 135 50" name="back">
+            <Property key="Caption" value="back"/>
+        </Widget>
+    </Widget>
+</MyGUI>
