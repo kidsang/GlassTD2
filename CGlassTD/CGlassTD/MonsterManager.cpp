@@ -366,17 +366,35 @@ void MonsterManager::waveBegin()
 
 	}
 	if(mCurrentWave.smallNormalMonster == 0)
+	{	
 		removeNumByFactoryType("SmallNormalMonster");
+		mCurrentWave.smallNormalMonster--;
+	}
 	if(mCurrentWave.smallIceMonster == 0)
+	{	
 		removeNumByFactoryType("SmallIceMonster");
+		mCurrentWave.smallIceMonster--;
+	}
 	if(mCurrentWave.smallFireMonster == 0)
+	{
 		removeNumByFactoryType("SmallFireMonster");
-    if(mCurrentWave.bigNormalMonster == 0)
+		mCurrentWave.smallFireMonster--;
+	}
+	if(mCurrentWave.bigNormalMonster == 0)
+	{
 		removeNumByFactoryType("BigNormalMonster");
+		mCurrentWave.bigNormalMonster--;
+	}
 	if(mCurrentWave.bigIceMonster == 0)
+	{
 		removeNumByFactoryType("BigIceMonster");
+		mCurrentWave.bigIceMonster--;
+	}
 	if(mCurrentWave.bigFireMonster == 0)
+	{
 		removeNumByFactoryType("BigFireMonster");
+		mCurrentWave.bigFireMonster--;
+	}
 
 	srand(time(0));
 	/// 将随机化的工厂号放在当前工厂号
@@ -393,14 +411,16 @@ void MonsterManager::removeNumByFactoryType( std::string type )
 			break;
 		numMark++;
 	}
-	for(auto iter = mMonsterFactoryRandom.begin(); iter != mMonsterFactoryRandom.end(); ++iter)
+	/*for(auto iter = mMonsterFactoryRandom.begin(); iter != mMonsterFactoryRandom.end(); ++iter)
 	{
-		if((*iter) == numMark)
-		{	
-			mMonsterFactoryRandom.erase(iter);
-			break;
-		}
+	if((*iter) == numMark)
+	{	
+	mMonsterFactoryRandom.erase(iter);
+	break;
 	}
+	}*/
+	auto iter = std::find(mMonsterFactoryRandom.begin(), mMonsterFactoryRandom.end(), numMark);
+	mMonsterFactoryRandom.erase(iter);
 }
 
 void MonsterManager::destoryMonster( Monster* monster )

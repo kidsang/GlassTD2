@@ -292,7 +292,7 @@ public:
 	MonsterFactory(NameValueList params)
 		:mParams(params)
 	{
-		mType = params["spell"];
+		mType = params["name"];
 	}
 	~MonsterFactory()
 	{
