@@ -1,6 +1,6 @@
 #include "CGlassTD.h"
 #include "StagePass1.h"
-#include "startStage.h"
+//#include "StartStage.h"
 
 //-------------------------------------------------------------------------------------
 CGlassTD::CGlassTD(void)
