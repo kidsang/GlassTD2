@@ -1,8 +1,11 @@
 #include "MonsterDeadAnimator.h"
+#include "MonsterManager.h"
 
 void MonsterDead(Monster* monster)
 {
-	SceneNode* node = monster->getNode();
+	//SceneNode* node = monster->getNode();
+	MonsterManager* mgr = monster->getCreater();
+	mgr->destoryMonster(monster);
 }
 
 MonsterDeadAnimator::MonsterDeadAnimator(float timeInterval)

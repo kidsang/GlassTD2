@@ -97,7 +97,7 @@ void MonsterManager::monsterGenerate(Ogre::SceneManager* sceneManager, float tim
 	/// std::list<Monster*> monsterList = mMonsterMgr->getMonstersList();
 	if(mMonsterMgr->getTimeCount() > mNewMonsterTime || mMonsterMgr->getTimeCount() == mNewMonsterTime)
 	{
-		Monster* monster = mCurrentMonsterFactory->createInstance(sceneManager, mMaze);
+		Monster* monster = mCurrentMonsterFactory->createInstance(sceneManager, mMaze, this);
 		/// monster->monsterScale(0.1, 0.1, 0.1);
 		monster->setAnimate();
 		mMonstersList.push_back(monster);
@@ -228,6 +228,7 @@ void MonsterManager::updateState( std::vector<NameValueList> explodedBullets, fl
 		delete (*iter);
 		mMonstersList.erase(std::find(mMonstersList.begin(), mMonstersList.end(), (*iter)));
 	}
+	mMonstersList.clear();
 
 
 	
