@@ -2,6 +2,8 @@
 #include "SceneManagerContainer.h"
 #include "CellType.h"
 #include "StagePass1Step1.h"
+#include "Score.h"
+#include "Money.h"
 #include <OgreMath.h>
 #include <sstream>
 
@@ -160,17 +162,28 @@ bool StagePass1Step0::onMousePressed(const OIS::MouseEvent &arg, OIS::MouseButto
 	Ogre::Vector3 position;
 	if (!this->convert(arg, position)) return true;
 	
+	Money* money = Money::getInstance();
+	
 	Maze* maze = mStagePass1->getMaze();
 	switch (mCurrentState)
 	{
 	case WITH_SWAMP:
-		maze->editMaze(position, SWAMP);
+		if (money->placeTrap(Money::TrapType::SWAMP))
+		{
+			maze->editMaze(position, SWAMP);
+		}
 		break;
 	case WITH_SPIKEWEED:
-		maze->editMaze(position, SPIKEWEED);
+		if (money->placeTrap(Money::TrapType::SPIKEWEED))
+		{
+			maze->editMaze(position, SPIKEWEED);
+		}
 		break;
 	case WITH_TRAP:
-		maze->editMaze(position, TRAP);
+		if (money->placeTrap(Money::TrapType::TRAP))
+		{
+			maze->editMaze(position, TRAP);
+		}
 		break;
 	}
 	

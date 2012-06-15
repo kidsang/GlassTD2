@@ -129,6 +129,7 @@
     <ClInclude Include="CheckMethod.h" />
     <ClInclude Include="LevelStage.h" />
     <ClInclude Include="Maze.h" />
+    <ClInclude Include="Money.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="MonsterDeadAnimator.h" />
     <ClInclude Include="MonsterHurtAnimator.h" />
@@ -140,6 +141,7 @@
     <ClInclude Include="QuestBank.h" />
     <ClInclude Include="res\Resource.h" />
     <ClInclude Include="SceneManagerContainer.h" />
+    <ClInclude Include="Score.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="StageManager.h" />
     <ClInclude Include="StagePass1.h" />
@@ -168,6 +170,7 @@
     <ClCompile Include="CheckMethod.cpp" />
     <ClCompile Include="LevelStage.cpp" />
     <ClCompile Include="Maze.cpp" />
+    <ClCompile Include="Money.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="MonsterDeadAnimator.cpp" />
     <ClCompile Include="MonsterHurtAnimator.cpp" />
@@ -177,6 +180,7 @@
     <ClCompile Include="Position.cpp" />
     <ClCompile Include="QuestBank.cpp" />
     <ClCompile Include="SceneManagerContainer.cpp" />
+    <ClCompile Include="Score.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="StageManager.cpp" />
     <ClCompile Include="StagePass1.cpp" />
