@@ -116,16 +116,24 @@ Monster::Monster(SceneNode* node, Maze* maze)
 
 Monster::~Monster(void)
 {
-	/*if(mNode != NULL)
-		delete mNode;*/
-	delete mCheckMethod;
-	delete mMaze;
-	delete mMonsterState;
 	if (mHealthHUD)
 	{
 		mHealthHUD->clear();
 		delete mHealthHUD;
 	}
+	if(mNode)
+	{
+		auto iter = mNode->getAttachedObjectIterator().begin();
+		while (iter != mNode->getAttachedObjectIterator().end())
+		{
+			delete (*iter).second;
+			++iter;
+		}
+		mNode->getParentSceneNode()->removeAndDestroyChild(mNode->getName());
+	}
+	delete mCheckMethod;
+	delete mMaze;
+	delete mMonsterState;
 }
 
 
@@ -275,10 +283,10 @@ void Monster::harmCheck(float timeSinceLastFrame)
 	health->setColour(currHealthCol);
 
 	// test -kid
-	MonsterHurtAnimator* mha = new MonsterHurtAnimator(0);
+	/*MonsterHurtAnimator* mha = new MonsterHurtAnimator(0);
 	mha->start(this);
 	mAnimatorList.push_back(mha);
-	mha->stop(this);
+	mha->stop(this);*/
 }
 
 bool Monster::isMonsterDead()

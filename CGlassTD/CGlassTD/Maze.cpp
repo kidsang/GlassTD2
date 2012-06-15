@@ -70,6 +70,8 @@ Maze::Maze(SceneManager* sceneManager, int* map, int width, int height, Ogre::Ve
 Maze::~Maze(void)
 {
 	delete this->pMapInfo;
+	delete this->mMap;
+	delete this->pMapInfo;  
 }
 
 Cell* Maze::getMazeInfo()

@@ -222,13 +222,12 @@ void MonsterManager::updateState( std::vector<NameValueList> explodedBullets, fl
 		(*iter2)->go(timeSinceLastFrame);		
 	}
 
-	// 触发怪物死亡动画
-	/*for (auto iter = deadMonster.begin(); iter != deadMonster.end(); ++iter)
+	// 销毁monster
+	for (auto iter = mMonsterRemoveList.begin(); iter != mMonsterRemoveList.end(); ++iter)
 	{
-		
-		mMonstersList.erase((std::find(mMonstersList.begin(), mMonstersList.end(), (*iter))));
-	}*/
-
+		delete (*iter);
+		mMonstersList.erase(std::find(mMonstersList.begin(), mMonstersList.end(), (*iter)));
+	}
 
 
 	
@@ -401,4 +400,9 @@ void MonsterManager::removeNumByFactoryType( std::string type )
 			break;
 		}
 	}
+}
+
+void MonsterManager::destoryMonster( Monster* monster )
+{
+	mMonsterRemoveList.push_back(monster);
 }
