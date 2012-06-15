@@ -1,15 +1,20 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Canvas" skin="Canvas" position="0 0 800 600">
-        <Widget type="Button" skin="Button" position="75 150 105 50" name="juqingmode">
-            <Property key="ImageName" value="lifeMode.png"/>
-            <Property key="ImageTexture" value="lifeMode.png"/>
-            <Property key="ImageResource" value="lifeMode.png"/>
-            <Property key="ImageGroup" value="lifeMode.png"/>
-            <Property key="ModeImage" value="true"/>
+    <Widget type="Widget" skin="skin_Default" position="0 0 800 600" layer="Back" name="_Main">
+        <Property key="Enabled" value="true"/>
+        <UserString key="LE_TargetWidgetType" value="Window"/>
+        <Widget type="Button" skin="Button" position="95 110 105 50" name="juqingmode">
+            <Property key="ImageResource" value="[DEFAULT]"/>
+            <Property key="Caption" value="juqingMode"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="225 225 115 55" name="lifeMode"/>
-        <Widget type="Button" skin="Button" position="395 285 120 55" name="setting"/>
-        <Widget type="Button" skin="Button" position="655 475 100 55" name="quit"/>
+        <Widget type="Button" skin="Button" position="225 225 115 55" name="lifeMode">
+            <Property key="Caption" value="lifeMode"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="395 285 120 55" name="setting">
+            <Property key="Caption" value="setting"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="655 475 100 55" name="quit">
+            <Property key="Caption" value="quit"/>
+        </Widget>
     </Widget>
 </MyGUI>
