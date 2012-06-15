@@ -52,7 +52,7 @@ bool StagePass1Step1::onKeyPressed(const OIS::KeyEvent& arg)
 
 bool StagePass1Step1::onMouseMoved(const OIS::MouseEvent& arg)
 {
-	mStagePass1->getCannon()->rotate(-arg.state.X.rel, arg.state.Y.rel);
+	mStagePass1->getCannon()->rotate(-arg.state.X.rel, arg.state.Y.rel, mStagePass1->getCamera());
 	
 	return true;
 }
