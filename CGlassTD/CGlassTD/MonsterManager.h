@@ -51,6 +51,8 @@ private:
 	static std::vector<MonsterFactory*> mMonsterFactoryList;
 	/// 怪物列表
 	static std::list<Monster*> mMonstersList;
+	/// 需要被移除的怪物列表
+	std::list<Monster*> mMonsterRemoveList;
 	/// 怪物数量
 	static int mMonsterNum;
 	/// 怪物管理器，单一
@@ -122,6 +124,10 @@ public:
 	void setMonsterWave(String fileName);
 
 	void setUFO(UFO& ufo);
+
+	/// 删除指定的Monster
+	/// @note 会删除其一切，包括节点和模型
+	void destoryMonster(Monster* monster);
 };
 
 

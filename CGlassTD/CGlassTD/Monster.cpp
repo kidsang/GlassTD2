@@ -1,6 +1,7 @@
 #include "Monster.h"
 #include "Cell.h"
 #include <algorithm>
+#include "MonsterHurtAnimator.h"
 #define CAN_STEP 0
 #define NOT_STEP 1
 #define HAS_STEP 2
@@ -115,16 +116,24 @@ Monster::Monster(SceneNode* node, Maze* maze)
 
 Monster::~Monster(void)
 {
-	/*if(mNode != NULL)
-		delete mNode;*/
-	delete mCheckMethod;
-	delete mMaze;
-	delete mMonsterState;
 	if (mHealthHUD)
 	{
 		mHealthHUD->clear();
 		delete mHealthHUD;
 	}
+	if(mNode)
+	{
+		auto iter = mNode->getAttachedObjectIterator().begin();
+		while (iter != mNode->getAttachedObjectIterator().end())
+		{
+			delete (*iter).second;
+			++iter;
+		}
+		mNode->getParentSceneNode()->removeAndDestroyChild(mNode->getName());
+	}
+	delete mCheckMethod;
+	delete mMaze;
+	delete mMonsterState;
 }
 
 
@@ -164,6 +173,10 @@ void Monster::go(float timeSinceLastFrame)
 
 	///用于测试怪物死亡
 	//mBlood -= 10 * timeSinceLastFrame;
+
+	// 执行怪物动画列表
+	for (auto iter = mAnimatorList.begin(); iter != mAnimatorList.end(); ++iter)
+		(*iter)->run(timeSinceLastFrame, this);
 
 	mIsDead = mCheckMethod->checkIsDead(mBlood);
 	
@@ -268,6 +281,12 @@ void Monster::harmCheck(float timeSinceLastFrame)
 	ColourValue minHealthCol = ColourValue(1, 0, 0);
 	ColourValue currHealthCol = maxHealthCol * healthPer + minHealthCol * (1 - healthPer);
 	health->setColour(currHealthCol);
+
+	// test -kid
+	/*MonsterHurtAnimator* mha = new MonsterHurtAnimator(0);
+	mha->start(this);
+	mAnimatorList.push_back(mha);
+	mha->stop(this);*/
 }
 
 bool Monster::isMonsterDead()

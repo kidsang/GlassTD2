@@ -9,6 +9,7 @@
 #include "Maze.h"
 #include "MonsterState.h"
 #include <stack>
+#include "Animator.h"
 using namespace Ogre;
 
 class Cell;
@@ -134,8 +135,11 @@ protected:
 	float mDistance;
 	/// 怪物头顶血条
 	BillboardSet* mHealthHUD;
+	/// 怪物动画列表
+	typedef std::deque<Animator<Monster>*> AnimatorList;
+	AnimatorList mAnimatorList;
 
-	std::vector<std::vector<Ogre::Vector3>> mMonsterPaths;
+	std::vector<std::vector<Ogre::Vector3> > mMonsterPaths;
 public:
 	//Monster(){}
 	//Monster(SceneNode* node);
@@ -161,6 +165,10 @@ public:
 	void setHealthHUD(BillboardSet* health)
 	{
 		mHealthHUD = health;
+	}
+	SceneNode* getNode()
+	{
+		return mNode;
 	}
 	std::string getType(void);
 	Ogre::Vector3 getFace(void);
