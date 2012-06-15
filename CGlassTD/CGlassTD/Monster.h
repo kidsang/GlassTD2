@@ -170,6 +170,10 @@ public:
 	{
 		return mNode;
 	}
+	void addAnimator(Animator<Monster>* ani)
+	{
+		mAnimatorList.push_back(ani);
+	}
 	std::string getType(void);
 	Ogre::Vector3 getFace(void);
 	void setFace(Ogre::Vector3& mFace);

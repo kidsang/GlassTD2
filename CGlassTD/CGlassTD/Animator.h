@@ -15,6 +15,7 @@ class Animator
 {
 	typedef void(*AnimatorCallback)(T* object);
 	typedef std::vector<AnimatorCallback> CallbackList;
+
 private:
 	/// 两次动画触发的时间间隔，以秒计算
 	float mTimeInterval;

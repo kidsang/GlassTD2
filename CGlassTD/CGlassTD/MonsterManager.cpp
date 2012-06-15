@@ -1,6 +1,6 @@
 #include "MonsterManager.h"
 #include "ParamParser.h"
-
+#include "MonsterDeadAnimator.h"
 
 
 MonsterManager* MonsterManager::mMonsterMgr = NULL;
@@ -195,27 +195,19 @@ void MonsterManager::updateState( std::vector<NameValueList> explodedBullets, fl
 	/// 储存子弹信息
 	storeExplodedBullets(explodedBullets);
 
+	std::vector<Monster*> deadMonster;
 	/// 遍历怪物
 	for(auto iter2 = mMonstersList.begin(); iter2 != mMonstersList.end(); ++iter2)
 	{
-		/// 如果怪物死亡，就销毁节点
-		while((*iter2)->isMonsterDead())
+		/// 如果怪物死亡，就加入死亡列表
+		if ((*iter2)->isMonsterDead())
 		{
-			//(*iter2)->destroyItself();
-			/*Monster* mon = new Monster();
-			memmove(mon, (*iter2), sizeof(*iter2));*/
-			//Monster* mon = (Monster*)(*iter2);
-			//std::list::iterator it = iter2 + 1;
-			
-			/*mMonstersList.erase(iter2++);
-
-			mMonsterNum--;
-			if(iter2 == mMonstersList.end())
-				break;*/
-
+			deadMonster.push_back((*iter2));
+			// 调用死亡动画
+			MonsterDeadAnimator* mda = new MonsterDeadAnimator(0);
+			mda->start((*iter2));
+			(*iter2)->addAnimator(mda);
 		}
-		if(iter2 == mMonstersList.end())
-			break;
 
 		/// 遍历子弹
 		for(auto iter = mExplodeBulletsLists.begin(); iter != mExplodeBulletsLists.end(); ++iter)
@@ -227,10 +219,16 @@ void MonsterManager::updateState( std::vector<NameValueList> explodedBullets, fl
 		/// 伤害检测
 		(*iter2)->harmCheck(timeSinceLastFrame);
 		/// 怪物走
-		(*iter2)->go(timeSinceLastFrame);
-		
-		
+		(*iter2)->go(timeSinceLastFrame);		
 	}
+
+	// 触发怪物死亡动画
+	/*for (auto iter = deadMonster.begin(); iter != deadMonster.end(); ++iter)
+	{
+		
+		mMonstersList.erase((std::find(mMonstersList.begin(), mMonstersList.end(), (*iter))));
+	}*/
+
 
 
 	
