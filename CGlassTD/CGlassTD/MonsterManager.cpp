@@ -199,7 +199,12 @@ void MonsterManager::updateState( std::vector<NameValueList> explodedBullets, fl
 		
 	}
 
-
+	// Ïú»Ùmonster
+	for (auto iter = mMonsterRemoveList.begin(); iter != mMonsterRemoveList.end(); ++iter)
+	{
+		delete (*iter);
+		mMonstersList.erase(std::find(mMonstersList.begin(), mMonstersList.end(), (*iter)));
+	}
 	
 }
 
@@ -297,4 +302,9 @@ void MonsterManager::setMonsterWave( String fileName )
 void MonsterManager::setUFO( UFO& ufo )
 {
 	mUFO = ufo;
+}
+
+void MonsterManager::destoryMonster( Monster* monster )
+{
+	mMonsterRemoveList.push_back(monster);
 }
