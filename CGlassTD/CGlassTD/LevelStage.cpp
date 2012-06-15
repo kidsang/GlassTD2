@@ -22,7 +22,7 @@ void LevelStage::jumpToStep(Step* step)
 
 bool LevelStage::run(float timeSinceLastFrame)
 {
-	return mCurrentStep->run(timeSinceLastFrame);
+	return true;
 }
 
 bool LevelStage::onKeyPressed(const OIS::KeyEvent &arg)

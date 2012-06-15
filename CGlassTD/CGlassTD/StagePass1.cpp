@@ -152,3 +152,21 @@ Vector3 StagePass1::getGravity()
 {
 	return mGravity;
 }
+
+bool StagePass1::run( float timeSinceLastFrame )
+{
+	// 播放摄像机动画
+	for (auto iter = mCameraAnimatorList.begin(); iter != mCameraAnimatorList.end(); ++iter)
+	{
+		if (!(*iter)->run(timeSinceLastFrame, mCamera))
+		{
+			// 丑陋的代码by kid
+			jumpToStep(new StagePass1Step1(this));
+			delete (*iter);
+			mCameraAnimatorList.erase(iter);
+			break;
+		}
+	}
+
+	return mCurrentStep->run(timeSinceLastFrame);
+}

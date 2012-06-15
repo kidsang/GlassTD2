@@ -120,6 +120,7 @@
     <ClInclude Include="BaseApplication.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletManager.h" />
+    <ClInclude Include="CameraStep02Step1Animator.h" />
     <ClInclude Include="Cannon.h" />
     <ClInclude Include="Cell.h" />
     <ClInclude Include="CellType.h" />

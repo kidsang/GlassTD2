@@ -6,6 +6,7 @@
 #include "Money.h"
 #include <OgreMath.h>
 #include <sstream>
+#include "CameraStep02Step1Animator.h"
 
 
 bool equal(Cell* firstCell, Cell* secondCell)
@@ -29,7 +30,8 @@ void StagePass1Step0::init()
 {
 	/// 改变镜头视角
 	mStagePass1->getCamera()->setPosition(Vector3(0, 2000, 1000));
-	mStagePass1->getCamera()->setDirection(-mStagePass1->getCamera()->getPosition());
+	//mStagePass1->getCamera()->setDirection(-mStagePass1->getCamera()->getPosition());
+	mStagePass1->getCamera()->lookAt(Vector3(0, 0, 0));
 
 	// debug text
 	debugText = mStagePass1->getGUI()->createWidget<MyGUI::StaticText>("TextBox", 10, 40, 300, 300, MyGUI::Align::Default, "Main");
@@ -48,8 +50,14 @@ bool StagePass1Step0::onKeyPressed(const OIS::KeyEvent& arg)
 	{
 	// 按 G 结束布局阶段，开始打怪阶段
 	case OIS::KC_G:
-		mStagePass1->getMaze()->clearShadow();
-		mStagePass1->jumpToStep(new StagePass1Step1(mStagePass1));
+		{
+			mStagePass1->getMaze()->clearShadow();
+			// 丑陋的代码by kid
+			CameraStep02Step1Animator* ani = new CameraStep02Step1Animator(0);
+			ani->start(mStagePass1->getCamera());
+			mStagePass1->addCameraAnimator(ani);
+			//mStagePass1->jumpToStep(new StagePass1Step1(mStagePass1));
+		}
 		break;
 	// 暂时
 	// 按 A 键地刺, 按 B 键沼泽， 按 C 键捕兽夹
