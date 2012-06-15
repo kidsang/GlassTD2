@@ -1,6 +1,6 @@
 #include "MonsterManager.h"
 #include "ParamParser.h"
-
+#include "MonsterDeadAnimator.h"
 
 
 MonsterManager* MonsterManager::mMonsterMgr = NULL;
@@ -15,6 +15,10 @@ std::list<Monster*> MonsterManager::mMonstersList = std::list<Monster*>();
 float MonsterManager::mNewMonsterTime = 0;
 std::vector<Wave> MonsterManager::mMonsterWave = std::vector<Wave>();
 Wave MonsterManager::mCurrentWave = Wave();
+std::vector<int> MonsterManager::mMonsterFactoryRandom = std::vector<int>();
+int MonsterManager::mCurrentMonsterFactoryNum = 0;
+int MonsterManager::mCurrentWaveNum = 0;
+bool MonsterManager::mIsStopGenerateMonster = false;
 
 MonsterManager::MonsterManager()
 {
@@ -62,8 +66,6 @@ MonsterManager* MonsterManager::getMonsterManager(void)
 	if(mMonsterMgr == NULL)
 	{
 		mMonsterMgr = new MonsterManager();
-		/// 初始化一波一波怪物的参数
-		mMonsterMgr->setMonsterWave("monsterWave.xml");
 	}
 	return mMonsterMgr;
 }
@@ -84,17 +86,24 @@ MonsterManager* MonsterManager::getMonsterManager(void)
 
 void MonsterManager::monsterGenerate(Ogre::SceneManager* sceneManager, float timeSinceLastFrame)
 {
+	if(mIsStopGenerateMonster)
+		return;
+	/// 怪物波开始
+	waveBegin();
+	if(mIsStopGenerateMonster)
+		return;
 	//::CreateThread(NULL, 0, createMonstersThread, sceneManager, NULL, NULL);
 	mMonsterMgr->setTimeCount(mMonsterMgr->getTimeCount() + timeSinceLastFrame);
 	/// std::list<Monster*> monsterList = mMonsterMgr->getMonstersList();
 	if(mMonsterMgr->getTimeCount() > mNewMonsterTime || mMonsterMgr->getTimeCount() == mNewMonsterTime)
 	{
-		Monster* monster = mCurrentMonsterFactory->createInstance(sceneManager, mMaze);
+		Monster* monster = mCurrentMonsterFactory->createInstance(sceneManager, mMaze, this);
 		/// monster->monsterScale(0.1, 0.1, 0.1);
 		monster->setAnimate();
 		mMonstersList.push_back(monster);
 		mMonsterMgr->MonsterNumPlus();
 		mMonsterMgr->setTimeCount(0.0f);
+		mNewMonsterTime = Ogre::Math::RangeRandom(mCurrentWave.timeInteval1, mCurrentWave.timeInteval2);
 		
 	}
 }
@@ -113,7 +122,7 @@ std::list<Monster*> MonsterManager::getMonstersList( void )
 //	
 //	//Ogre::SceneManager* param = (Ogre::SceneManager*)pVoid;
 //	///// param = (Ogre::SceneManager*)pVoid;
-//	///// MoveMemory(param, pVoid, sizeof(Ogre::SceneManager));
+/// //MoveMemory(param, pVoid, sizeof(Ogre::SceneManager));
 //	//Ogre::SceneManager* sceneManager = param;
 //
 //	//HANDLE mutex;
@@ -160,6 +169,23 @@ void MonsterManager::setMonsterNum(int num)
 void MonsterManager::MonsterNumPlus(void)
 {
 	mMonsterNum++;
+	if(mCurrentMonsterFactory->getType() == "SmallNormalMonster")
+		mCurrentWave.smallNormalMonster--;
+	else if(mCurrentMonsterFactory->getType() == "SmallIceMonster")
+		mCurrentWave.smallIceMonster--;
+	else if(mCurrentMonsterFactory->getType() == "SmallFireMonster")
+		mCurrentWave.smallFireMonster--;
+	else if(mCurrentMonsterFactory->getType() == "BigNormalMonster")
+		mCurrentWave.bigNormalMonster--;
+	else if(mCurrentMonsterFactory->getType() == "BigIceMonster")
+		mCurrentWave.bigIceMonster--;
+	else if(mCurrentMonsterFactory->getType() == "BigFireMonster")
+		mCurrentWave.bigFireMonster--;
+	else
+		;
+
+	mCurrentWave.totalMonster--;
+
 }
 
 void MonsterManager::updateState( std::vector<NameValueList> explodedBullets, float timeSinceLastFrame, Ogre::SceneManager* sceneManager )
@@ -169,20 +195,19 @@ void MonsterManager::updateState( std::vector<NameValueList> explodedBullets, fl
 	/// 储存子弹信息
 	storeExplodedBullets(explodedBullets);
 
+	std::vector<Monster*> deadMonster;
 	/// 遍历怪物
 	for(auto iter2 = mMonstersList.begin(); iter2 != mMonstersList.end(); ++iter2)
 	{
-		/// 如果怪物死亡，就销毁节点
-		while((*iter2)->isMonsterDead())
+		/// 如果怪物死亡，就加入死亡列表
+		if ((*iter2)->isMonsterDead())
 		{
-			(*iter2)->destroyItself();
-			mMonstersList.erase(iter2++);
-			if(iter2 == mMonstersList.end())
-				break;
-
+			deadMonster.push_back((*iter2));
+			// 调用死亡动画
+			MonsterDeadAnimator* mda = new MonsterDeadAnimator(0);
+			mda->start((*iter2));
+			(*iter2)->addAnimator(mda);
 		}
-		if(iter2 == mMonstersList.end())
-			break;
 
 		/// 遍历子弹
 		for(auto iter = mExplodeBulletsLists.begin(); iter != mExplodeBulletsLists.end(); ++iter)
@@ -194,10 +219,16 @@ void MonsterManager::updateState( std::vector<NameValueList> explodedBullets, fl
 		/// 伤害检测
 		(*iter2)->harmCheck(timeSinceLastFrame);
 		/// 怪物走
-		(*iter2)->go(timeSinceLastFrame);
-		
-		
+		(*iter2)->go(timeSinceLastFrame);		
 	}
+
+	// 销毁monster
+	for (auto iter = mMonsterRemoveList.begin(); iter != mMonsterRemoveList.end(); ++iter)
+	{
+		delete (*iter);
+		mMonstersList.erase(std::find(mMonstersList.begin(), mMonstersList.end(), (*iter)));
+	}
+	mMonsterRemoveList.clear();
 
 
 	
@@ -261,7 +292,9 @@ void MonsterManager::initialize( Maze* maze )
 	NameValueList* monsterParams = monsterParser.getNext();
 	mNewMonsterTime = atof((*monsterParams)["newMonsterTime"].c_str());
 	while (monsterParser.hasNext())
+	{
 		mMonsterFactoryList.push_back(new MonsterFactory(*monsterParser.getNext()));
+	}
 	if(mMonsterFactoryList.size() != 0)
 		mCurrentMonsterFactory = mMonsterFactoryList.at(0);
 	
@@ -292,9 +325,85 @@ void MonsterManager::setMonsterWave( String fileName )
 		wave.timeInteval2  = (atof((*waveParams)["timeInterval2"].c_str()));
 		mMonsterWave.push_back(wave);
 	}
+
+	mMonsterNum = 0;
+	/// 不停止产怪
+	mIsStopGenerateMonster = false;
+
+	mCurrentWaveNum = 0;
+	
+	/// 设置当前波
+	mCurrentWave = mMonsterWave[mCurrentWaveNum];
+	mNewMonsterTime = mCurrentWave.newWaveTime;
+	mMonsterFactoryRandom.clear();
+	for(unsigned int i = 0; i < mMonsterFactoryList.size(); i++)
+		mMonsterFactoryRandom.push_back(i);
 }
 
 void MonsterManager::setUFO( UFO& ufo )
 {
 	mUFO = ufo;
+}
+
+void MonsterManager::waveBegin()
+{
+	/// 对当前波的怪物数量进行判断，等于0的时候就进行下一波
+	if(mCurrentWave.totalMonster == 0)
+	{
+		++mCurrentWaveNum;
+		if((unsigned int)mCurrentWaveNum == mMonsterWave.size() || (unsigned int)mCurrentWaveNum > mMonsterWave.size())
+		{
+			mIsStopGenerateMonster = true;
+			return;
+		}
+		mCurrentWave = mMonsterWave[mCurrentWaveNum];
+		/// 将生成怪物的时间间隔设定为下一波的时间间隔
+		mNewMonsterTime = mCurrentWave.newWaveTime;
+		/// 清空随机工厂数
+		mMonsterFactoryRandom.clear();
+		for(unsigned int i = 0; i < mMonsterFactoryList.size(); i++)
+			mMonsterFactoryRandom.push_back(i);
+
+	}
+	if(mCurrentWave.smallNormalMonster == 0)
+		removeNumByFactoryType("SmallNormalMonster");
+	if(mCurrentWave.smallIceMonster == 0)
+		removeNumByFactoryType("SmallIceMonster");
+	if(mCurrentWave.smallFireMonster == 0)
+		removeNumByFactoryType("SmallFireMonster");
+    if(mCurrentWave.bigNormalMonster == 0)
+		removeNumByFactoryType("BigNormalMonster");
+	if(mCurrentWave.bigIceMonster == 0)
+		removeNumByFactoryType("BigIceMonster");
+	if(mCurrentWave.bigFireMonster == 0)
+		removeNumByFactoryType("BigFireMonster");
+
+	srand(time(0));
+	/// 将随机化的工厂号放在当前工厂号
+	mCurrentMonsterFactoryNum = mMonsterFactoryRandom[rand() % mMonsterFactoryRandom.size()];
+	mCurrentMonsterFactory = mMonsterFactoryList[mCurrentMonsterFactoryNum];
+}
+
+void MonsterManager::removeNumByFactoryType( std::string type )
+{
+	int numMark = 0;
+	for(auto iter = mMonsterFactoryList.begin(); iter != mMonsterFactoryList.end(); ++iter)
+	{
+		if((*iter)->getType() == type)
+			break;
+		numMark++;
+	}
+	for(auto iter = mMonsterFactoryRandom.begin(); iter != mMonsterFactoryRandom.end(); ++iter)
+	{
+		if((*iter) == numMark)
+		{	
+			mMonsterFactoryRandom.erase(iter);
+			break;
+		}
+	}
+}
+
+void MonsterManager::destoryMonster( Monster* monster )
+{
+	mMonsterRemoveList.push_back(monster);
 }

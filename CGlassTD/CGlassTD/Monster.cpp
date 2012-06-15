@@ -32,8 +32,10 @@
 //
 //}
 
-Monster::Monster(SceneNode* node, Maze* maze)
-	:mSpeed(1),
+Monster::Monster(SceneNode* node, Maze* maze, MonsterManager* monsterMgr)
+	:
+	mMonsterManager(monsterMgr),
+	mSpeed(1),
 	mSpeedTemp(1),
 	/*mPos(Ogre::Vector3(BEGIN_POS_X, 10, BEGIN_POS_Y)),*/
 	mBlood(0),
@@ -116,16 +118,20 @@ Monster::Monster(SceneNode* node, Maze* maze)
 
 Monster::~Monster(void)
 {
-	/*if(mNode != NULL)
-		delete mNode;*/
-	delete mCheckMethod;
-	delete mMaze;
-	delete mMonsterState;
 	if (mHealthHUD)
 	{
 		mHealthHUD->clear();
 		delete mHealthHUD;
 	}
+	if(mNode)
+	{
+		MovableObject* obj = mNode->getAttachedObject(0);
+		delete obj;
+		mNode->getParentSceneNode()->removeAndDestroyChild(mNode->getName());
+	}
+	delete mCheckMethod;
+	//delete mMaze;
+	delete mMonsterState;
 }
 
 
@@ -275,10 +281,10 @@ void Monster::harmCheck(float timeSinceLastFrame)
 	health->setColour(currHealthCol);
 
 	// test -kid
-	MonsterHurtAnimator* mha = new MonsterHurtAnimator(0);
+	/*MonsterHurtAnimator* mha = new MonsterHurtAnimator(0);
 	mha->start(this);
 	mAnimatorList.push_back(mha);
-	mha->stop(this);
+	mha->stop(this);*/
 }
 
 bool Monster::isMonsterDead()
@@ -780,13 +786,13 @@ void Monster::stateRecover()
 //	return mon;
 //}
 
-Monster* MonsterFactory::createInstance(SceneManager* sceneMgr, Maze* maze)
+Monster* MonsterFactory::createInstance(SceneManager* sceneMgr, Maze* maze, MonsterManager* monsterMgr)
 {
 	Ogre::SceneNode* monsterNode = sceneMgr->getRootSceneNode()->createChildSceneNode();
 	Ogre::Entity* entity = sceneMgr->createEntity(mParams["mesh"]);
 	monsterNode->attachObject(entity);
 	Monster* mon;
-	mon = new Monster(monsterNode, maze);
+	mon = new Monster(monsterNode, maze, monsterMgr);
 	if (mParams.find("radius") != mParams.end())
 		mon->setRadius((float)atof(mParams["radius"].c_str()));
 

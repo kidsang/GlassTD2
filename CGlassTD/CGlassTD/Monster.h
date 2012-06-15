@@ -13,6 +13,7 @@
 using namespace Ogre;
 
 class Cell;
+class MonsterManager;
 
 
 const float FULL_BLOOD = 100.0f;
@@ -138,14 +139,16 @@ protected:
 	/// 怪物动画列表
 	typedef std::deque<Animator<Monster>*> AnimatorList;
 	AnimatorList mAnimatorList;
+	/// 怪物管理类的指针
+	MonsterManager* mMonsterManager;
 
 	std::vector<std::vector<Ogre::Vector3> > mMonsterPaths;
 public:
-	//Monster(){}
+	Monster(){}
 	//Monster(SceneNode* node);
-	Monster(SceneNode* node, Maze* maze);
+	Monster(SceneNode* node, Maze* maze, MonsterManager* monsterMgr);
 	//Monster(SceneNode* node, Maze* maze);
-	Monster(Ogre::SceneManager* sceneMgr, Ogre::SceneNode* parentNode);
+	//Monster(Ogre::SceneManager* sceneMgr, Ogre::SceneNode* parentNode, MonsterManager* monsterMgr);
 	~Monster(void);
 	void go(float timeSinceLastFrame);
 	float getBlood(void);
@@ -169,6 +172,14 @@ public:
 	SceneNode* getNode()
 	{
 		return mNode;
+	}
+	void addAnimator(Animator<Monster>* ani)
+	{
+		mAnimatorList.push_back(ani);
+	}
+	MonsterManager* getCreater()
+	{
+		return mMonsterManager;
 	}
 	std::string getType(void);
 	Ogre::Vector3 getFace(void);
@@ -289,7 +300,7 @@ public:
 	}
 
 	//Monster* createInstance(SceneManager* sceneMgr);
-	Monster* createInstance(SceneManager* sceneMgr, Maze* maze);
+	Monster* createInstance(SceneManager* sceneMgr, Maze* maze, MonsterManager* monsterMgr);
 	
 	std::string getType();
 };

@@ -37,7 +37,6 @@ protected:
 
 private:
 	StageManager* mpStageManager;
-
 };
 
 #endif // #ifndef __CGlassTD_h_
