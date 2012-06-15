@@ -1,7 +1,12 @@
 #include "CGlassTD.h"
 #include "StagePass1.h"
+<<<<<<< HEAD
 #include "startStage.h"
 #include "Questions.h"
+=======
+#include "StartStage.h"
+#include "StageSelect.h"
+>>>>>>> 89ae1ddb0ca127a376a4bb8789b97bbb0533d06b
 
 //-------------------------------------------------------------------------------------
 CGlassTD::CGlassTD(void)
@@ -36,13 +41,14 @@ void CGlassTD::createScene(void)
 	Questions.init(mGui);
 
 	// test gui
-	MyGUI::ButtonPtr button = mGui->createWidget<MyGUI::Button>("Button", 10, 10, 300, 26, MyGUI::Align::Default, "Main");
-	button->setCaption("exit");
+	//MyGUI::ButtonPtr button = mGui->createWidget<MyGUI::Button>("Button", 10, 10, 300, 26, MyGUI::Align::Default, "Main");
+	//button->setCaption("exit");
 
 	// ´´½¨³¡¾°
 	mpStageManager = new StageManager(mSceneMgr);
-	mpStageManager->setStage(new StagePass1(mSceneMgr, mpStageManager, mGui));
-	//mpStageManager->setStage(new StartStage(mSceneMgr, mpStageManager, mGui)); 
+	//mpStageManager->setStage(new StagePass1(mSceneMgr, mpStageManager, mGui));
+	mpStageManager->setStage(new StartStage(mSceneMgr, mpStageManager, mGui)); 
+	//mpStageManager->setStage(new StageSelect(mSceneMgr, mpStageManager, mGui)); 
 }
 
 bool CGlassTD::frameRenderingQueued( const Ogre::FrameEvent& evt )
