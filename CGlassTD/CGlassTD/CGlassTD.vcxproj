@@ -147,6 +147,8 @@
     <ClInclude Include="StagePass1.h" />
     <ClInclude Include="StagePass1Step0.h" />
     <ClInclude Include="StagePass1Step1.h" />
+    <ClInclude Include="StagePass2.h" />
+    <ClInclude Include="StagePass3.h" />
     <ClInclude Include="StageSelect.h" />
     <ClInclude Include="StartStage.h" />
     <ClInclude Include="Step.h" />
@@ -187,6 +189,8 @@
     <ClCompile Include="StagePass1.cpp" />
     <ClCompile Include="StagePass1Step0.cpp" />
     <ClCompile Include="StagePass1Step1.cpp" />
+    <ClCompile Include="StagePass2.cpp" />
+    <ClCompile Include="StagePass3.cpp" />
     <ClCompile Include="StageSelect.cpp" />
     <ClCompile Include="StartStage.cpp" />
     <ClCompile Include="tinystr.cpp" />
