@@ -92,6 +92,18 @@ public:
 		mGravity = gravity;
 	}
 
+	// helper functions
+protected:
+	/// 初始化大炮
+	/// @param cannonDefine 大炮定义xml文件
+	/// @param bulletDefine 炮弹定义xml文件
+	void initializeCannon(const std::string& cannonDefine, const std::string& bulletDefine);
+
+	/// 初始化迷宫
+	/// @param mazeDefine 迷宫定义xml文件
+	/// @param cellDefine 墙定义xml文件
+	void initializeMaze(const std::string& mazeDefine, const std::string& cellDefine);
+
 protected:
 	/// 当前的分场景
 	Step* mCurrentStep;
