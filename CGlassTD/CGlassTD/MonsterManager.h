@@ -80,7 +80,7 @@ private:
 	/// 现在的工厂号
 	static int mCurrentMonsterFactoryNum;
 
-	UFO mUFO;
+	UFO* mUFO;
 	/// 是否停止产生怪物
 	static bool mIsStopGenerateMonster;
 
@@ -137,7 +137,7 @@ public:
 	/// 波数开始
 	void waveBegin();
 
-	void setUFO(UFO& ufo);
+	void setUFO(UFO* ufo);
 
 	/// 删除指定的Monster
 	/// @note 会删除其一切，包括节点和模型

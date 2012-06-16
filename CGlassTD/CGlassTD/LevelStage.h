@@ -72,6 +72,11 @@ public:
 		return mMaze;
 	}
 
+	UFO* getUFO()
+	{
+		return mUFO;
+	}
+
 	MonsterManager* getMonsterManager()
 	{
 		return mMonsterManager;
@@ -104,6 +109,10 @@ protected:
 	/// @param cellDefine 墙定义xml文件
 	void initializeMaze(const std::string& mazeDefine, const std::string& cellDefine);
 
+	/// 初始化UFO
+	/// @param ufoDefine UFO定义xml文件
+	void initializeUFO(const std::string& ufoDefine);
+
 protected:
 	/// 当前的分场景
 	Step* mCurrentStep;
@@ -111,6 +120,8 @@ protected:
 	Cannon* mCannon;
 	/// 迷宫
 	Maze* mMaze;
+	/// UFO
+	UFO* mUFO;
 	/// 怪物序列管理器
 	MonsterManager* mMonsterManager;
 

@@ -4,7 +4,7 @@
 
 LevelStage::LevelStage(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui)
 	: Stage(sceneManager, stageManager, gui),
-	mCurrentStep(0), mCannon(0), mMaze(0), mMonsterManager(0),
+	mCurrentStep(0), mCannon(0), mMaze(0), mMonsterManager(0), mUFO(0),
 	mGravity(Vector3(0, -200, 0))
 {
 }
@@ -15,6 +15,8 @@ LevelStage::~LevelStage()
 		delete mCurrentStep;
 	if (mCannon)
 		delete mCannon;
+	if (mUFO)
+		delete mUFO;
 	if (mMaze)
 		delete mMaze;
 	//TODO: monster manager是单例,这里不delete
@@ -156,4 +158,29 @@ void LevelStage::initializeMaze( const std::string& mazeDefine, const std::strin
 	}
 
 	mMaze = new Maze(mSceneManager, map, mapWidth, mapHeight,start1, start2, end, cellDefine);
+}
+
+void LevelStage::initializeUFO( const std::string& ufoDefine )
+{
+	ParamParser parser= ParamParser(ufoDefine);
+	parser.parse();
+	parser.moveToFirst();
+	NameValueList* params = parser.getNext(); 
+
+	SceneNode* node = mSceneManager->getRootSceneNode()->createChildSceneNode();
+	std::vector<std::string> nums;
+	if (params->find("position") != params->end())
+	{
+		nums = mysplit((*params)["position"]);
+		node->setPosition((float)atof(nums[0].c_str()), (float)atof(nums[1].c_str()), (float)atof(nums[2].c_str()));
+	}
+	Entity* entity = mSceneManager->createEntity((*params)["mesh"]);
+	node->attachObject(entity);
+
+	int blood = 0;
+	if (params->find("blood") != params->end())
+		blood = atoi((*params)["blood"].c_str());
+
+	UFO* ufo = new UFO(node, entity, blood);
+
 }

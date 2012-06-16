@@ -340,7 +340,7 @@ void MonsterManager::setMonsterWave( String fileName )
 		mMonsterFactoryRandom.push_back(i);
 }
 
-void MonsterManager::setUFO( UFO& ufo )
+void MonsterManager::setUFO( UFO* ufo )
 {
 	mUFO = ufo;
 }

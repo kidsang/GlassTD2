@@ -12,6 +12,8 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	initializeCannon("CannonDefine.xml", "BulletDefine.xml");
 	/// 初始化迷宫
 	initializeMaze("MazeDefine.xml", "CellDefine.xml");
+	/// 初始化飞船
+	initializeUFO("UFODefine.xml");
 
 	/// 新增一个monster管理器
 	MonsterManager::initialize(mMaze);
@@ -19,8 +21,6 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	/// 初始化一波一波怪物的参数,每层的波数不一样
 	mMonsterManager->setMonsterWave("monsterWave.xml");
 
-	/// 加载飞船
-	UFO ufo = UFO(sceneManager, sceneManager->getRootSceneNode()->createChildSceneNode(),"ship.mesh", Ogre::Vector3(900,0,-50), 100);
 	/// 设置天空盒
 	//mSceneManager->setSkyBox(true, "Examples/EveSpaceSkyBox");
 	
