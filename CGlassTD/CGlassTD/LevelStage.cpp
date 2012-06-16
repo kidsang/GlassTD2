@@ -19,7 +19,9 @@ LevelStage::~LevelStage()
 		delete mUFO;
 	if (mMaze)
 		delete mMaze;
-	//TODO: monster manager是单例,这里不delete
+	// 单例
+	if (mMonsterManager)
+		mMonsterManager->release();
 	for (auto iter = mCameraAnimatorList.begin(); iter != mCameraAnimatorList.end(); ++iter)
 		delete (*iter);
 }

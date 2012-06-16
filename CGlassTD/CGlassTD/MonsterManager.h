@@ -90,7 +90,7 @@ private:
 //	static DWORD WINAPI createMonstersThread(PVOID pVoid); 
 
 public:
-	static void initialize(Maze* maze);
+	static void initialize(Maze* maze, const std::string& monsterDefine);
 
 	~MonsterManager(void);
     /// Ogre::String mMonNames[100];
@@ -142,6 +142,11 @@ public:
 	/// 删除指定的Monster
 	/// @note 会删除其一切，包括节点和模型
 	void destoryMonster(Monster* monster);
+	
+	/// 进行清理工作
+	/// 因为该类是单例
+	/// add by kid
+	void release();
 };
 
 
