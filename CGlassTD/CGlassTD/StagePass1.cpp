@@ -6,8 +6,7 @@
 #include "ParamParser.h"
 
 StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui)
-	: LevelStage(sceneManager, stageManager, gui),
-	mGravity(Vector3(0, -200, 0))
+	: LevelStage(sceneManager, stageManager, gui)
 {
 	// ÐÂÔöcannon
 	ParamParser cannonParser= ParamParser("CannonDefine.xml");
@@ -43,11 +42,6 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 		nums = mysplit((*cannonParams)["angle"]);
 		mCannon->setFireAngle(Vector2((float)atof(nums[0].c_str()), (float)atof(nums[1].c_str())));
 	}
-	//// ÅÚÌ¨?
-	//SceneNode* node1 = sceneManager->getRootSceneNode()->createChildSceneNode();
-	//Entity* fort = sceneManager->createEntity("fort.mesh");
-	//node1->attachObject((MovableObject*)fort);
-	//node1->setPosition(0, 200, 550);
 
 	// ¸øcannonÔö¼ÓÅÚµ¯
 	ParamParser bulletParser = ParamParser("BulletDefine.xml");
@@ -118,55 +112,4 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 
 StagePass1::~StagePass1(void)
 {
-	// É¾³ýÅÚ
-	delete mCannon;
-	// É¾³ýÅÚµ¯
-	//mBulletList.clear();
-	// É¾³ýÃÔ¹¬
-	delete mMaze;
-}
-
-
-Cannon* StagePass1::getCannon()
-{
-	return mCannon;
-}
-
-
-Maze* StagePass1::getMaze()
-{
-	return mMaze;
-}
-
-MonsterManager* StagePass1::getMonsterManager()
-{
-	return mMonsterManager;
-}
-
-BulletManager& StagePass1::getBulletManager()
-{
-	return mBulletManager;
-}
-
-Vector3 StagePass1::getGravity()
-{
-	return mGravity;
-}
-
-bool StagePass1::run( float timeSinceLastFrame )
-{
-	// ²¥·ÅÉãÏñ»ú¶¯»­
-	for (auto iter = mCameraAnimatorList.begin(); iter != mCameraAnimatorList.end(); ++iter)
-	{
-		if (!(*iter)->run(timeSinceLastFrame, mCamera))
-		{
-			// ³óÂªµÄ´úÂëby kid
-			jumpToStep(new StagePass1Step1(this));
-			delete (*iter);
-			mCameraAnimatorList.erase(iter);
-			break;
-		}
-	}
-
-	return mCurrentStep->run(timeSinceLastFrame);
 }

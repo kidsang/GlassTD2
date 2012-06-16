@@ -15,7 +15,7 @@ bool equal(Cell* firstCell, Cell* secondCell)
 }
 
 
-StagePass1Step0::StagePass1Step0(StagePass1* stagePass1)
+StagePass1Step0::StagePass1Step0(LevelStage* stagePass1)
 	: mStagePass1(stagePass1), mCurrentState(WITH_SWAMP), mCurrentCell(NULL)
 {
 	mRaySceneQuery = SceneManagerContainer::getSceneManager()->createRayQuery(Ogre::Ray());
@@ -176,19 +176,19 @@ bool StagePass1Step0::onMousePressed(const OIS::MouseEvent &arg, OIS::MouseButto
 	switch (mCurrentState)
 	{
 	case WITH_SWAMP:
-		if (money->placeTrap(Money::TrapType::SWAMP))
+		if (money->placeTrap(Money::SWAMP))
 		{
 			maze->editMaze(position, SWAMP);
 		}
 		break;
 	case WITH_SPIKEWEED:
-		if (money->placeTrap(Money::TrapType::SPIKEWEED))
+		if (money->placeTrap(Money::SPIKEWEED))
 		{
 			maze->editMaze(position, SPIKEWEED);
 		}
 		break;
 	case WITH_TRAP:
-		if (money->placeTrap(Money::TrapType::TRAP))
+		if (money->placeTrap(Money::TRAP))
 		{
 			maze->editMaze(position, TRAP);
 		}

@@ -1,7 +1,7 @@
 #include "StagePass1Step1.h"
 
 
-StagePass1Step1::StagePass1Step1(StagePass1* stagePass1)
+StagePass1Step1::StagePass1Step1(LevelStage* stagePass1)
 	: mStagePass1(stagePass1)
 {
 }
