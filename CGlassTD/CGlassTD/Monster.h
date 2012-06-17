@@ -9,7 +9,7 @@
 #include "Maze.h"
 #include "MonsterState.h"
 #include <stack>
-#include "Animator.h"
+#include "Animatable.h"
 using namespace Ogre;
 
 class Cell;
@@ -94,7 +94,7 @@ struct Vect
 //		fireHarmTime(FIRE_HARM_TIME){};
 //};
 
-class Monster
+class Monster : public Animatalbe<Monster>
 {
 protected:
 	int mBeginPosIndex;
@@ -137,8 +137,8 @@ protected:
 	/// 怪物头顶血条
 	BillboardSet* mHealthHUD;
 	/// 怪物动画列表
-	typedef std::deque<Animator<Monster>*> AnimatorList;
-	AnimatorList mAnimatorList;
+	//typedef std::deque<Animator<Monster>*> AnimatorList;
+	//AnimatorList mAnimatorList;
 	/// 怪物管理类的指针
 	MonsterManager* mMonsterManager;
 
@@ -173,10 +173,10 @@ public:
 	{
 		return mNode;
 	}
-	void addAnimator(Animator<Monster>* ani)
+	/*void addAnimator(Animator<Monster>* ani)
 	{
 		mAnimatorList.push_back(ani);
-	}
+	}*/
 	MonsterManager* getCreater()
 	{
 		return mMonsterManager;

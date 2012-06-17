@@ -187,6 +187,8 @@ void MonsterManager::updateState( std::vector<NameValueList> explodedBullets, fl
 		(*iter2)->harmCheck(timeSinceLastFrame);
 		/// 怪物走
 		(*iter2)->go(timeSinceLastFrame);		
+		/// 怪物动画
+		(*iter2)->animate(timeSinceLastFrame, (*iter2));
 	}
 
 	// 销毁monster

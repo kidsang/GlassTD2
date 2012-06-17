@@ -26,7 +26,7 @@ public:
 	/// @param timeSinceLastFrame 上一帧(游戏循环)持续的时间
 	/// @param object 被动画作用的物体
 	/// @note 动画在stop的时候，会被移除并销毁
-	void run(float timeSinceLastFrame, T* object);
+	void animate(float timeSinceLastFrame, T* object);
 
 	/// 添加一个动画
 	void addAnimator(Animator<T>* animator)
@@ -36,7 +36,7 @@ public:
 };
 
 template <typename T>
-void Animatalbe<T>::run( float timeSinceLastFrame, T* object )
+void Animatalbe<T>::animate( float timeSinceLastFrame, T* object )
 {
 	for (auto iter = mAnimatorList.begin(); iter != mAnimatorList.end(); ++iter)
 		if (!(*iter)->run(timeSinceLastFrame, object))
