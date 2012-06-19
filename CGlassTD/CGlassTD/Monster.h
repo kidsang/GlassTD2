@@ -16,16 +16,16 @@ class Cell;
 class MonsterManager;
 
 
-const float FULL_BLOOD = 100.0f;
-const float BEGIN_POS_X = -100.0f;
-const float BEGIN_POS_Y = 0.f;
-const float BEGIN_POS_Z = -100.f;
-const float FIRE_HARM_TIME = 1.0f;    ///火属性伤害持续时间
-const float ICE_HARM_TIME = 1.0f;     /// 冰属性伤害持续时间
-const float ICE_HARM_SPEED = 0.4f;    /// 冰属性影响的速度值
-const float FIRE_HARM_BLOOD = 0.01f;  /// 火属性伤害的血量值
-const float SPIKEWEED_HARM_BLOOD = 20.0f;  /// 地刺伤害的血量值
-const float SWAMP_HARM_SPEED = 0.4f;  /// 沼泽影响的速度值
+//const float FULL_BLOOD = 100.0f;
+//const float BEGIN_POS_X = -100.0f;
+//const float BEGIN_POS_Y = 0.f;
+//const float BEGIN_POS_Z = -100.f;
+//const float FIRE_HARM_TIME = 1.0f;    ///火属性伤害持续时间
+//const float ICE_HARM_TIME = 1.0f;     /// 冰属性伤害持续时间
+//const float ICE_HARM_SPEED = 0.4f;    /// 冰属性影响的速度值
+//const float FIRE_HARM_BLOOD = 0.01f;  /// 火属性伤害的血量值
+//const float SPIKEWEED_HARM_BLOOD = 20.0f;  /// 地刺伤害的血量值
+//const float SWAMP_HARM_SPEED = 0.4f;  /// 沼泽影响的速度值
 
 
 struct Pos
@@ -192,7 +192,7 @@ public:
 	///两点之间的距离
 	float distance(Ogre::Vector3 pos1, Ogre::Vector3 pos2);
 	/// 设置动画
-	void setAnimate();
+	void setAnimate(std::string animateName, bool isLoop);
 	/// 根据时间刷新动画状态
 	void addTimeToAnimation(float timeSinceLastFrame);
 	/// 获取怪兽的半径
