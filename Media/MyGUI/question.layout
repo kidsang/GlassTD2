@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Window" skin="Window" position="285 165 445 375" layer="Overlapped">
+    <Widget type="Window" skin="Window" position="360 230 445 375" layer="Overlapped">
         <Property key="Caption" value="question"/>
         <Widget type="TextBox" skin="TextBox" position="20 20 390 100" name="questionText">
             <Property key="Caption" value="questions here"/>
         </Widget>
         <Widget type="Button" skin="RadioButton" position="25 135 20 20" align="Left VCenter" name="firstChoice"/>
-        <Widget type="Button" skin="RadioButton" position="25 170 25 20" name="secondChoice"/>
+        <Widget type="Button" skin="RadioButton" position="25 170 20 20" name="secondChoice"/>
         <Widget type="Button" skin="RadioButton" position="25 205 20 20" name="thirdChoice"/>
         <Widget type="TextBox" skin="TextBox" position="50 135 360 20" name="firstChoiceText">
             <Property key="Caption" value="first choice"/>

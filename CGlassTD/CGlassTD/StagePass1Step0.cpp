@@ -6,7 +6,6 @@
 #include "Money.h"
 #include <OgreMath.h>
 #include <sstream>
-#include "Questions.h"
 
 
 bool equal(Cell* firstCell, Cell* secondCell)
@@ -36,8 +35,6 @@ void StagePass1Step0::init()
 	debugText = mStagePass1->getGUI()->createWidget<MyGUI::StaticText>("TextBox", 10, 40, 300, 300, MyGUI::Align::Default, "Main");
 	debugText->setTextColour(MyGUI::Colour::White);
 	debugText->setCaption("no");
-
-	Questions.getInstance()->popUpQuestion();
 }
 
 bool StagePass1Step0::run(float timeSinceLastFrame)

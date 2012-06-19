@@ -13,7 +13,9 @@
 /// 单条问题
 class Quest
 {
+public:
 	typedef std::map<std::string, std::string> Selections;
+	
 private:
 	/// 问题
 	std::string mQuestion;

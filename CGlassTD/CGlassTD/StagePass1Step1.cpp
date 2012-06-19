@@ -1,4 +1,5 @@
 #include "StagePass1Step1.h"
+#include "Questions.h"
 
 
 StagePass1Step1::StagePass1Step1(StagePass1* stagePass1)
@@ -33,6 +34,9 @@ bool StagePass1Step1::run(float timeSinceLastFrame)
 
 bool StagePass1Step1::onKeyPressed(const OIS::KeyEvent& arg)
 {
+	// 处于答题阶段时无法进行操作
+	if (Questions::getInstance()->isAnswering()) return true;
+
 	// 发炮
 	if (arg.key == OIS::KC_SPACE)
 	{
@@ -45,14 +49,19 @@ bool StagePass1Step1::onKeyPressed(const OIS::KeyEvent& arg)
 		mStagePass1->getCannon()->changeBullet();
 	else if (arg.key >= OIS::KC_1 && arg.key <= OIS::KC_9)
 		mStagePass1->getCannon()->changeBullet(arg.key - OIS::KC_1);
+	// 答题
+	else if (arg.key == OIS::KC_Q)
+		Questions::getInstance()->popUpQuestion();
 		
 	return true;
 }
 
 bool StagePass1Step1::onMouseMoved(const OIS::MouseEvent& arg)
 {
+	// 处于答题阶段时无法进行操作
+	if (Questions::getInstance()->isAnswering()) return true;
+
 	mStagePass1->getCannon()->rotate(-arg.state.X.rel, arg.state.Y.rel);
-	
 	return true;
 }
 
