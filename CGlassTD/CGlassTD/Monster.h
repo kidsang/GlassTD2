@@ -97,6 +97,7 @@ struct Vect
 class Monster : public Animatalbe<Monster>
 {
 protected:
+	bool mIsGetUFO;
 	int mBeginPosIndex;
 	int mNextPosIndex;
 	Ogre::Vector3 mBeginPos;
@@ -173,6 +174,7 @@ public:
 	{
 		return mNode;
 	}
+	
 	/*void addAnimator(Animator<Monster>* ani)
 	{
 		mAnimatorList.push_back(ani);
@@ -279,6 +281,10 @@ private:
 	///ÊÇ·ñ±»ÅÚµ¯»÷ÖÐ
 	bool isHitByBullet(float* bulletPos, float bulletRadius);
 	bool notSpecialBullet(std::string bulletSpell);
+	bool isGetUFO()
+	{
+		return mIsGetUFO;
+	}
 
 };
 

@@ -51,7 +51,8 @@ Monster::Monster(SceneNode* node, Maze* maze, MonsterManager* monsterMgr)
 	mBulletHarmTime(0),
 	mBulletHarmValue(0),
 	mTerrainHarmvalue(0),
-	mHealthHUD(0)
+	mHealthHUD(0),
+	mIsGetUFO(false)
 {
 	mNode = node;
 	mMaze = maze;
@@ -174,7 +175,10 @@ void Monster::go(float timeSinceLastFrame)
 				mNode->rotate(quat);
 			}
 			else
+			{
 				setBlood(0);
+				mIsGetUFO = true;
+			}
 		}
 	
 		/// 平移所需要走的路
