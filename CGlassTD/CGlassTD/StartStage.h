@@ -39,10 +39,10 @@ public:
 	/// @note 应该只由框架调用
 	bool onMouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 private:
-	MyGUI::Button* juqingBtn;
-	MyGUI::Button* lifeBtn;
-	MyGUI::Button* settingBtn;
-	MyGUI::Button* quitBtn;
+	MyGUI::ImageBox* juqingBtn;
+	MyGUI::ImageBox* lifeBtn;
+	MyGUI::ImageBox* settingBtn;
+	MyGUI::ImageBox* quitBtn;
 	MyGUI::VectorWidgetPtr mLayout;
 	
 };

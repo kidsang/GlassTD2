@@ -84,7 +84,7 @@ void Questions::popUpQuestion()
 	
 	Quest* quest = mQuestBank->getQuest();
 	mQuesText->setCaption(quest->getQuestion());
-	QuestBank::Selection selection = quest->getSelections();
+	Quest::Selections selection = quest->getSelections();
 	mFirstText->setCaption(selection["a"]);
 	mSecondText->setCaption(selection["b"]);
 	mThirdText->setCaption(selection["c"]);
@@ -112,7 +112,7 @@ void Questions::handUpAnswer()
 		answer = "b";
 	else if (mThirdChoice->getStateSelected())
 		answer = "c";
-	else (mFourthChoice->getStateSelected())
+	else if (mFourthChoice->getStateSelected())
 		answer = "d";
 		
 	if (answer.compare(mCorrectAnswer) == 0)
