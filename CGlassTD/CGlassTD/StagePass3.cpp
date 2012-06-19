@@ -20,6 +20,7 @@ StagePass3::StagePass3(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	mMonsterManager = MonsterManager::getMonsterManager();
 	/// 初始化一波一波怪物的参数,每层的波数不一样
 	mMonsterManager->setMonsterWave("monsterWave.xml");
+	mMonsterManager->setUFO(mUFO);
 
 	/// 设置天空盒
 	//mSceneManager->setSkyBox(true, "Examples/EveSpaceSkyBox");

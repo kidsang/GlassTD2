@@ -191,6 +191,9 @@ void MonsterManager::updateState( std::vector<NameValueList> explodedBullets, fl
 		(*iter2)->go(timeSinceLastFrame);		
 		/// ¹ÖÎï¶¯»­
 		(*iter2)->animate(timeSinceLastFrame, (*iter2));
+		/// ÅĞ¶ÏUFOÉËÑª
+		if ((*iter2)->isGetUFO())
+			mUFO->setBlood(mUFO->getBlood() - 1);
 	}
 
 	// Ïú»Ùmonster

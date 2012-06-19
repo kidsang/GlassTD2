@@ -11,7 +11,7 @@ StagePass2::StagePass2(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	/// 初始化大炮
 	initializeCannon("CannonDefine.xml", "BulletDefine.xml");
 	/// 初始化迷宫
-	initializeMaze("MazeDefine.xml", "CellDefine.xml");
+	initializeMaze("MazeDefine2.xml", "CellDefine.xml");
 	/// 初始化飞船
 	initializeUFO("UFODefine.xml");
 
@@ -20,6 +20,7 @@ StagePass2::StagePass2(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	mMonsterManager = MonsterManager::getMonsterManager();
 	/// 初始化一波一波怪物的参数,每层的波数不一样
 	mMonsterManager->setMonsterWave("monsterWave.xml");
+	mMonsterManager->setUFO(mUFO);
 
 	/// 设置天空盒
 	//mSceneManager->setSkyBox(true, "Examples/EveSpaceSkyBox");
