@@ -124,8 +124,8 @@ Monster::~Monster(void)
 		delete mHealthHUD;
 		mHealthHUD = 0;
 	}
-	for (auto iter = mAnimatorList.begin(); iter != mAnimatorList.end(); ++iter)
-		delete (*iter);
+	/*for (auto iter = mAnimatorList.begin(); iter != mAnimatorList.end(); ++iter)
+		delete (*iter);*/
 	if(mNode)
 	{
 		MovableObject* obj = mNode->getAttachedObject(0);
