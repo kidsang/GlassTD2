@@ -223,6 +223,12 @@ public:
 
 	/// 状态恢复
 	void stateRecover();
+
+	/// 是否触碰到UFO
+	bool isGetUFO()
+	{
+		return mIsGetUFO;
+	}
 private:
 	Pos parent;
 	/// 地图指针
@@ -281,10 +287,6 @@ private:
 	///是否被炮弹击中
 	bool isHitByBullet(float* bulletPos, float bulletRadius);
 	bool notSpecialBullet(std::string bulletSpell);
-	bool isGetUFO()
-	{
-		return mIsGetUFO;
-	}
 
 };
 

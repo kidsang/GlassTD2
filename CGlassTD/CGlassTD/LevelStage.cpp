@@ -183,6 +183,18 @@ void LevelStage::initializeUFO( const std::string& ufoDefine )
 	if (params->find("blood") != params->end())
 		blood = atoi((*params)["blood"].c_str());
 
-	UFO* ufo = new UFO(node, entity, blood);
+	mUFO = new UFO(node, entity, blood);
+
+	/// ufoÍ·¶¥ÑªÌõ
+	BillboardSet* healthHUD = mSceneManager->createBillboardSet();
+	healthHUD->setMaterialName("Glass/Billboard");
+	healthHUD->setDefaultWidth(200);
+	healthHUD->setDefaultHeight(14);
+	SceneNode* hudNode = node->createChildSceneNode();
+	hudNode->attachObject(healthHUD);
+	Billboard* b = healthHUD->createBillboard(0, entity->getBoundingBox().getSize().y, 0);
+	b->setColour(ColourValue(0, 0.8f, 0));
+
+	mUFO->setHealthHUD(healthHUD);
 
 }
