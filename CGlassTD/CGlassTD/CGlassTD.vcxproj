@@ -116,7 +116,9 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Attribute.h" />
     <ClInclude Include="BaseApplication.h" />
+    <ClInclude Include="BaseLayout.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletManager.h" />
     <ClInclude Include="Cannon.h" />
@@ -144,9 +146,9 @@
     <ClInclude Include="Step.h" />
     <ClInclude Include="tinystr.h" />
     <ClInclude Include="tinyxml.h" />
+    <ClInclude Include="WrapsAttribute.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include=".gitignore" />
     <None Include="res\CGlassTD.ico" />
   </ItemGroup>
   <ItemGroup>

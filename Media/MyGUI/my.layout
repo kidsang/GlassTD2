@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="ImageBox" skin="ImageBox" position="640 520 80 80" align="Default" layer="Main" name="bomb_black">
+        <Property key="ImageTexture" value="black.png"/>
+        <Widget type="TextBox" skin="TextBox" position="0 0 80 80" name="b1"/>
+    </Widget>
+    <Widget type="ImageBox" skin="ImageBox" position="720 560 40 40" align="Default" layer="Main" name="bomb_blue">
+        <Property key="ImageTexture" value="blue.png"/>
+        <Widget type="TextBox" skin="TextBox" position="0 0 40 40" name="b2"/>
+    </Widget>
+    <Widget type="ImageBox" skin="ImageBox" position="760 560 40 40" align="Default" layer="Main" name="bomb_red">
+        <Property key="ImageTexture" value="red.png"/>
+        <Widget type="TextBox" skin="TextBox" position="0 0 40 40" name="b3"/>
+    </Widget>
+</MyGUI>

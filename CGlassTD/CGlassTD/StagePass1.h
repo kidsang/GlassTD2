@@ -28,6 +28,9 @@ private:
 	/// 环境重力
 	Vector3 mGravity;
 
+	//GUI
+	MyGUI::VectorWidgetPtr my;
+
 public:
 	/// 构造函数
 	/// @param pSceneManager 场景管理器的指针

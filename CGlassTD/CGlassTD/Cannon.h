@@ -73,6 +73,12 @@ public:
 
 	// Get/Set
 public:
+	/// 返回炮弹工厂列表
+	const BulletFactoryList& getBulletFactories()
+	{
+		return mBulletFactoryList;
+	}
+
 	/// 返回大炮的射角限制
 	const Vector2& getFireAngle()
 	{
@@ -122,7 +128,11 @@ public:
 	{
 		mColdDown = coldDown;
 	}
-
+	///返回当前炮弹类型
+	unsigned int getCurrentBullet()
+	{
+		return mCurrentBullet;
+	}
 };
 
 
