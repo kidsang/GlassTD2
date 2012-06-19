@@ -11,13 +11,25 @@ private:
 	int mBlood;
 	Ogre::SceneNode* mNode;
 	Ogre::Entity* mEntity;
+
 public:
-	UFO(void);
-	UFO(Ogre::SceneManager* manager, Ogre::SceneNode* parent, Ogre::String mesh, Ogre::Vector3 pos,int blood);
+	UFO(Ogre::SceneNode* node, Ogre::Entity* entity, int blood);
 	~UFO(void);
-	void setBlood(int blood);
-	int getBlood();
-	bool isDestroy();
+
+	void setBlood(int blood)
+	{
+		mBlood = blood;
+	}
+
+	int getBlood()
+	{
+		return mBlood;
+	}
+
+	bool isDestroy()
+	{
+		return (mBlood <= 0);
+	}
 };
 
 #endif

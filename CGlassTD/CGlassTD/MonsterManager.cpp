@@ -22,42 +22,23 @@ bool MonsterManager::mIsStopGenerateMonster = false;
 
 MonsterManager::MonsterManager()
 {
-//	ParamParser monsterParser = ParamParser("MonsterDefine.xml");
-//	monsterParser.parse();
-//	monsterParser.moveToFirst();
-//	NameValueList* monsterParams = monsterParser.getNext();
-//	this->mNewMonsterTime = atof((*monsterParams)["Time"].c_str());
-//	while (monsterParser.hasNext())
-//		mMonsterFactoryList.push_back(new MonsterFactory(*monsterParser.getNext()));
-//	if(mMonsterFactoryList.size() != 0)
-//		mCurrentMonsterFactory = mMonsterFactoryList.at(3);
 }
-
-/*MonsterManager::MonsterManager( Maze* maze )
-{
-	ParamParser monsterParser = ParamParser("MonsterDefine.xml");
-	monsterParser.parse();
-	monsterParser.moveToFirst();
-	NameValueList* monsterParams = monsterParser.getNext();
-	this->mNewMonsterTime = atof((*monsterParams)["newMonsterTime"].c_str());
-	while (monsterParser.hasNext())
-		mMonsterFactoryList.push_back(new MonsterFactory(*monsterParser.getNext()));
-	if(mMonsterFactoryList.size() != 0)
-		mCurrentMonsterFactory = mMonsterFactoryList.at(0);
-
-	mMaze = maze;
-}*/
 
 MonsterManager::~MonsterManager(void)
 {
-	if(mMonsterMgr != NULL)
-		delete mMonsterMgr;
+	release();
+}
+
+void MonsterManager::release()
+{
 	for (auto iter = mMonstersList.begin(); iter != mMonstersList.end(); ++iter)
 		delete (*iter);
+	mMonstersList.clear();
 	for (auto iter = mMonsterFactoryList.begin(); iter != mMonsterFactoryList.end(); ++iter)
 		delete (*iter);
-	delete mCurrentMonsterFactory;
-	delete mMaze;
+	mMonsterFactoryList.clear();
+
+	isInitialized = false;
 }
 
 MonsterManager* MonsterManager::getMonsterManager(void)
@@ -69,20 +50,6 @@ MonsterManager* MonsterManager::getMonsterManager(void)
 	}
 	return mMonsterMgr;
 }
-
-/*MonsterManager* MonsterManager::getMonsterManager(Maze* maze)
-{
-	if(mMonsterMgr == NULL)
-		mMonsterMgr = new MonsterManager(maze);
-	return mMonsterMgr;
-}*/
-
-//
-//void MonsterManager::monsterTimer(Ogre::SceneManager* sceneManager)
-//{
-//	MonsterManager* monsterMgr = getMonterManager();
-//	SetTimer(1, 3000, monsterMgr->monsterGenerate(sceneManager));
-//}
 
 void MonsterManager::monsterGenerate(Ogre::SceneManager* sceneManager, float timeSinceLastFrame)
 {
@@ -222,6 +189,8 @@ void MonsterManager::updateState( std::vector<NameValueList> explodedBullets, fl
 		(*iter2)->harmCheck(timeSinceLastFrame);
 		/// 怪物走
 		(*iter2)->go(timeSinceLastFrame);		
+		/// 怪物动画
+		(*iter2)->animate(timeSinceLastFrame, (*iter2));
 	}
 
 	// 销毁monster
@@ -288,9 +257,9 @@ void MonsterManager::storeExplodedBullets(std::vector<NameValueList> explodedBul
 
 }
 
-void MonsterManager::initialize( Maze* maze )
+void MonsterManager::initialize( Maze* maze, const std::string& monsterDefine )
 {
-	ParamParser monsterParser = ParamParser("MonsterDefine.xml");
+	ParamParser monsterParser = ParamParser(monsterDefine);
 	monsterParser.parse();
 	monsterParser.moveToFirst();
 	NameValueList* monsterParams = monsterParser.getNext();
@@ -344,7 +313,7 @@ void MonsterManager::setMonsterWave( String fileName )
 		mMonsterFactoryRandom.push_back(i);
 }
 
-void MonsterManager::setUFO( UFO& ufo )
+void MonsterManager::setUFO( UFO* ufo )
 {
 	mUFO = ufo;
 }

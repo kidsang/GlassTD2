@@ -187,8 +187,8 @@ void Monster::go(float timeSinceLastFrame)
 	//mBlood -= 10 * timeSinceLastFrame;
 
 	// 执行怪物动画列表
-	for (auto iter = mAnimatorList.begin(); iter != mAnimatorList.end(); ++iter)
-		(*iter)->run(timeSinceLastFrame, this);
+	/*for (auto iter = mAnimatorList.begin(); iter != mAnimatorList.end(); ++iter)
+		(*iter)->run(timeSinceLastFrame, this);*/
 
 	mIsDead = mCheckMethod->checkIsDead(mBlood);
 	

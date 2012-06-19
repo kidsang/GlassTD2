@@ -69,10 +69,16 @@ public:
 	void changeBullet();
 
 	/// 修改炮台朝向
-	void rotate(int yaw, int pitch);
+	void rotate(int yaw, int pitch, Ogre::Camera* cam);
 
 	// Get/Set
 public:
+	/// 返回大炮的节点
+	const SceneNode* getCannonNode()
+	{
+		return mGunNode;
+	}
+
 	/// 返回大炮的射角限制
 	const Vector2& getFireAngle()
 	{

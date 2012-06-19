@@ -1,11 +1,11 @@
-#include "StagePass1.h"
+#include "StagePass2.h"
 #include "StagePass1Step1.h"
 #include "StagePass1Step0.h"
 #include <OgreLogManager.h>
 #include "UFO.h"
 #include "ParamParser.h"
 
-StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui)
+StagePass2::StagePass2(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui)
 	: LevelStage(sceneManager, stageManager, gui)
 {
 	/// ³õÊ¼»¯´óÅÚ
@@ -29,6 +29,6 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 }
 
 
-StagePass1::~StagePass1(void)
+StagePass2::~StagePass2(void)
 {
 }
