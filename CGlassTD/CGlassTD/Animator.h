@@ -97,7 +97,7 @@ public:
 	/// @param timeSinceLastFrame 上一帧(游戏循环)持续的时间
 	/// @param object 被动画作用的物体
 	/// @note 此函数由外部管理类调用，用户不该重载此函数，而应该重载runImpl
-	void run(float timeSinceLastFrame, T* object);
+	bool run(float timeSinceLastFrame, T* object);
 
 	/// 动画的实现
 	/// @param timeSinceLastFrame 上一帧(游戏循环)持续的时间
@@ -107,18 +107,19 @@ public:
 };
 
 template <typename T>
-void Animator<T>::run(float timeSinceLastFrame, T* object)
+bool Animator<T>::run(float timeSinceLastFrame, T* object)
 {
 	if (!mIsStarted)
-		return;
+		return false;
 
 	mLastTime += timeSinceLastFrame;
 	if (mLastTime < mTimeInterval)
-		return;
+		return true;
 
 	runImpl(timeSinceLastFrame, object);
 
 	mLastTime -= mTimeInterval;
+	return true;
 }
 
 #endif // Animator_h__

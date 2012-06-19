@@ -2,7 +2,7 @@
 #include "Questions.h"
 
 
-StagePass1Step1::StagePass1Step1(StagePass1* stagePass1)
+StagePass1Step1::StagePass1Step1(LevelStage* stagePass1)
 	: mStagePass1(stagePass1)
 {
 }
@@ -11,7 +11,8 @@ void StagePass1Step1::init()
 {
 	
 	mStagePass1->getCamera()->setPosition(Vector3(0, 1200, 2000));
-	mStagePass1->getCamera()->setDirection(Vector3(0, -500, -1000));
+	mStagePass1->getCamera()->lookAt(Vector3(0, 0, 0));
+	//mStagePass1->getCamera()->setDirection(Vector3(0, -500, -1000));
 }
 
 bool StagePass1Step1::run(float timeSinceLastFrame)
@@ -61,7 +62,8 @@ bool StagePass1Step1::onMouseMoved(const OIS::MouseEvent& arg)
 	// 处于答题阶段时无法进行操作
 	if (Questions::getInstance()->isAnswering()) return true;
 
-	mStagePass1->getCannon()->rotate(-arg.state.X.rel, arg.state.Y.rel);
+	//StagePass1->getCannon()->rotate(-arg.state.X.rel, arg.state.Y.rel);
+	mStagePass1->getCannon()->rotate(-arg.state.X.rel, arg.state.Y.rel, mStagePass1->getCamera());
 	return true;
 }
 

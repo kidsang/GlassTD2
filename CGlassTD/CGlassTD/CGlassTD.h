@@ -7,6 +7,7 @@
 #include "../res/resource.h"
 #include "StageManager.h"
 #include "SceneManagerContainer.h"
+#include "StartStage.h"
 
 /**
  * ÎÄ¼ş£ºCGlassTD

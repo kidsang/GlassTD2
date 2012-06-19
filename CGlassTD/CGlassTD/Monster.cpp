@@ -51,7 +51,8 @@ Monster::Monster(SceneNode* node, Maze* maze, MonsterManager* monsterMgr)
 	mBulletHarmTime(0),
 	mBulletHarmValue(0),
 	mTerrainHarmvalue(0),
-	mHealthHUD(0)
+	mHealthHUD(0),
+	mIsGetUFO(false)
 {
 	mNode = node;
 	mMaze = maze;
@@ -122,59 +123,76 @@ Monster::~Monster(void)
 	{
 		mHealthHUD->clear();
 		delete mHealthHUD;
+		mHealthHUD = 0;
 	}
+	/*for (auto iter = mAnimatorList.begin(); iter != mAnimatorList.end(); ++iter)
+		delete (*iter);*/
 	if(mNode)
 	{
 		MovableObject* obj = mNode->getAttachedObject(0);
 		delete obj;
 		mNode->getParentSceneNode()->removeAndDestroyChild(mNode->getName());
+		mNode = 0;
 	}
-	delete mCheckMethod;
-	//delete mMaze;
-	delete mMonsterState;
+	if (mCheckMethod)
+	{
+		delete mCheckMethod;
+		mCheckMethod = 0;
+	}
+	if (mMonsterState)
+	{
+		delete mMonsterState;
+		mMonsterState = 0;
+	}
+	
 }
 
 
 
 void Monster::go(float timeSinceLastFrame)
 {
+	
 	/// 给动画增加时间
 	addTimeToAnimation(timeSinceLastFrame);
-
-	if(mDistance < 0.0f || mDistance == 0.0f)
+	if(!mIsDead)
 	{
-		int size = ogrePath.size();
-		mNode->setPosition(ogrePath[mNextPosIndex]);
-		if(ogrePath[ogrePath.size()-1] != mNode->getPosition())
+		if(mDistance < 0.0f || mDistance == 0.0f)
 		{
-			mBeginPosIndex++;
-			mNextPosIndex++;
-			mDistance = distance(ogrePath[mNextPosIndex], ogrePath[mBeginPosIndex]);
-			/// 面向，方向向量
-			mFace = (ogrePath[mNextPosIndex] - ogrePath[mBeginPosIndex]);
-			mFace.normalise();
+			int size = ogrePath.size();
+			mNode->setPosition(ogrePath[mNextPosIndex]);
+			if(ogrePath[ogrePath.size()-1] != mNode->getPosition())
+			{
+				mBeginPosIndex++;
+				mNextPosIndex++;
+				mDistance = distance(ogrePath[mNextPosIndex], ogrePath[mBeginPosIndex]);
+				/// 面向，方向向量
+				mFace = (ogrePath[mNextPosIndex] - ogrePath[mBeginPosIndex]);
+				mFace.normalise();
 			
-			/// 旋转面向角度
-			Ogre::Vector3 src = mNode->getOrientation() * Vector3::UNIT_X; 
-			Ogre::Quaternion quat = src.getRotationTo(mFace);
-			mNode->rotate(quat);
+				/// 旋转面向角度
+				Ogre::Vector3 src = mNode->getOrientation() * Vector3::UNIT_X; 
+				Ogre::Quaternion quat = src.getRotationTo(mFace);
+				mNode->rotate(quat);
+			}
+			else
+			{
+				setBlood(0);
+				mIsGetUFO = true;
+			}
 		}
-		else
-			setBlood(0);
-	}
 	
-	/// 平移所需要走的路
-	float moveDistance =  timeSinceLastFrame * mSpeed;
+		/// 平移所需要走的路
+		float moveDistance =  timeSinceLastFrame * mSpeed;
 
-	mNode->translate(mFace * moveDistance);
-	mDistance -= moveDistance;
-
+		mNode->translate(mFace * moveDistance);
+		mDistance -= moveDistance;
+	}
 	///用于测试怪物死亡
 	//mBlood -= 10 * timeSinceLastFrame;
 
 	// 执行怪物动画列表
-	for (auto iter = mAnimatorList.begin(); iter != mAnimatorList.end(); ++iter)
-		(*iter)->run(timeSinceLastFrame, this);
+	/*for (auto iter = mAnimatorList.begin(); iter != mAnimatorList.end(); ++iter)
+		(*iter)->run(timeSinceLastFrame, this);*/
 
 	mIsDead = mCheckMethod->checkIsDead(mBlood);
 	
@@ -221,12 +239,12 @@ void Monster::setMesh( Ogre::String mesh )
 	mMesh = mesh;
 }
 
-void Monster::setAnimate()
+void Monster::setAnimate(std::string animateName, bool isLoop)
 {
 	Ogre::Entity* entity;
 	entity = (Ogre::Entity*)mNode->getAttachedObject(0);
-	mAnimationState = entity->getAnimationState("Walk");
-	mAnimationState->setLoop(true);
+	mAnimationState = entity->getAnimationState(animateName);
+	mAnimationState->setLoop(isLoop);
 	mAnimationState->setEnabled(true);
 }
 
@@ -807,7 +825,7 @@ Monster* MonsterFactory::createInstance(SceneManager* sceneMgr, Maze* maze, Mons
 
 	if (mParams.find("spell") != mParams.end())
 		mon->setType((mParams["spell"].c_str()));
-	mon->setAnimate();
+
 
 	// 创建怪物头顶血条
 	BillboardSet* healthHUD = sceneMgr->createBillboardSet();

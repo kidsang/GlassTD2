@@ -2,14 +2,14 @@
 #define __StagePass1Step1_h_
 
 #include "Step.h"
-#include "StagePass1.h"
+#include "LevelStage.h"
 #include "SceneManagerContainer.h"
 
 /// 第一关的打怪阶段
 class StagePass1Step1 : public Step
 {
 public:
-	StagePass1Step1(StagePass1* stagePass1);
+	StagePass1Step1(LevelStage* stagePass1);
 
 	// 实现父类的函数
 	void init();
@@ -20,7 +20,7 @@ public:
 	bool onMouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 
 private:
-	StagePass1* mStagePass1;
+	LevelStage* mStagePass1;
 };
 
 

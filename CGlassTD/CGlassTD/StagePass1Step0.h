@@ -2,7 +2,7 @@
 #define __StagePass1Step0_h_
 
 #include "Step.h"
-#include "StagePass1.h"
+#include "LevelStage.h"
 #include "Maze.h"
 
 /// 第一关的布阵阶段
@@ -15,7 +15,7 @@ public:
 		NOTHING, WITH_SWAMP/*沼泽*/, WITH_SPIKEWEED/*地刺*/, WITH_TRAP/*捕兽夹*/, 
 	};
 
-	StagePass1Step0(StagePass1* stagePass1);
+	StagePass1Step0(LevelStage* stagePass1);
 	~StagePass1Step0();
 
 	// 实现父类的函数
@@ -32,7 +32,7 @@ private:
 	bool convert(const OIS::MouseEvent& arg, Ogre::Vector3& output);
 	
 private:
-	StagePass1* mStagePass1;
+	LevelStage* mStagePass1;
 	State mCurrentState;
 	Cell* mCurrentCell;
 	Ogre::Vector3 mLastPos;

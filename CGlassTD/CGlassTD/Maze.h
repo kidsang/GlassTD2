@@ -54,7 +54,7 @@ public:
 	/// @param map 地图数组指针
 	/// @param width 地图的宽
 	/// @param height 地图的高
-	Maze(SceneManager* sceneManager, int* map, int width, int height, Ogre::Vector3 start1, Ogre::Vector3 start2,Ogre::Vector3 end);
+	Maze(SceneManager* sceneManager, int* map, int width, int height, Ogre::Vector3 start1, Ogre::Vector3 start2,Ogre::Vector3 end, std::string cellDefine);
 	/// 获取当前地图的信息
 	/// @return 返回一维数组
 	Cell* getMazeInfo();

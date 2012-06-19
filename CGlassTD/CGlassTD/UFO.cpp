@@ -1,38 +1,32 @@
 #include "UFO.h"
-
 #include "ObjectFactory.h"
 
-UFO::UFO(void)
+UFO::UFO(Ogre::SceneNode* node, Ogre::Entity* entity, int blood)
+	: mNode(node), mEntity(entity), mBlood(blood), mMaxBlood(blood), mHealthHUD(0)
 {
-}
-
-UFO::UFO( Ogre::SceneManager* manager, Ogre::SceneNode* parent, Ogre::String mesh, Ogre::Vector3 pos,int blood)
-{
-	this->mEntity = ObjectFactory::createEntity(manager,mesh);
-	this->mNode = ObjectFactory::createSceneNode(parent,this->mEntity, pos);
-	this->mBlood = blood;
 }
 
 
 UFO::~UFO(void)
 {
+	if (mHealthHUD)
+	{
+		mHealthHUD->clear();
+		delete mHealthHUD;
+		mHealthHUD = 0;
+	}
 }
 
 void UFO::setBlood( int blood )
 {
 	mBlood = blood;
-}
-
-int UFO::getBlood()
-{
-	return mBlood;
-}
-
-bool UFO::isDestroy()
-{
-	if(mBlood <= 0)
-	{
-		return true;
-	}
-	return false;
+	/// 改变头顶血量显示
+	Billboard* health = mHealthHUD->getBillboard(0);
+	float healthPer = mBlood / (float)mMaxBlood;
+	float healthLength = healthPer * mHealthHUD->getDefaultWidth();
+	health->setDimensions(healthLength, mHealthHUD->getDefaultHeight());
+	ColourValue maxHealthCol = ColourValue(0, 0.8f, 0);
+	ColourValue minHealthCol = ColourValue(1, 0, 0);
+	ColourValue currHealthCol = maxHealthCol * healthPer + minHealthCol * (1 - healthPer);
+	health->setColour(currHealthCol);
 }

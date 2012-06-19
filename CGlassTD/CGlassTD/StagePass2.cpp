@@ -1,17 +1,17 @@
-#include "StagePass1.h"
+#include "StagePass2.h"
 #include "StagePass1Step1.h"
 #include "StagePass1Step0.h"
 #include <OgreLogManager.h>
 #include "UFO.h"
 #include "ParamParser.h"
 
-StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui)
+StagePass2::StagePass2(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui)
 	: LevelStage(sceneManager, stageManager, gui)
 {
 	/// 初始化大炮
 	initializeCannon("CannonDefine.xml", "BulletDefine.xml");
 	/// 初始化迷宫
-	initializeMaze("MazeDefine.xml", "CellDefine.xml");
+	initializeMaze("MazeDefine2.xml", "CellDefine.xml");
 	/// 初始化飞船
 	initializeUFO("UFODefine.xml");
 
@@ -30,6 +30,6 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 }
 
 
-StagePass1::~StagePass1(void)
+StagePass2::~StagePass2(void)
 {
 }

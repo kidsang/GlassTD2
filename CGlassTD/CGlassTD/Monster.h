@@ -9,23 +9,23 @@
 #include "Maze.h"
 #include "MonsterState.h"
 #include <stack>
-#include "Animator.h"
+#include "Animatable.h"
 using namespace Ogre;
 
 class Cell;
 class MonsterManager;
 
 
-const float FULL_BLOOD = 100.0f;
-const float BEGIN_POS_X = -100.0f;
-const float BEGIN_POS_Y = 0.f;
-const float BEGIN_POS_Z = -100.f;
-const float FIRE_HARM_TIME = 1.0f;    ///火属性伤害持续时间
-const float ICE_HARM_TIME = 1.0f;     /// 冰属性伤害持续时间
-const float ICE_HARM_SPEED = 0.4f;    /// 冰属性影响的速度值
-const float FIRE_HARM_BLOOD = 0.01f;  /// 火属性伤害的血量值
-const float SPIKEWEED_HARM_BLOOD = 20.0f;  /// 地刺伤害的血量值
-const float SWAMP_HARM_SPEED = 0.4f;  /// 沼泽影响的速度值
+//const float FULL_BLOOD = 100.0f;
+//const float BEGIN_POS_X = -100.0f;
+//const float BEGIN_POS_Y = 0.f;
+//const float BEGIN_POS_Z = -100.f;
+//const float FIRE_HARM_TIME = 1.0f;    ///火属性伤害持续时间
+//const float ICE_HARM_TIME = 1.0f;     /// 冰属性伤害持续时间
+//const float ICE_HARM_SPEED = 0.4f;    /// 冰属性影响的速度值
+//const float FIRE_HARM_BLOOD = 0.01f;  /// 火属性伤害的血量值
+//const float SPIKEWEED_HARM_BLOOD = 20.0f;  /// 地刺伤害的血量值
+//const float SWAMP_HARM_SPEED = 0.4f;  /// 沼泽影响的速度值
 
 
 struct Pos
@@ -94,9 +94,10 @@ struct Vect
 //		fireHarmTime(FIRE_HARM_TIME){};
 //};
 
-class Monster
+class Monster : public Animatalbe<Monster>
 {
 protected:
+	bool mIsGetUFO;
 	int mBeginPosIndex;
 	int mNextPosIndex;
 	Ogre::Vector3 mBeginPos;
@@ -137,8 +138,8 @@ protected:
 	/// 怪物头顶血条
 	BillboardSet* mHealthHUD;
 	/// 怪物动画列表
-	typedef std::deque<Animator<Monster>*> AnimatorList;
-	AnimatorList mAnimatorList;
+	//typedef std::deque<Animator<Monster>*> AnimatorList;
+	//AnimatorList mAnimatorList;
 	/// 怪物管理类的指针
 	MonsterManager* mMonsterManager;
 
@@ -173,10 +174,11 @@ public:
 	{
 		return mNode;
 	}
-	void addAnimator(Animator<Monster>* ani)
+	
+	/*void addAnimator(Animator<Monster>* ani)
 	{
 		mAnimatorList.push_back(ani);
-	}
+	}*/
 	MonsterManager* getCreater()
 	{
 		return mMonsterManager;
@@ -192,7 +194,7 @@ public:
 	///两点之间的距离
 	float distance(Ogre::Vector3 pos1, Ogre::Vector3 pos2);
 	/// 设置动画
-	void setAnimate();
+	void setAnimate(std::string animateName, bool isLoop);
 	/// 根据时间刷新动画状态
 	void addTimeToAnimation(float timeSinceLastFrame);
 	/// 获取怪兽的半径
@@ -221,6 +223,12 @@ public:
 
 	/// 状态恢复
 	void stateRecover();
+
+	/// 是否触碰到UFO
+	bool isGetUFO()
+	{
+		return mIsGetUFO;
+	}
 private:
 	Pos parent;
 	/// 地图指针

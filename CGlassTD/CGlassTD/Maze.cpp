@@ -5,11 +5,11 @@ Maze::Maze(void)
 {
 }
 
-Maze::Maze(SceneManager* sceneManager, int* map, int width, int height, Ogre::Vector3 start1, Ogre::Vector3 start2, Ogre::Vector3 final)
+Maze::Maze(SceneManager* sceneManager, int* map, int width, int height, Ogre::Vector3 start1, Ogre::Vector3 start2, Ogre::Vector3 final, std::string cellDefine)
 	: mWidth(width), mHeight(height), mSceneManager(sceneManager), 
 	mMap(0)
 {	
-	ParamParser cellParser = ParamParser("CellDefine.xml");
+	ParamParser cellParser = ParamParser(cellDefine);
 	cellParser.parse();
 	cellParser.moveToFirst();
 	NameValueList* cellParams = cellParser.getNext();

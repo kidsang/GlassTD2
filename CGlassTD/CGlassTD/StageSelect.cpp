@@ -1,6 +1,8 @@
 
 #include "StageSelect.h"
 #include "StagePass1.h"
+#include "StagePass2.h"
+#include "StagePass3.h"
 #include "StartStage.h"
 
 StageSelect::StageSelect(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui)
@@ -28,12 +30,12 @@ void StageSelect::notifyMouseButtonClick(MyGUI::Widget* _sender)
 	else if(_sender == stage2Btn)
 	{
 
-		Stage* nextStage = new StagePass1(this->mSceneManager, this->mStageManager, this->mGui);
+		Stage* nextStage = new StagePass2(this->mSceneManager, this->mStageManager, this->mGui);
 		this->jumpToNextStage(nextStage);
 	}
 	else if(_sender == stage3Btn)
 	{
-		Stage* nextStage = new StagePass1(this->mSceneManager, this->mStageManager, this->mGui);
+		Stage* nextStage = new StagePass3(this->mSceneManager, this->mStageManager, this->mGui);
 		this->jumpToNextStage(nextStage);
 
 	}

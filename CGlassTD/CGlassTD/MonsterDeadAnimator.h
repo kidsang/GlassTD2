@@ -9,6 +9,8 @@
 /// ¹ÖÎïËÀÍö¶¯»­
 class MonsterDeadAnimator : public Animator<Monster>
 {
+private:
+	float mDieTime;
 public:
 	MonsterDeadAnimator(float timeInterval);
 	~MonsterDeadAnimator(void);

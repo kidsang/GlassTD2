@@ -18,7 +18,7 @@
           spell="ice"
           />
    <Monster name="SmallFireMonster"
-          mesh="monster1.mesh"
+          mesh="fireMonster.mesh"
           blood="100"
           speed="200"
           radius="10"
@@ -40,7 +40,7 @@
           spell="ice"
           />
    <Monster name="BigFireMonster"
-          mesh="monster1.mesh"
+          mesh="fireMonster.mesh"
           blood="100"
           speed="200"
           radius="10"

@@ -2,22 +2,39 @@
 #ifndef __UFO_h_
 #define __UFO_h_
 
-#include <OgreSceneManager.h>
-#include <OgreSceneNode.h>
+#include <Ogre.h>
+using namespace Ogre;
 
 class UFO
 {
 private:
 	int mBlood;
+	int mMaxBlood;
 	Ogre::SceneNode* mNode;
 	Ogre::Entity* mEntity;
+	/// UFOÍ·¶¥ÑªÌõ
+	BillboardSet* mHealthHUD;
+
 public:
-	UFO(void);
-	UFO(Ogre::SceneManager* manager, Ogre::SceneNode* parent, Ogre::String mesh, Ogre::Vector3 pos,int blood);
+	UFO(Ogre::SceneNode* node, Ogre::Entity* entity, int blood);
 	~UFO(void);
+
 	void setBlood(int blood);
-	int getBlood();
-	bool isDestroy();
+
+	int getBlood()
+	{
+		return mBlood;
+	}
+
+	bool isDestroy()
+	{
+		return (mBlood <= 0);
+	}
+
+	void setHealthHUD(BillboardSet* health)
+	{
+		mHealthHUD = health;
+	}
 };
 
 #endif

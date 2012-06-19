@@ -31,7 +31,7 @@
           mass="4"
           damage="1000"
 		  appendDamage="0"
-          range="200"
+          range="1000"
           ammo="100"
           spell="normal"
 		  time="0"

@@ -5,6 +5,13 @@
 using std::vector;
 #include "Stage.h"
 #include "Step.h"
+#include "Bullet.h"
+#include "Cannon.h"
+#include "Maze.h"
+#include "MonsterManager.h"
+#include "BulletManager.h"
+#include "List.hpp"
+#include "Animator.h"
 
 class LevelStage : public Stage
 {
@@ -47,8 +54,86 @@ public:
 	/// @note 应该只由框架调用
 	bool onMouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 
+	/// 添加一个摄像机动画
+	void addCameraAnimator(Animator<Ogre::Camera>* ani)
+	{
+		mCameraAnimatorList.push_back(ani);
+	}
+
+	// Get/Set
+public:
+	Cannon* getCannon()
+	{
+		return mCannon;
+	}
+
+	Maze* getMaze()
+	{
+		return mMaze;
+	}
+
+	UFO* getUFO()
+	{
+		return mUFO;
+	}
+
+	MonsterManager* getMonsterManager()
+	{
+		return mMonsterManager;
+	}
+
+	BulletManager& getBulletManager()
+	{
+		return mBulletManager;
+	}
+
+	const Vector3& getGravity()
+	{
+		return mGravity;
+	}
+
+	void setGravity(const Vector3& gravity)
+	{
+		mGravity = gravity;
+	}
+
+	// helper functions
 protected:
+	/// 初始化大炮
+	/// @param cannonDefine 大炮定义xml文件
+	/// @param bulletDefine 炮弹定义xml文件
+	void initializeCannon(const std::string& cannonDefine, const std::string& bulletDefine);
+
+	/// 初始化迷宫
+	/// @param mazeDefine 迷宫定义xml文件
+	/// @param cellDefine 墙定义xml文件
+	void initializeMaze(const std::string& mazeDefine, const std::string& cellDefine);
+
+	/// 初始化UFO
+	/// @param ufoDefine UFO定义xml文件
+	void initializeUFO(const std::string& ufoDefine);
+
+protected:
+	/// 当前的分场景
 	Step* mCurrentStep;
+	/// 炮
+	Cannon* mCannon;
+	/// 迷宫
+	Maze* mMaze;
+	/// UFO
+	UFO* mUFO;
+	/// 怪物序列管理器
+	MonsterManager* mMonsterManager;
+
+	/// 炮弹管理类
+	BulletManager mBulletManager;
+	/// 摄像机动画列表
+	std::deque<Animator<Ogre::Camera>*> mCameraAnimatorList;
+
+	/// 环境重力
+	Vector3 mGravity;
+
+
 };
 
 
