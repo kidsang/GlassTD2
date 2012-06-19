@@ -54,7 +54,7 @@ public:
 	/// @param map 地图数组指针
 	/// @param width 地图的宽
 	/// @param height 地图的高
-	Maze(SceneManager* sceneManager, int* map, int width, int height, Ogre::Vector3 start1, Ogre::Vector3 start2,Ogre::Vector3 end);
+	Maze(SceneManager* sceneManager, int* map, int width, int height, Ogre::Vector3 start1, Ogre::Vector3 start2,Ogre::Vector3 end, std::string cellDefine);
 	/// 获取当前地图的信息
 	/// @return 返回一维数组
 	Cell* getMazeInfo();
@@ -90,12 +90,14 @@ public:
 	/// 获取cell的宽度
 	/// @return 返回cell的宽度
 	int getEntityWidth();
+	bool setCellFree(Ogre::Vector3 pos);
 	/************************************** 地图编辑接口 ******************************/
 	/// 地图编辑时，临时决定的地图
 	/// @params pos 世界地图三维坐标指针
 	/// @params type 要显示的cell的类型
 	/// @return true 表示成功，反之不成功
 	bool editMaze(Ogre::Vector3 pos, CellType type);
+	void clearShadow();
 	/************************************** end: 地图编辑接口 ******************************/
 	/// 析构函数
 	~Maze(void);

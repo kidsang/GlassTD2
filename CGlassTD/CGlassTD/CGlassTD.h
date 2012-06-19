@@ -7,6 +7,7 @@
 #include "../res/resource.h"
 #include "StageManager.h"
 #include "SceneManagerContainer.h"
+#include "StartStage.h"
 
 /**
  * ÎÄ¼þ£ºCGlassTD
@@ -37,7 +38,6 @@ protected:
 
 private:
 	StageManager* mpStageManager;
-
 };
 
 #endif // #ifndef __CGlassTD_h_

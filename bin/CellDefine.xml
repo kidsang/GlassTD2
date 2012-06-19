@@ -5,9 +5,9 @@
     swamp="swamp.mesh"
     spikeweed="spikeweed.mesh"
     trap="trap.mesh"
-    shadowSwamp="cubess.mesh"
-    shadowSpikeweed="cubess.mesh"
-    shadowTrap="cubess.mesh"
+    shadowSwamp="shadon_swamp.mesh"
+    shadowSpikeweed="shadow_spikeweed.mesh"
+    shadowTrap="shadow_trap.mesh"
      />
   <size
     width="100"

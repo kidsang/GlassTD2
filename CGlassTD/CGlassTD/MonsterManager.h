@@ -6,37 +6,92 @@
 #include "ParamParser.h"
 #include "Bullet.h"
 #include "Maze.h"
+#include <vector>
+#include "UFO.h"
+
+
+struct Wave
+{
+	float newWaveTime;
+	int totalMonster;
+	int smallNormalMonster;
+	int smallIceMonster;
+	int smallFireMonster;
+	int bigNormalMonster;
+	int bigIceMonster;
+	int bigFireMonster;
+	float timeInteval1;
+	float timeInteval2;
+};
+/// 用于记录爆炸的炮弹的结构体
+struct ExplodedBulletsStruct
+{
+	std::string bulletType;
+	float bulletHarm;
+	float bulletAppendHarm;
+	float bulletRadius;
+	float bulletEffectTime;
+	float bulletPos[3];
+};
+
+
 class MonsterManager
 {
 private:
 	/// 地图
-	Maze* mMaze;
+	static Maze* mMaze;
+	/// 用于记录所有爆炸子弹信息的结构体
+	std::vector<ExplodedBulletsStruct*> mExplodeBulletsLists;
 	/// 时间计数器
 	static float mTimeCount;
 	/// std::list<SceneNode*> mMonsterNodes;
 	/// 现在的怪物工厂
-	MonsterFactory* mCurrentMonsterFactory;
+	static MonsterFactory* mCurrentMonsterFactory;
 	/// 怪兽工厂列表，用于生成不同种类的怪物
-	std::vector<MonsterFactory*> mMonsterFactoryList;
+	static std::vector<MonsterFactory*> mMonsterFactoryList;
 	/// 怪物列表
-	std::list<Monster*> mMonstersList;
+	static std::list<Monster*> mMonstersList;
+	/// 需要被移除的怪物列表
+	std::list<Monster*> mMonsterRemoveList;
 	/// 怪物数量
 	static int mMonsterNum;
 	/// 怪物管理器，单一
 	static MonsterManager* mMonsterMgr;
 
 	/// 新增怪物的时间间隔
-	float mNewMonsterTime ;
+	static float mNewMonsterTime ;
 
-	MonsterManager(Maze* maze);
-	MonsterManager(Ogre::SceneManager* sceneManager);
+	/// 初始化标志位
+	static bool isInitialized;
+
+	//MonsterManager(Maze* maze);
+	//MonsterManager(Ogre::SceneManager* sceneManager);
 	MonsterManager();
+
+
+	static std::vector<Wave> mMonsterWave ;
+
+	/// 当前一波的号码
+	static int mCurrentWaveNum;
+	/// 当前一波
+	static Wave mCurrentWave;
+	/// 工厂随机号，用来储存还需要生产该怪物的工厂
+	static std::vector<int> mMonsterFactoryRandom;
+	/// 现在的工厂号
+	static int mCurrentMonsterFactoryNum;
+
+	UFO* mUFO;
+	/// 是否停止产生怪物
+	static bool mIsStopGenerateMonster;
+
 
 //protected:
 //	
 //	static DWORD WINAPI createMonstersThread(PVOID pVoid); 
-		
+
 public:
+	static void initialize(Maze* maze, const std::string& monsterDefine);
+
 	~MonsterManager(void);
     /// Ogre::String mMonNames[100];
 	/// 获取怪物数量
@@ -44,6 +99,8 @@ public:
 
 	/// 设置怪物数量
 	void setMonsterNum(int num);
+
+	void removeNumByFactoryType(std::string type);
 
 	/// 怪物数量+1
 	void MonsterNumPlus(void);
@@ -59,7 +116,7 @@ public:
 
 	/// 获取怪物管理器
 	static MonsterManager* getMonsterManager(void);
-	static MonsterManager* getMonsterManager(Maze* maze);
+	//static MonsterManager* getMonsterManager(Maze* maze);
 
 	/// void monsterTimer(Ogre::SceneManager* sceneManager);
 
@@ -68,8 +125,28 @@ public:
 
 	void setMaze(Maze* maze);
 
-	
+	/// 储存爆炸炮弹信息
+	void storeExplodedBullets(std::vector<NameValueList> explodedBullets);
+
+	/// 更新怪物信息
 	void updateState(std::vector<NameValueList> explodedBullets, float timeSinceLastFrame, Ogre::SceneManager* sceneManager);
+	
+	/// 设置怪兽波数
+	void setMonsterWave(String fileName);
+
+	/// 波数开始
+	void waveBegin();
+
+	void setUFO(UFO* ufo);
+
+	/// 删除指定的Monster
+	/// @note 会删除其一切，包括节点和模型
+	void destoryMonster(Monster* monster);
+	
+	/// 进行清理工作
+	/// 因为该类是单例
+	/// add by kid
+	void release();
 };
 
 

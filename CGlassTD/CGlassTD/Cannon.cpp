@@ -62,7 +62,7 @@ void Cannon::changeBullet()
 	mCurrentBullet = (mCurrentBullet + 1) % mBulletFactoryList.size();
 }
 
-void Cannon::rotate( int yaw, int pitch )
+void Cannon::rotate( int yaw, int pitch, Ogre::Camera* cam)
 {
 	float factor = 400.f; // 调整炮台的旋转速度
 	float fyaw = (float)yaw / factor;
@@ -96,4 +96,5 @@ void Cannon::rotate( int yaw, int pitch )
 	//mGunNode->pitch(Ogre::Radian(fpitch), Ogre::Node::TS_WORLD);
 	mTireNode->yaw(Ogre::Radian(fyaw));
 	mGunNode->pitch(Ogre::Radian(fpitch));
+	cam->yaw(Ogre::Radian(fyaw));
 }

@@ -1,38 +1,45 @@
 #include "Monster.h"
 #include "Cell.h"
 #include <algorithm>
+#include "MonsterHurtAnimator.h"
 #define CAN_STEP 0
 #define NOT_STEP 1
 #define HAS_STEP 2
 #define SET_MARK 3
 
-Monster::Monster(SceneNode* node)
-	:mSpeed(1),
-	mSpeedTemp(1),
-	/*mPos(Ogre::Vector3(BEGIN_POS_X, 10, BEGIN_POS_Y)),*/
-	mBlood(0),
-    mFace(Ogre::Vector3(0, 0, 1)),
-	mRadius(1),
-	mType(),
-	//mHarmList(),
-	mIsDead(false),
-	mBeginPosIndex(-1),
-    mNextPosIndex(0),
-	mDistance(-0.1f),
-	mBulletHarmTime(0),
-	mBulletHarmValue(0),
-	mTerrainHarmvalue(0)
-{
-	mNode = node;
-	mCheckMethod = new CheckMethod();
-	
-}
+//Monster::Monster(SceneNode* node)
+//	:mSpeed(1),
+//	mSpeedTemp(1),
+//	//mPos(Ogre::Vector3(BEGIN_POS_X, 10, BEGIN_POS_Y)),
+//	mBlood(0),
+//    mFace(Ogre::Vector3(0, 0, 1)),
+//	mRadius(1),
+//	mType(),
+//	//mHarmList(),
+//	mIsDead(false),
+//	mBeginPosIndex(-1),
+//    mNextPosIndex(0),
+//	mDistance(-0.1f),
+//	mBulletHarmTime(0),
+//	mBulletHarmValue(0),
+//	mTerrainHarmvalue(0)
+//{
+//	mNode = node;
+//	mNode->setOrientation(0, 0, 1, 0);
+//	mCheckMethod = new CheckMethod();
+//	
+//	
+//
+//}
 
-Monster::Monster(SceneNode* node, Maze* maze)
-	:mSpeed(1),
+Monster::Monster(SceneNode* node, Maze* maze, MonsterManager* monsterMgr)
+	:
+	mMonsterManager(monsterMgr),
+	mSpeed(1),
 	mSpeedTemp(1),
 	/*mPos(Ogre::Vector3(BEGIN_POS_X, 10, BEGIN_POS_Y)),*/
 	mBlood(0),
+	mMaxBlood(0),
 	mFace(Ogre::Vector3(0, 0, 0)),
 	mRadius(1),
 	mType(),
@@ -43,13 +50,16 @@ Monster::Monster(SceneNode* node, Maze* maze)
 	mDistance(-0.1f),
 	mBulletHarmTime(0),
 	mBulletHarmValue(0),
-	mTerrainHarmvalue(0)
+	mTerrainHarmvalue(0),
+	mHealthHUD(0),
+	mIsGetUFO(false)
 {
 	mNode = node;
 	mMaze = maze;
 	mCheckMethod = new CheckMethod();
 	mMonsterState = new MonsterState();
 
+	//mNode->setOrientation(0, 0, 1, 0);
 	makeMap(mMaze->getMazeInfo());
 	int i = rand() % startPos.size();
 	fromPos = startPos[i];
@@ -106,80 +116,83 @@ Monster::Monster(SceneNode* node, Maze* maze)
 	path.push_back(Pos(8, 15));*/
 }
 
-////
-////Monster::Monster( SceneNode* node, Maze* maze )
-////	:mSpeed(1),
-////	mSpeedTemp(1),
-////	/*mPos(Ogre::Vector3(BEGIN_POS_X, 10, BEGIN_POS_Y)),*/
-////	mBlood(0),
-////	mFace(Ogre::Vector3(0, 0, 1)),
-////	mRadius(1),
-////	mType(),
-////	mHarmList(),
-////	mIsDead(false)
-////{
-////	mNode = node;
-////	mCheckMethod = new CheckMethod();
-////	mMaze = maze;
-////}
-
-//
-//Monster::Monster( Ogre::SceneManager* sceneMgr, Ogre::SceneNode* parentNode, Position& pos)
-//{	
-//	
-//}
 
 Monster::~Monster(void)
 {
-	/*if(mNode != NULL)
-		delete mNode;*/
-	delete mCheckMethod;
-	delete mMaze;
-	delete mMonsterState;
+	if (mHealthHUD)
+	{
+		mHealthHUD->clear();
+		delete mHealthHUD;
+		mHealthHUD = 0;
+	}
+	/*for (auto iter = mAnimatorList.begin(); iter != mAnimatorList.end(); ++iter)
+		delete (*iter);*/
+	if(mNode)
+	{
+		MovableObject* obj = mNode->getAttachedObject(0);
+		delete obj;
+		mNode->getParentSceneNode()->removeAndDestroyChild(mNode->getName());
+		mNode = 0;
+	}
+	if (mCheckMethod)
+	{
+		delete mCheckMethod;
+		mCheckMethod = 0;
+	}
+	if (mMonsterState)
+	{
+		delete mMonsterState;
+		mMonsterState = 0;
+	}
+	
 }
 
-//Ogre::SceneNode* Monster::getNode(Ogre::String mesh, Ogre::String name)
-//{
-//	
-//	
-//}
+
 
 void Monster::go(float timeSinceLastFrame)
 {
-	///harmCheck(timeSinceLastFrame);
+	
 	/// 给动画增加时间
 	addTimeToAnimation(timeSinceLastFrame);
-
-	if(mDistance < 0.0f || mDistance == 0.0f)
+	if(!mIsDead)
 	{
-		int size = ogrePath.size();
-		mNode->setPosition(ogrePath[mNextPosIndex]);
-		if(ogrePath[ogrePath.size()-1] != mNode->getPosition())
+		if(mDistance < 0.0f || mDistance == 0.0f)
 		{
-			mBeginPosIndex++;
-			mNextPosIndex++;
-			mDistance = distance(ogrePath[mNextPosIndex], ogrePath[mBeginPosIndex]);
-			/// 面向，方向向量
-			mFace = (ogrePath[mNextPosIndex] - ogrePath[mBeginPosIndex]);
-			mFace.normalise();
+			int size = ogrePath.size();
+			mNode->setPosition(ogrePath[mNextPosIndex]);
+			if(ogrePath[ogrePath.size()-1] != mNode->getPosition())
+			{
+				mBeginPosIndex++;
+				mNextPosIndex++;
+				mDistance = distance(ogrePath[mNextPosIndex], ogrePath[mBeginPosIndex]);
+				/// 面向，方向向量
+				mFace = (ogrePath[mNextPosIndex] - ogrePath[mBeginPosIndex]);
+				mFace.normalise();
 			
-			/// 旋转面向角度
-			Ogre::Vector3 src = mNode->getOrientation() * Vector3::UNIT_X; 
-			Ogre::Quaternion quat = src.getRotationTo(mFace);
-			mNode->rotate(quat);
+				/// 旋转面向角度
+				Ogre::Vector3 src = mNode->getOrientation() * Vector3::UNIT_X; 
+				Ogre::Quaternion quat = src.getRotationTo(mFace);
+				mNode->rotate(quat);
+			}
+			else
+			{
+				setBlood(0);
+				mIsGetUFO = true;
+			}
 		}
-		else
-			setBlood(0);
-	}
 	
-	/// 平移所需要走的路
-	float moveDistance =  timeSinceLastFrame * mSpeed;
+		/// 平移所需要走的路
+		float moveDistance =  timeSinceLastFrame * mSpeed;
 
-	mNode->translate(mFace * moveDistance);
-	mDistance -= moveDistance;
-
+		mNode->translate(mFace * moveDistance);
+		mDistance -= moveDistance;
+	}
 	///用于测试怪物死亡
 	//mBlood -= 10 * timeSinceLastFrame;
+
+	// 执行怪物动画列表
+	/*for (auto iter = mAnimatorList.begin(); iter != mAnimatorList.end(); ++iter)
+		(*iter)->run(timeSinceLastFrame, this);*/
 
 	mIsDead = mCheckMethod->checkIsDead(mBlood);
 	
@@ -226,12 +239,12 @@ void Monster::setMesh( Ogre::String mesh )
 	mMesh = mesh;
 }
 
-void Monster::setAnimate()
+void Monster::setAnimate(std::string animateName, bool isLoop)
 {
 	Ogre::Entity* entity;
 	entity = (Ogre::Entity*)mNode->getAttachedObject(0);
-	mAnimationState = entity->getAnimationState("Walk");
-	mAnimationState->setLoop(true);
+	mAnimationState = entity->getAnimationState(animateName);
+	mAnimationState->setLoop(isLoop);
 	mAnimationState->setEnabled(true);
 }
 
@@ -275,6 +288,21 @@ void Monster::harmCheck(float timeSinceLastFrame)
 	mIsDead = mCheckMethod->checkIsDead(mBlood);
 	/// 根据地形改地图
 	changeMazeByTerrain(mMonsterState->getTerrainState());
+	/// 改变头顶血量显示
+	Billboard* health = mHealthHUD->getBillboard(0);
+	float healthPer = mBlood / mMaxBlood;
+	float healthLength = healthPer * mHealthHUD->getDefaultWidth();
+	health->setDimensions(healthLength, mHealthHUD->getDefaultHeight());
+	ColourValue maxHealthCol = ColourValue(0, 0.8f, 0);
+	ColourValue minHealthCol = ColourValue(1, 0, 0);
+	ColourValue currHealthCol = maxHealthCol * healthPer + minHealthCol * (1 - healthPer);
+	health->setColour(currHealthCol);
+
+	// test -kid
+	/*MonsterHurtAnimator* mha = new MonsterHurtAnimator(0);
+	mha->start(this);
+	mAnimatorList.push_back(mha);
+	mha->stop(this);*/
 }
 
 bool Monster::isMonsterDead()
@@ -359,8 +387,8 @@ void Monster::checkCellType()
 	/// cell的临时变量，用来储存现在怪兽所在的cell的指针
 	Cell* cellTemp;
 	cellTemp = mMaze->getCellByPos(mNode->getPosition());
-	if (!cellTemp)
-		return;
+   /* if(cellTemp == NULL)
+		return;*/
 	mMonsterState->setTerrainState(cellTemp->getCellType());
 	/// 设置地图伤害
 	setTerrainHarm(cellTemp->getHarmValue(), 0);
@@ -721,7 +749,7 @@ void Monster::changeMazeByTerrain( int terrainType )
 {
 	switch(terrainType)
 	{
-	case TRAP: mMaze->editMaze(mNode->getPosition(), FREE); break;
+	case TRAP: mMaze->setCellFree(mNode->getPosition()); break;
 	default: break;
 	}
 }
@@ -754,47 +782,64 @@ void Monster::stateRecover()
 //}
 
 
-Monster* MonsterFactory::createInstance(SceneManager* sceneMgr)
+//Monster* MonsterFactory::createInstance(SceneManager* sceneMgr)
+//{
+//	Ogre::SceneNode* monsterNode = sceneMgr->getRootSceneNode()->createChildSceneNode();
+//	Ogre::Entity* entity = sceneMgr->createEntity(mParams["mesh"]);
+//	monsterNode->attachObject(entity);
+//	Monster* mon;
+//	mon = new Monster(monsterNode);
+//	if (mParams.find("radius") != mParams.end())
+//		mon->setRadius((float)atof(mParams["radius"].c_str()));
+//
+//	if (mParams.find("blood") != mParams.end())
+//		mon->setBlood((float)atof(mParams["blood"].c_str()));
+//
+//	if (mParams.find("speed") != mParams.end())
+//		mon->setSpeed((float)atof(mParams["speed"].c_str()));
+//
+//	if (mParams.find("spell") != mParams.end())
+//		mon->setType((mParams["spell"].c_str()));
+//	mon->setAnimate();
+//	return mon;
+//}
+
+Monster* MonsterFactory::createInstance(SceneManager* sceneMgr, Maze* maze, MonsterManager* monsterMgr)
 {
 	Ogre::SceneNode* monsterNode = sceneMgr->getRootSceneNode()->createChildSceneNode();
 	Ogre::Entity* entity = sceneMgr->createEntity(mParams["mesh"]);
 	monsterNode->attachObject(entity);
 	Monster* mon;
-	mon = new Monster(monsterNode);
+	mon = new Monster(monsterNode, maze, monsterMgr);
 	if (mParams.find("radius") != mParams.end())
 		mon->setRadius((float)atof(mParams["radius"].c_str()));
 
 	if (mParams.find("blood") != mParams.end())
+	{
 		mon->setBlood((float)atof(mParams["blood"].c_str()));
+		mon->setMaxBlood(mon->getBlood());
+	}
 
 	if (mParams.find("speed") != mParams.end())
 		mon->setSpeed((float)atof(mParams["speed"].c_str()));
 
 	if (mParams.find("spell") != mParams.end())
 		mon->setType((mParams["spell"].c_str()));
-	mon->setAnimate();
-	return mon;
-}
 
-Monster* MonsterFactory::createInstance(SceneManager* sceneMgr, Maze* maze)
-{
-	Ogre::SceneNode* monsterNode = sceneMgr->getRootSceneNode()->createChildSceneNode();
-	Ogre::Entity* entity = sceneMgr->createEntity(mParams["mesh"]);
-	monsterNode->attachObject(entity);
-	Monster* mon;
-	mon = new Monster(monsterNode, maze);
-	if (mParams.find("radius") != mParams.end())
-		mon->setRadius((float)atof(mParams["radius"].c_str()));
 
-	if (mParams.find("blood") != mParams.end())
-		mon->setBlood((float)atof(mParams["blood"].c_str()));
-
-	if (mParams.find("speed") != mParams.end())
-		mon->setSpeed((float)atof(mParams["speed"].c_str()));
-
-	if (mParams.find("spell") != mParams.end())
-		mon->setType((mParams["spell"].c_str()));
-	mon->setAnimate();
+	// 创建怪物头顶血条
+	BillboardSet* healthHUD = sceneMgr->createBillboardSet();
+	healthHUD->setMaterialName("Glass/Billboard");
+	healthHUD->setDefaultWidth(100);
+	healthHUD->setDefaultHeight(14);
+	SceneNode* hudNode = monsterNode->createChildSceneNode();
+	hudNode->attachObject(healthHUD);
+	/*Billboard* b2 = healthHUD->createBillboard(0, entity->getBoundingBox().getSize().y, 0);
+	b2->setColour(ColourValue::Black);*/
+	Billboard* b = healthHUD->createBillboard(0, entity->getBoundingBox().getSize().y, 0);
+	//b->setColour(ColourValue(0, 0.75f, 0));
+	//b->setDimensions(96, 12);
+	mon->setHealthHUD(healthHUD);
 	return mon;
 }
 

@@ -1,0 +1,129 @@
+material fireMonster_Material#4
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588 0.588 0.588 1
+			diffuse 0.588 0.588 0.588 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture fireMonster_pink.jpg
+			}
+		}
+
+	}
+
+}
+
+
+
+material fireMonster_Material#8
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588 0.588 0.588 1
+			diffuse 0.588 0.588 0.588 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture fireMonster_black01.jpg
+			}
+		}
+
+	}
+
+}
+
+
+
+material fireMonster_Material#6
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588 0.588 0.588 1
+			diffuse 0.588 0.588 0.588 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture fireMonster_gray.jpg
+			}
+		}
+
+	}
+
+}
+
+
+
+material fireMonster_Material#7
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588 0.588 0.588 1
+			diffuse 0.588 0.588 0.588 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture fireMonster_mon1_body.jpg
+			}
+		}
+
+	}
+
+}
+
+
+
+material fireMonster_Material#3
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588 0.588 0.588 1
+			diffuse 0.588 0.588 0.588 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture fireMonster_mon1_head.jpg
+			}
+		}
+
+	}
+
+}
+
+
+
+material fireMonster_Material#9
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588 0.588 0.588 1
+			diffuse 0.588 0.588 0.588 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture fireMonster_darkgray.jpg
+			}
+		}
+
+	}
+
+}

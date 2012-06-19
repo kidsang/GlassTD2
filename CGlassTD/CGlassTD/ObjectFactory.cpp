@@ -30,7 +30,7 @@ Ogre::SceneNode* ObjectFactory::createSceneNode( Ogre::SceneNode* parentNode,Ogr
 }
 
 
-Ogre::SceneNode* ObjectFactory::createSceneNode( Ogre::SceneNode* parentNode,Ogre::Entity* entity,Ogre::Vector3& vector )
+Ogre::SceneNode* ObjectFactory::createSceneNode( Ogre::SceneNode* parentNode,Ogre::Entity* entity,Ogre::Vector3 vector )
 {
 	SceneNode* sceneNode = parentNode->createChildSceneNode(vector);
 	sceneNode->attachObject((MovableObject*)entity);

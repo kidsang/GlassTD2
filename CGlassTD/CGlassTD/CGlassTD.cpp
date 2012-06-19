@@ -1,6 +1,7 @@
 #include "CGlassTD.h"
 #include "StagePass1.h"
-
+#include "StartStage.h"
+#include "StageSelect.h"
 
 //-------------------------------------------------------------------------------------
 CGlassTD::CGlassTD(void)
@@ -33,19 +34,21 @@ void CGlassTD::createScene(void)
 	mGui->initialise();
 
 	// test gui
-	MyGUI::ButtonPtr button = mGui->createWidget<MyGUI::Button>("Button", 10, 10, 300, 26, MyGUI::Align::Default, "Main");
-	button->setCaption("exit");
+	//MyGUI::ButtonPtr button = mGui->createWidget<MyGUI::Button>("Button", 10, 10, 300, 26, MyGUI::Align::Default, "Main");
+	//button->setCaption("exit");
 
 	// 创建场景
 	mpStageManager = new StageManager(mSceneMgr);
-	mpStageManager->setStage(new StagePass1(mSceneMgr, mpStageManager, mGui));
-
+	//mpStageManager->setStage(new StagePass1(mSceneMgr, mpStageManager, mGui));
+	mpStageManager->setStage(new StartStage(mSceneMgr, mpStageManager, mGui)); 
+	//mpStageManager->setStage(new StageSelect(mSceneMgr, mpStageManager, mGui)); 
 }
 
 bool CGlassTD::frameRenderingQueued( const Ogre::FrameEvent& evt )
 {
 	//
-	BaseApplication::frameRenderingQueued(evt);
+	if (!BaseApplication::frameRenderingQueued(evt))
+		return false;
 
 	// 运行当前场景的逻辑
 	mpStageManager->getStage()->run(evt.timeSinceLastFrame);
@@ -56,29 +59,25 @@ bool CGlassTD::frameRenderingQueued( const Ogre::FrameEvent& evt )
 bool CGlassTD::keyPressed(const OIS::KeyEvent &arg)
 {
 	MyGUI::InputManager::getInstance().injectKeyPress(MyGUI::KeyCode::Enum(arg.key), arg.text);
-	mpStageManager->getStage()->onKeyPressed(arg);
-	return true;
+	return mpStageManager->getStage()->onKeyPressed(arg);
 }
 
 bool CGlassTD::mouseMoved(const OIS::MouseEvent &arg)
 {
 	MyGUI::InputManager::getInstance().injectMouseMove(arg.state.X.abs, arg.state.Y.abs, arg.state.Z.abs);
-	mpStageManager->getStage()->onMouseMoved(arg);
-	return true;
+	return mpStageManager->getStage()->onMouseMoved(arg);
 }
 
 bool CGlassTD::mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
 {
 	MyGUI::InputManager::getInstance().injectMousePress(arg.state.X.abs, arg.state.Y.abs, MyGUI::MouseButton::Enum(id));
-	mpStageManager->getStage()->onMousePressed(arg, id);
-	return true;
+	return mpStageManager->getStage()->onMousePressed(arg, id);
 }
 
 bool CGlassTD::mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
 {
 	MyGUI::InputManager::getInstance().injectMouseRelease(arg.state.X.abs, arg.state.Y.abs, MyGUI::MouseButton::Enum(id));
-	mpStageManager->getStage()->onMouseReleased(arg, id);
-	return true;
+	return mpStageManager->getStage()->onMouseReleased(arg, id);
 }
 
 

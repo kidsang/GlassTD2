@@ -116,11 +116,12 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Attribute.h" />
+    <ClInclude Include="Animatable.h" />
+    <ClInclude Include="Animator.h" />
     <ClInclude Include="BaseApplication.h" />
-    <ClInclude Include="BaseLayout.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletManager.h" />
+    <ClInclude Include="CameraStep02Step1Animator.h" />
     <ClInclude Include="Cannon.h" />
     <ClInclude Include="Cell.h" />
     <ClInclude Include="CellType.h" />
@@ -130,12 +131,16 @@
     <ClInclude Include="CheckMethod.h" />
     <ClInclude Include="LevelStage.h" />
     <ClInclude Include="Maze.h" />
+    <ClInclude Include="Money.h" />
     <ClInclude Include="Monster.h" />
+    <ClInclude Include="MonsterDeadAnimator.h" />
+    <ClInclude Include="MonsterHurtAnimator.h" />
     <ClInclude Include="MonsterManager.h" />
     <ClInclude Include="MonsterState.h" />
     <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="ParamParser.h" />
     <ClInclude Include="Position.h" />
+    <ClInclude Include="QuestBank.h" />
     <ClInclude Include="res\Resource.h" />
     <ClInclude Include="SceneManagerContainer.h" />
     <ClInclude Include="Stage.h" />
@@ -143,12 +148,17 @@
     <ClInclude Include="StagePass1.h" />
     <ClInclude Include="StagePass1Step0.h" />
     <ClInclude Include="StagePass1Step1.h" />
+    <ClInclude Include="StagePass2.h" />
+    <ClInclude Include="StagePass3.h" />
+    <ClInclude Include="StageSelect.h" />
+    <ClInclude Include="StartStage.h" />
     <ClInclude Include="Step.h" />
     <ClInclude Include="tinystr.h" />
     <ClInclude Include="tinyxml.h" />
-    <ClInclude Include="WrapsAttribute.h" />
+    <ClInclude Include="UFO.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".gitignore" />
     <None Include="res\CGlassTD.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -165,21 +175,30 @@
     <ClCompile Include="CheckMethod.cpp" />
     <ClCompile Include="LevelStage.cpp" />
     <ClCompile Include="Maze.cpp" />
+    <ClCompile Include="Money.cpp" />
     <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="MonsterDeadAnimator.cpp" />
+    <ClCompile Include="MonsterHurtAnimator.cpp" />
     <ClCompile Include="MonsterManager.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
     <ClCompile Include="ParamParser.cpp" />
     <ClCompile Include="Position.cpp" />
+    <ClCompile Include="QuestBank.cpp" />
     <ClCompile Include="SceneManagerContainer.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="StageManager.cpp" />
     <ClCompile Include="StagePass1.cpp" />
     <ClCompile Include="StagePass1Step0.cpp" />
     <ClCompile Include="StagePass1Step1.cpp" />
+    <ClCompile Include="StagePass2.cpp" />
+    <ClCompile Include="StagePass3.cpp" />
+    <ClCompile Include="StageSelect.cpp" />
+    <ClCompile Include="StartStage.cpp" />
     <ClCompile Include="tinystr.cpp" />
     <ClCompile Include="tinyxml.cpp" />
     <ClCompile Include="tinyxmlerror.cpp" />
     <ClCompile Include="tinyxmlparser.cpp" />
+    <ClCompile Include="UFO.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
