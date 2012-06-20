@@ -10,7 +10,8 @@ class StageSelect: public Stage
 public:
 	StageSelect(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui);
 	~StageSelect();
-	void notifyMouseButtonClick(MyGUI::Widget* _sender);
+	void notifyMouseButtonPress(MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id);
+	void notifyMouseButtonRelease(MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id);
 	/// 场景的运行逻辑
 	/// @param timeSinceLastFrame 从上一帧到现在流逝的时间
 	/// @note 这个函数每一帧调用，处理的是每一帧的逻辑
@@ -40,10 +41,10 @@ public:
 	/// @note 应该只由框架调用
 	bool onMouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 private:
-	MyGUI::Button* stage1Btn;
-	MyGUI::Button* stage2Btn;
-	MyGUI::Button* stage3Btn;
-	MyGUI::Button* backBtn;
+	MyGUI::ImageBox* stage1Btn;
+	MyGUI::ImageBox* stage2Btn;
+	MyGUI::ImageBox* stage3Btn;
+	MyGUI::ImageBox* backBtn;
 	MyGUI::VectorWidgetPtr mLayout;
 	
 };
