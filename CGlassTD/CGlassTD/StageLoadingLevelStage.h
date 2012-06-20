@@ -3,21 +3,45 @@
 
 #include "Stage.h"
 
+template <typename T>
 class StageLoadingLevelStage : public Stage
 {
 public:
-	StageLoadingLevelStage(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui);
-	~StageLoadingLevelStage(void);
+	StageLoadingLevelStage(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui)
+		: Stage(sceneManager, stageManager, gui)
+	{
 
-	virtual bool run( float timeSinceLastFrame );
+	}
+	~StageLoadingLevelStage(void)
+	{
 
-	virtual bool onKeyPressed( const OIS::KeyEvent &arg );
+	}
 
-	virtual bool onMouseMoved( const OIS::MouseEvent &arg );
+	virtual bool run( float timeSinceLastFrame )
+	{
+		this->jumpToNextStage(new T(mSceneManager, mStageManager, mGui));
+		return true;
+	}
 
-	virtual bool onMousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id );
+	virtual bool onKeyPressed( const OIS::KeyEvent &arg )
+	{
+		return true;
+	}
 
-	virtual bool onMouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id );
+	virtual bool onMouseMoved( const OIS::MouseEvent &arg )
+	{
+		return true;
+	}
+
+	virtual bool onMousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
+	{
+		return true;
+	}
+
+	virtual bool onMouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
+	{
+		return true;
+	}
 
 };
 
