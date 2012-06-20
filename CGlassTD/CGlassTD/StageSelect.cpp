@@ -1,9 +1,9 @@
-
 #include "StageSelect.h"
 #include "StagePass1.h"
 #include "StagePass2.h"
 #include "StagePass3.h"
 #include "StartStage.h"
+#include "Sound.h"
 
 StageSelect::StageSelect(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui)
 	: Stage(sceneManager, stageManager, gui)
@@ -31,6 +31,7 @@ StageSelect::StageSelect(Ogre::SceneManager* sceneManager, StageManager* stageMa
 
 void StageSelect::notifyMouseButtonPress( MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id )
 {
+	Sound::getInstance()->play("../Media/Sound/click.wav", false);
 	if(_sender == stage1Btn)
 	{
 		stage1Btn->setImageTexture("stage1Press.png");
