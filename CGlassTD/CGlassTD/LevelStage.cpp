@@ -13,6 +13,7 @@ LevelStage::LevelStage(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	MyGUI::Button* edBtn;
 	edBtn = mGui->findWidget<MyGUI::Button>("ed_home_btn");
 	edBtn->eventMouseButtonClick += MyGUI::newDelegate(this, &LevelStage::onEdHomeBtnClick);
+	mGui->findWidget<MyGUI::Window>("ed_window")->setVisible(false);
 }
 
 LevelStage::~LevelStage()

@@ -13,7 +13,7 @@ Cell::Cell(Ogre::SceneManager* sceneManager,Ogre::SceneNode* parentNode,Ogre::Ve
 	this->mType = FREE;
 	this->mSceneNode = NULL;
 	this->mEntity = NULL;
-	this->pPos = new Ogre::Vector2(pos->x,pos->y);
+	this->pPos = pos;
 }
 
 Cell::Cell( Ogre::SceneManager* sceneManager,Ogre::SceneNode* parentNode,Ogre::String mesh,Ogre::Vector2* pos, CellType type, float harmValue)
@@ -26,6 +26,7 @@ Cell::Cell( Ogre::SceneManager* sceneManager,Ogre::SceneNode* parentNode,Ogre::S
 	float z = this->mEntity->getBoundingBox().getSize().z;
 	this->mSceneNode = ObjectFactory::createSceneNode(parentNode,this->mEntity, Vector3(x * pos->x,Real(0), z * pos->y));
 	this->mType = type;
+	this->pPos = pos;
 }
 
 Cell::Cell( Ogre::SceneManager* sceneManager,Ogre::SceneNode* parentNode,Ogre::String mesh,Ogre::Vector2* pos,int type, float harmValue)
@@ -40,6 +41,7 @@ Cell::Cell( Ogre::SceneManager* sceneManager,Ogre::SceneNode* parentNode,Ogre::S
 	///float z = this->mEntity->getBoundingBox().getSize().z;
 	float y = this->mEntity->getBoundingBox().getSize().y;
 	this->mSceneNode = ObjectFactory::createSceneNode(parentNode,this->mEntity, Vector3(x * pos->x,Real(-30), z * pos->y));
+	this->pPos = pos;
 	switch(type){
 	case 0:
 		this->mType = FREE;
@@ -68,6 +70,11 @@ Cell::~Cell(void)
 		delete mEntity;
 		mSceneNode->getParentSceneNode()->removeAndDestroyChild(mSceneNode->getName());
 		mSceneNode = 0;
+	}
+	if (pPos)
+	{
+		delete pPos;
+		pPos = 0;
 	}
 }
 
