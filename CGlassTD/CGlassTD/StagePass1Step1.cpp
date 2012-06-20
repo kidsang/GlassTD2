@@ -1,6 +1,8 @@
 #include "StagePass1Step1.h"
 #include "Questions.h"
 
+#include "Sound.h"
+
 
 StagePass1Step1::StagePass1Step1(LevelStage* stagePass1)
 	: mStagePass1(stagePass1)
@@ -47,7 +49,10 @@ bool StagePass1Step1::onKeyPressed(const OIS::KeyEvent& arg)
 	{
 		Bullet* bullet = mStagePass1->getCannon()->fire(SceneManagerContainer::getSceneManager());
 		if (bullet)
+		{
 			mStagePass1->getBulletManager().add(bullet);
+			Sound::getInstance()->play("672.wav", false);
+		}
 	}
 	// »»ÅÚµ¯
 	else if (arg.key == OIS::KC_TAB)

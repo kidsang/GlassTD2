@@ -47,6 +47,32 @@ void Money::correctAnswer()
 	mTextBox->setCaption(std::string("Money: ") + this->getAmountStr());
 }
 
+bool Money::enough(Money::TrapType type)
+{
+	int cost = 0;
+	switch (type)
+	{
+	case Money::SPIKEWEED:
+		cost = 10;
+		break;
+	case Money::SWAMP:
+		cost = 15;
+		break;
+	case Money::TRAP:
+		cost = 10;
+		break;
+	}
+
+	if (mAmount - cost < 0)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+
 bool Money::placeTrap(Money::TrapType type)
 {
 	int cost = 0;
