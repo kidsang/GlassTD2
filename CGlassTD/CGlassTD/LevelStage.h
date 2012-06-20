@@ -133,7 +133,13 @@ protected:
 	/// 环境重力
 	Vector3 mGravity;
 
+	/// 结束画面根
+	MyGUI::VectorWidgetPtr mEdLayout;
 
+	// 结束画面回调函数
+protected:
+	/// 回主菜单
+	void onEdHomeBtnClick(MyGUI::Widget* sender);
 };
 
 

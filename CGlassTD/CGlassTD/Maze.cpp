@@ -7,7 +7,7 @@ Maze::Maze(void)
 
 Maze::Maze(SceneManager* sceneManager, int* map, int width, int height, Ogre::Vector3 start1, Ogre::Vector3 start2, Ogre::Vector3 final, std::string cellDefine)
 	: mWidth(width), mHeight(height), mSceneManager(sceneManager), 
-	mMap(0)
+	mMap(0), pMapInfo(0)
 {	
 	ParamParser cellParser = ParamParser(cellDefine);
 	cellParser.parse();
@@ -69,9 +69,16 @@ Maze::Maze(SceneManager* sceneManager, int* map, int width, int height, Ogre::Ve
 
 Maze::~Maze(void)
 {
-	delete this->pMapInfo;
-	delete this->mMap;
-	delete this->pMapInfo;  
+	if (pMapInfo)
+	{
+		delete this->pMapInfo;
+		pMapInfo = 0;
+	}
+	if (mMap)
+	{
+		delete this->mMap;
+		mMap = 0;
+	}
 }
 
 Cell* Maze::getMazeInfo()
