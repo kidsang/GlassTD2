@@ -19,15 +19,25 @@ void StagePass1Step1::init()
 
 bool StagePass1Step1::run(float timeSinceLastFrame)
 {
+	MonsterManager* monsterManager = mStagePass1->getMonsterManager();
+
 	// 飞船爆了，要弹出一个框框，上面有两个按钮：返回主菜单和重玩
 	if (mStagePass1->getUFO()->isDestroy())
+	{
 		mStagePass1->getGUI()->findWidget<MyGUI::Window>("ed_window")->setVisible(true);
+		mStagePass1->getGUI()->findWidget<MyGUI::Button>("ed_next_btn")->setVisible(false);
+	}
+
+	// 游戏胜利
+	if (monsterManager->isWinGame())
+	{
+		mStagePass1->getGUI()->findWidget<MyGUI::Window>("ed_window")->setVisible(true);
+	}
 
 	BulletManager& bulletManager = mStagePass1->getBulletManager();
 	Vector3 gravity = mStagePass1->getGravity();
 	bulletManager.fly(timeSinceLastFrame, gravity);
 
-	MonsterManager* monsterManager = mStagePass1->getMonsterManager();
 	Maze* maze = mStagePass1->getMaze();
 	std::vector<NameValueList> explodedBullets = bulletManager.getAndRemoveExplodedBullets(maze->getHorizon());
 	monsterManager->updateState(
