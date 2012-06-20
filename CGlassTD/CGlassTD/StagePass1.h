@@ -8,8 +8,6 @@ class StagePass1 : public LevelStage
 {
 private:
 
-	//GUI
-	MyGUI::VectorWidgetPtr my;
 
 public:
 	/// ¹¹Ôìº¯Êý

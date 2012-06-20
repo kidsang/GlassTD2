@@ -26,6 +26,8 @@ public:
 	bool onMousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 	bool onMouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 
+	void setNotify();
+	void guiNotifyMouseClick(MyGUI::Widget* _sender);
 private:
 	/// 将鼠标在屏幕上的坐标转换成场景中的三维坐标
 	/// @return 成功返回true，output中为三维坐标，失败返回false
@@ -37,9 +39,6 @@ private:
 	Cell* mCurrentCell;
 	Ogre::Vector3 mLastPos;
 	Ogre::RaySceneQuery* mRaySceneQuery;
-
-	// debug
-	MyGUI::StaticTextPtr debugText;
 };
 
 

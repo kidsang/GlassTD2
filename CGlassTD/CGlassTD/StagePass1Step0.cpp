@@ -19,6 +19,9 @@ StagePass1Step0::StagePass1Step0(LevelStage* stagePass1)
 	: mStagePass1(stagePass1), mCurrentState(WITH_SWAMP), mCurrentCell(NULL)
 {
 	mRaySceneQuery = SceneManagerContainer::getSceneManager()->createRayQuery(Ogre::Ray());
+
+	this->mStagePass1->createGUI0();
+	
 }
 
 StagePass1Step0::~StagePass1Step0()
@@ -33,10 +36,7 @@ void StagePass1Step0::init()
 	//mStagePass1->getCamera()->setDirection(-mStagePass1->getCamera()->getPosition());
 	mStagePass1->getCamera()->lookAt(Vector3(0, 0, 0));
 
-	// debug text
-	debugText = mStagePass1->getGUI()->createWidget<MyGUI::StaticText>("TextBox", 10, 40, 300, 300, MyGUI::Align::Default, "Main");
-	debugText->setTextColour(MyGUI::Colour::White);
-	debugText->setCaption("no");
+	
 }
 
 bool StagePass1Step0::run(float timeSinceLastFrame)
@@ -127,7 +127,7 @@ bool StagePass1Step0::onMouseMoved(const OIS::MouseEvent& arg)
 	display += pcell.str() + ' ' + poldcell.str() + '\n';
 	display += xxx.str() + ' ' + yyy.str() + '\n';
 
-	debugText->setCaption(display.c_str());
+
 	
 	// 如果该cell与上次设置的cell是同一个，则不作处理，否则进入下面的if
 	if (cell != mCurrentCell)
@@ -229,4 +229,14 @@ bool StagePass1Step0::convert(const OIS::MouseEvent& arg, Ogre::Vector3& output)
 	{
 		return false;
 	}
+}
+
+
+void StagePass1Step0::setNotify()
+{
+	this->mStagePass1->cellImage[0]->eventMouseButtonClick += MyGUI::newDelegate(this, &StagePass1Step0::guiNotifyMouseClick);
+}
+void StagePass1Step0::guiNotifyMouseClick(MyGUI::Widget* _sender)
+{
+	mCurrentState = WITH_SPIKEWEED;
 }

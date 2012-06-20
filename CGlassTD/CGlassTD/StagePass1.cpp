@@ -4,8 +4,6 @@
 #include <OgreLogManager.h>
 #include "UFO.h"
 #include "ParamParser.h"
-#include <string>
-
 
 StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui)
 	: LevelStage(sceneManager, stageManager, gui)
@@ -31,8 +29,9 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	mCurrentStep->init();
 
 	///GUI
-	my = MyGUI::LayoutManager::getInstance().loadLayout("my.layout");
 	
+	
+	/*
 	const int imageCount = 3; 
 	const int imageSize = 40;
 	MyGUI::ImageBox* bulletImage[imageCount];
@@ -56,7 +55,7 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 		std::ostringstream temp;
 		temp << mCannon->getBulletFactories().at(i)->getAmmoCount();
 		bulletCount[i]->setCaption(temp.str());
-	}
+	}*/
 	
 
 	//MyGUI::ResourceManager::getInstance().load("Resources.xml");
