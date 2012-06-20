@@ -57,6 +57,9 @@ bool StagePass1Step1::onKeyPressed(const OIS::KeyEvent& arg)
 	// ´ðÌâ
 	else if (arg.key == OIS::KC_Q)
 		Questions::getInstance()->popUpQuestion();
+	// test by kid
+	else if (arg.key == OIS::KC_L)
+		mStagePass1->getUFO()->setBlood(-1);
 		
 	return true;
 }

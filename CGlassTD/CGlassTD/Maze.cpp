@@ -29,7 +29,8 @@ Maze::Maze(SceneManager* sceneManager, int* map, int width, int height, Ogre::Ve
 	this->mHarmSwamp = (float)(atof((*cellParams)["swamp"].c_str()));	
 
 
-	this->mSceneNode = sceneManager->getRootSceneNode()->createChildSceneNode("mapSenenNode");
+	//this->mSceneNode = sceneManager->getRootSceneNode()->createChildSceneNode("mapSenenNode");
+	this->mSceneNode = sceneManager->getRootSceneNode()->createChildSceneNode();
 	this->pZones = new Cell*[mWidth * mHeight];
 	this->pMapInfo = new int[mWidth * mHeight];
 	this->startPos = std::vector<Ogre::Vector3>();

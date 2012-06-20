@@ -33,3 +33,13 @@ StagePass3::StagePass3(Ogre::SceneManager* sceneManager, StageManager* stageMana
 StagePass3::~StagePass3(void)
 {
 }
+
+void StagePass3::onEdReplayBtnClick( MyGUI::Widget* sender )
+{
+	throw std::exception("The method or operation is not implemented.");
+}
+
+void StagePass3::onEdNextBtnClick( MyGUI::Widget* sender )
+{
+	throw std::exception("The method or operation is not implemented.");
+}

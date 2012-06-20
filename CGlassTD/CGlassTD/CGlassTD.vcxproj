@@ -145,6 +145,7 @@
     <ClInclude Include="res\Resource.h" />
     <ClInclude Include="SceneManagerContainer.h" />
     <ClInclude Include="Stage.h" />
+    <ClInclude Include="StageLoadingLevelStage.h" />
     <ClInclude Include="StageManager.h" />
     <ClInclude Include="StagePass1.h" />
     <ClInclude Include="StagePass1Step0.h" />
@@ -188,6 +189,7 @@
     <ClCompile Include="Questions.cpp" />
     <ClCompile Include="SceneManagerContainer.cpp" />
     <ClCompile Include="Stage.cpp" />
+    <ClCompile Include="StageLoadingLevelStage.cpp" />
     <ClCompile Include="StageManager.cpp" />
     <ClCompile Include="StagePass1.cpp" />
     <ClCompile Include="StagePass1Step0.cpp" />
