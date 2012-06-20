@@ -1,6 +1,7 @@
 #include "Questions.h"
 #include "Money.h"
 #include <string>
+#include "Sound.h"
 
 Questions* Questions::instance = 0;
 
@@ -84,6 +85,7 @@ std::wstring s2ws(const std::string& s)
 
 void Questions::popUpQuestion()
 {
+	MyGUI::PointerManager::getInstance().show();
 	for (MyGUI::VectorWidgetPtr::iterator itr = widgetVector.begin(); itr != widgetVector.end(); ++itr)
 	{
 		(*itr)->setVisible(true);
@@ -126,7 +128,9 @@ bool Questions::isAnswering()
 }
 
 void Questions::handUpAnswer()
-{
+{	
+	Sound::getInstance()->play("../Media/Sound/click.wav", false);
+	MyGUI::PointerManager::getInstance().hide();
 	for (MyGUI::VectorWidgetPtr::iterator itr = widgetVector.begin(); itr != widgetVector.end(); ++itr)
 	{
 		(*itr)->setVisible(false);
@@ -151,6 +155,8 @@ void Questions::handUpAnswer()
 
 void Questions::giveUp()
 {
+	Sound::getInstance()->play("../Media/Sound/click.wav", false);
+	MyGUI::PointerManager::getInstance().hide();
 	for (MyGUI::VectorWidgetPtr::iterator itr = widgetVector.begin(); itr != widgetVector.end(); ++itr)
 	{
 		(*itr)->setVisible(false);
@@ -161,6 +167,7 @@ void Questions::giveUp()
 
 void Questions::onRadioClick(MyGUI::Widget* sender)
 {
+	Sound::getInstance()->play("../Media/Sound/switch.wav", false);
 	MyGUI::Button* button = sender->castType<MyGUI::Button>();
 	button->setStateSelected(true);
 	

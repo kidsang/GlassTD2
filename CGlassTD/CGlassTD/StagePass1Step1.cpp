@@ -24,6 +24,7 @@ bool StagePass1Step1::run(float timeSinceLastFrame)
 	// 飞船爆了，要弹出一个框框，上面有两个按钮：返回主菜单和重玩
 	if (mStagePass1->isRunning() && mStagePass1->getUFO()->isDestroy())
 	{
+		MyGUI::PointerManager::getInstance().show();
 		mStagePass1->setRunning(false);
 		Sound::getInstance()->play("../Media/Sound/lose.wav", false);
 		mStagePass1->getGUI()->findWidget<MyGUI::Window>("ed_window")->setVisible(true);
@@ -33,6 +34,7 @@ bool StagePass1Step1::run(float timeSinceLastFrame)
 	// 游戏胜利
 	if (mStagePass1->isRunning() && monsterManager->isWinGame())
 	{
+		MyGUI::PointerManager::getInstance().show();
 		mStagePass1->setRunning(false);
 		Sound::getInstance()->play("../Media/Sound/win.wav", false);
 		mStagePass1->getGUI()->findWidget<MyGUI::Window>("ed_window")->setVisible(true);
