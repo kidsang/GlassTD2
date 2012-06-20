@@ -3,6 +3,7 @@
 #include "StagePass2.h"
 #include "StagePass3.h"
 #include "StartStage.h"
+#include "StageLoadingLevelStage.h"
 #include "Sound.h"
 
 StageSelect::StageSelect(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui)
@@ -55,19 +56,22 @@ void StageSelect::notifyMouseButtonRelease( MyGUI::Widget* _sender, int _left, i
 	if(_sender == stage1Btn)
 	{
 		stage1Btn->setImageTexture("stage1.png");
-		Stage* nextStage = new StagePass1(this->mSceneManager, this->mStageManager, this->mGui);
+		//Stage* nextStage = new StagePass1(this->mSceneManager, this->mStageManager, this->mGui);
+		Stage* nextStage = new StageLoadingLevelStage<StagePass1>(this->mSceneManager, this->mStageManager, this->mGui);
 		this->jumpToNextStage(nextStage);
 	}
 	else if(_sender == stage2Btn)
 	{
 		stage2Btn->setImageTexture("stage2.png");
-		Stage* nextStage = new StagePass2(this->mSceneManager, this->mStageManager, this->mGui);
+		//Stage* nextStage = new StagePass2(this->mSceneManager, this->mStageManager, this->mGui);
+		Stage* nextStage = new StageLoadingLevelStage<StagePass2>(this->mSceneManager, this->mStageManager, this->mGui);
 		this->jumpToNextStage(nextStage);
 	}
 	else if(_sender == stage3Btn)
 	{
 		stage3Btn->setImageTexture("stage3.png");
-		Stage* nextStage = new StagePass3(this->mSceneManager, this->mStageManager, this->mGui);
+		//Stage* nextStage = new StagePass3(this->mSceneManager, this->mStageManager, this->mGui);
+		Stage* nextStage = new StageLoadingLevelStage<StagePass3>(this->mSceneManager, this->mStageManager, this->mGui);
 		this->jumpToNextStage(nextStage);
 	}
 	else if(_sender == backBtn)

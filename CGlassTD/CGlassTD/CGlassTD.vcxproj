@@ -191,7 +191,6 @@
     <ClCompile Include="SceneManagerContainer.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Stage.cpp" />
-    <ClCompile Include="StageLoadingLevelStage.cpp" />
     <ClCompile Include="StageManager.cpp" />
     <ClCompile Include="StagePass1.cpp" />
     <ClCompile Include="StagePass1Step0.cpp" />

@@ -2,23 +2,35 @@
 #define StageLoadingLevelStage_h__
 
 #include "Stage.h"
+#include <MyGUI/MyGUI.h>
 
 template <typename T>
 class StageLoadingLevelStage : public Stage
 {
+	MyGUI::TextBox* mWarnText;
+	int mCount;
+
 public:
 	StageLoadingLevelStage(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui)
-		: Stage(sceneManager, stageManager, gui)
+		: Stage(sceneManager, stageManager, gui),
+		mCount(60)
 	{
-
+		// test by kid
+		mWarnText = mGui->createWidget<MyGUI::TextBox>("TextBox", 0, 0, 600, 300, MyGUI::Align::Center, "Main");
+		mWarnText->setCaption("loading...");
+		mWarnText->setAlign(MyGUI::Align::Center);
+		mWarnText->setTextColour(MyGUI::Colour::White);
+		mWarnText->setFontHeight(100);
 	}
 	~StageLoadingLevelStage(void)
 	{
-
+		mGui->destroyWidget(mWarnText);
 	}
 
 	virtual bool run( float timeSinceLastFrame )
 	{
+		if (--mCount > 0)
+			return true;
 		this->jumpToNextStage(new T(mSceneManager, mStageManager, mGui));
 		return true;
 	}
