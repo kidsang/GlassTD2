@@ -48,5 +48,5 @@ void StagePass1::onEdReplayBtnClick( MyGUI::Widget* sender )
 
 void StagePass1::onEdNextBtnClick( MyGUI::Widget* sender )
 {
-	this->jumpToNextStage(new StagePass2(mSceneManager, mStageManager, mGui));
+	this->jumpToNextStage(new StageLoadingLevelStage(mSceneManager, mStageManager, mGui));
 }

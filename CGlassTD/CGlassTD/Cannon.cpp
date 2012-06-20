@@ -18,6 +18,10 @@ Cannon::~Cannon()
 	// 清空炮弹工厂列表
 	for (auto iter = mBulletFactoryList.begin(); iter != mBulletFactoryList.end(); ++iter)
 		delete (*iter);
+	//
+	delete mTire;
+	delete mGun;
+	mTireNode->getParentSceneNode()->removeAndDestroyChild(mTireNode->getName());
 }
 
 void Cannon::addBulletFactory( BulletFactory* bulletFactory )
