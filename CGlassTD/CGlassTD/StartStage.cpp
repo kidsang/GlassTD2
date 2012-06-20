@@ -71,6 +71,7 @@ void StartStage::notifyMouseButtonRelease( MyGUI::Widget* _sender, int _left, in
 	else if(_sender == quitBtn)
 	{
 		quitBtn->setImageTexture("quit.png");
+
 	}
 }
 

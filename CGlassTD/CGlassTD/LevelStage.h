@@ -15,10 +15,6 @@ using std::vector;
 
 class LevelStage : public Stage
 {
-private:
-	MyGUI::ImageBox* backToMenu;
-	MyGUI::ImageBox* palyAgain;
-	MyGUI::ImageBox* nextStage;
 public:
 	/// ¹¹Ôìº¯Êý
 	LevelStage(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui);

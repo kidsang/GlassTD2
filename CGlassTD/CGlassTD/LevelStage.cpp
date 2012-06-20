@@ -13,16 +13,20 @@ LevelStage::LevelStage(Ogre::SceneManager* sceneManager, StageManager* stageMana
 		Money::init(gui);
 	Money::getInstance()->display();
 	// ½áÊø»­Ãæ
-	mEdLayout = MyGUI::LayoutManager::getInstance().loadLayout("ed.layout");
+	MyGUI::ImageBox* backToMenu;
+	MyGUI::ImageBox* palyAgain;
+	MyGUI::ImageBox* nextStage;
+	mEdLayout = MyGUI::LayoutManager::getInstance().loadLayout("passStage.layout");
 	backToMenu = mGui->findWidget<MyGUI::ImageBox>("back_to_menu");
 	backToMenu->eventMouseButtonPressed += MyGUI::newDelegate(this, &LevelStage::onEdBackToMenuBtnPress);
 	backToMenu->eventMouseButtonReleased += MyGUI::newDelegate(this, &LevelStage::onEdBackToMenuBtnRelease);
 	nextStage = mGui->findWidget<MyGUI::ImageBox>("next_one");
-	nextStage->eventMouseButtonPressed += MyGUI::newDelegate(this, &LevelStage::onEdBackToMenuBtnPress);
-	nextStage->eventMouseButtonReleased += MyGUI::newDelegate(this, &LevelStage::onEdBackToMenuBtnRelease);
+	nextStage->eventMouseButtonPressed += MyGUI::newDelegate(this, &LevelStage::onEdNextBtnPress);
+	nextStage->eventMouseButtonReleased += MyGUI::newDelegate(this, &LevelStage::onEdNextBtnRelease);
 	palyAgain = mGui->findWidget<MyGUI::ImageBox>("play_it_again");
-	palyAgain->eventMouseButtonPressed += MyGUI::newDelegate(this, &LevelStage::onEdBackToMenuBtnPress);
-	palyAgain->eventMouseButtonReleased += MyGUI::newDelegate(this, &LevelStage::onEdBackToMenuBtnRelease);
+	palyAgain->eventMouseButtonPressed += MyGUI::newDelegate(this, &LevelStage::onEdReplayBtnPress);
+	palyAgain->eventMouseButtonReleased += MyGUI::newDelegate(this, &LevelStage::onEdReplayBtnRelease);
+	mGui->findWidget<MyGUI::Window>("ed_window")->setPosition(270,200);
 	mGui->findWidget<MyGUI::Window>("ed_window")->setVisible(false);
 }
 
@@ -237,30 +241,39 @@ void LevelStage::onEdHomeBtnClick( MyGUI::Widget* sender )
 
 void LevelStage::onEdReplayBtnPress( MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id )
 {
-
+	MyGUI::ImageBox* temp = mGui->findWidget<MyGUI::ImageBox>("play_it_again");
+	temp->setImageTexture("againPress.png");
 }
 
 void LevelStage::onEdReplayBtnRelease( MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id )
 {
+	MyGUI::ImageBox* temp = mGui->findWidget<MyGUI::ImageBox>("play_it_again");
+	temp->setImageTexture("again.png");
 	onEdReplayBtnClick(_sender);
 }
 
 void LevelStage::onEdNextBtnPress( MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id )
 {
-
+	MyGUI::ImageBox* temp = mGui->findWidget<MyGUI::ImageBox>("next_one");
+	temp->setImageTexture("nextStagePress.png");
 }
 
 void LevelStage::onEdNextBtnRelease( MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id )
 {
+	MyGUI::ImageBox* temp = mGui->findWidget<MyGUI::ImageBox>("next_one");
+	temp->setImageTexture("nextStage.png");
 	onEdReplayBtnClick(_sender);
 }
 
 void LevelStage::onEdBackToMenuBtnPress( MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id )
 {
-	
+	MyGUI::ImageBox* backToMenu = mGui->findWidget<MyGUI::ImageBox>("back_to_menu");
+	backToMenu->setImageTexture("backToMenuPress.png");
 }
 
 void LevelStage::onEdBackToMenuBtnRelease( MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id )
 {
+	MyGUI::ImageBox* backToMenu = mGui->findWidget<MyGUI::ImageBox>("back_to_menu");
+	backToMenu->setImageTexture("backToMenu.png");
 	onEdHomeBtnClick(_sender);
 }

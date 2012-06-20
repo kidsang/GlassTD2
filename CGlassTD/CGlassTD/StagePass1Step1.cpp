@@ -26,29 +26,41 @@ bool StagePass1Step1::run(float timeSinceLastFrame)
 	{
 		mStagePass1->setRunning(false);
 		Sound::getInstance()->play("../Media/Sound/lose.wav", false);
+		MyGUI::ImageBox* stages = mStagePass1->getGUI()->findWidget<MyGUI::ImageBox>("word_of_stages");
+		stages->setImageTexture("word_stage1.png");
+		MyGUI::ImageBox* result = mStagePass1->getGUI()->findWidget<MyGUI::ImageBox>("result_of_play");
+		result->setImageTexture("fail.png");
 		mStagePass1->getGUI()->findWidget<MyGUI::Window>("ed_window")->setVisible(true);
-		mStagePass1->getGUI()->findWidget<MyGUI::Button>("ed_next_btn")->setVisible(false);
+		mStagePass1->getGUI()->findWidget<MyGUI::ImageBox>("next_one")->setImageTexture("nextStageUnuse.png");
 	}
 
 	// ÓÎÏ·Ê¤Àû
-	if (mStagePass1->isRunning() && monsterManager->isWinGame())
+	else if (mStagePass1->isRunning() && monsterManager->isWinGame())
 	{
 		mStagePass1->setRunning(false);
 		Sound::getInstance()->play("../Media/Sound/win.wav", false);
+		MyGUI::ImageBox* stages = mStagePass1->getGUI()->findWidget<MyGUI::ImageBox>("word_of_stages");
+		stages->setImageTexture("word_stage1.png");
+		MyGUI::ImageBox* result = mStagePass1->getGUI()->findWidget<MyGUI::ImageBox>("result_of_play");
+		result->setImageTexture("sucess.png");
 		mStagePass1->getGUI()->findWidget<MyGUI::Window>("ed_window")->setVisible(true);
 	}
 
-	BulletManager& bulletManager = mStagePass1->getBulletManager();
-	Vector3 gravity = mStagePass1->getGravity();
-	bulletManager.fly(timeSinceLastFrame, gravity);
+	else if (mStagePass1->isRunning())
+	{
+		BulletManager& bulletManager = mStagePass1->getBulletManager();
+		Vector3 gravity = mStagePass1->getGravity();
+		bulletManager.fly(timeSinceLastFrame, gravity);
 
-	Maze* maze = mStagePass1->getMaze();
-	std::vector<NameValueList> explodedBullets = bulletManager.getAndRemoveExplodedBullets(maze->getHorizon());
-	monsterManager->updateState(
-		explodedBullets,
-		timeSinceLastFrame,
-		SceneManagerContainer::getSceneManager()
-		);
+		Maze* maze = mStagePass1->getMaze();
+		std::vector<NameValueList> explodedBullets = bulletManager.getAndRemoveExplodedBullets(maze->getHorizon());
+		monsterManager->updateState(
+			explodedBullets,
+			timeSinceLastFrame,
+			SceneManagerContainer::getSceneManager()
+			);
+	}
+	
 		
 	return true;
 }
