@@ -1,6 +1,6 @@
 #include "StartStage.h"
 #include "StageSelect.h"
-
+#include "Sound.h"
 
 StartStage::StartStage(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui)
 	: Stage(sceneManager, stageManager, gui)
@@ -34,6 +34,7 @@ void StartStage::notifyMouseMove( MyGUI::Widget* _sender, int _left, int _top )
 }
 void StartStage::notifyMouseButtonPress( MyGUI::Widget* _sender, int _left, int _top , MyGUI::MouseButton _id)
 {
+	Sound::getInstance()->play("../Media/Sound/click.wav", false);
 	if(_sender == juqingBtn)
 	{		
 		juqingBtn->setImageTexture("juqingPress.png");

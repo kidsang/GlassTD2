@@ -7,7 +7,7 @@
 LevelStage::LevelStage(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui)
 	: Stage(sceneManager, stageManager, gui),
 	mCurrentStep(0), mCannon(0), mMaze(0), mMonsterManager(0), mUFO(0),
-	mGravity(Vector3(0, -200, 0))
+	mGravity(Vector3(0, -200, 0)), mIsRunning(true)
 {
 	if (Money::getInstance() == 0)
 		Money::init(gui);

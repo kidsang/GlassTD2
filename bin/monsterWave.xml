@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
  <waves>
     <wave
-        newWaveTime="4"
-        total="6"
+        newWaveTime="1"
+        total="1"
         smallNormalMonster="1"
         smallIceMonster="1"
         smallFireMonster="1"
@@ -13,8 +13,8 @@
         timeInterval2="4.0"
         />
     <wave
-        newWaveTime="10"
-        total="20"
+        newWaveTime="1"
+        total="1"
         smallNormalMonster="8"
         smallIceMonster="3"
         smallFireMonster="3"
@@ -25,8 +25,8 @@
         timeInterval2="4.0"
         />
     <wave
-        newWaveTime="10"
-        total="50"
+        newWaveTime="1"
+        total="1"
         smallNormalMonster="20"
         smallIceMonster="5"
         smallFireMonster="5"
