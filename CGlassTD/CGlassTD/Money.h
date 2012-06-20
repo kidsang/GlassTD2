@@ -1,12 +1,14 @@
 #ifndef __Money_h_
 #define __Money_h_
 
+#include <MyGUI/MyGUI.h>
+#include <string>
 
 /// 处理金钱，单例
 class Money
 {
 private:
-	Money();
+	Money(MyGUI::Gui* gui);
 
 public:
 
@@ -19,20 +21,34 @@ public:
 	
 	/// 获得实例
 	static Money* getInstance();
+	static void init(MyGUI::Gui* gui);
 	static void destroyInstance();
+	
+	~Money();
+	
+	/// 显示金钱
+	void display();
 
 	/// 答题正确会获得金钱
 	void correctAnswer();
+
+	/// 判断金钱是否足以放置某个陷阱
+	bool enough(TrapType);
 
 	/// 放置陷阱会失去金钱，如果金钱已经不够返回false，成功返回true
 	bool placeTrap(TrapType);
 
 	/// 获取当前金钱数量
 	int getAmount() const;
+	
+	/// 获取当前金钱数量，返回字符串
+	std::string getAmountStr() const;
 
 private:
 	static Money* instance;
 	int mAmount;
+	MyGUI::Gui* mGui;
+	MyGUI::TextBox* mTextBox;
 };
 
 

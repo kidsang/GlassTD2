@@ -472,7 +472,7 @@ void Monster::checkHitByBullet( float* bulletPos, float bulletHarm, float bullet
 	}
 }
 
-void Monster::makeMap( Cell* cells )
+void Monster::makeMap( Cell** cells )
 {
 	this->mMapHeight = mMaze->getMapHeight();
 	this->mMapWidth = mMaze->getMapWidth();
@@ -498,7 +498,7 @@ void Monster::makeMap( Cell* cells )
 	}
 	for(int i = 0; i < mMapWidth * mMapHeight; ++i)
 	{
-		if(cells[i].getCellType() != WALL)
+		if(cells[i]->getCellType() != WALL)
 		{
 			map[i / mMapHeight][i % mMapHeight] = CAN_STEP;
 		}

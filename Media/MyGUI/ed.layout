@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="Window" skin="Window" position="190 45 375 385" layer="Popup" name="ed_window">
+        <Widget type="Button" skin="Button" position="30 230 75 65" name="ed_home_btn">
+            <Property key="Caption" value="home"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="135 230 95 65" name="ed_replay_btn">
+            <Property key="Caption" value="replay"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="245 230 90 65" name="ed_next_btn">
+            <Property key="Caption" value="next"/>
+        </Widget>
+        <Widget type="TextBox" skin="TextBox" position="60 40 90 50" name="ed_win_text">
+            <Property key="Caption" value="win"/>
+            <Property key="TextAlign" value="Center"/>
+        </Widget>
+        <Widget type="TextBox" skin="TextBox" position="200 40 110 55" name="ed_lose_text">
+            <Property key="Caption" value="lose"/>
+            <Property key="TextAlign" value="Center"/>
+        </Widget>
+        <Widget type="TextBox" skin="TextBox" position="110 145 145 50" name="ed_score_text">
+            <Property key="Caption" value="0123456"/>
+            <Property key="TextAlign" value="Center"/>
+        </Widget>
+    </Widget>
+</MyGUI>

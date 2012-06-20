@@ -3,6 +3,7 @@
 #include "Questions.h"
 #include "StartStage.h"
 #include "StageSelect.h"
+#include "Money.h"
 
 //-------------------------------------------------------------------------------------
 CGlassTD::CGlassTD(void)
@@ -35,6 +36,7 @@ void CGlassTD::createScene(void)
 	mGui->initialise();
 	
 	Questions::init(mGui);
+	Money::init(mGui);
 
 	// test gui
 	//MyGUI::ButtonPtr button = mGui->createWidget<MyGUI::Button>("Button", 10, 10, 300, 26, MyGUI::Align::Default, "Main");

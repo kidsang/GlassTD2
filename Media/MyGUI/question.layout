@@ -1,30 +1,30 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Window" skin="Window" position="0 470 805 135" layer="Overlapped">
+    <Widget type="Window" skin="Window" position="0 570 1025 135" layer="Overlapped">
         <Property key="Caption" value="question"/>
-        <Widget type="TextBox" skin="TextBox" position="10 10 775 25" name="questionText">
+        <Widget type="TextBox" skin="TextBox" position="10 10 995 25" name="questionText">
             <Property key="Caption" value="questions here"/>
         </Widget>
         <Widget type="Button" skin="RadioButton" position="20 40 20 20" align="Default" name="firstChoice"/>
-        <Widget type="Button" skin="RadioButton" position="215 40 20 20" name="secondChoice"/>
-        <Widget type="Button" skin="RadioButton" position="410 40 20 20" name="thirdChoice"/>
+        <Widget type="Button" skin="RadioButton" position="300 40 20 20" name="secondChoice"/>
+        <Widget type="Button" skin="RadioButton" position="560 40 20 20" name="thirdChoice"/>
         <Widget type="TextBox" skin="TextBox" position="40 40 155 20" name="firstChoiceText">
             <Property key="Caption" value="first choice"/>
         </Widget>
-        <Widget type="TextBox" skin="TextBox" position="235 40 155 20" name="secondChoiceText">
+        <Widget type="TextBox" skin="TextBox" position="325 40 155 20" name="secondChoiceText">
             <Property key="Caption" value="socend choioce"/>
         </Widget>
-        <Widget type="TextBox" skin="TextBox" position="430 40 155 20" name="thirdChoiceText">
+        <Widget type="TextBox" skin="TextBox" position="585 40 155 20" name="thirdChoiceText">
             <Property key="Caption" value="third choice"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="160 65 130 25" name="okButton">
+        <Widget type="Button" skin="Button" position="240 65 130 25" name="okButton">
             <Property key="Caption" value="ok"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="520 65 130 25" name="giveUpButton">
+        <Widget type="Button" skin="Button" position="680 65 130 25" name="giveUpButton">
             <Property key="Caption" value="give up"/>
         </Widget>
-        <Widget type="Button" skin="RadioButton" position="610 40 20 20" name="fourthChoice"/>
-        <Widget type="TextBox" skin="TextBox" position="630 40 145 20" name="fourthChoiceText">
+        <Widget type="Button" skin="RadioButton" position="820 40 20 20" name="fourthChoice"/>
+        <Widget type="TextBox" skin="TextBox" position="845 40 145 20" name="fourthChoiceText">
             <Property key="Caption" value="fourth choice"/>
         </Widget>
     </Widget>

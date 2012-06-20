@@ -1,24 +1,48 @@
 #include "LevelStage.h"
 #include "StagePass1Step1.h"
 #include "StagePass1Step0.h"
+#include "StartStage.h"
+#include "Money.h"
 
 LevelStage::LevelStage(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui)
 	: Stage(sceneManager, stageManager, gui),
 	mCurrentStep(0), mCannon(0), mMaze(0), mMonsterManager(0), mUFO(0),
 	mGravity(Vector3(0, -200, 0))
 {
+	if (Money::getInstance() == 0)
+		Money::init(gui);
+	Money::getInstance()->display();
+	// ½áÊø»­Ãæ
+	mEdLayout = MyGUI::LayoutManager::getInstance().loadLayout("ed.layout");
+	MyGUI::Button* edBtn;
+	edBtn = mGui->findWidget<MyGUI::Button>("ed_home_btn");
+	edBtn->eventMouseButtonClick += MyGUI::newDelegate(this, &LevelStage::onEdHomeBtnClick);
+	mGui->findWidget<MyGUI::Window>("ed_window")->setVisible(false);
 }
 
 LevelStage::~LevelStage()
 {
+	MyGUI::LayoutManager::getInstance().unloadLayout(mEdLayout);
 	if (mCurrentStep)
+	{
 		delete mCurrentStep;
+		mCurrentStep = 0;
+	}
 	if (mCannon)
+	{
 		delete mCannon;
+		mCannon = 0;
+	}
 	if (mUFO)
+	{
 		delete mUFO;
+		mUFO = 0;
+	}
 	if (mMaze)
+	{
 		delete mMaze;
+		mMaze = 0;
+	}
 	// µ¥Àý
 	if (mMonsterManager)
 		mMonsterManager->release();
@@ -198,4 +222,9 @@ void LevelStage::initializeUFO( const std::string& ufoDefine )
 
 	mUFO->setHealthHUD(healthHUD);
 
+}
+
+void LevelStage::onEdHomeBtnClick( MyGUI::Widget* sender )
+{
+	this->jumpToNextStage(new StartStage(mSceneManager, mStageManager, mGui));
 }

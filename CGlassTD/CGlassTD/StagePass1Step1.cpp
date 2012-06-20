@@ -1,6 +1,8 @@
 #include "StagePass1Step1.h"
 #include "Questions.h"
 
+#include "Sound.h"
+
 
 StagePass1Step1::StagePass1Step1(LevelStage* stagePass1)
 	: mStagePass1(stagePass1)
@@ -19,8 +21,7 @@ bool StagePass1Step1::run(float timeSinceLastFrame)
 {
 	// 飞船爆了，要弹出一个框框，上面有两个按钮：返回主菜单和重玩
 	if (mStagePass1->getUFO()->isDestroy())
-	{
-	}
+		mStagePass1->getGUI()->findWidget<MyGUI::Window>("ed_window")->setVisible(true);
 
 	BulletManager& bulletManager = mStagePass1->getBulletManager();
 	Vector3 gravity = mStagePass1->getGravity();
@@ -48,7 +49,10 @@ bool StagePass1Step1::onKeyPressed(const OIS::KeyEvent& arg)
 	{
 		Bullet* bullet = mStagePass1->getCannon()->fire(SceneManagerContainer::getSceneManager());
 		if (bullet)
+		{
 			mStagePass1->getBulletManager().add(bullet);
+			Sound::getInstance()->play("672.wav", false);
+		}
 	}
 	// 换炮弹
 	else if (arg.key == OIS::KC_TAB)
@@ -58,6 +62,9 @@ bool StagePass1Step1::onKeyPressed(const OIS::KeyEvent& arg)
 	// 答题
 	else if (arg.key == OIS::KC_Q)
 		Questions::getInstance()->popUpQuestion();
+	// test by kid
+	else if (arg.key == OIS::KC_L)
+		mStagePass1->getUFO()->setBlood(-1);
 		
 	return true;
 }
