@@ -25,12 +25,14 @@ LevelStage::LevelStage(Ogre::SceneManager* sceneManager, StageManager* stageMana
 LevelStage::~LevelStage()
 {
 	MyGUI::LayoutManager::getInstance().unloadLayout(mEdLayout);
+	MyGUI::LayoutManager::getInstance().unloadLayout(levelStageLayout);
 	if (mCurrentStep)
 	{
 		delete mCurrentStep;
 		mCurrentStep = 0;
 	}
 	if (mCannon)
+
 	{
 		delete mCannon;
 		mCannon = 0;
