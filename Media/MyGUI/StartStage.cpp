@@ -6,13 +6,10 @@ StartStage::StartStage(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	: Stage(sceneManager, stageManager, gui)
 {
 	mLayout = MyGUI::LayoutManager::getInstance().loadLayout("start.layout");
-	MyGUI::ImageBox* iii = this->getGUI()->findWidget<MyGUI::ImageBox>("background"); 
-	iii->setVisible(true);
 	juqingBtn = this->getGUI()->findWidget<MyGUI::ImageBox>("juqingMode"); 
 	lifeBtn = this->getGUI()->findWidget<MyGUI::ImageBox>("lifeMode"); 
 	settingBtn = this->getGUI()->findWidget<MyGUI::ImageBox>("setting"); 
 	quitBtn = this->getGUI()->findWidget<MyGUI::ImageBox>("quit"); 
-	juqingBtn->setVisible(true);
 	juqingBtn->eventMouseButtonClick += MyGUI::newDelegate(this, &StartStage::notifyMouseButtonClick);
 	lifeBtn->eventMouseButtonClick += MyGUI::newDelegate(this, &StartStage::notifyMouseButtonClick);
 	settingBtn->eventMouseButtonClick += MyGUI::newDelegate(this, &StartStage::notifyMouseButtonClick);
