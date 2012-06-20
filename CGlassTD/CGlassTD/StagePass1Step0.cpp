@@ -51,7 +51,6 @@ bool StagePass1Step0::onKeyPressed(const OIS::KeyEvent& arg)
 	// 按 G 结束布局阶段，开始打怪阶段
 	case OIS::KC_G:
 		{
-			mStagePass1->getMaze()->clearShadow();
 			// 丑陋的代码by kid
 			CameraStep02Step1Animator* ani = new CameraStep02Step1Animator(0);
 			ani->start(mStagePass1->getCamera());
