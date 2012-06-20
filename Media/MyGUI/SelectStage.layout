@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="Widget" skin="skin_Default" position="0 0 1024 736" align="Stretch" layer="Back" name="_Main">
+        <Property key="Enabled" value="true"/>
+        <UserString key="LE_TargetWidgetType" value="Window"/>
+        <Widget type="ImageBox" skin="ImageBox" position="0 0 1024 768" name="stageBG">
+            <Property key="ImageTexture" value="stageBG.png"/>
+            <Widget type="ImageBox" skin="ImageBox" position="685 260 160 160" name="stage2">
+                <Property key="ImageTexture" value="stage2.png"/>
+            </Widget>
+            <Widget type="ImageBox" skin="ImageBox" position="405 375 160 160" name="stage3">
+                <Property key="ImageTexture" value="stage3.png"/>
+            </Widget>
+            <Widget type="ImageBox" skin="ImageBox" position="600 475 160 160" name="stage1">
+                <Property key="ImageTexture" value="stage1.png"/>
+            </Widget>
+            <Widget type="ImageBox" skin="ImageBox" position="55 600 120 96" name="back">
+                <Property key="ImageTexture" value="back.png"/>
+            </Widget>
+        </Widget>
+    </Widget>
+</MyGUI>
