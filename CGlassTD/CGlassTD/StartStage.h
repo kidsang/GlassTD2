@@ -9,6 +9,7 @@ class StartStage : public Stage
 public:
 	StartStage(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui);
 	~StartStage();
+	void notifyMouseMove(MyGUI::Widget* _sender, int _left, int _top);
 	void notifyMouseButtonPress(MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id);
 	void notifyMouseButtonRelease(MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id);
 	/// 场景的运行逻辑
@@ -40,11 +41,14 @@ public:
 	/// @note 应该只由框架调用
 	bool onMouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 private:
+	MyGUI::ImageBox* background;
 	MyGUI::ImageBox* juqingBtn;
 	MyGUI::ImageBox* lifeBtn;
 	MyGUI::ImageBox* settingBtn;
 	MyGUI::ImageBox* quitBtn;
 	MyGUI::VectorWidgetPtr mLayout;
+	int flag;
+	int preFlag;
 	
 };
 
