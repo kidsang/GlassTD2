@@ -32,6 +32,4 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 
 StagePass1::~StagePass1(void)
 {
-	if (mCurrentStep != 0)
-		delete mCurrentStep;
 }

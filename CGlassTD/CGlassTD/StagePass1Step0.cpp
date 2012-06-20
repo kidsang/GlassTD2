@@ -169,21 +169,30 @@ bool StagePass1Step0::onMousePressed(const OIS::MouseEvent &arg, OIS::MouseButto
 	switch (mCurrentState)
 	{
 	case WITH_SWAMP:
-		if (money->placeTrap(Money::SWAMP))
+		if (money->enough(Money::SWAMP))
 		{
-			maze->editMaze(position, SWAMP);
+			if (maze->editMaze(position, SWAMP))
+			{
+				money->placeTrap(Money::SWAMP);
+			}
 		}
 		break;
 	case WITH_SPIKEWEED:
-		if (money->placeTrap(Money::SPIKEWEED))
+		if (money->enough(Money::SPIKEWEED))
 		{
-			maze->editMaze(position, SPIKEWEED);
+			if (maze->editMaze(position, SPIKEWEED))
+			{
+				money->placeTrap(Money::SPIKEWEED);
+			}
 		}
 		break;
 	case WITH_TRAP:
-		if (money->placeTrap(Money::TRAP))
+		if (money->enough(Money::TRAP))
 		{
-			maze->editMaze(position, TRAP);
+			if (maze->editMaze(position, TRAP))
+			{
+				money->placeTrap(Money::TRAP);
+			}
 		}
 		break;
 	}
