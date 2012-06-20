@@ -2,12 +2,16 @@
 #include "StagePass1Step1.h"
 #include "StagePass1Step0.h"
 #include "StartStage.h"
+#include "Money.h"
 
 LevelStage::LevelStage(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui)
 	: Stage(sceneManager, stageManager, gui),
 	mCurrentStep(0), mCannon(0), mMaze(0), mMonsterManager(0), mUFO(0),
 	mGravity(Vector3(0, -200, 0))
 {
+	if (Money::getInstance() == 0)
+		Money::init(gui);
+	Money::getInstance()->display();
 	// ½áÊø»­Ãæ
 	mEdLayout = MyGUI::LayoutManager::getInstance().loadLayout("ed.layout");
 	MyGUI::Button* edBtn;

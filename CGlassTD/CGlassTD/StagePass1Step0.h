@@ -39,7 +39,7 @@ private:
 	Ogre::RaySceneQuery* mRaySceneQuery;
 
 	// debug
-	MyGUI::StaticTextPtr debugText;
+	//MyGUI::StaticTextPtr debugText;
 };
 
 

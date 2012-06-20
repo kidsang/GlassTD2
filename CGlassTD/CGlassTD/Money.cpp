@@ -1,19 +1,20 @@
 #include "Money.h"
-
+#include <sstream>
 
 Money* Money::instance = 0;
 
-Money::Money() : mAmount(20)
+Money::Money(MyGUI::Gui* gui) : mAmount(20), mTextBox(0), mGui(gui)
 {
 }
 
 Money* Money::getInstance()
 {
-	if (instance == 0)
-	{
-		instance = new Money();
-	}
 	return instance;
+}
+
+void Money::init(MyGUI::Gui* gui)
+{
+	instance = new Money(gui);
 }
 
 void Money::destroyInstance()
@@ -25,9 +26,25 @@ void Money::destroyInstance()
 	}
 }
 
+Money::~Money()
+{
+	if (mTextBox != 0)
+	{
+		mGui->destroyWidget(mTextBox);
+	}
+}
+
+void Money::display()
+{
+	mTextBox = static_cast<MyGUI::TextBox*>( mGui->createWidgetT("TextBox", "TextBox", 30, 20, 180, 180, MyGUI::Align::Default, "Main") );
+	mTextBox->setTextColour(MyGUI::Colour::White);
+	mTextBox->setCaption(std::string("Money: ") + this->getAmountStr());
+}
+
 void Money::correctAnswer()
 {
 	mAmount += 10;
+	mTextBox->setCaption(std::string("Money: ") + this->getAmountStr());
 }
 
 bool Money::placeTrap(Money::TrapType type)
@@ -35,13 +52,13 @@ bool Money::placeTrap(Money::TrapType type)
 	int cost = 0;
 	switch (type)
 	{
-	case Money::TrapType::SPIKEWEED:
+	case Money::SPIKEWEED:
 		cost = 10;
 		break;
-	case Money::TrapType::SWAMP:
+	case Money::SWAMP:
 		cost = 15;
 		break;
-	case Money::TrapType::TRAP:
+	case Money::TRAP:
 		cost = 10;
 		break;
 	}
@@ -53,6 +70,7 @@ bool Money::placeTrap(Money::TrapType type)
 	else
 	{
 		mAmount -= cost;
+		mTextBox->setCaption(std::string("Money: ") + this->getAmountStr());
 		return true;
 	}
 }
@@ -61,4 +79,12 @@ bool Money::placeTrap(Money::TrapType type)
 int Money::getAmount() const
 {
 	return mAmount;
+}
+
+
+std::string Money::getAmountStr() const
+{
+	std::ostringstream temp;
+	temp << mAmount;
+	return temp.str();
 }
