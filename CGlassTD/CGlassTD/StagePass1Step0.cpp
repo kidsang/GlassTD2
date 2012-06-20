@@ -30,13 +30,7 @@ void StagePass1Step0::init()
 {
 	/// 改变镜头视角
 	mStagePass1->getCamera()->setPosition(Vector3(0, 2000, 1000));
-	//mStagePass1->getCamera()->setDirection(-mStagePass1->getCamera()->getPosition());
 	mStagePass1->getCamera()->lookAt(Vector3(0, 0, 0));
-
-	// debug text
-	//debugText = mStagePass1->getGUI()->createWidget<MyGUI::StaticText>("TextBox", 10, 40, 300, 300, MyGUI::Align::Default, "Main");
-	//debugText->setTextColour(MyGUI::Colour::White);
-	//debugText->setCaption("no");
 }
 
 bool StagePass1Step0::run(float timeSinceLastFrame)
