@@ -28,17 +28,21 @@ LevelStage::LevelStage(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	palyAgain->eventMouseButtonReleased += MyGUI::newDelegate(this, &LevelStage::onEdReplayBtnRelease);
 	mGui->findWidget<MyGUI::Window>("ed_window")->setPosition(270,200);
 	mGui->findWidget<MyGUI::Window>("ed_window")->setVisible(false);
+
+	levelStageLayout = MyGUI::LayoutManager::getInstance().loadLayout("my.layout");
 }
 
 LevelStage::~LevelStage()
 {
 	MyGUI::LayoutManager::getInstance().unloadLayout(mEdLayout);
+	MyGUI::LayoutManager::getInstance().unloadLayout(levelStageLayout);
 	if (mCurrentStep)
 	{
 		delete mCurrentStep;
 		mCurrentStep = 0;
 	}
 	if (mCannon)
+
 	{
 		delete mCannon;
 		mCannon = 0;
@@ -82,7 +86,7 @@ bool LevelStage::run(float timeSinceLastFrame)
 				mMaze->clearShadow();
 			}
 	}
-
+	//updateMoney();
 	return mCurrentStep->run(timeSinceLastFrame);
 }
 
@@ -233,6 +237,101 @@ void LevelStage::initializeUFO( const std::string& ufoDefine )
 	mUFO->setHealthHUD(healthHUD);
 
 }
+
+void LevelStage::createGUI0()
+{
+	MyGUI::Gui* mGui = this->getGUI();
+	
+	cellImage[0] = mGui->findWidget<MyGUI::ImageBox>("swamp");
+	cellImage[1] = mGui->findWidget<MyGUI::ImageBox>("spikeweed");
+	cellImage[2] = mGui->findWidget<MyGUI::ImageBox>("trap");
+
+	cellImage[0]->setPosition(0,mGui->getViewHeight()-cellImage[0]->getHeight());
+	cellImage[1]->setPosition(cellImage[0]->getLeft()+cellImage[0]->getWidth(),mGui->getViewHeight()-cellImage[0]->getHeight());
+	cellImage[2]->setPosition(cellImage[1]->getLeft()+cellImage[1]->getWidth(),mGui->getViewHeight()-cellImage[0]->getHeight());
+
+	cellImage[0]->setVisible(true);
+	cellImage[1]->setVisible(true);
+	cellImage[2]->setVisible(true);
+
+}
+void LevelStage::createGUI1()
+{
+	MyGUI::Gui* mGui = this->getGUI();
+	
+
+	bulletImage[0] = mGui->findWidget<MyGUI::ImageBox>("bomb_red");
+	bulletImage[1] = mGui->findWidget<MyGUI::ImageBox>("bomb_blue");
+	bulletImage[2] = mGui->findWidget<MyGUI::ImageBox>("bomb_black");
+
+	bulletImage[0]->setCoord((mGui->getViewWidth()-4*imageSize),(mGui->getViewHeight()-2*imageSize), imageSize*2, imageSize*2);
+	bulletImage[1]->setCoord((mGui->getViewWidth()-2*imageSize),(mGui->getViewHeight()-1*imageSize), imageSize, imageSize);
+	bulletImage[2]->setCoord((mGui->getViewWidth()-1*imageSize),(mGui->getViewHeight()-1*imageSize), imageSize, imageSize);
+
+	bulletCount[0] = mGui->findWidget<MyGUI::TextBox>("b3");
+	bulletCount[1] = mGui->findWidget<MyGUI::TextBox>("b2");
+	bulletCount[2] = mGui->findWidget<MyGUI::TextBox>("b1");
+
+	for(int i = 0; i < 3; i++)
+	{
+
+		std::ostringstream temp;
+		temp << this->getCannon()->getBulletFactories().at(i)->getAmmoCount();
+		bulletCount[i]->setCaption(temp.str());
+	}
+
+	bulletImage[0]->setVisible(true);
+	bulletImage[1]->setVisible(true);
+	bulletImage[2]->setVisible(true);
+}
+
+
+void LevelStage::updateCount()
+{
+	MyGUI::Gui* mGui = this->getGUI();
+	
+	bulletCount[0] = mGui->findWidget<MyGUI::TextBox>("b3");
+	bulletCount[1] = mGui->findWidget<MyGUI::TextBox>("b2");
+	bulletCount[2] = mGui->findWidget<MyGUI::TextBox>("b1");
+
+	for(int i = 0; i < 3; i++)
+	{
+		std::ostringstream temp;
+		temp << this->getCannon()->getBulletFactories().at(i)->getAmmoCount();
+		bulletCount[i]->setCaption(temp.str());
+	}
+}
+
+void LevelStage::updateImage()
+{
+	MyGUI::Gui* mGui = this->getGUI();
+
+	bulletImage[0] = mGui->findWidget<MyGUI::ImageBox>("bomb_red");
+	bulletImage[1] = mGui->findWidget<MyGUI::ImageBox>("bomb_blue");
+	bulletImage[2] = mGui->findWidget<MyGUI::ImageBox>("bomb_black");
+
+	int Big = bulletImage[0]->getWidth()>bulletImage[1]->getWidth()?0:1;
+	Big = bulletImage[Big]->getWidth()>bulletImage[2]->getWidth()?Big:2;
+	int Next = (Big+1)%3;
+	int left = bulletImage[0]->getCoord().left;
+	int top = bulletImage[Big]->getCoord().top;
+
+	int flag[imageCount] = {0,0,0};
+	flag[Big] = 1;
+	flag[Next] = -1;
+	bulletImage[0]->setCoord(left,bulletImage[0]->getCoord().top+flag[0]*imageSize, (bulletImage[0]->getWidth()-flag[0]*imageSize), (bulletImage[0]->getHeight()-flag[0]*imageSize));
+	bulletImage[1]->setCoord(bulletImage[0]->getCoord().left+bulletImage[0]->getWidth(),bulletImage[1]->getCoord().top+flag[1]*imageSize, (bulletImage[1]->getWidth()-flag[1]*imageSize), (bulletImage[1]->getHeight()-flag[1]*imageSize));
+	bulletImage[2]->setCoord(bulletImage[1]->getCoord().left+bulletImage[1]->getWidth(),bulletImage[2]->getCoord().top+flag[2]*imageSize, (bulletImage[2]->getWidth()-flag[2]*imageSize), (bulletImage[2]->getHeight()-flag[2]*imageSize));
+
+}
+
+void LevelStage::change0to1()
+{
+	cellImage[0]->setVisible(false);
+	cellImage[1]->setVisible(false);
+	cellImage[2]->setVisible(false);
+}
+
 
 void LevelStage::onEdHomeBtnClick( MyGUI::Widget* sender )
 {

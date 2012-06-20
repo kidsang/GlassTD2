@@ -19,6 +19,9 @@ StagePass1Step0::StagePass1Step0(LevelStage* stagePass1)
 	: mStagePass1(stagePass1), mCurrentState(WITH_SWAMP), mCurrentCell(NULL)
 {
 	mRaySceneQuery = SceneManagerContainer::getSceneManager()->createRayQuery(Ogre::Ray());
+
+	this->mStagePass1->createGUI0();
+	setNotify();
 }
 
 StagePass1Step0::~StagePass1Step0()
@@ -50,6 +53,7 @@ bool StagePass1Step0::onKeyPressed(const OIS::KeyEvent& arg)
 			ani->start(mStagePass1->getCamera());
 			mStagePass1->addCameraAnimator(ani);
 			//mStagePass1->jumpToStep(new StagePass1Step1(mStagePass1));
+			mStagePass1->change0to1();
 		}
 		break;
 	// днЪБ
@@ -231,4 +235,42 @@ bool StagePass1Step0::convert(const OIS::MouseEvent& arg, Ogre::Vector3& output)
 	{
 		return false;
 	}
+}
+
+
+void StagePass1Step0::setNotify()
+{
+	this->mStagePass1->cellImage[0]->eventMouseButtonPressed += MyGUI::newDelegate(this, &StagePass1Step0::guiNotifyMousePressSwamp);
+	this->mStagePass1->cellImage[1]->eventMouseButtonPressed += MyGUI::newDelegate(this, &StagePass1Step0::guiNotifyMousePressSpikeweed);
+	this->mStagePass1->cellImage[2]->eventMouseButtonPressed += MyGUI::newDelegate(this, &StagePass1Step0::guiNotifyMousePressTrap);
+	this->mStagePass1->cellImage[0]->eventMouseButtonReleased += MyGUI::newDelegate(this, &StagePass1Step0::guiNotifyMouseReleaseSwamp);
+	this->mStagePass1->cellImage[1]->eventMouseButtonReleased += MyGUI::newDelegate(this, &StagePass1Step0::guiNotifyMouseReleaseSpikeweed);
+	this->mStagePass1->cellImage[2]->eventMouseButtonReleased += MyGUI::newDelegate(this, &StagePass1Step0::guiNotifyMouseReleaseTrap);
+}
+void StagePass1Step0::guiNotifyMousePressSwamp(MyGUI::Widget* _sender, int _left, int _top , MyGUI::MouseButton _id)
+{
+	mCurrentState = WITH_SWAMP;
+	_sender->castType<MyGUI::ImageBox>()->setImageTexture("swamp_p.png");
+}
+void StagePass1Step0::guiNotifyMousePressSpikeweed(MyGUI::Widget* _sender, int _left, int _top , MyGUI::MouseButton _id)
+{
+	mCurrentState = WITH_SPIKEWEED;
+	_sender->castType<MyGUI::ImageBox>()->setImageTexture("spikeweed_p.png");
+}
+void StagePass1Step0::guiNotifyMousePressTrap(MyGUI::Widget* _sender, int _left, int _top , MyGUI::MouseButton _id)
+{
+	mCurrentState = WITH_TRAP;
+	_sender->castType<MyGUI::ImageBox>()->setImageTexture("trap_p.png");
+}
+void StagePass1Step0::guiNotifyMouseReleaseSwamp(MyGUI::Widget* _sender, int _left, int _top , MyGUI::MouseButton _id)
+{
+	_sender->castType<MyGUI::ImageBox>()->setImageTexture("swamp.png");
+}
+void StagePass1Step0::guiNotifyMouseReleaseSpikeweed(MyGUI::Widget* _sender, int _left, int _top , MyGUI::MouseButton _id)
+{
+	_sender->castType<MyGUI::ImageBox>()->setImageTexture("spikeweed.png");
+}
+void StagePass1Step0::guiNotifyMouseReleaseTrap(MyGUI::Widget* _sender, int _left, int _top , MyGUI::MouseButton _id)
+{
+	_sender->castType<MyGUI::ImageBox>()->setImageTexture("trap.png");
 }

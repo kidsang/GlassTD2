@@ -7,11 +7,12 @@
 StagePass1Step1::StagePass1Step1(LevelStage* stagePass1)
 	: mStagePass1(stagePass1)
 {
+	this->mStagePass1->createGUI1();
 }
 
 void StagePass1Step1::init()
 {
-	
+
 	mStagePass1->getCamera()->setPosition(Vector3(0, 1200, 2000));
 	mStagePass1->getCamera()->lookAt(Vector3(0, 0, 0));
 	//mStagePass1->getCamera()->setDirection(Vector3(0, -500, -1000));
@@ -78,6 +79,7 @@ bool StagePass1Step1::onKeyPressed(const OIS::KeyEvent& arg)
 		{
 			mStagePass1->getBulletManager().add(bullet);
 			Sound::getInstance()->play("../Media/Sound/fire.wav", false);
+			mStagePass1->updateCount();
 		}
 	}
 	// »»ÅÚµ¯
@@ -85,6 +87,9 @@ bool StagePass1Step1::onKeyPressed(const OIS::KeyEvent& arg)
 	{
 		Sound::getInstance()->play("../Media/Sound/switch.wav", false);
 		mStagePass1->getCannon()->changeBullet();
+
+		mStagePass1->updateImage(); 
+		
 	}
 	else if (arg.key >= OIS::KC_1 && arg.key <= OIS::KC_9)
 	{

@@ -8,6 +8,7 @@ class StagePass1 : public LevelStage
 {
 private:
 
+
 public:
 	/// 构造函数
 	/// @param pSceneManager 场景管理器的指针

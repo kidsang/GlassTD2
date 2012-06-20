@@ -12,6 +12,7 @@ using std::vector;
 #include "BulletManager.h"
 #include "List.hpp"
 #include "Animator.h"
+#include "Money.h"
 
 class LevelStage : public Stage
 {
@@ -59,7 +60,22 @@ public:
 	{
 		mCameraAnimatorList.push_back(ani);
 	}
+	///创建放置物体的UI界面
+	void createGUI0();
 
+	///创建发射炮弹的UI界面
+	void createGUI1();
+
+	///更新炮弹数
+	void updateCount();
+
+	///更新炮弹图片
+	void updateImage();
+
+	///场景转换时切换UI
+	void change0to1();
+	void change1to0();
+	///
 	// Get/Set
 public:
 	bool isRunning()
@@ -108,6 +124,12 @@ public:
 	}
 
 	// helper functions
+	MyGUI::VectorWidgetPtr getLevelStageLayout()
+	{
+		return levelStageLayout;
+	}
+
+
 protected:
 	/// 初始化大炮
 	/// @param cannonDefine 大炮定义xml文件
@@ -123,6 +145,7 @@ protected:
 	/// @param ufoDefine UFO定义xml文件
 	void initializeUFO(const std::string& ufoDefine);
 
+	
 protected:
 	/// 当前的分场景
 	Step* mCurrentStep;
@@ -145,6 +168,18 @@ protected:
 	/// 场景是否在运行
 	bool mIsRunning;
 
+	///GUI
+public:
+	MyGUI::VectorWidgetPtr levelStageLayout;
+
+	static const int cellCount = 3;
+	static const int cellSize = 80;
+	MyGUI::ImageBox* cellImage[cellCount];
+	
+	static const int imageCount = 3; 
+	static const int imageSize = 40;
+	MyGUI::ImageBox* bulletImage[imageCount];
+	MyGUI::TextBox* bulletCount[imageCount];
 	/// 结束画面根
 	MyGUI::VectorWidgetPtr mEdLayout;
 

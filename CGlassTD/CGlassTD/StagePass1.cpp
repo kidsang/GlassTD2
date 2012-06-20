@@ -34,6 +34,51 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	
 	mCurrentStep = new StagePass1Step0(this);
 	mCurrentStep->init();
+
+	///GUI
+	
+	
+	/*
+	const int imageCount = 3; 
+	const int imageSize = 40;
+	MyGUI::ImageBox* bulletImage[imageCount];
+
+	bulletImage[0] = this->getGUI()->findWidget<MyGUI::ImageBox>("bomb_red");
+	bulletImage[1] = this->getGUI()->findWidget<MyGUI::ImageBox>("bomb_blue");
+	bulletImage[2] = this->getGUI()->findWidget<MyGUI::ImageBox>("bomb_black");
+
+	bulletImage[0]->setCoord((gui->getViewWidth()-4*imageSize),(gui->getViewHeight()-2*imageSize), imageSize*2, imageSize*2);
+	bulletImage[1]->setCoord((gui->getViewWidth()-2*imageSize),(gui->getViewHeight()-1*imageSize), imageSize, imageSize);
+	bulletImage[2]->setCoord((gui->getViewWidth()-1*imageSize),(gui->getViewHeight()-1*imageSize), imageSize, imageSize);
+
+	MyGUI::TextBox* bulletCount[imageCount];
+	bulletCount[0] = this->getGUI()->findWidget<MyGUI::TextBox>("b3");
+	bulletCount[1] = this->getGUI()->findWidget<MyGUI::TextBox>("b2");
+	bulletCount[2] = this->getGUI()->findWidget<MyGUI::TextBox>("b1");
+
+	for(int i = 0; i < 3; i++)
+	{
+
+		std::ostringstream temp;
+		temp << mCannon->getBulletFactories().at(i)->getAmmoCount();
+		bulletCount[i]->setCaption(temp.str());
+	}*/
+	
+
+	//MyGUI::ResourceManager::getInstance().load("Resources.xml");
+	//MyGUI::ImageBox* image = MyGUI::Gui::getInstance().createWidget<MyGUI::ImageBox>("ImageBox", MyGUI::IntCoord(0, 0, 128, 128), MyGUI::Align::Default, "Main");
+	//image->setItemResource("pic_Crystal_Clear_Butterfly");
+	//image->setItemGroup("States");
+	//image->setItemName("Normal");
+
+	//image->setMaskPick("Crystal_Clear_Butterfly_Pick.png");
+	/*image1->setItemResource("bomb_black.jpg");
+	image2->setItemResource("bomb_blue.jpg");
+	image3->setItemResource("bomb_red.jpg");
+
+	image1->setMaskPick("bomb_pick.jpg");
+	image2->setMaskPick("bomb_pick.jpg");
+	image3->setMaskPick("bomb_pick.jpg");*/
 }
 
 
