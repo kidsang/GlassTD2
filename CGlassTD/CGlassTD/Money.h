@@ -32,6 +32,9 @@ public:
 	/// 答题正确会获得金钱
 	void correctAnswer();
 
+	/// 判断金钱是否足以放置某个陷阱
+	bool enough(TrapType);
+
 	/// 放置陷阱会失去金钱，如果金钱已经不够返回false，成功返回true
 	bool placeTrap(TrapType);
 

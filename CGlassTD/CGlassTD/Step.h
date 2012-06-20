@@ -11,6 +11,11 @@
 class Step
 {
 public:
+	virtual ~Step()
+	{
+
+	}
+
 	/// 初始化操作，如更改摄像头位置等
 	virtual void init() = 0;
 

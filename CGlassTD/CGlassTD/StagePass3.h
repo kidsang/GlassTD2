@@ -14,6 +14,11 @@ public:
 	/// @param pStageManager 舞台管理器的指针
 	StagePass3(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui);
 	~StagePass3(void);
+
+	virtual void onEdReplayBtnClick( MyGUI::Widget* sender );
+
+	virtual void onEdNextBtnClick( MyGUI::Widget* sender );
+
 };
 
 #endif // StagePass3_h__

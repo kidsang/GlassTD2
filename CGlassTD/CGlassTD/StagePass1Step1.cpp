@@ -1,6 +1,8 @@
 #include "StagePass1Step1.h"
 #include "Questions.h"
 
+#include "Sound.h"
+
 
 StagePass1Step1::StagePass1Step1(LevelStage* stagePass1)
 	: mStagePass1(stagePass1)
@@ -50,9 +52,8 @@ bool StagePass1Step1::onKeyPressed(const OIS::KeyEvent& arg)
 		if (bullet)
 		{
 			mStagePass1->getBulletManager().add(bullet);
-
+			Sound::getInstance()->play("672.wav", false);
 			mStagePass1->updateCount();
-			
 		}
 	}
 	// »»ÅÚµ¯
@@ -68,6 +69,9 @@ bool StagePass1Step1::onKeyPressed(const OIS::KeyEvent& arg)
 	// ´ðÌâ
 	else if (arg.key == OIS::KC_Q)
 		Questions::getInstance()->popUpQuestion();
+	// test by kid
+	else if (arg.key == OIS::KC_L)
+		mStagePass1->getUFO()->setBlood(-1);
 		
 	return true;
 }

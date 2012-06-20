@@ -33,13 +33,7 @@ void StagePass1Step0::init()
 {
 	/// 改变镜头视角
 	mStagePass1->getCamera()->setPosition(Vector3(0, 2000, 1000));
-	//mStagePass1->getCamera()->setDirection(-mStagePass1->getCamera()->getPosition());
 	mStagePass1->getCamera()->lookAt(Vector3(0, 0, 0));
-
-	// debug text
-	//debugText = mStagePass1->getGUI()->createWidget<MyGUI::StaticText>("TextBox", 10, 40, 300, 300, MyGUI::Align::Default, "Main");
-	//debugText->setTextColour(MyGUI::Colour::White);
-	//debugText->setCaption("no");
 }
 
 bool StagePass1Step0::run(float timeSinceLastFrame)
@@ -179,21 +173,30 @@ bool StagePass1Step0::onMousePressed(const OIS::MouseEvent &arg, OIS::MouseButto
 	switch (mCurrentState)
 	{
 	case WITH_SWAMP:
-		if (money->placeTrap(Money::SWAMP))
+		if (money->enough(Money::SWAMP))
 		{
-			maze->editMaze(position, SWAMP);
+			if (maze->editMaze(position, SWAMP))
+			{
+				money->placeTrap(Money::SWAMP);
+			}
 		}
 		break;
 	case WITH_SPIKEWEED:
-		if (money->placeTrap(Money::SPIKEWEED))
+		if (money->enough(Money::SPIKEWEED))
 		{
-			maze->editMaze(position, SPIKEWEED);
+			if (maze->editMaze(position, SPIKEWEED))
+			{
+				money->placeTrap(Money::SPIKEWEED);
+			}
 		}
 		break;
 	case WITH_TRAP:
-		if (money->placeTrap(Money::TRAP))
+		if (money->enough(Money::TRAP))
 		{
-			maze->editMaze(position, TRAP);
+			if (maze->editMaze(position, TRAP))
+			{
+				money->placeTrap(Money::TRAP);
+			}
 		}
 		break;
 	}

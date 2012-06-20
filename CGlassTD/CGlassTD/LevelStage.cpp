@@ -26,13 +26,25 @@ LevelStage::~LevelStage()
 {
 	MyGUI::LayoutManager::getInstance().unloadLayout(mEdLayout);
 	if (mCurrentStep)
+	{
 		delete mCurrentStep;
+		mCurrentStep = 0;
+	}
 	if (mCannon)
+	{
 		delete mCannon;
+		mCannon = 0;
+	}
 	if (mUFO)
+	{
 		delete mUFO;
+		mUFO = 0;
+	}
 	if (mMaze)
+	{
 		delete mMaze;
+		mMaze = 0;
+	}
 	// µ¥Àý
 	if (mMonsterManager)
 		mMonsterManager->release();

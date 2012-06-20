@@ -175,6 +175,14 @@ public:
 protected:
 	/// 回主菜单
 	void onEdHomeBtnClick(MyGUI::Widget* sender);
+
+	/// 重玩
+	/// @note 该方法需要由场景分别实现，因为特定场景才知道需要重玩哪个场景
+	virtual void onEdReplayBtnClick(MyGUI::Widget* sender) = 0;
+
+	/// 下一关
+	/// @note 该方法需要由场景分别实现，因为特定场景才知道需要跳到哪个场景
+	virtual void onEdNextBtnClick(MyGUI::Widget* sender) = 0;
 };
 
 
