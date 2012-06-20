@@ -72,6 +72,9 @@ public:
 	///更新炮弹图片
 	void updateImage();
 
+	///场景转换时切换UI
+	void change0to1();
+	void change1to0();
 	///
 	// Get/Set
 public:

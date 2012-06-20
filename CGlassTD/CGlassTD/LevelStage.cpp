@@ -18,6 +18,8 @@ LevelStage::LevelStage(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	edBtn = mGui->findWidget<MyGUI::Button>("ed_home_btn");
 	edBtn->eventMouseButtonClick += MyGUI::newDelegate(this, &LevelStage::onEdHomeBtnClick);
 	mGui->findWidget<MyGUI::Window>("ed_window")->setVisible(false);
+
+	levelStageLayout = MyGUI::LayoutManager::getInstance().loadLayout("my.layout");
 }
 
 LevelStage::~LevelStage()
@@ -299,9 +301,13 @@ void LevelStage::updateImage()
 
 }
 
-void notifyMousepress()
+void LevelStage::change0to1()
 {
+	cellImage[0]->setVisible(false);
+	cellImage[1]->setVisible(false);
+	cellImage[2]->setVisible(false);
 }
+
 
 void LevelStage::onEdHomeBtnClick( MyGUI::Widget* sender )
 {
