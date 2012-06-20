@@ -78,6 +78,16 @@ public:
 	///
 	// Get/Set
 public:
+	bool isRunning()
+	{
+		return mIsRunning;
+	}
+
+	void setRunning(bool isRunning)
+	{
+		mIsRunning = isRunning;
+	}
+
 	Cannon* getCannon()
 	{
 		return mCannon;
@@ -155,6 +165,8 @@ protected:
 
 	/// 环境重力
 	Vector3 mGravity;
+	/// 场景是否在运行
+	bool mIsRunning;
 
 	///GUI
 public:
