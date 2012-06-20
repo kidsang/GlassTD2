@@ -14,9 +14,15 @@ LevelStage::LevelStage(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	Money::getInstance()->display();
 	// ½áÊø»­Ãæ
 	mEdLayout = MyGUI::LayoutManager::getInstance().loadLayout("ed.layout");
-	MyGUI::Button* edBtn;
-	edBtn = mGui->findWidget<MyGUI::Button>("ed_home_btn");
-	edBtn->eventMouseButtonClick += MyGUI::newDelegate(this, &LevelStage::onEdHomeBtnClick);
+	backToMenu = mGui->findWidget<MyGUI::ImageBox>("back_to_menu");
+	backToMenu->eventMouseButtonPressed += MyGUI::newDelegate(this, &LevelStage::onEdBackToMenuBtnPress);
+	backToMenu->eventMouseButtonReleased += MyGUI::newDelegate(this, &LevelStage::onEdBackToMenuBtnRelease);
+	nextStage = mGui->findWidget<MyGUI::ImageBox>("next_one");
+	nextStage->eventMouseButtonPressed += MyGUI::newDelegate(this, &LevelStage::onEdBackToMenuBtnPress);
+	nextStage->eventMouseButtonReleased += MyGUI::newDelegate(this, &LevelStage::onEdBackToMenuBtnRelease);
+	palyAgain = mGui->findWidget<MyGUI::ImageBox>("play_it_again");
+	palyAgain->eventMouseButtonPressed += MyGUI::newDelegate(this, &LevelStage::onEdBackToMenuBtnPress);
+	palyAgain->eventMouseButtonReleased += MyGUI::newDelegate(this, &LevelStage::onEdBackToMenuBtnRelease);
 	mGui->findWidget<MyGUI::Window>("ed_window")->setVisible(false);
 }
 
@@ -227,4 +233,34 @@ void LevelStage::initializeUFO( const std::string& ufoDefine )
 void LevelStage::onEdHomeBtnClick( MyGUI::Widget* sender )
 {
 	this->jumpToNextStage(new StartStage(mSceneManager, mStageManager, mGui));
+}
+
+void LevelStage::onEdReplayBtnPress( MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id )
+{
+
+}
+
+void LevelStage::onEdReplayBtnRelease( MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id )
+{
+	onEdReplayBtnClick(_sender);
+}
+
+void LevelStage::onEdNextBtnPress( MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id )
+{
+
+}
+
+void LevelStage::onEdNextBtnRelease( MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id )
+{
+	onEdReplayBtnClick(_sender);
+}
+
+void LevelStage::onEdBackToMenuBtnPress( MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id )
+{
+	
+}
+
+void LevelStage::onEdBackToMenuBtnRelease( MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id )
+{
+	onEdHomeBtnClick(_sender);
 }

@@ -15,6 +15,10 @@ using std::vector;
 
 class LevelStage : public Stage
 {
+private:
+	MyGUI::ImageBox* backToMenu;
+	MyGUI::ImageBox* palyAgain;
+	MyGUI::ImageBox* nextStage;
 public:
 	/// 构造函数
 	LevelStage(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui);
@@ -148,6 +152,18 @@ protected:
 	/// 下一关
 	/// @note 该方法需要由场景分别实现，因为特定场景才知道需要跳到哪个场景
 	virtual void onEdNextBtnClick(MyGUI::Widget* sender) = 0;
+
+	void onEdBackToMenuBtnPress(MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id);
+
+	void onEdBackToMenuBtnRelease(MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id);
+
+	void onEdReplayBtnPress(MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id);
+
+	void onEdReplayBtnRelease(MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id);
+
+	void onEdNextBtnPress(MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id);
+
+	void onEdNextBtnRelease(MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id);
 };
 
 
