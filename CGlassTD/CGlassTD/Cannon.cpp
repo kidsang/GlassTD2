@@ -19,8 +19,8 @@ Cannon::~Cannon()
 	for (auto iter = mBulletFactoryList.begin(); iter != mBulletFactoryList.end(); ++iter)
 		delete (*iter);
 	//
-	delete mTire;
-	delete mGun;
+	delete mGunNode->getAttachedObject(0);
+	delete mTireNode->getAttachedObject(0);
 	mTireNode->getParentSceneNode()->removeAndDestroyChild(mTireNode->getName());
 }
 
