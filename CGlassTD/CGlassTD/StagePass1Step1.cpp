@@ -17,6 +17,11 @@ void StagePass1Step1::init()
 
 bool StagePass1Step1::run(float timeSinceLastFrame)
 {
+	// 飞船爆了，要弹出一个框框，上面有两个按钮：返回主菜单和重玩
+	if (mStagePass1->getUFO()->isDestroy())
+	{
+	}
+
 	BulletManager& bulletManager = mStagePass1->getBulletManager();
 	Vector3 gravity = mStagePass1->getGravity();
 	bulletManager.fly(timeSinceLastFrame, gravity);
