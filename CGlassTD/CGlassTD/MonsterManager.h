@@ -147,6 +147,14 @@ public:
 	/// 因为该类是单例
 	/// add by kid
 	void release();
+
+	bool isWinGame()
+	{
+		if(mCurrentWaveNum == mMonsterWave.size() && mMonstersList.size() == 0)
+			return true;
+		else 
+			return false;
+	}
 };
 
 

@@ -1,20 +1,23 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Widget" skin="skin_Default" position="0 0 800 600" layer="Back" name="_Main">
+    <Widget type="Widget" skin="skin_Default" position="0 0 1024 736" align="Stretch" layer="Back" name="_Main">
         <Property key="Enabled" value="true"/>
         <UserString key="LE_TargetWidgetType" value="Window"/>
-        <Widget type="Button" skin="Button" position="95 110 105 50" name="juqingmode">
-            <Property key="ImageResource" value="[DEFAULT]"/>
-            <Property key="Caption" value="juqingMode"/>
-        </Widget>
-        <Widget type="Button" skin="Button" position="225 225 115 55" name="lifeMode">
-            <Property key="Caption" value="lifeMode"/>
-        </Widget>
-        <Widget type="Button" skin="Button" position="395 285 120 55" name="setting">
-            <Property key="Caption" value="setting"/>
-        </Widget>
-        <Widget type="Button" skin="Button" position="655 475 100 55" name="quit">
-            <Property key="Caption" value="quit"/>
+        <Widget type="ImageBox" skin="ImageBox" position="0 0 1024 736" align="Right VStretch" name="background">
+            <Property key="ImageTexture" value="mainBG.png"/>
+            <Widget type="ImageBox" skin="ImageBox" position="135 160 280 100" name="juqingMode">
+                <Property key="ImageTexture" value="juqing.png"/>
+            </Widget>
+            <Widget type="ImageBox" skin="ImageBox" position="380 270 280 100" name="lifeMode">
+                <Property key="ImageTexture" value="life.png"/>
+                <Property key="Alpha" value="1"/>
+            </Widget>
+            <Widget type="ImageBox" skin="ImageBox" position="605 380 280 100" name="setting">
+                <Property key="ImageTexture" value="setting.png"/>
+            </Widget>
+            <Widget type="ImageBox" skin="ImageBox" position="870 600 120 120" name="quit">
+                <Property key="ImageTexture" value="quit.png"/>
+            </Widget>
         </Widget>
     </Widget>
 </MyGUI>

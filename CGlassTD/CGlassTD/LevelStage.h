@@ -165,6 +165,13 @@ public:
 	static const int imageSize = 40;
 	MyGUI::ImageBox* bulletImage[imageCount];
 	MyGUI::TextBox* bulletCount[imageCount];
+	/// 结束画面根
+	MyGUI::VectorWidgetPtr mEdLayout;
+
+	// 结束画面回调函数
+protected:
+	/// 回主菜单
+	void onEdHomeBtnClick(MyGUI::Widget* sender);
 };
 
 

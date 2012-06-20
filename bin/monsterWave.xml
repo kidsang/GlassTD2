@@ -3,12 +3,12 @@
     <wave
         newWaveTime="4"
         total="6"
-        smallNormalMonster="0"
-        smallIceMonster="0"
-        smallFireMonster="10"
-        bigNormalMonster="0"
-        bigIceMonster="0"
-        bigFireMonster="6"
+        smallNormalMonster="1"
+        smallIceMonster="1"
+        smallFireMonster="1"
+        bigNormalMonster="1"
+        bigIceMonster="1"
+        bigFireMonster="1"
         timeInterval1="2.5"
         timeInterval2="4.0"
         />

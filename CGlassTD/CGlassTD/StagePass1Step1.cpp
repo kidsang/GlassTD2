@@ -1,4 +1,5 @@
 #include "StagePass1Step1.h"
+#include "Questions.h"
 
 
 StagePass1Step1::StagePass1Step1(LevelStage* stagePass1)
@@ -17,6 +18,10 @@ void StagePass1Step1::init()
 
 bool StagePass1Step1::run(float timeSinceLastFrame)
 {
+	// 飞船爆了，要弹出一个框框，上面有两个按钮：返回主菜单和重玩
+	if (mStagePass1->getUFO()->isDestroy())
+		mStagePass1->getGUI()->findWidget<MyGUI::Window>("ed_window")->setVisible(true);
+
 	BulletManager& bulletManager = mStagePass1->getBulletManager();
 	Vector3 gravity = mStagePass1->getGravity();
 	bulletManager.fly(timeSinceLastFrame, gravity);
@@ -35,6 +40,9 @@ bool StagePass1Step1::run(float timeSinceLastFrame)
 
 bool StagePass1Step1::onKeyPressed(const OIS::KeyEvent& arg)
 {
+	// 处于答题阶段时无法进行操作
+	if (Questions::getInstance()->isAnswering()) return true;
+
 	// 发炮
 	if (arg.key == OIS::KC_SPACE)
 	{
@@ -57,14 +65,20 @@ bool StagePass1Step1::onKeyPressed(const OIS::KeyEvent& arg)
 	}
 	else if (arg.key >= OIS::KC_1 && arg.key <= OIS::KC_9)
 		mStagePass1->getCannon()->changeBullet(arg.key - OIS::KC_1);
+	// 答题
+	else if (arg.key == OIS::KC_Q)
+		Questions::getInstance()->popUpQuestion();
 		
 	return true;
 }
 
 bool StagePass1Step1::onMouseMoved(const OIS::MouseEvent& arg)
 {
+	// 处于答题阶段时无法进行操作
+	if (Questions::getInstance()->isAnswering()) return true;
+
+	//StagePass1->getCannon()->rotate(-arg.state.X.rel, arg.state.Y.rel);
 	mStagePass1->getCannon()->rotate(-arg.state.X.rel, arg.state.Y.rel, mStagePass1->getCamera());
-	
 	return true;
 }
 
