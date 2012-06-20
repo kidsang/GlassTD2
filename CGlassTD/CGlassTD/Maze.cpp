@@ -30,7 +30,7 @@ Maze::Maze(SceneManager* sceneManager, int* map, int width, int height, Ogre::Ve
 
 
 	this->mSceneNode = sceneManager->getRootSceneNode()->createChildSceneNode("mapSenenNode");
-	this->pZones = new Cell[mWidth * mHeight];
+	this->pZones = new Cell*[mWidth * mHeight];
 	this->pMapInfo = new int[mWidth * mHeight];
 	this->startPos = std::vector<Ogre::Vector3>();
 	this->mSceneNode->setPosition(Ogre::Vector3(-mWidth / 2.0f * this->mCellWidth, 0, -mHeight / 2.0f * this->mCellHeight));
@@ -42,19 +42,19 @@ Maze::Maze(SceneManager* sceneManager, int* map, int width, int height, Ogre::Ve
 			switch(map[j * width + i])
 			{
 			case 0:
-				this->pZones[j * width + i] = Cell(sceneManager, mSceneNode, new Ogre::Vector2(Real(i),Real(j)));
+				this->pZones[j * width + i] = new Cell(sceneManager, mSceneNode, new Ogre::Vector2(Real(i),Real(j)));
 				break;
 			case 1:
-				this->pZones[j * width + i] = Cell(sceneManager, mSceneNode,this->mWall, new Ogre::Vector2(Real(i),Real(j)), map[j * width + i], 0.0f );
+				this->pZones[j * width + i] = new Cell(sceneManager, mSceneNode,this->mWall, new Ogre::Vector2(Real(i),Real(j)), map[j * width + i], 0.0f );
 				break;
 			case 2:
-				this->pZones[j * width + i] = Cell(sceneManager, mSceneNode,this->mSpikeweed, new Ogre::Vector2(Real(i),Real(j)), map[j * width + i], this->mHarmSpikeweed );
+				this->pZones[j * width + i] = new Cell(sceneManager, mSceneNode,this->mSpikeweed, new Ogre::Vector2(Real(i),Real(j)), map[j * width + i], this->mHarmSpikeweed );
 				break;
 			case 3:
-				this->pZones[j * width + i] = Cell(sceneManager, mSceneNode,this->mSwamp, new Ogre::Vector2(Real(i),Real(j)), map[j * width + i],this->mHarmSwamp );
+				this->pZones[j * width + i] = new Cell(sceneManager, mSceneNode,this->mSwamp, new Ogre::Vector2(Real(i),Real(j)), map[j * width + i],this->mHarmSwamp );
 				break;
 			case 4:
-				this->pZones[j * width + i] = Cell(sceneManager, mSceneNode,this->mTrap, new Ogre::Vector2(Real(i),Real(j)), map[j * width + i], 0.0f );
+				this->pZones[j * width + i] = new Cell(sceneManager, mSceneNode,this->mTrap, new Ogre::Vector2(Real(i),Real(j)), map[j * width + i], 0.0f );
 				break;
 			}
 		}
@@ -71,17 +71,17 @@ Maze::~Maze(void)
 {
 	if (pMapInfo)
 	{
-		delete this->pMapInfo;
+		delete[] this->pMapInfo;
 		pMapInfo = 0;
 	}
 	if (mMap)
 	{
-		delete this->mMap;
+		delete[] this->mMap;
 		mMap = 0;
 	}
 }
 
-Cell* Maze::getMazeInfo()
+Cell** Maze::getMazeInfo()
 {
 	return this->pZones;
 }
@@ -136,7 +136,7 @@ Cell* Maze::getCellByPos( Ogre::Vector3 pos )
 	int x = (int)xInput / 100;
 	int y = (int)zInput / 100;
 
-	return &this->pZones[y * mHeight + x];
+	return this->pZones[y * mHeight + x];
 }
 
 
@@ -206,10 +206,10 @@ void Maze::clearShadow()
 {
 	for(int i = 0; i < mWidth * mHeight; ++i)
 	{
-		Cell cell = this->pZones[i];
-		if(cell.getCellType() == SHADOW_SPIKEWEED || cell.getCellType() == SHADOW_SWAMP || cell.getCellType() == SHADOW_TRAP)
+		Cell* cell = this->pZones[i];
+		if(cell->getCellType() == SHADOW_SPIKEWEED || cell->getCellType() == SHADOW_SWAMP || cell->getCellType() == SHADOW_TRAP)
 		{
-			this->pZones[i].setCellType(FREE);
+			this->pZones[i]->setCellType(FREE);
 		}
 	}
 }

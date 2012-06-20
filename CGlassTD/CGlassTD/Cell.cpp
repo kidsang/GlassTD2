@@ -63,6 +63,12 @@ Cell::Cell( Ogre::SceneManager* sceneManager,Ogre::SceneNode* parentNode,Ogre::S
 
 Cell::~Cell(void)
 {
+	if(mSceneNode)
+	{
+		delete mEntity;
+		mSceneNode->getParentSceneNode()->removeAndDestroyChild(mSceneNode->getName());
+		mSceneNode = 0;
+	}
 }
 
 
