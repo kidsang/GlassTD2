@@ -45,6 +45,7 @@ bool LevelStage::run(float timeSinceLastFrame)
 				jumpToStep(new StagePass1Step1(this));
 				delete (*iter);
 				mCameraAnimatorList.erase(iter);
+				mMaze->clearShadow();
 			}
 	}
 

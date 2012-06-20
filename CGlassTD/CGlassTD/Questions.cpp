@@ -68,6 +68,20 @@ void Questions::destroyInstance()
 	}
 }
 
+std::wstring s2ws(const std::string& s)
+{
+    setlocale(LC_ALL, "chs"); 
+    const char* _Source = s.c_str();
+    size_t _Dsize = s.size() + 1;
+    wchar_t *_Dest = new wchar_t[_Dsize];
+    wmemset(_Dest, 0, _Dsize);
+    mbstowcs(_Dest,_Source,_Dsize);
+    std::wstring result = _Dest;
+    delete []_Dest;
+    setlocale(LC_ALL, "C");
+    return result;
+}
+
 void Questions::popUpQuestion()
 {
 	for (MyGUI::VectorWidgetPtr::iterator itr = widgetVector.begin(); itr != widgetVector.end(); ++itr)
@@ -83,12 +97,26 @@ void Questions::popUpQuestion()
 	mCurrentFlag = FIRST;
 	
 	Quest* quest = mQuestBank->getQuest();
-	mQuesText->setCaption(quest->getQuestion());
+	std::string caption = quest->getQuestion();
+	/*
+	// 每十个字插入一个回车
+	std::vector<unsigned> allPos;
+	//allPos.push_back(15);
+	//allPos.push_back(47);
+	allPos.push_back(63);
+	//allPos.push_back(95);
+	for (std::vector<unsigned>::iterator it = allPos.begin(); it != allPos.end(); ++it)
+	{
+		if (*it >= caption.size()) break;
+		caption.insert(*it, "\n");
+	}
+	*/
+	mQuesText->setCaption(s2ws(caption).c_str());
 	Quest::Selections selection = quest->getSelections();
-	mFirstText->setCaption(selection["a"]);
-	mSecondText->setCaption(selection["b"]);
-	mThirdText->setCaption(selection["c"]);
-	mFourthText->setCaption(selection["d"]);
+	mFirstText->setCaption(s2ws(selection["a"]).c_str());
+	mSecondText->setCaption(s2ws(selection["b"]).c_str());
+	mThirdText->setCaption(s2ws(selection["c"]).c_str());
+	mFourthText->setCaption(s2ws(selection["d"]).c_str());
 	mCorrectAnswer = quest->getAnswer();
 }
 
@@ -112,7 +140,7 @@ void Questions::handUpAnswer()
 		answer = "b";
 	else if (mThirdChoice->getStateSelected())
 		answer = "c";
-	else if (mFourthChoice->getStateSelected())
+	else
 		answer = "d";
 		
 	if (answer.compare(mCorrectAnswer) == 0)
