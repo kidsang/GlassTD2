@@ -7,7 +7,7 @@
 #include <OgreMath.h>
 #include <sstream>
 #include "CameraStep02Step1Animator.h"
-
+#include <MyGUI/MyGUI.h>
 
 bool equal(Cell* firstCell, Cell* secondCell)
 {
@@ -16,7 +16,8 @@ bool equal(Cell* firstCell, Cell* secondCell)
 
 
 StagePass1Step0::StagePass1Step0(LevelStage* stagePass1)
-	: mStagePass1(stagePass1), mCurrentState(WITH_SWAMP), mCurrentCell(NULL)
+	: mStagePass1(stagePass1), mCurrentState(WITH_SWAMP), mCurrentCell(NULL),
+	mRollX(0), mRollY(0)
 {
 	mRaySceneQuery = SceneManagerContainer::getSceneManager()->createRayQuery(Ogre::Ray());
 
@@ -38,6 +39,9 @@ void StagePass1Step0::init()
 
 bool StagePass1Step0::run(float timeSinceLastFrame)
 {
+	// 卷动画面
+	int moveStep = 60;
+	mStagePass1->getCamera()->move(Ogre::Vector3(moveStep * mRollX, 0, moveStep * mRollY));
 	return true;
 }
 
@@ -86,46 +90,6 @@ bool StagePass1Step0::onMouseMoved(const OIS::MouseEvent& arg)
 	Maze* maze = mStagePass1->getMaze();
 	Cell* cell = maze->getCellByPos(position);
 	if (cell == NULL) return true;
-
-	std::ostringstream x;
-	std::ostringstream y;
-	std::ostringstream positionX;
-	std::ostringstream positionY;
-	std::ostringstream positionZ;
-	std::ostringstream pcell;
-	std::ostringstream poldcell;
-	x << arg.state.X.abs;
-	y << arg.state.Y.abs;
-	positionX << position[0];
-	positionY << position[1];
-	positionZ << position[2];
-	pcell << cell;
-	poldcell << mCurrentCell;
-
-	double xInput = position.x;
-	xInput += 801;
-	if( xInput < 0 ) xInput = 0;
-	if( xInput > 1599 ) xInput = 1599;
-
-	double zInput = position.z;
-	zInput += 801;
-	if( zInput < 0 ) zInput = 0;
-	if( zInput > 1599 ) zInput = 1599;
-
-	int xx = (int)xInput / 100;
-	int yt = (int)zInput / 100;
-
-	std::ostringstream xxx;
-	std::ostringstream yyy;
-	xxx << xx;
-	yyy << yt;
-
-	std::string display = x.str() + ' ' + y.str() + '\n';
-	display += positionX.str() + ' ' + positionY.str() + ' ' + positionZ.str() + '\n';
-	display += pcell.str() + ' ' + poldcell.str() + '\n';
-	display += xxx.str() + ' ' + yyy.str() + '\n';
-
-	//debugText->setCaption(display.c_str());
 	
 	// 如果该cell与上次设置的cell是同一个，则不作处理，否则进入下面的if
 	if (cell != mCurrentCell)
@@ -156,6 +120,22 @@ bool StagePass1Step0::onMouseMoved(const OIS::MouseEvent& arg)
 			mLastPos = position;
 		}
 	}
+
+	// 鼠标卷动画面
+	int width = MyGUI::RenderManager::getInstance().getViewSize().width;
+	int height = MyGUI::RenderManager::getInstance().getViewSize().height;
+	if (arg.state.X.abs <= 16)
+		mRollX = -1;
+	else if (arg.state.X.abs >= width - 16)
+		mRollX = 1;
+	else
+		mRollX = 0;
+	if (arg.state.Y.abs <= 16)
+		mRollY = -1;
+	else if (arg.state.Y.abs >= height - 16)
+		mRollY = 1;
+	else
+		mRollY = 0;
 	
 	return true;
 }

@@ -91,7 +91,7 @@ void StageSelect::notifyMouseButtonPress( MyGUI::Widget* _sender, int _left, int
 {
 	if(_id.toValue() != 0)
 		return;
-	Sound::getInstance()->play("../Media/Sound/click.wav", false);
+	Stage::playSound("../Media/Sound/click.wav", false);
 	if(_sender == stage1Btn)
 	{
 		stage1Btn->setImageTexture("stage1Press.png");
