@@ -45,6 +45,11 @@ private:
 	Ogre::Vector3 mLastPos;
 	Ogre::RaySceneQuery* mRaySceneQuery;
 
+	/// 画面卷动鼠标X方向标志位
+	int mRollX;
+	/// 画面卷动鼠标Y方向标志位
+	int mRollY;
+
 	// debug
 	//MyGUI::StaticTextPtr debugText;
 };

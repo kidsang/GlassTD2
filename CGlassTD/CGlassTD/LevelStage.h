@@ -80,6 +80,7 @@ public:
 	///场景转换时切换UI
 	void change0to1();
 	void change1to0();
+
 	///
 	// Get/Set
 public:
@@ -172,6 +173,7 @@ protected:
 	Vector3 mGravity;
 	/// 场景是否在运行
 	bool mIsRunning;
+
 
 	///GUI
 public:

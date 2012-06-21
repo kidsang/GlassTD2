@@ -97,7 +97,9 @@ bool LevelStage::onKeyPressed(const OIS::KeyEvent &arg)
 
 bool LevelStage::onMouseMoved(const OIS::MouseEvent &arg)
 {
+	// 鼠标滚轮拉远拉近
 	mCamera->move(Vector3(0, 0, arg.state.Z.rel));
+
 	return mCurrentStep->onMouseMoved(arg);
 }
 
