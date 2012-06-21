@@ -144,6 +144,7 @@
     <ClInclude Include="Questions.h" />
     <ClInclude Include="res\Resource.h" />
     <ClInclude Include="SceneManagerContainer.h" />
+    <ClInclude Include="SettingStage.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="StageLoadingLevelStage.h" />
@@ -189,6 +190,7 @@
     <ClCompile Include="QuestBank.cpp" />
     <ClCompile Include="Questions.cpp" />
     <ClCompile Include="SceneManagerContainer.cpp" />
+    <ClCompile Include="SettingStage.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="StageManager.cpp" />

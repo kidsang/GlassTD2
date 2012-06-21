@@ -49,6 +49,7 @@ private:
 	int mAmount;
 	MyGUI::Gui* mGui;
 	MyGUI::TextBox* mTextBox;
+	MyGUI::ImageBox* mImageBox;
 };
 
 

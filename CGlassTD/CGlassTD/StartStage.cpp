@@ -1,6 +1,7 @@
 #include "StartStage.h"
 #include "StageSelect.h"
 #include "Sound.h"
+#include "SettingStage.h"
 
 StartStage::StartStage(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui)
 	: Stage(sceneManager, stageManager, gui)
@@ -120,6 +121,8 @@ void StartStage::notifyMouseButtonRelease( MyGUI::Widget* _sender, int _left, in
 	else if(_sender == settingBtn)
 	{
 		settingBtn->setImageTexture("setting.png");
+		Stage* nextStage = new SettingStage(this->mSceneManager, this->mStageManager, this->mGui);
+		this->jumpToNextStage(nextStage);
 	}
 	else if(_sender == quitBtn)
 	{

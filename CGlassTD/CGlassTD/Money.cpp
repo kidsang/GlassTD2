@@ -3,7 +3,7 @@
 
 Money* Money::instance = 0;
 
-Money::Money(MyGUI::Gui* gui) : mAmount(20), mTextBox(0), mGui(gui)
+Money::Money(MyGUI::Gui* gui) : mAmount(20000), mTextBox(0), mGui(gui)
 {
 }
 
@@ -34,15 +34,20 @@ Money::~Money()
 	{
 		mGui->destroyWidget(mTextBox);
 	}
+	if(mImageBox != 0)
+	{
+		mGui->destroyWidget(mImageBox);
+	}
 }
 
 void Money::display()
 {
 	if (mTextBox != 0) return;
-
-	mTextBox = static_cast<MyGUI::TextBox*>( mGui->createWidgetT("TextBox", "TextBox", 30, 20, 180, 180, MyGUI::Align::Default, "Main") );
+	mImageBox = static_cast<MyGUI::ImageBox*>(mGui->createWidgetT("ImageBox", "ImageBox", 30, 20, 50, 50, MyGUI::Align::Default, "Main"));
+	mImageBox->setImageTexture("money.png");
+	mTextBox = static_cast<MyGUI::TextBox*>( mGui->createWidgetT("TextBox", "TextBox", 80, 40, 50, 50, MyGUI::Align::Default, "Main") );
 	mTextBox->setTextColour(MyGUI::Colour::White);
-	mTextBox->setCaption(std::string("Money: ") + this->getAmountStr());
+	mTextBox->setCaption(this->getAmountStr());
 }
 
 void Money::correctAnswer()
