@@ -10,15 +10,15 @@
         <Widget type="Button" skin="RadioButton" position="60 135 20 20" align="Default" name="firstChoice"/>
         <Widget type="Button" skin="RadioButton" position="210 135 20 20" name="secondChoice"/>
         <Widget type="Button" skin="RadioButton" position="360 135 20 20" name="thirdChoice"/>
-        <Widget type="TextBox" skin="TextBox" position="80 135 155 20" name="firstChoiceText">
+        <Widget type="TextBox" skin="TextBox" position="80 135 120 20" name="firstChoiceText">
             <Property key="Caption" value="first choice"/>
             <Property key="TextColour" value="1 1 1"/>
         </Widget>
-        <Widget type="TextBox" skin="TextBox" position="230 135 155 20" name="secondChoiceText">
+        <Widget type="TextBox" skin="TextBox" position="230 135 120 20" name="secondChoiceText">
             <Property key="Caption" value="socend choioce"/>
             <Property key="TextColour" value="1 1 1"/>
         </Widget>
-        <Widget type="TextBox" skin="TextBox" position="380 135 155 20" name="thirdChoiceText">
+        <Widget type="TextBox" skin="TextBox" position="380 135 120 20" name="thirdChoiceText">
             <Property key="Caption" value="third choice"/>
             <Property key="TextColour" value="1 1 1"/>
         </Widget>

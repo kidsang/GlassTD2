@@ -34,8 +34,10 @@ Questions::Questions(MyGUI::Gui* gui) :
 	mThirdChoice->eventMouseButtonClick += MyGUI::newDelegate(this, &Questions::onRadioClick);
 	mFourthChoice->eventMouseButtonClick += MyGUI::newDelegate(this, &Questions::onRadioClick);
 	
-	mOkButton->eventMouseButtonClick += MyGUI::newDelegate(this, &Questions::onButtonClick);
-	mGiveUpButton->eventMouseButtonClick += MyGUI::newDelegate(this, &Questions::onButtonClick);
+	mOkButton->eventMouseButtonPressed += MyGUI::newDelegate(this, &Questions::onOkPress);
+	mOkButton->eventMouseButtonReleased += MyGUI::newDelegate(this, &Questions::onOkRelease);
+	mGiveUpButton->eventMouseButtonPressed += MyGUI::newDelegate(this, &Questions::onNoPress);
+	mGiveUpButton->eventMouseButtonReleased += MyGUI::newDelegate(this, &Questions::onNoRelease);
 	
 	for (MyGUI::VectorWidgetPtr::iterator itr = widgetVector.begin(); itr != widgetVector.end(); ++itr)
 	{
@@ -89,7 +91,7 @@ std::wstring s2ws(const std::string& s)
 
 void Questions::popUpQuestion()
 {
-	MyGUI::PointerManager::getInstance().show();
+	MyGUI::PointerManager::getInstance().setVisible(true);
 	for (MyGUI::VectorWidgetPtr::iterator itr = widgetVector.begin(); itr != widgetVector.end(); ++itr)
 	{
 		(*itr)->setVisible(true);
@@ -134,7 +136,7 @@ bool Questions::isAnswering()
 void Questions::handUpAnswer()
 {	
 	Sound::getInstance()->play("../Media/Sound/click.wav", false);
-	MyGUI::PointerManager::getInstance().hide();
+	MyGUI::PointerManager::getInstance().setVisible(false);
 	for (MyGUI::VectorWidgetPtr::iterator itr = widgetVector.begin(); itr != widgetVector.end(); ++itr)
 	{
 		(*itr)->setVisible(false);
@@ -160,7 +162,7 @@ void Questions::handUpAnswer()
 void Questions::giveUp()
 {
 	Sound::getInstance()->play("../Media/Sound/click.wav", false);
-	MyGUI::PointerManager::getInstance().hide();
+	MyGUI::PointerManager::getInstance().setVisible(false);
 	for (MyGUI::VectorWidgetPtr::iterator itr = widgetVector.begin(); itr != widgetVector.end(); ++itr)
 	{
 		(*itr)->setVisible(false);
@@ -205,16 +207,24 @@ void Questions::onRadioClick(MyGUI::Widget* sender)
 	}
 }
 
-void Questions::onButtonClick(MyGUI::Widget* sender)
+void Questions::onOkPress(MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id)
 {
-	MyGUI::ImageBox* button = sender->castType<MyGUI::ImageBox>();
-	
-	if (button == mOkButton)
-	{
-		this->handUpAnswer();
-	}
-	else
-	{
-		this->giveUp();
-	}
+	mOkButton->setImageTexture("quest_submit_down.png");
+}
+
+void Questions::onNoPress(MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id)
+{
+	mGiveUpButton->setImageTexture("quest_giveup_down.png");
+}
+
+void Questions::onOkRelease(MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id)
+{
+	mOkButton->setImageTexture("quest_submit_up.png");
+	this->handUpAnswer();
+}
+
+void Questions::onNoRelease(MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id)
+{
+	mGiveUpButton->setImageTexture("quest_giveup_up.png");
+	this->giveUp();
 }
