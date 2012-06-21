@@ -2,6 +2,7 @@
 #include "Money.h"
 #include <string>
 #include "Sound.h"
+#include "Stage.h"
 
 Questions* Questions::instance = 0;
 
@@ -135,7 +136,7 @@ bool Questions::isAnswering()
 
 void Questions::handUpAnswer()
 {	
-	Sound::getInstance()->play("../Media/Sound/click.wav", false);
+	Stage::playSound("../Media/Sound/click.wav", false);
 	MyGUI::PointerManager::getInstance().setVisible(false);
 	for (MyGUI::VectorWidgetPtr::iterator itr = widgetVector.begin(); itr != widgetVector.end(); ++itr)
 	{
@@ -161,7 +162,7 @@ void Questions::handUpAnswer()
 
 void Questions::giveUp()
 {
-	Sound::getInstance()->play("../Media/Sound/click.wav", false);
+	Stage::playSound("../Media/Sound/click.wav", false);
 	MyGUI::PointerManager::getInstance().setVisible(false);
 	for (MyGUI::VectorWidgetPtr::iterator itr = widgetVector.begin(); itr != widgetVector.end(); ++itr)
 	{
@@ -173,7 +174,7 @@ void Questions::giveUp()
 
 void Questions::onRadioClick(MyGUI::Widget* sender)
 {
-	Sound::getInstance()->play("../Media/Sound/switch.wav", false);
+	Stage::playSound("../Media/Sound/switch.wav", false);
 	MyGUI::Button* button = sender->castType<MyGUI::Button>();
 	button->setStateSelected(true);
 	

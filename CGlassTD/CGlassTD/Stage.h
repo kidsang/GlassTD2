@@ -57,6 +57,32 @@ public:
 		return mGui;
 	}
 
+	/// 播放音效
+	/// @note helper function
+	static void playSound(const char* fileName, bool loop);
+	/// 播放音乐
+	static void playMusic(const char* fileName, bool loop);
+
+	static void setSoundFlag(bool isEnable)
+	{
+		mSoundEnabled = isEnable;
+	}
+
+	static bool getSoundFlag()
+	{
+		return mSoundEnabled;
+	}
+
+	static void setMusicFlag(bool isEnable)
+	{
+		mMusicEnabled = isEnable;
+	}
+
+	static bool getMusicFlag()
+	{
+		return mMusicEnabled;
+	}
+
 protected:
 	/// 跳转到下一个舞台，内部调用
 	/// @param pNextStage 下一个舞台的指针
@@ -70,6 +96,10 @@ protected:
 	Ogre::Camera* mCamera;
 	/// MyGUI
 	MyGUI::Gui* mGui;
+	/// 音效开关标志位
+	static bool mSoundEnabled;
+	/// 音乐开关标志位
+	static bool mMusicEnabled;
 };
 
 

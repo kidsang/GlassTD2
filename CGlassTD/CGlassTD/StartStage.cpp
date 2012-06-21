@@ -85,7 +85,7 @@ void StartStage::notifyMouseButtonPress( MyGUI::Widget* _sender, int _left, int 
 {
 	if(_id.toValue() !=  0)
 		return ;
-	Sound::getInstance()->play("../Media/Sound/click.wav", false);
+	Stage::playSound("../Media/Sound/click.wav", false);
 	if(_sender == juqingBtn)
 	{		
 		juqingBtn->setImageTexture("juqingPress.png");

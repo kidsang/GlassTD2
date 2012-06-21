@@ -15,7 +15,7 @@ StagePass2::StagePass2(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	/// 初始化迷宫
 	initializeMaze("MazeDefine2.xml", "CellDefine.xml");
 	/// 初始化飞船
-	initializeUFO("UFODefine.xml");
+	initializeUFO("UFODefine2.xml");
 
 	/// 新增一个monster管理器
 	MonsterManager::initialize(mMaze, "MonsterDefine.xml");
