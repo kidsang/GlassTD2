@@ -28,8 +28,11 @@ public:
 	bool isAnswering();
 	
 private:
-	void onRadioClick(MyGUI::Widget* sender);
-	void onButtonClick(MyGUI::Widget* sender);
+	void onRadioClick(MyGUI::Widget* _sender);
+	void onOkPress(MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id);
+	void onNoPress(MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id);
+	void onOkRelease(MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id);
+	void onNoRelease(MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id);
 	
 	/// Ìá½»´ð°¸
 	void handUpAnswer();
@@ -44,8 +47,8 @@ private:
 	MyGUI::Button* mSecondChoice;
 	MyGUI::Button* mThirdChoice;
 	MyGUI::Button* mFourthChoice;
-	MyGUI::Button* mOkButton;
-	MyGUI::Button* mGiveUpButton;
+	MyGUI::ImageBox* mOkButton;
+	MyGUI::ImageBox* mGiveUpButton;
 	MyGUI::TextBox* mQuesText;
 	MyGUI::TextBox* mFirstText;
 	MyGUI::TextBox* mSecondText;

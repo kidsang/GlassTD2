@@ -13,7 +13,7 @@ StagePass1Step1::StagePass1Step1(LevelStage* stagePass1)
 void StagePass1Step1::init()
 {
 
-	mStagePass1->getCamera()->setPosition(Vector3(0, 1200, 2000));
+	mStagePass1->getCamera()->setPosition(Vector3(0, 1000, 1800));
 	mStagePass1->getCamera()->lookAt(Vector3(0, 0, 0));
 	//mStagePass1->getCamera()->setDirection(Vector3(0, -500, -1000));
 }
@@ -25,25 +25,54 @@ bool StagePass1Step1::run(float timeSinceLastFrame)
 	// 飞船爆了，要弹出一个框框，上面有两个按钮：返回主菜单和重玩
 	if (mStagePass1->isRunning() && mStagePass1->getUFO()->isDestroy())
 	{
-		MyGUI::PointerManager::getInstance().show();
+		MyGUI::PointerManager::getInstance().setVisible(true);
 		mStagePass1->setRunning(false);
 		Sound::getInstance()->play("../Media/Sound/lose.wav", false);
 		MyGUI::ImageBox* stages = mStagePass1->getGUI()->findWidget<MyGUI::ImageBox>("word_of_stages");
-		stages->setImageTexture("word_stage1.png");
+		switch(mStagePass1->getLevel())
+		{
+		case 1:
+			stages->setImageTexture("word_stage1.png");
+			break;
+		case 2:
+			stages->setImageTexture("word_stage2.png");
+			break;
+		case 3:
+			stages->setImageTexture("word_stage3.png");
+			break;
+		default:
+			stages->setImageTexture("word_stage1.png");
+			break;
+		}
 		MyGUI::ImageBox* result = mStagePass1->getGUI()->findWidget<MyGUI::ImageBox>("result_of_play");
 		result->setImageTexture("fail.png");
 		mStagePass1->getGUI()->findWidget<MyGUI::Window>("ed_window")->setVisible(true);
 		mStagePass1->getGUI()->findWidget<MyGUI::ImageBox>("next_one")->setImageTexture("nextStageUnuse.png");
+		mStagePass1->getGUI()->findWidget<MyGUI::ImageBox>("next_one")->setEnabled(false);
 	}
 
 	// 游戏胜利
 	else if (mStagePass1->isRunning() && monsterManager->isWinGame())
 	{
-		MyGUI::PointerManager::getInstance().show();
+		MyGUI::PointerManager::getInstance().setVisible(true);
 		mStagePass1->setRunning(false);
 		Sound::getInstance()->play("../Media/Sound/win.wav", false);
 		MyGUI::ImageBox* stages = mStagePass1->getGUI()->findWidget<MyGUI::ImageBox>("word_of_stages");
-		stages->setImageTexture("word_stage1.png");
+		switch(mStagePass1->getLevel())
+		{
+		case 1:
+			stages->setImageTexture("word_stage1.png");
+			break;
+		case 2:
+			stages->setImageTexture("word_stage2.png");
+			break;
+		case 3:
+			stages->setImageTexture("word_stage3.png");
+			break;
+		default:
+			stages->setImageTexture("word_stage1.png");
+			break;
+		}
 		MyGUI::ImageBox* result = mStagePass1->getGUI()->findWidget<MyGUI::ImageBox>("result_of_play");
 		result->setImageTexture("sucess.png");
 		mStagePass1->getGUI()->findWidget<MyGUI::Window>("ed_window")->setVisible(true);

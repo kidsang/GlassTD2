@@ -7,7 +7,7 @@
 #include "ParamParser.h"
 
 StagePass3::StagePass3(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui)
-	: LevelStage(sceneManager, stageManager, gui)
+	: LevelStage(sceneManager, stageManager, gui, 3)
 {
 	/// ³õÊ¼»¯´óÅÚ
 	initializeCannon("CannonDefine.xml", "BulletDefine.xml");

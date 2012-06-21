@@ -16,12 +16,17 @@ using std::vector;
 
 class LevelStage : public Stage
 {
+private:
+	int mLevel;
 public:
 	/// 构造函数
-	LevelStage(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui);
+	LevelStage(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui, int level);
 
 	/// 析构函数
 	virtual ~LevelStage();
+
+	/// 获取当前关卡
+	int getLevel();
 
 	/// 跳到第i个步骤
 	void jumpToStep(Step* step);
@@ -207,6 +212,7 @@ protected:
 	void onEdNextBtnPress(MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id);
 
 	void onEdNextBtnRelease(MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id);
+
 };
 
 

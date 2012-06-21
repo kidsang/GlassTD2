@@ -48,7 +48,7 @@ bool StagePass1Step0::onKeyPressed(const OIS::KeyEvent& arg)
 	// 按 G 结束布局阶段，开始打怪阶段
 	case OIS::KC_G:
 		{
-			MyGUI::PointerManager::getInstance().hide();
+			MyGUI::PointerManager::getInstance().setVisible(false);
 			// 丑陋的代码by kid
 			CameraStep02Step1Animator* ani = new CameraStep02Step1Animator(0);
 			ani->start(mStagePass1->getCamera());

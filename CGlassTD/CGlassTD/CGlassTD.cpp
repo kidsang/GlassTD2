@@ -56,9 +56,7 @@ bool CGlassTD::frameRenderingQueued( const Ogre::FrameEvent& evt )
 		return false;
 
 	// 运行当前场景的逻辑
-	mpStageManager->getStage()->run(evt.timeSinceLastFrame);
-
-	return true;
+	return mpStageManager->getStage()->run(evt.timeSinceLastFrame);
 }
 
 bool CGlassTD::keyPressed(const OIS::KeyEvent &arg)

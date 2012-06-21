@@ -1,0 +1,219 @@
+material normalMonster_Material#10
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588 0.588 0.588 1
+			diffuse 0.588 0.588 0.588 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture normalMonster_fin01.jpg
+			}
+		}
+
+	}
+
+}
+
+
+
+material normalMonster_Material#7
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588 0.588 0.588 1
+			diffuse 0.588 0.588 0.588 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture normalMonster_tailfin.jpg
+			}
+		}
+
+	}
+
+}
+
+
+
+material normalMonster_Material#6
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588 0.588 0.588 1
+			diffuse 0.588 0.588 0.588 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture normalMonster_sphere.jpg
+			}
+		}
+
+	}
+
+}
+
+
+
+material normalMonster_Material#10
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588 0.588 0.588 1
+			diffuse 0.588 0.588 0.588 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture normalMonster_fin01.jpg
+			}
+		}
+
+	}
+
+}
+
+
+
+material normalMonster_Material#11
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588 0.588 0.588 1
+			diffuse 0.588 0.588 0.588 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture normalMonster_fin02.jpg
+			}
+		}
+
+	}
+
+}
+
+
+
+material normalMonster_Material#25
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588 0.588 0.588 1
+			diffuse 0.588 0.588 0.588 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture normalMonster_orange.jpg
+			}
+		}
+
+	}
+
+}
+
+
+
+material normalMonster_14-Default
+{
+	technique
+	{
+		pass
+		{
+			ambient 0 0 0 1
+			diffuse 0.588235 0.588235 0.588235 1
+			scene_blend add
+
+			texture_unit
+			{
+				colour_op_ex blend_manual src_manual src_current 0.94 1 1 1
+				colour_op_multipass_fallback dest_colour zero
+				alpha_op_ex source1 src_manual src_current 0.94
+			}
+		}
+
+	}
+
+}
+
+
+
+material normalMonster_Material#12
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588 0.588 0.588 1
+			diffuse 0.588 0.588 0.588 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture normalMonster_darkblue.jpg
+			}
+		}
+
+	}
+
+}
+
+
+
+material normalMonster_Material#6
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588 0.588 0.588 1
+			diffuse 0.588 0.588 0.588 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture normalMonster_sphere.jpg
+			}
+		}
+
+	}
+
+}
+
+
+
+material normalMonster_Material#8
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588 0.588 0.588 1
+			diffuse 0.588 0.588 0.588 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture normalMonster_tank.jpg
+			}
+		}
+
+	}
+
+}

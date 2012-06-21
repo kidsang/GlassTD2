@@ -4,10 +4,10 @@
 #include "StartStage.h"
 #include "Money.h"
 
-LevelStage::LevelStage(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui)
+LevelStage::LevelStage(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui, int level)
 	: Stage(sceneManager, stageManager, gui),
 	mCurrentStep(0), mCannon(0), mMaze(0), mMonsterManager(0), mUFO(0),
-	mGravity(Vector3(0, -200, 0)), mIsRunning(true)
+	mGravity(Vector3(0, -200, 0)), mIsRunning(true),mLevel(level)
 {
 	if (Money::getInstance() == 0)
 		Money::init(gui);
@@ -97,6 +97,7 @@ bool LevelStage::onKeyPressed(const OIS::KeyEvent &arg)
 
 bool LevelStage::onMouseMoved(const OIS::MouseEvent &arg)
 {
+	mCamera->move(Vector3(0, 0, arg.state.Z.rel));
 	return mCurrentStep->onMouseMoved(arg);
 }
 
@@ -363,7 +364,7 @@ void LevelStage::onEdNextBtnRelease( MyGUI::Widget* _sender, int _left, int _top
 {
 	MyGUI::ImageBox* temp = mGui->findWidget<MyGUI::ImageBox>("next_one");
 	temp->setImageTexture("nextStage.png");
-	onEdReplayBtnClick(_sender);
+	onEdNextBtnClick(_sender);
 }
 
 void LevelStage::onEdBackToMenuBtnPress( MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id )
@@ -377,4 +378,9 @@ void LevelStage::onEdBackToMenuBtnRelease( MyGUI::Widget* _sender, int _left, in
 	MyGUI::ImageBox* backToMenu = mGui->findWidget<MyGUI::ImageBox>("back_to_menu");
 	backToMenu->setImageTexture("backToMenu.png");
 	onEdHomeBtnClick(_sender);
+}
+
+int LevelStage::getLevel()
+{
+	return mLevel;
 }

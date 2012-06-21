@@ -1,31 +1,33 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Window" skin="Window" position="0 570 1025 135" layer="Info">
+    <Widget type="ImageBox" skin="ImageBox" position="0 140 1024 200" layer="Overlapped" name="quest_bg">
         <Property key="Caption" value="question"/>
-        <Widget type="TextBox" skin="TextBox" position="10 10 995 25" name="questionText">
+        <Widget type="TextBox" skin="TextBox" position="60 90 995 25" name="questionText">
             <Property key="Caption" value="questions here"/>
+            <Property key="TextColour" value="1 1 1"/>
+            <Property key="TextShadowColour" value="[DEFAULT]"/>
         </Widget>
-        <Widget type="Button" skin="RadioButton" position="20 40 20 20" align="Default" name="firstChoice"/>
-        <Widget type="Button" skin="RadioButton" position="300 40 20 20" name="secondChoice"/>
-        <Widget type="Button" skin="RadioButton" position="560 40 20 20" name="thirdChoice"/>
-        <Widget type="TextBox" skin="TextBox" position="40 40 155 20" name="firstChoiceText">
+        <Widget type="Button" skin="RadioButton" position="60 135 20 20" align="Default" name="firstChoice"/>
+        <Widget type="Button" skin="RadioButton" position="210 135 20 20" name="secondChoice"/>
+        <Widget type="Button" skin="RadioButton" position="360 135 20 20" name="thirdChoice"/>
+        <Widget type="TextBox" skin="TextBox" position="80 135 120 20" name="firstChoiceText">
             <Property key="Caption" value="first choice"/>
+            <Property key="TextColour" value="1 1 1"/>
         </Widget>
-        <Widget type="TextBox" skin="TextBox" position="325 40 155 20" name="secondChoiceText">
+        <Widget type="TextBox" skin="TextBox" position="230 135 120 20" name="secondChoiceText">
             <Property key="Caption" value="socend choioce"/>
+            <Property key="TextColour" value="1 1 1"/>
         </Widget>
-        <Widget type="TextBox" skin="TextBox" position="585 40 155 20" name="thirdChoiceText">
+        <Widget type="TextBox" skin="TextBox" position="380 135 120 20" name="thirdChoiceText">
             <Property key="Caption" value="third choice"/>
+            <Property key="TextColour" value="1 1 1"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="240 65 130 25" name="okButton">
-            <Property key="Caption" value="ok"/>
-        </Widget>
-        <Widget type="Button" skin="Button" position="680 65 130 25" name="giveUpButton">
-            <Property key="Caption" value="give up"/>
-        </Widget>
-        <Widget type="Button" skin="RadioButton" position="820 40 20 20" name="fourthChoice"/>
-        <Widget type="TextBox" skin="TextBox" position="845 40 145 20" name="fourthChoiceText">
+        <Widget type="Button" skin="RadioButton" position="510 135 20 20" name="fourthChoice"/>
+        <Widget type="TextBox" skin="TextBox" position="530 135 145 20" name="fourthChoiceText">
             <Property key="Caption" value="fourth choice"/>
+            <Property key="TextColour" value="1 1 1"/>
         </Widget>
+        <Widget type="ImageBox" skin="ImageBox" position="740 140 115 40" name="okButton"/>
+        <Widget type="ImageBox" skin="ImageBox" position="880 140 115 40" name="giveUpButton"/>
     </Widget>
 </MyGUI>
