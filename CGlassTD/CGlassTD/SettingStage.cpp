@@ -33,6 +33,7 @@ SettingStage::SettingStage(Ogre::SceneManager* sceneManager, StageManager* stage
 
 SettingStage::~SettingStage(void)
 {
+	MyGUI::LayoutManager::getInstance().unloadLayout(mLayout);
 }
 
 void SettingStage::notifyMouseButtonClick( MyGUI::Widget* _sender )
@@ -41,7 +42,6 @@ void SettingStage::notifyMouseButtonClick( MyGUI::Widget* _sender )
 	{
 		if(!soundFlag)
 		{
-			
 			sound->setImageTexture("settingSelect.png");
 		}
 		else
@@ -49,6 +49,7 @@ void SettingStage::notifyMouseButtonClick( MyGUI::Widget* _sender )
 			sound->setImageTexture("settingNoSelect.png");
 		}
 		soundFlag = !soundFlag;
+		Stage::setSoundFlag(soundFlag);
 
 	}
 	else if(_sender == music)
@@ -63,6 +64,7 @@ void SettingStage::notifyMouseButtonClick( MyGUI::Widget* _sender )
 			music->setImageTexture("settingNoSelect.png");
 		}
 		musicFlag = !musicFlag;
+		Stage::setMusicFlag(musicFlag);
 	}
 	else if(_sender == back)
 	{
