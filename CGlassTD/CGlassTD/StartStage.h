@@ -49,7 +49,7 @@ private:
 	MyGUI::VectorWidgetPtr mLayout;
 	int flag;
 	int preFlag;
-	
+	bool quitFlag;
 };
 
 #endif

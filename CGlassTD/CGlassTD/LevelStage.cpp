@@ -4,10 +4,10 @@
 #include "StartStage.h"
 #include "Money.h"
 
-LevelStage::LevelStage(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui)
+LevelStage::LevelStage(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui, int level)
 	: Stage(sceneManager, stageManager, gui),
 	mCurrentStep(0), mCannon(0), mMaze(0), mMonsterManager(0), mUFO(0),
-	mGravity(Vector3(0, -200, 0)), mIsRunning(true)
+	mGravity(Vector3(0, -200, 0)), mIsRunning(true),mLevel(level)
 {
 	if (Money::getInstance() == 0)
 		Money::init(gui);
@@ -375,4 +375,9 @@ void LevelStage::onEdBackToMenuBtnRelease( MyGUI::Widget* _sender, int _left, in
 	MyGUI::ImageBox* backToMenu = mGui->findWidget<MyGUI::ImageBox>("back_to_menu");
 	backToMenu->setImageTexture("backToMenu.png");
 	onEdHomeBtnClick(_sender);
+}
+
+int LevelStage::getLevel()
+{
+	return mLevel;
 }

@@ -7,6 +7,7 @@ StartStage::StartStage(Ogre::SceneManager* sceneManager, StageManager* stageMana
 {
 	flag = 0;
 	preFlag = -1;
+	quitFlag = false;
 	mLayout = MyGUI::LayoutManager::getInstance().loadLayout("start.layout");
 	background = this->getGUI()->findWidget<MyGUI::ImageBox>("background"); 
 	background->eventMouseMove += MyGUI::newDelegate(this, &StartStage::notifyMouseMove);
@@ -30,7 +31,55 @@ StartStage::StartStage(Ogre::SceneManager* sceneManager, StageManager* stageMana
 
 void StartStage::notifyMouseMove( MyGUI::Widget* _sender, int _left, int _top )
 {
-	
+	if(preFlag != flag)
+	{
+		if(preFlag == 1)
+		{
+			juqingBtn->setImageTexture("juqing.png");
+		}
+		else if(preFlag == 2)
+		{
+			lifeBtn->setImageTexture("life.png");
+		}
+		else if(preFlag == 3)
+		{
+			settingBtn->setImageTexture("setting.png");
+		}
+		else if(preFlag == 4)
+		{
+			quitBtn->setImageTexture("quit.png");
+		}
+
+	}
+	if(_sender == juqingBtn)
+	{
+		juqingBtn->setImageTexture("juqingMove.png");
+		preFlag = flag;
+		flag = 1;
+	}
+	else if(_sender == lifeBtn)
+	{
+		lifeBtn->setImageTexture("lifeMove.png");
+		preFlag = flag;
+		flag = 2;
+	}
+	else if(_sender == settingBtn)
+	{
+		settingBtn->setImageTexture("settingMove.png");
+		preFlag = flag;
+		flag = 3;
+	}
+	else if(_sender == quitBtn)
+	{
+		quitBtn->setImageTexture("quitMove.png");
+		preFlag = flag;
+		flag = 4;
+	}
+	else 
+	{
+		preFlag = flag;
+		flag = 0;
+	}
 }
 void StartStage::notifyMouseButtonPress( MyGUI::Widget* _sender, int _left, int _top , MyGUI::MouseButton _id)
 {
@@ -71,7 +120,7 @@ void StartStage::notifyMouseButtonRelease( MyGUI::Widget* _sender, int _left, in
 	else if(_sender == quitBtn)
 	{
 		quitBtn->setImageTexture("quit.png");
-
+		quitFlag = true;
 	}
 }
 
@@ -82,7 +131,7 @@ StartStage::~StartStage(void)
 
 bool StartStage::run(float timeSinceLastFrame)
 {
-	return true;
+	return (!quitFlag);
 }
 
 bool StartStage::onKeyPressed(const OIS::KeyEvent &arg)
