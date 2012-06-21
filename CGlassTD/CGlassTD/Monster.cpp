@@ -339,11 +339,11 @@ void Monster::makeMap( Cell** cells )
 	{
 		if(cells[i]->getCellType() != WALL)
 		{
-			map[i / mMapHeight][i % mMapHeight] = CAN_STEP;
+			map[i / mMapWidth][i % mMapWidth] = CAN_STEP;
 		}
 		else
 		{
-			map[i / mMapHeight][i % mMapHeight] = NOT_STEP;
+			map[i / mMapWidth][i % mMapWidth] = NOT_STEP;
 		}
 	}
 }

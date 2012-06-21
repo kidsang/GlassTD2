@@ -4,7 +4,7 @@
 Maze::Maze(void)
 {
 }
-
+#include <fstream>
 Maze::Maze(SceneManager* sceneManager, int* map, int width, int height, Ogre::Vector3 start1, Ogre::Vector3 start2, Ogre::Vector3 final, std::string cellDefine)
 	: mWidth(width), mHeight(height), mSceneManager(sceneManager), 
 	mMap(0), pMapInfo(0)
@@ -35,10 +35,20 @@ Maze::Maze(SceneManager* sceneManager, int* map, int width, int height, Ogre::Ve
 	this->pMapInfo = new int[mWidth * mHeight];
 	this->startPos = std::vector<Ogre::Vector3>();
 	this->mSceneNode->setPosition(Ogre::Vector3(-mWidth / 2.0f * this->mCellWidth, 0, -mHeight / 2.0f * this->mCellHeight));
-
-	for(int j = 0; j < width; ++j)
+	std::ofstream fout;
+	fout.open( "eeee.txt", ios::out );
+	for( int i = 0; i < mWidth; ++i )
 	{
-		for(int i = 0; i < height; ++i)
+		for( int j = 0; j < mHeight; ++j )
+		{
+			fout<< map[i + j * mHeight]<<" ";
+		}
+		fout<<std::endl;
+	}
+	fout.close();
+	for(int j = 0; j < height; ++j)
+	{
+		for(int i = 0; i < width; ++i)
 		{
 			switch(map[j * width + i])
 			{
@@ -56,6 +66,9 @@ Maze::Maze(SceneManager* sceneManager, int* map, int width, int height, Ogre::Ve
 				break;
 			case 4:
 				this->pZones[j * width + i] = new Cell(sceneManager, mSceneNode,this->mTrap, new Ogre::Vector2(Real(i),Real(j)), map[j * width + i], 0.0f );
+				break;
+			default:
+				this->pZones[j * width + i] = new Cell(sceneManager, mSceneNode, new Ogre::Vector2(Real(i),Real(j)));
 				break;
 			}
 		}
@@ -118,7 +131,7 @@ int Maze::getMapHeight()
 
 Ogre::Vector3 Maze::translatePos( Ogre::Vector3 pos )
 {
-	return  Ogre::Vector3(Real((pos.x - (int)(this->mHeight / 2.0f)) * 100),Real(pos.y),Real((pos.z - (int)(this->mWidth / 2.0f)) * 100));
+	return  Ogre::Vector3(Real((pos.x - (int)(this->mWidth / 2.0f)) * 100),Real(pos.y),Real((pos.z - (int)(this->mHeight / 2.0f)) * 100));
 }
 
 void Maze::addStartPos( Ogre::Vector3 pos )
