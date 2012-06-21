@@ -1,6 +1,7 @@
 #include "MonsterManager.h"
 #include "ParamParser.h"
 #include "MonsterDeadAnimator.h"
+#include "Sound.h"
 
 
 MonsterManager* MonsterManager::mMonsterMgr = NULL;

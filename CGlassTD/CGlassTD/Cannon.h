@@ -73,6 +73,12 @@ public:
 
 	// Get/Set
 public:
+	/// 返回炮弹工厂列表
+	const BulletFactoryList& getBulletFactories()
+	{
+		return mBulletFactoryList;
+	}
+
 	/// 返回大炮的节点
 	const SceneNode* getCannonNode()
 	{
@@ -128,7 +134,11 @@ public:
 	{
 		mColdDown = coldDown;
 	}
-
+	///返回当前炮弹类型
+	unsigned int getCurrentBullet()
+	{
+		return mCurrentBullet;
+	}
 };
 
 

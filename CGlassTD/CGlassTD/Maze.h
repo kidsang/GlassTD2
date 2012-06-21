@@ -17,7 +17,7 @@ private:
 	/// 地图的场景节点指针
 	SceneNode* mSceneNode;
 	/// 地图所拥有的空间一维数组
-	Cell* pZones;
+	Cell** pZones;
 	/// 地图信息的一维数组
 	int* pMapInfo;
 	/// 地平线
@@ -57,7 +57,7 @@ public:
 	Maze(SceneManager* sceneManager, int* map, int width, int height, Ogre::Vector3 start1, Ogre::Vector3 start2,Ogre::Vector3 end, std::string cellDefine);
 	/// 获取当前地图的信息
 	/// @return 返回一维数组
-	Cell* getMazeInfo();
+	Cell** getMazeInfo();
 	/// 获取地板的y坐标
 	float getHorizon();
 	/// 获取怪兽出现的位置

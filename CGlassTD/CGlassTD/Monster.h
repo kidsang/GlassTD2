@@ -248,7 +248,7 @@ private:
 	std::vector<Pos> path;
 	std::vector<Ogre::Vector3> ogrePath;
 	/// 构造寻路地图
-	void makeMap(Cell* cells);
+	void makeMap(Cell** cells);
 	/// 判定坐标是否有效
 	/// @param pos 要判定的坐标
 	/// @return 返回true表示有效，反之无效

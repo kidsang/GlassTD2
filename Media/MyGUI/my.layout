@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="ImageBox" skin="ImageBox" position="640 520 80 80" align="Default" layer="Main" name="bomb_black">
+        <Property key="ImageTexture" value="black.png"/>
+        <Property key="Visible" value="false"/>
+        <Widget type="TextBox" skin="TextBox" position="0 0 80 80" name="b1">
+            <Property key="TextColour" value="1 1 1"/>
+        </Widget>
+    </Widget>
+    <Widget type="ImageBox" skin="ImageBox" position="720 560 40 40" align="Default" layer="Main" name="bomb_blue">
+        <Property key="ImageTexture" value="blue.png"/>
+        <Property key="Visible" value="false"/>
+        <Widget type="TextBox" skin="TextBox" position="0 0 40 40" name="b2">
+            <Property key="TextColour" value="1 1 1"/>
+        </Widget>
+    </Widget>
+    <Widget type="ImageBox" skin="ImageBox" position="760 560 40 40" align="Default" layer="Main" name="bomb_red">
+        <Property key="ImageTexture" value="red.png"/>
+        <Property key="Visible" value="false"/>
+        <Widget type="TextBox" skin="TextBox" position="0 0 40 40" name="b3">
+            <Property key="TextShadowColour" value="1 1 1"/>
+            <Property key="TextColour" value="1 1 1"/>
+        </Widget>
+    </Widget>
+    <Widget type="ImageBox" skin="ImageBox" position="0 520 80 80" align="Default" layer="Main" name="swamp">
+        <Property key="ImageTexture" value="swamp.png"/>
+        <Property key="Visible" value="false"/>
+    </Widget>
+    <Widget type="ImageBox" skin="ImageBox" position="80 520 80 80" align="Default" layer="Main" name="spikeweed">
+        <Property key="ImageTexture" value="spikeweed.png"/>
+        <Property key="Visible" value="false"/>
+    </Widget>
+    <Widget type="ImageBox" skin="ImageBox" position="160 520 80 80" align="Default" layer="Main" name="trap">
+        <Property key="ImageTexture" value="trap.png"/>
+        <Property key="Visible" value="false"/>
+    </Widget>
+</MyGUI>

@@ -8,12 +8,18 @@ class StagePass1 : public LevelStage
 {
 private:
 
+
 public:
 	/// 构造函数
 	/// @param pSceneManager 场景管理器的指针
 	/// @param pStageManager 舞台管理器的指针
 	StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui);
 	~StagePass1(void);
+
+	virtual void onEdReplayBtnClick( MyGUI::Widget* sender );
+
+	virtual void onEdNextBtnClick( MyGUI::Widget* sender );
+
 };
 
 #endif // StagePass1_h__

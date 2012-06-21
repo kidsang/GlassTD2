@@ -15,6 +15,12 @@ UFO::~UFO(void)
 		delete mHealthHUD;
 		mHealthHUD = 0;
 	}
+	if(mNode)
+	{
+		delete mEntity;
+		mNode->getParentSceneNode()->removeAndDestroyChild(mNode->getName());
+		mNode = 0;
+	}
 }
 
 void UFO::setBlood( int blood )

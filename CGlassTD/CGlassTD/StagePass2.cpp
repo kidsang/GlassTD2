@@ -1,6 +1,8 @@
 #include "StagePass2.h"
 #include "StagePass1Step1.h"
 #include "StagePass1Step0.h"
+#include "StagePass3.h"
+#include "StageLoadingLevelStage.h"
 #include <OgreLogManager.h>
 #include "UFO.h"
 #include "ParamParser.h"
@@ -22,6 +24,10 @@ StagePass2::StagePass2(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	mMonsterManager->setMonsterWave("monsterWave.xml");
 	mMonsterManager->setUFO(mUFO);
 
+	// 为结束画面菜单增加回调
+	//mGui->findWidget<MyGUI::Button>("ed_replay_btn")->eventMouseButtonClick += MyGUI::newDelegate(this, &StagePass2::onEdReplayBtnClick);
+	//mGui->findWidget<MyGUI::Button>("ed_next_btn")->eventMouseButtonClick += MyGUI::newDelegate(this, &StagePass2::onEdNextBtnClick);
+
 	/// 设置天空盒
 	//mSceneManager->setSkyBox(true, "Examples/EveSpaceSkyBox");
 	
@@ -32,4 +38,14 @@ StagePass2::StagePass2(Ogre::SceneManager* sceneManager, StageManager* stageMana
 
 StagePass2::~StagePass2(void)
 {
+}
+
+void StagePass2::onEdReplayBtnClick( MyGUI::Widget* sender )
+{
+	this->jumpToNextStage(new StageLoadingLevelStage<StagePass2>(mSceneManager, mStageManager, mGui));
+}
+
+void StagePass2::onEdNextBtnClick( MyGUI::Widget* sender )
+{
+	this->jumpToNextStage(new StageLoadingLevelStage<StagePass3>(mSceneManager, mStageManager, mGui));
 }

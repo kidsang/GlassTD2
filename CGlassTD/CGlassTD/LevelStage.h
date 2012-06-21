@@ -12,6 +12,7 @@ using std::vector;
 #include "BulletManager.h"
 #include "List.hpp"
 #include "Animator.h"
+#include "Money.h"
 
 class LevelStage : public Stage
 {
@@ -59,9 +60,34 @@ public:
 	{
 		mCameraAnimatorList.push_back(ani);
 	}
+	///创建放置物体的UI界面
+	void createGUI0();
 
+	///创建发射炮弹的UI界面
+	void createGUI1();
+
+	///更新炮弹数
+	void updateCount();
+
+	///更新炮弹图片
+	void updateImage();
+
+	///场景转换时切换UI
+	void change0to1();
+	void change1to0();
+	///
 	// Get/Set
 public:
+	bool isRunning()
+	{
+		return mIsRunning;
+	}
+
+	void setRunning(bool isRunning)
+	{
+		mIsRunning = isRunning;
+	}
+
 	Cannon* getCannon()
 	{
 		return mCannon;
@@ -98,6 +124,12 @@ public:
 	}
 
 	// helper functions
+	MyGUI::VectorWidgetPtr getLevelStageLayout()
+	{
+		return levelStageLayout;
+	}
+
+
 protected:
 	/// 初始化大炮
 	/// @param cannonDefine 大炮定义xml文件
@@ -113,6 +145,7 @@ protected:
 	/// @param ufoDefine UFO定义xml文件
 	void initializeUFO(const std::string& ufoDefine);
 
+	
 protected:
 	/// 当前的分场景
 	Step* mCurrentStep;
@@ -132,8 +165,48 @@ protected:
 
 	/// 环境重力
 	Vector3 mGravity;
+	/// 场景是否在运行
+	bool mIsRunning;
 
+	///GUI
+public:
+	MyGUI::VectorWidgetPtr levelStageLayout;
 
+	static const int cellCount = 3;
+	static const int cellSize = 80;
+	MyGUI::ImageBox* cellImage[cellCount];
+	
+	static const int imageCount = 3; 
+	static const int imageSize = 40;
+	MyGUI::ImageBox* bulletImage[imageCount];
+	MyGUI::TextBox* bulletCount[imageCount];
+	/// 结束画面根
+	MyGUI::VectorWidgetPtr mEdLayout;
+
+	// 结束画面回调函数
+protected:
+	/// 回主菜单
+	void onEdHomeBtnClick(MyGUI::Widget* sender);
+
+	/// 重玩
+	/// @note 该方法需要由场景分别实现，因为特定场景才知道需要重玩哪个场景
+	virtual void onEdReplayBtnClick(MyGUI::Widget* sender) = 0;
+
+	/// 下一关
+	/// @note 该方法需要由场景分别实现，因为特定场景才知道需要跳到哪个场景
+	virtual void onEdNextBtnClick(MyGUI::Widget* sender) = 0;
+
+	void onEdBackToMenuBtnPress(MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id);
+
+	void onEdBackToMenuBtnRelease(MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id);
+
+	void onEdReplayBtnPress(MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id);
+
+	void onEdReplayBtnRelease(MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id);
+
+	void onEdNextBtnPress(MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id);
+
+	void onEdNextBtnRelease(MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id);
 };
 
 

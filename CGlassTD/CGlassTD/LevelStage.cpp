@@ -1,24 +1,62 @@
 #include "LevelStage.h"
 #include "StagePass1Step1.h"
 #include "StagePass1Step0.h"
+#include "StartStage.h"
+#include "Money.h"
 
 LevelStage::LevelStage(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui)
 	: Stage(sceneManager, stageManager, gui),
 	mCurrentStep(0), mCannon(0), mMaze(0), mMonsterManager(0), mUFO(0),
-	mGravity(Vector3(0, -200, 0))
+	mGravity(Vector3(0, -200, 0)), mIsRunning(true)
 {
+	if (Money::getInstance() == 0)
+		Money::init(gui);
+	Money::getInstance()->display();
+	// ½áÊø»­Ãæ
+	MyGUI::ImageBox* backToMenu;
+	MyGUI::ImageBox* palyAgain;
+	MyGUI::ImageBox* nextStage;
+	mEdLayout = MyGUI::LayoutManager::getInstance().loadLayout("passStage.layout");
+	backToMenu = mGui->findWidget<MyGUI::ImageBox>("back_to_menu");
+	backToMenu->eventMouseButtonPressed += MyGUI::newDelegate(this, &LevelStage::onEdBackToMenuBtnPress);
+	backToMenu->eventMouseButtonReleased += MyGUI::newDelegate(this, &LevelStage::onEdBackToMenuBtnRelease);
+	nextStage = mGui->findWidget<MyGUI::ImageBox>("next_one");
+	nextStage->eventMouseButtonPressed += MyGUI::newDelegate(this, &LevelStage::onEdNextBtnPress);
+	nextStage->eventMouseButtonReleased += MyGUI::newDelegate(this, &LevelStage::onEdNextBtnRelease);
+	palyAgain = mGui->findWidget<MyGUI::ImageBox>("play_it_again");
+	palyAgain->eventMouseButtonPressed += MyGUI::newDelegate(this, &LevelStage::onEdReplayBtnPress);
+	palyAgain->eventMouseButtonReleased += MyGUI::newDelegate(this, &LevelStage::onEdReplayBtnRelease);
+	mGui->findWidget<MyGUI::Window>("ed_window")->setPosition(270,200);
+	mGui->findWidget<MyGUI::Window>("ed_window")->setVisible(false);
+
+	levelStageLayout = MyGUI::LayoutManager::getInstance().loadLayout("my.layout");
 }
 
 LevelStage::~LevelStage()
 {
+	MyGUI::LayoutManager::getInstance().unloadLayout(mEdLayout);
+	MyGUI::LayoutManager::getInstance().unloadLayout(levelStageLayout);
 	if (mCurrentStep)
+	{
 		delete mCurrentStep;
+		mCurrentStep = 0;
+	}
 	if (mCannon)
+
+	{
 		delete mCannon;
+		mCannon = 0;
+	}
 	if (mUFO)
+	{
 		delete mUFO;
+		mUFO = 0;
+	}
 	if (mMaze)
+	{
 		delete mMaze;
+		mMaze = 0;
+	}
 	// µ¥Àý
 	if (mMonsterManager)
 		mMonsterManager->release();
@@ -45,9 +83,10 @@ bool LevelStage::run(float timeSinceLastFrame)
 				jumpToStep(new StagePass1Step1(this));
 				delete (*iter);
 				mCameraAnimatorList.erase(iter);
+				mMaze->clearShadow();
 			}
 	}
-
+	//updateMoney();
 	return mCurrentStep->run(timeSinceLastFrame);
 }
 
@@ -197,4 +236,145 @@ void LevelStage::initializeUFO( const std::string& ufoDefine )
 
 	mUFO->setHealthHUD(healthHUD);
 
+}
+
+void LevelStage::createGUI0()
+{
+	MyGUI::Gui* mGui = this->getGUI();
+	
+	cellImage[0] = mGui->findWidget<MyGUI::ImageBox>("swamp");
+	cellImage[1] = mGui->findWidget<MyGUI::ImageBox>("spikeweed");
+	cellImage[2] = mGui->findWidget<MyGUI::ImageBox>("trap");
+
+	MyGUI::RenderManager* rm = MyGUI::RenderManager::getInstancePtr();
+	cellImage[0]->setPosition(0,rm->getViewSize().height-cellImage[0]->getHeight());
+	cellImage[1]->setPosition(cellImage[0]->getLeft()+cellImage[0]->getWidth(),rm->getViewSize().height-cellImage[0]->getHeight());
+	cellImage[2]->setPosition(cellImage[1]->getLeft()+cellImage[1]->getWidth(),rm->getViewSize().height-cellImage[0]->getHeight());
+
+	cellImage[0]->setVisible(true);
+	cellImage[1]->setVisible(true);
+	cellImage[2]->setVisible(true);
+
+}
+void LevelStage::createGUI1()
+{
+	MyGUI::Gui* mGui = this->getGUI();
+	
+
+	bulletImage[0] = mGui->findWidget<MyGUI::ImageBox>("bomb_red");
+	bulletImage[1] = mGui->findWidget<MyGUI::ImageBox>("bomb_blue");
+	bulletImage[2] = mGui->findWidget<MyGUI::ImageBox>("bomb_black");
+
+	MyGUI::RenderManager* rm = MyGUI::RenderManager::getInstancePtr();
+	bulletImage[0]->setCoord((rm->getViewSize().width-4*imageSize),(rm->getViewSize().height-2*imageSize), imageSize*2, imageSize*2);
+	bulletImage[1]->setCoord((rm->getViewSize().width-2*imageSize),(rm->getViewSize().height-1*imageSize), imageSize, imageSize);
+	bulletImage[2]->setCoord((rm->getViewSize().width-1*imageSize),(rm->getViewSize().height-1*imageSize), imageSize, imageSize);
+
+	bulletCount[0] = mGui->findWidget<MyGUI::TextBox>("b3");
+	bulletCount[1] = mGui->findWidget<MyGUI::TextBox>("b2");
+	bulletCount[2] = mGui->findWidget<MyGUI::TextBox>("b1");
+
+	for(int i = 0; i < 3; i++)
+	{
+
+		std::ostringstream temp;
+		temp << this->getCannon()->getBulletFactories().at(i)->getAmmoCount();
+		bulletCount[i]->setCaption(temp.str());
+	}
+
+	bulletImage[0]->setVisible(true);
+	bulletImage[1]->setVisible(true);
+	bulletImage[2]->setVisible(true);
+}
+
+
+void LevelStage::updateCount()
+{
+	MyGUI::Gui* mGui = this->getGUI();
+	
+	bulletCount[0] = mGui->findWidget<MyGUI::TextBox>("b3");
+	bulletCount[1] = mGui->findWidget<MyGUI::TextBox>("b2");
+	bulletCount[2] = mGui->findWidget<MyGUI::TextBox>("b1");
+
+	for(int i = 0; i < 3; i++)
+	{
+		std::ostringstream temp;
+		temp << this->getCannon()->getBulletFactories().at(i)->getAmmoCount();
+		bulletCount[i]->setCaption(temp.str());
+	}
+}
+
+void LevelStage::updateImage()
+{
+	MyGUI::Gui* mGui = this->getGUI();
+
+	bulletImage[0] = mGui->findWidget<MyGUI::ImageBox>("bomb_red");
+	bulletImage[1] = mGui->findWidget<MyGUI::ImageBox>("bomb_blue");
+	bulletImage[2] = mGui->findWidget<MyGUI::ImageBox>("bomb_black");
+
+	int Big = bulletImage[0]->getWidth()>bulletImage[1]->getWidth()?0:1;
+	Big = bulletImage[Big]->getWidth()>bulletImage[2]->getWidth()?Big:2;
+	int Next = (Big+1)%3;
+	int left = bulletImage[0]->getCoord().left;
+	int top = bulletImage[Big]->getCoord().top;
+
+	int flag[imageCount] = {0,0,0};
+	flag[Big] = 1;
+	flag[Next] = -1;
+	bulletImage[0]->setCoord(left,bulletImage[0]->getCoord().top+flag[0]*imageSize, (bulletImage[0]->getWidth()-flag[0]*imageSize), (bulletImage[0]->getHeight()-flag[0]*imageSize));
+	bulletImage[1]->setCoord(bulletImage[0]->getCoord().left+bulletImage[0]->getWidth(),bulletImage[1]->getCoord().top+flag[1]*imageSize, (bulletImage[1]->getWidth()-flag[1]*imageSize), (bulletImage[1]->getHeight()-flag[1]*imageSize));
+	bulletImage[2]->setCoord(bulletImage[1]->getCoord().left+bulletImage[1]->getWidth(),bulletImage[2]->getCoord().top+flag[2]*imageSize, (bulletImage[2]->getWidth()-flag[2]*imageSize), (bulletImage[2]->getHeight()-flag[2]*imageSize));
+
+}
+
+void LevelStage::change0to1()
+{
+	cellImage[0]->setVisible(false);
+	cellImage[1]->setVisible(false);
+	cellImage[2]->setVisible(false);
+}
+
+
+void LevelStage::onEdHomeBtnClick( MyGUI::Widget* sender )
+{
+	this->jumpToNextStage(new StartStage(mSceneManager, mStageManager, mGui));
+}
+
+void LevelStage::onEdReplayBtnPress( MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id )
+{
+	MyGUI::ImageBox* temp = mGui->findWidget<MyGUI::ImageBox>("play_it_again");
+	temp->setImageTexture("againPress.png");
+}
+
+void LevelStage::onEdReplayBtnRelease( MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id )
+{
+	MyGUI::ImageBox* temp = mGui->findWidget<MyGUI::ImageBox>("play_it_again");
+	temp->setImageTexture("again.png");
+	onEdReplayBtnClick(_sender);
+}
+
+void LevelStage::onEdNextBtnPress( MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id )
+{
+	MyGUI::ImageBox* temp = mGui->findWidget<MyGUI::ImageBox>("next_one");
+	temp->setImageTexture("nextStagePress.png");
+}
+
+void LevelStage::onEdNextBtnRelease( MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id )
+{
+	MyGUI::ImageBox* temp = mGui->findWidget<MyGUI::ImageBox>("next_one");
+	temp->setImageTexture("nextStage.png");
+	onEdReplayBtnClick(_sender);
+}
+
+void LevelStage::onEdBackToMenuBtnPress( MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id )
+{
+	MyGUI::ImageBox* backToMenu = mGui->findWidget<MyGUI::ImageBox>("back_to_menu");
+	backToMenu->setImageTexture("backToMenuPress.png");
+}
+
+void LevelStage::onEdBackToMenuBtnRelease( MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id )
+{
+	MyGUI::ImageBox* backToMenu = mGui->findWidget<MyGUI::ImageBox>("back_to_menu");
+	backToMenu->setImageTexture("backToMenu.png");
+	onEdHomeBtnClick(_sender);
 }

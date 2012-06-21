@@ -26,6 +26,13 @@ public:
 	bool onMousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 	bool onMouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 
+	void setNotify();
+	void guiNotifyMousePressSwamp(MyGUI::Widget* _sender, int _left, int _top , MyGUI::MouseButton _id);
+	void guiNotifyMousePressSpikeweed(MyGUI::Widget* _sender, int _left, int _top , MyGUI::MouseButton _id);
+	void guiNotifyMousePressTrap(MyGUI::Widget* _sender, int _left, int _top , MyGUI::MouseButton _id);
+	void guiNotifyMouseReleaseSwamp(MyGUI::Widget* _sender, int _left, int _top , MyGUI::MouseButton _id);
+	void guiNotifyMouseReleaseSpikeweed(MyGUI::Widget* _sender, int _left, int _top , MyGUI::MouseButton _id);
+	void guiNotifyMouseReleaseTrap(MyGUI::Widget* _sender, int _left, int _top , MyGUI::MouseButton _id);
 private:
 	/// 将鼠标在屏幕上的坐标转换成场景中的三维坐标
 	/// @return 成功返回true，output中为三维坐标，失败返回false
@@ -39,7 +46,7 @@ private:
 	Ogre::RaySceneQuery* mRaySceneQuery;
 
 	// debug
-	MyGUI::StaticTextPtr debugText;
+	//MyGUI::StaticTextPtr debugText;
 };
 
 
