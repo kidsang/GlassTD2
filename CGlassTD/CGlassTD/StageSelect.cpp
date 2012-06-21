@@ -89,6 +89,8 @@ void StageSelect::notifyMouseButtonMove( MyGUI::Widget* _sender, int _left, int 
 
 void StageSelect::notifyMouseButtonPress( MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id )
 {
+	if(_id.toValue() != 0)
+		return;
 	Sound::getInstance()->play("../Media/Sound/click.wav", false);
 	if(_sender == stage1Btn)
 	{
@@ -110,6 +112,8 @@ void StageSelect::notifyMouseButtonPress( MyGUI::Widget* _sender, int _left, int
 
 void StageSelect::notifyMouseButtonRelease( MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id )
 {
+	if(_id.toValue() != 0)
+		return;
 	if(_sender == stage1Btn)
 	{
 		stage1Btn->setImageTexture("stage1.png");

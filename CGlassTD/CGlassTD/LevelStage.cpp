@@ -345,12 +345,16 @@ void LevelStage::onEdHomeBtnClick( MyGUI::Widget* sender )
 
 void LevelStage::onEdReplayBtnPress( MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id )
 {
+	if(_id.toValue() != 0)
+		return;
 	MyGUI::ImageBox* temp = mGui->findWidget<MyGUI::ImageBox>("play_it_again");
 	temp->setImageTexture("againPress.png");
 }
 
 void LevelStage::onEdReplayBtnRelease( MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id )
 {
+	if(_id.toValue() != 0)
+		return;
 	MyGUI::ImageBox* temp = mGui->findWidget<MyGUI::ImageBox>("play_it_again");
 	temp->setImageTexture("again.png");
 	onEdReplayBtnClick(_sender);
@@ -358,12 +362,16 @@ void LevelStage::onEdReplayBtnRelease( MyGUI::Widget* _sender, int _left, int _t
 
 void LevelStage::onEdNextBtnPress( MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id )
 {
+	if(_id.toValue() != 0)
+		return;
 	MyGUI::ImageBox* temp = mGui->findWidget<MyGUI::ImageBox>("next_one");
 	temp->setImageTexture("nextStagePress.png");
 }
 
 void LevelStage::onEdNextBtnRelease( MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id )
 {
+	if(_id.toValue() != 0)
+		return;
 	MyGUI::ImageBox* temp = mGui->findWidget<MyGUI::ImageBox>("next_one");
 	temp->setImageTexture("nextStage.png");
 	onEdNextBtnClick(_sender);
@@ -371,12 +379,16 @@ void LevelStage::onEdNextBtnRelease( MyGUI::Widget* _sender, int _left, int _top
 
 void LevelStage::onEdBackToMenuBtnPress( MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id )
 {
+	if(_id.toValue() != 0)
+		return;
 	MyGUI::ImageBox* backToMenu = mGui->findWidget<MyGUI::ImageBox>("back_to_menu");
 	backToMenu->setImageTexture("backToMenuPress.png");
 }
 
 void LevelStage::onEdBackToMenuBtnRelease( MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id )
 {
+	if(_id.toValue() != 0)
+		return;
 	MyGUI::ImageBox* backToMenu = mGui->findWidget<MyGUI::ImageBox>("back_to_menu");
 	backToMenu->setImageTexture("backToMenu.png");
 	onEdHomeBtnClick(_sender);

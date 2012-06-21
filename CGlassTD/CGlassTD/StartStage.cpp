@@ -83,6 +83,8 @@ void StartStage::notifyMouseMove( MyGUI::Widget* _sender, int _left, int _top )
 }
 void StartStage::notifyMouseButtonPress( MyGUI::Widget* _sender, int _left, int _top , MyGUI::MouseButton _id)
 {
+	if(_id.toValue() !=  0)
+		return ;
 	Sound::getInstance()->play("../Media/Sound/click.wav", false);
 	if(_sender == juqingBtn)
 	{		
@@ -103,6 +105,8 @@ void StartStage::notifyMouseButtonPress( MyGUI::Widget* _sender, int _left, int 
 }
 void StartStage::notifyMouseButtonRelease( MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id )
 {
+	if(_id.toValue() !=  0)
+		return ;
 	if(_sender == juqingBtn)
 	{
 		juqingBtn->setImageTexture("juqing.png");
