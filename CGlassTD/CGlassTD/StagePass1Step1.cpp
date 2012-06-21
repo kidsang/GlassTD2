@@ -13,7 +13,7 @@ StagePass1Step1::StagePass1Step1(LevelStage* stagePass1)
 void StagePass1Step1::init()
 {
 
-	mStagePass1->getCamera()->setPosition(Vector3(0, 1200, 2000));
+	mStagePass1->getCamera()->setPosition(Vector3(0, 1000, 1800));
 	mStagePass1->getCamera()->lookAt(Vector3(0, 0, 0));
 	//mStagePass1->getCamera()->setDirection(Vector3(0, -500, -1000));
 }
