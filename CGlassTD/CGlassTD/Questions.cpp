@@ -10,14 +10,18 @@ Questions::Questions(MyGUI::Gui* gui) :
 {
 	widgetVector = MyGUI::LayoutManager::getInstance().loadLayout("question.layout");
 	
+	mGUI->findWidget<MyGUI::ImageBox>("quest_bg")->setImageTexture("quest_bg.png");
+
 	mFirstChoice = mGUI->findWidget<MyGUI::Button>("firstChoice");
 	mFirstChoice->setStateSelected(true);
 	mCurrentFlag = FIRST;
 	mSecondChoice = mGUI->findWidget<MyGUI::Button>("secondChoice");
 	mThirdChoice = mGUI->findWidget<MyGUI::Button>("thirdChoice");
 	mFourthChoice = mGUI->findWidget<MyGUI::Button>("fourthChoice");
-	mOkButton = mGUI->findWidget<MyGUI::Button>("okButton");
-	mGiveUpButton = mGUI->findWidget<MyGUI::Button>("giveUpButton");
+	mOkButton = mGUI->findWidget<MyGUI::ImageBox>("okButton");
+	mOkButton->setImageTexture("quest_submit_up.png");
+	mGiveUpButton = mGUI->findWidget<MyGUI::ImageBox>("giveUpButton");
+	mGiveUpButton->setImageTexture("quest_giveup_up.png");
 	
 	mQuesText = mGUI->findWidget<MyGUI::TextBox>("questionText");
 	mFirstText = mGUI->findWidget<MyGUI::TextBox>("firstChoiceText");
@@ -203,7 +207,7 @@ void Questions::onRadioClick(MyGUI::Widget* sender)
 
 void Questions::onButtonClick(MyGUI::Widget* sender)
 {
-	MyGUI::Button* button = sender->castType<MyGUI::Button>();
+	MyGUI::ImageBox* button = sender->castType<MyGUI::ImageBox>();
 	
 	if (button == mOkButton)
 	{

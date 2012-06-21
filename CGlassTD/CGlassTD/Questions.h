@@ -44,8 +44,8 @@ private:
 	MyGUI::Button* mSecondChoice;
 	MyGUI::Button* mThirdChoice;
 	MyGUI::Button* mFourthChoice;
-	MyGUI::Button* mOkButton;
-	MyGUI::Button* mGiveUpButton;
+	MyGUI::ImageBox* mOkButton;
+	MyGUI::ImageBox* mGiveUpButton;
 	MyGUI::TextBox* mQuesText;
 	MyGUI::TextBox* mFirstText;
 	MyGUI::TextBox* mSecondText;
