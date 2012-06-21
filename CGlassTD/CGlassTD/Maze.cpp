@@ -158,7 +158,7 @@ Cell* Maze::getCellByPos( Ogre::Vector3 pos )
 	int x = (int)xInput / 100;
 	int y = (int)zInput / 100;
 
-	return this->pZones[y * mHeight + x];
+	return this->pZones[y * mWidth + x];
 }
 
 
