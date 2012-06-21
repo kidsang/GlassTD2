@@ -258,7 +258,7 @@ float Monster::getRadius()
 	return mRadius;
 }
 
-void Monster::monsterScale( float x, float y, float z )
+void Monster::setScale( float x, float y, float z )
 {
 	mNode->scale(x, y, z);
 }
@@ -826,6 +826,13 @@ Monster* MonsterFactory::createInstance(SceneManager* sceneMgr, Maze* maze, Mons
 	if (mParams.find("spell") != mParams.end())
 		mon->setType((mParams["spell"].c_str()));
 
+	if (mParams.find("scale") != mParams.end())
+	{
+		float scale = (float)atof(mParams["scale"].c_str());
+		mon->setScale(scale, scale, scale);
+	}
+
+	//mon->setScale(2, 2, 2);
 
 	// 创建怪物头顶血条
 	BillboardSet* healthHUD = sceneMgr->createBillboardSet();

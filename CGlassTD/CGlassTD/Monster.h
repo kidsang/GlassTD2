@@ -200,7 +200,7 @@ public:
 	/// »ñÈ¡¹ÖÊŞµÄ°ë¾¶
 	float getRadius();
 	/// Ëõ·Å¹ÖÎï
-	void monsterScale(float x, float y, float z);
+	void setScale(float x, float y, float z);
 	/// ÉËº¦¼ì²â
 	void harmCheck(float timeSinceLastFrame);
 	/// ¹ÖÊŞËÀµô
