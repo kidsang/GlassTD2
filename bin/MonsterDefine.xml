@@ -12,7 +12,7 @@
 		  scale="1"
           />
 	<Monster name="SmallIceMonster"
-          mesh="normalMonster.mesh"
+          mesh="iceMonster.mesh"
           blood="100"
           speed="200"
           radius="10"
@@ -37,7 +37,7 @@
 		  scale="2"
           />
    <Monster name="BigIceMonster"
-          mesh="normalMonster.mesh"
+          mesh="iceMonster.mesh"
           blood="100"
           speed="200"
           radius="10"

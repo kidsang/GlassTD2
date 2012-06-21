@@ -1,0 +1,24 @@
+<scene formatVersion="1.0" upAxis="y" unitsPerMeter="1000" unitType="millimeters" minOgreVersion="1.7" ogreMaxVersion="2.4.3" author="OgreMax Scene Exporter (www.ogremax.com)" application="3DS Max">
+    <environment>
+        <colourAmbient r="0.333333" g="0.333333" b="0.333333" />
+        <colourBackground r="0" g="0" b="0" />
+        <clipping near="0" far="2.54e+006" />
+    </environment>
+    <nodes>
+        <node name="iceMonster">
+            <position x="0" y="2.39397" z="-1.04644e-007" />
+            <scale x="1.01764" y="1.01764" z="1.01764" />
+            <rotation qx="-0.707107" qy="3.09086e-008" qz="0.707107" qw="0" />
+            <entity name="iceMonster" castShadows="true" receiveShadows="true" meshFile="iceMonster.mesh">
+                <subentities>
+                    <subentity index="0" materialName="iceMonster_Material#46" />
+                    <subentity index="1" materialName="iceMonster_Material#60" />
+                    <subentity index="2" materialName="iceMonster_Material#45" />
+                    <subentity index="3" materialName="iceMonster_Material#174" />
+                    <subentity index="4" materialName="iceMonster_Material#61" />
+                    <subentity index="5" materialName="iceMonster_Material#58" />
+                </subentities>
+            </entity>
+        </node>
+    </nodes>
+</scene>
