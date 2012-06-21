@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Window" skin="Window" position="0 570 1025 135" layer="Overlapped">
+    <Widget type="Window" skin="Window" position="0 570 1025 135" layer="Info">
         <Property key="Caption" value="question"/>
         <Widget type="TextBox" skin="TextBox" position="10 10 995 25" name="questionText">
             <Property key="Caption" value="questions here"/>
