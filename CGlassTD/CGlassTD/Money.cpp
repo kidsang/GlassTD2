@@ -14,6 +14,8 @@ Money* Money::getInstance()
 
 void Money::init(MyGUI::Gui* gui)
 {
+	if (instance != 0) delete instance;
+	
 	instance = new Money(gui);
 }
 
@@ -36,6 +38,8 @@ Money::~Money()
 
 void Money::display()
 {
+	if (mTextBox != 0) return;
+
 	mTextBox = static_cast<MyGUI::TextBox*>( mGui->createWidgetT("TextBox", "TextBox", 30, 20, 180, 180, MyGUI::Align::Default, "Main") );
 	mTextBox->setTextColour(MyGUI::Colour::White);
 	mTextBox->setCaption(std::string("Money: ") + this->getAmountStr());

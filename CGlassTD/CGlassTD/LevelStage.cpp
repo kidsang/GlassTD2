@@ -97,6 +97,7 @@ bool LevelStage::onKeyPressed(const OIS::KeyEvent &arg)
 
 bool LevelStage::onMouseMoved(const OIS::MouseEvent &arg)
 {
+	mCamera->move(Vector3(0, 0, arg.state.Z.rel));
 	return mCurrentStep->onMouseMoved(arg);
 }
 
@@ -246,9 +247,10 @@ void LevelStage::createGUI0()
 	cellImage[1] = mGui->findWidget<MyGUI::ImageBox>("spikeweed");
 	cellImage[2] = mGui->findWidget<MyGUI::ImageBox>("trap");
 
-	cellImage[0]->setPosition(0,mGui->getViewHeight()-cellImage[0]->getHeight());
-	cellImage[1]->setPosition(cellImage[0]->getLeft()+cellImage[0]->getWidth(),mGui->getViewHeight()-cellImage[0]->getHeight());
-	cellImage[2]->setPosition(cellImage[1]->getLeft()+cellImage[1]->getWidth(),mGui->getViewHeight()-cellImage[0]->getHeight());
+	MyGUI::RenderManager* rm = MyGUI::RenderManager::getInstancePtr();
+	cellImage[0]->setPosition(0,rm->getViewSize().height-cellImage[0]->getHeight());
+	cellImage[1]->setPosition(cellImage[0]->getLeft()+cellImage[0]->getWidth(),rm->getViewSize().height-cellImage[0]->getHeight());
+	cellImage[2]->setPosition(cellImage[1]->getLeft()+cellImage[1]->getWidth(),rm->getViewSize().height-cellImage[0]->getHeight());
 
 	cellImage[0]->setVisible(true);
 	cellImage[1]->setVisible(true);
@@ -264,9 +266,10 @@ void LevelStage::createGUI1()
 	bulletImage[1] = mGui->findWidget<MyGUI::ImageBox>("bomb_blue");
 	bulletImage[2] = mGui->findWidget<MyGUI::ImageBox>("bomb_black");
 
-	bulletImage[0]->setCoord((mGui->getViewWidth()-4*imageSize),(mGui->getViewHeight()-2*imageSize), imageSize*2, imageSize*2);
-	bulletImage[1]->setCoord((mGui->getViewWidth()-2*imageSize),(mGui->getViewHeight()-1*imageSize), imageSize, imageSize);
-	bulletImage[2]->setCoord((mGui->getViewWidth()-1*imageSize),(mGui->getViewHeight()-1*imageSize), imageSize, imageSize);
+	MyGUI::RenderManager* rm = MyGUI::RenderManager::getInstancePtr();
+	bulletImage[0]->setCoord((rm->getViewSize().width-4*imageSize),(rm->getViewSize().height-2*imageSize), imageSize*2, imageSize*2);
+	bulletImage[1]->setCoord((rm->getViewSize().width-2*imageSize),(rm->getViewSize().height-1*imageSize), imageSize, imageSize);
+	bulletImage[2]->setCoord((rm->getViewSize().width-1*imageSize),(rm->getViewSize().height-1*imageSize), imageSize, imageSize);
 
 	bulletCount[0] = mGui->findWidget<MyGUI::TextBox>("b3");
 	bulletCount[1] = mGui->findWidget<MyGUI::TextBox>("b2");
@@ -361,7 +364,7 @@ void LevelStage::onEdNextBtnRelease( MyGUI::Widget* _sender, int _left, int _top
 {
 	MyGUI::ImageBox* temp = mGui->findWidget<MyGUI::ImageBox>("next_one");
 	temp->setImageTexture("nextStage.png");
-	onEdReplayBtnClick(_sender);
+	onEdNextBtnClick(_sender);
 }
 
 void LevelStage::onEdBackToMenuBtnPress( MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id )

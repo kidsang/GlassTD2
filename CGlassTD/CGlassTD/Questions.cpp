@@ -1,6 +1,7 @@
 #include "Questions.h"
 #include "Money.h"
 #include <string>
+#include "Sound.h"
 
 Questions* Questions::instance = 0;
 
@@ -9,14 +10,18 @@ Questions::Questions(MyGUI::Gui* gui) :
 {
 	widgetVector = MyGUI::LayoutManager::getInstance().loadLayout("question.layout");
 	
+	mGUI->findWidget<MyGUI::ImageBox>("quest_bg")->setImageTexture("quest_bg.png");
+
 	mFirstChoice = mGUI->findWidget<MyGUI::Button>("firstChoice");
 	mFirstChoice->setStateSelected(true);
 	mCurrentFlag = FIRST;
 	mSecondChoice = mGUI->findWidget<MyGUI::Button>("secondChoice");
 	mThirdChoice = mGUI->findWidget<MyGUI::Button>("thirdChoice");
 	mFourthChoice = mGUI->findWidget<MyGUI::Button>("fourthChoice");
-	mOkButton = mGUI->findWidget<MyGUI::Button>("okButton");
-	mGiveUpButton = mGUI->findWidget<MyGUI::Button>("giveUpButton");
+	mOkButton = mGUI->findWidget<MyGUI::ImageBox>("okButton");
+	mOkButton->setImageTexture("quest_submit_up.png");
+	mGiveUpButton = mGUI->findWidget<MyGUI::ImageBox>("giveUpButton");
+	mGiveUpButton->setImageTexture("quest_giveup_up.png");
 	
 	mQuesText = mGUI->findWidget<MyGUI::TextBox>("questionText");
 	mFirstText = mGUI->findWidget<MyGUI::TextBox>("firstChoiceText");
@@ -29,8 +34,10 @@ Questions::Questions(MyGUI::Gui* gui) :
 	mThirdChoice->eventMouseButtonClick += MyGUI::newDelegate(this, &Questions::onRadioClick);
 	mFourthChoice->eventMouseButtonClick += MyGUI::newDelegate(this, &Questions::onRadioClick);
 	
-	mOkButton->eventMouseButtonClick += MyGUI::newDelegate(this, &Questions::onButtonClick);
-	mGiveUpButton->eventMouseButtonClick += MyGUI::newDelegate(this, &Questions::onButtonClick);
+	mOkButton->eventMouseButtonPressed += MyGUI::newDelegate(this, &Questions::onOkPress);
+	mOkButton->eventMouseButtonReleased += MyGUI::newDelegate(this, &Questions::onOkRelease);
+	mGiveUpButton->eventMouseButtonPressed += MyGUI::newDelegate(this, &Questions::onNoPress);
+	mGiveUpButton->eventMouseButtonReleased += MyGUI::newDelegate(this, &Questions::onNoRelease);
 	
 	for (MyGUI::VectorWidgetPtr::iterator itr = widgetVector.begin(); itr != widgetVector.end(); ++itr)
 	{
@@ -84,6 +91,7 @@ std::wstring s2ws(const std::string& s)
 
 void Questions::popUpQuestion()
 {
+	MyGUI::PointerManager::getInstance().setVisible(true);
 	for (MyGUI::VectorWidgetPtr::iterator itr = widgetVector.begin(); itr != widgetVector.end(); ++itr)
 	{
 		(*itr)->setVisible(true);
@@ -126,7 +134,9 @@ bool Questions::isAnswering()
 }
 
 void Questions::handUpAnswer()
-{
+{	
+	Sound::getInstance()->play("../Media/Sound/click.wav", false);
+	MyGUI::PointerManager::getInstance().setVisible(false);
 	for (MyGUI::VectorWidgetPtr::iterator itr = widgetVector.begin(); itr != widgetVector.end(); ++itr)
 	{
 		(*itr)->setVisible(false);
@@ -151,6 +161,8 @@ void Questions::handUpAnswer()
 
 void Questions::giveUp()
 {
+	Sound::getInstance()->play("../Media/Sound/click.wav", false);
+	MyGUI::PointerManager::getInstance().setVisible(false);
 	for (MyGUI::VectorWidgetPtr::iterator itr = widgetVector.begin(); itr != widgetVector.end(); ++itr)
 	{
 		(*itr)->setVisible(false);
@@ -161,6 +173,7 @@ void Questions::giveUp()
 
 void Questions::onRadioClick(MyGUI::Widget* sender)
 {
+	Sound::getInstance()->play("../Media/Sound/switch.wav", false);
 	MyGUI::Button* button = sender->castType<MyGUI::Button>();
 	button->setStateSelected(true);
 	
@@ -194,16 +207,24 @@ void Questions::onRadioClick(MyGUI::Widget* sender)
 	}
 }
 
-void Questions::onButtonClick(MyGUI::Widget* sender)
+void Questions::onOkPress(MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id)
 {
-	MyGUI::Button* button = sender->castType<MyGUI::Button>();
-	
-	if (button == mOkButton)
-	{
-		this->handUpAnswer();
-	}
-	else
-	{
-		this->giveUp();
-	}
+	mOkButton->setImageTexture("quest_submit_down.png");
+}
+
+void Questions::onNoPress(MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id)
+{
+	mGiveUpButton->setImageTexture("quest_giveup_down.png");
+}
+
+void Questions::onOkRelease(MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id)
+{
+	mOkButton->setImageTexture("quest_submit_up.png");
+	this->handUpAnswer();
+}
+
+void Questions::onNoRelease(MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id)
+{
+	mGiveUpButton->setImageTexture("quest_giveup_up.png");
+	this->giveUp();
 }

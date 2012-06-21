@@ -45,10 +45,7 @@ void CheckMethod::swampHarmCheck( float& harm, float& speed, float speedTemp )
 
 bool CheckMethod::checkIsDead( float blood )
 {
-	if(blood < 0.0f || blood == 0.0f)
-		return true;
-	else 
-		return false;
+	return (blood <= 0);
 }
 
 bool CheckMethod::isAttributeImmune( std::string type1, std::string type2 )

@@ -1,6 +1,7 @@
 #include "MonsterManager.h"
 #include "ParamParser.h"
 #include "MonsterDeadAnimator.h"
+#include "Sound.h"
 
 
 MonsterManager* MonsterManager::mMonsterMgr = NULL;
@@ -65,7 +66,7 @@ void MonsterManager::monsterGenerate(Ogre::SceneManager* sceneManager, float tim
 	if(mMonsterMgr->getTimeCount() > mNewMonsterTime || mMonsterMgr->getTimeCount() == mNewMonsterTime)
 	{
 		Monster* monster = mCurrentMonsterFactory->createInstance(sceneManager, mMaze, this);
-		/// monster->monsterScale(0.1, 0.1, 0.1);
+		/// monster->setScale(0.1, 0.1, 0.1);
 		monster->setAnimate("Walk", true);
 		mMonstersList.push_back(monster);
 		mMonsterMgr->MonsterNumPlus();

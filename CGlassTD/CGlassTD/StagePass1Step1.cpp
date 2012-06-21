@@ -13,7 +13,7 @@ StagePass1Step1::StagePass1Step1(LevelStage* stagePass1)
 void StagePass1Step1::init()
 {
 
-	mStagePass1->getCamera()->setPosition(Vector3(0, 1200, 2000));
+	mStagePass1->getCamera()->setPosition(Vector3(0, 1000, 1800));
 	mStagePass1->getCamera()->lookAt(Vector3(0, 0, 0));
 	//mStagePass1->getCamera()->setDirection(Vector3(0, -500, -1000));
 }
@@ -25,6 +25,7 @@ bool StagePass1Step1::run(float timeSinceLastFrame)
 	// 飞船爆了，要弹出一个框框，上面有两个按钮：返回主菜单和重玩
 	if (mStagePass1->isRunning() && mStagePass1->getUFO()->isDestroy())
 	{
+		MyGUI::PointerManager::getInstance().setVisible(true);
 		mStagePass1->setRunning(false);
 		Sound::getInstance()->play("../Media/Sound/lose.wav", false);
 		MyGUI::ImageBox* stages = mStagePass1->getGUI()->findWidget<MyGUI::ImageBox>("word_of_stages");
@@ -53,6 +54,7 @@ bool StagePass1Step1::run(float timeSinceLastFrame)
 	// 游戏胜利
 	else if (mStagePass1->isRunning() && monsterManager->isWinGame())
 	{
+		MyGUI::PointerManager::getInstance().setVisible(true);
 		mStagePass1->setRunning(false);
 		Sound::getInstance()->play("../Media/Sound/win.wav", false);
 		MyGUI::ImageBox* stages = mStagePass1->getGUI()->findWidget<MyGUI::ImageBox>("word_of_stages");

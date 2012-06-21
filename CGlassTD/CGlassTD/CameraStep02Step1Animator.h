@@ -26,7 +26,7 @@ private:
 		if (mFirst)
 		{
 			mFirst = false;
-			mPosStep = (Vector3(0, 1200, 2000) - object->getPosition()) / mCount;
+			mPosStep = (Vector3(0, 1000, 1800) - object->getPosition()) / mCount;
 		}
 
 		object->setPosition(object->getPosition() + mPosStep);
