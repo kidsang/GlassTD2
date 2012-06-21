@@ -3,6 +3,7 @@
 #include <algorithm>
 #include "MonsterHurtAnimator.h"
 #include "Sound.h"
+#include "Stage.h"
 #define CAN_STEP 0
 #define NOT_STEP 1
 #define HAS_STEP 2
@@ -196,7 +197,7 @@ void Monster::harmCheck(float timeSinceLastFrame)
 	if (!mIsDead && mCheckMethod->checkIsDead(mBlood))
 	{
 		mIsDead = true;
-		Sound::getInstance()->play("../Media/Sound/dead.wav", false);
+		Stage::playSound("../Media/Sound/dead.wav", false);
 	}
 	/// 根据地形改地图
 	changeMazeByTerrain(mMonsterState->getTerrainState());

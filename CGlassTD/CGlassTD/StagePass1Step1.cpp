@@ -27,7 +27,7 @@ bool StagePass1Step1::run(float timeSinceLastFrame)
 	{
 		MyGUI::PointerManager::getInstance().setVisible(true);
 		mStagePass1->setRunning(false);
-		Sound::getInstance()->play("../Media/Sound/lose.wav", false);
+		Stage::playSound("../Media/Sound/lose.wav", false);
 		MyGUI::ImageBox* stages = mStagePass1->getGUI()->findWidget<MyGUI::ImageBox>("word_of_stages");
 		switch(mStagePass1->getLevel())
 		{
@@ -56,7 +56,7 @@ bool StagePass1Step1::run(float timeSinceLastFrame)
 	{
 		MyGUI::PointerManager::getInstance().setVisible(true);
 		mStagePass1->setRunning(false);
-		Sound::getInstance()->play("../Media/Sound/win.wav", false);
+		Stage::playSound("../Media/Sound/win.wav", false);
 		MyGUI::ImageBox* stages = mStagePass1->getGUI()->findWidget<MyGUI::ImageBox>("word_of_stages");
 		switch(mStagePass1->getLevel())
 		{
@@ -109,14 +109,14 @@ bool StagePass1Step1::onKeyPressed(const OIS::KeyEvent& arg)
 		if (bullet)
 		{
 			mStagePass1->getBulletManager().add(bullet);
-			Sound::getInstance()->play("../Media/Sound/fire.wav", false);
+			Stage::playSound("../Media/Sound/fire.wav", false);
 			mStagePass1->updateCount();
 		}
 	}
 	// »»ÅÚµ¯
 	else if (arg.key == OIS::KC_TAB)
 	{
-		Sound::getInstance()->play("../Media/Sound/switch.wav", false);
+		Stage::playSound("../Media/Sound/switch.wav", false);
 		mStagePass1->getCannon()->changeBullet();
 
 		mStagePass1->updateImage(); 
@@ -124,7 +124,7 @@ bool StagePass1Step1::onKeyPressed(const OIS::KeyEvent& arg)
 	}
 	else if (arg.key >= OIS::KC_1 && arg.key <= OIS::KC_9)
 	{
-		Sound::getInstance()->play("../Media/Sound/switch.wav", false);
+		Stage::playSound("../Media/Sound/switch.wav", false);
 		mStagePass1->getCannon()->changeBullet(arg.key - OIS::KC_1);
 	}
 	// ´ğÌâ
