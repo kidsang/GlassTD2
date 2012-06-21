@@ -364,7 +364,7 @@ void LevelStage::onEdNextBtnRelease( MyGUI::Widget* _sender, int _left, int _top
 {
 	MyGUI::ImageBox* temp = mGui->findWidget<MyGUI::ImageBox>("next_one");
 	temp->setImageTexture("nextStage.png");
-	onEdReplayBtnClick(_sender);
+	onEdNextBtnClick(_sender);
 }
 
 void LevelStage::onEdBackToMenuBtnPress( MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id )
