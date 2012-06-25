@@ -3,7 +3,7 @@
 
 Money* Money::instance = 0;
 
-Money::Money(MyGUI::Gui* gui) : mAmount(20000), mTextBox(0), mGui(gui)
+Money::Money(MyGUI::Gui* gui) : mAmount(50), mTextBox(0), mGui(gui)
 {
 }
 
