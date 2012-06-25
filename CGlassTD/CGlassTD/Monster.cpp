@@ -12,8 +12,9 @@
 Monster::Monster(SceneNode* node, Maze* maze, MonsterManager* monsterMgr)
 	:
 	mMonsterManager(monsterMgr),
-	mSpeed(1),
+	mSpeedPre(1),
 	mSpeedTemp(1),
+	mSpeedCurrent(1),
 	/*mPos(Ogre::Vector3(BEGIN_POS_X, 10, BEGIN_POS_Y)),*/
 	mBlood(0),
 	mMaxBlood(0),
@@ -109,7 +110,7 @@ void Monster::go(float timeSinceLastFrame)
 		}
 	
 		/// 平移所需要走的路
-		float moveDistance =  timeSinceLastFrame * mSpeed;
+		float moveDistance =  timeSinceLastFrame * mSpeedCurrent;
 		mNode->translate(mFace * moveDistance);
 		mDistance -= moveDistance;
 	}
@@ -182,16 +183,16 @@ void Monster::setScale( float x, float y, float z )
 
 void Monster::harmCheck(float timeSinceLastFrame)
 {
+	
 	/// 先检查地形，更新怪物信息
 	checkCellType();
+	checkMonsterIsChange();
 	
-	mCheckMethod->bulletHarmCheck(mMonsterState->getBulletState(), mBulletHarmValue, mBulletHarmTime, mBlood, mSpeed, mSpeedTemp, timeSinceLastFrame);
-	mCheckMethod->terrainHarmCheck(mMonsterState->getTerrainState(), mTerrainHarmvalue, mBlood, mSpeed, mSpeedTemp, timeSinceLastFrame);
+	mCheckMethod->bulletHarmCheck(mMonsterState->getBulletState(), mBulletHarmValue, mBulletHarmTime, mBlood, mSpeedPre, mSpeedCurrent, mSpeedTemp, timeSinceLastFrame);
+	mCheckMethod->terrainHarmCheck(mMonsterState->getTerrainState(), mTerrainHarmvalue, mBlood, mSpeedPre, mSpeedCurrent, mSpeedTemp, timeSinceLastFrame);
 	/// 状态恢复
 	stateRecover();
-	/// 速度恢复
-	if(mMonsterState->getBulletState() != "ice" && mMonsterState->getTerrainState() != SWAMP)
-		mCheckMethod->speedRecover(mSpeed, mSpeedTemp);
+	
 	/// 判断是否死亡
 	//mIsDead = mCheckMethod->checkIsDead(mBlood);
 	if (!mIsDead && mCheckMethod->checkIsDead(mBlood))
@@ -219,8 +220,9 @@ bool Monster::isMonsterDead()
 
 void Monster::setSpeed( float speed )
 {
-	mSpeed = speed;
+	mSpeedCurrent = speed;
 	mSpeedTemp = speed;
+	mSpeedPre = speed;
 }
 
 void Monster::setRadius( float radius )
@@ -249,7 +251,10 @@ void Monster::checkCellType()
 	cellTemp = mMaze->getCellByPos(mNode->getPosition());
    /* if(cellTemp == NULL)
 		return;*/
-	mMonsterState->setTerrainState(cellTemp->getCellType());
+	if(mMonsterState->getTerrainState() != cellTemp->getCellType())
+		mMonsterState->setTerrainState(cellTemp->getCellType());
+	else 
+		mMonsterState->setTerrainStatePre(cellTemp->getCellType());
 	/// 设置地图伤害
 	setTerrainHarm(cellTemp->getHarmValue(), 0);
 }
@@ -595,8 +600,24 @@ void Monster::setBulletHarm( float harm, float time )
 
 void Monster::stateRecover()
 {
+	if(mMonsterState->getBulletState() != mMonsterState->getBulletStatePre())
+		mMonsterState->setBulletStatePre(mMonsterState->getBulletState());
 	if(mBulletHarmTime < 0 || mBulletHarmTime == 0)
+	{	
 		mMonsterState->setBulletState("normal");
+	}
+}
+
+void Monster::checkMonsterIsChange()
+{
+	if(mMonsterState->getBulletState() != mMonsterState->getBulletStatePre() ||
+		mMonsterState->getTerrainState() != mMonsterState->getTerrainStatePre())
+	{
+		mSpeedPre = mSpeedCurrent;
+		/// 速度恢复
+		mCheckMethod->speedRecover(mMonsterState->getBulletState(), mMonsterState->getTerrainState(), mSpeedPre, mSpeedCurrent, mSpeedTemp);
+
+	}
 }
 
 Monster* MonsterFactory::createInstance(SceneManager* sceneMgr, Maze* maze, MonsterManager* monsterMgr)
