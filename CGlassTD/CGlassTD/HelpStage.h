@@ -1,14 +1,15 @@
+#ifndef __HelpStage_h__
+#define __HelpStage_h__
 
-#ifndef __StartStage_h__
-#define __StartStage_h__
+#include "stage.h"
+#include "StartStage.h"
 
-#include "Stage.h"
-
-class StartStage : public Stage
+class HelpStage :
+	public Stage
 {
 public:
-	StartStage(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui);
-	~StartStage();
+	HelpStage(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui);
+	~HelpStage(void);
 	void notifyMouseMove(MyGUI::Widget* _sender, int _left, int _top);
 	void notifyMouseButtonPress(MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id);
 	void notifyMouseButtonRelease(MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id);
@@ -41,17 +42,8 @@ public:
 	/// @note 应该只由框架调用
 	bool onMouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 private:
-	MyGUI::ImageBox* background;
-	MyGUI::ImageBox* juqingBtn;
-	MyGUI::ImageBox* lifeBtn;
-	MyGUI::ImageBox* settingBtn;
-	MyGUI::ImageBox* quitBtn;
-	MyGUI::ImageBox* helpBtn;
 	MyGUI::VectorWidgetPtr mLayout;
-	int flag;
-	int preFlag;
-	bool quitFlag;
+	MyGUI::ImageBox* mBackBtn;
 };
 
 #endif
-

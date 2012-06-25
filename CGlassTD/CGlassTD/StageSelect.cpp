@@ -5,10 +5,12 @@
 #include "StartStage.h"
 #include "StageLoadingLevelStage.h"
 #include "Sound.h"
+#include "Money.h"
 
 StageSelect::StageSelect(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui)
 	: Stage(sceneManager, stageManager, gui),preFlag(-1),flag(0)
 {
+	Money::getInstance()->unDisplay();
 	mLayout = MyGUI::LayoutManager::getInstance().loadLayout("SelectStage.layout");
 	stageBG = this->getGUI()->findWidget<MyGUI::ImageBox>("stageBG");
 	stage1Btn = this->getGUI()->findWidget<MyGUI::ImageBox>("stage1"); 
