@@ -70,7 +70,9 @@ material Glass/SpriteExplode
     {
         pass
         {
-            ambient 1 1 1 
+            lighting off
+            depth_write off
+            scene_blend add
 
             texture_unit
             {
