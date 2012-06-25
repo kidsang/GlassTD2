@@ -24,6 +24,8 @@ private:
 	Vector3 mPosition;;
 	/// 该炮弹是否已经被发射
 	bool mIsFired;
+	/// 炮弹的名字
+	std::string mType;
 
 	/// 该炮弹的节点
 	SceneNode* mNode;
@@ -67,6 +69,18 @@ public:
 
 	// Get/Set
 public:
+	/// 返回炮弹类型
+	const std::string& getType()
+	{
+		return mType;
+	}
+
+	/// 设置炮弹类型
+	void setType(const std::string& type)
+	{
+		mType = type;
+	}
+
 	/// 获取炮弹效果持续时间
 	float getEffectTime()
 	{
