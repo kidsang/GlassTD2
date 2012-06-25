@@ -64,3 +64,18 @@ material Glass/FireBall
     }
 }
 
+material Glass/SpriteExplode
+{
+    technique
+    {
+        pass
+        {
+            ambient 1 1 1 
+
+            texture_unit
+            {
+                texture explode.png
+            }
+        }
+    }
+}

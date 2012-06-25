@@ -1,4 +1,5 @@
 #include "BulletManager.h"
+#include "BillboardSpriteAnimator.h"
 
 
 BulletManager::BulletManager(void)
@@ -12,6 +13,17 @@ BulletManager::~BulletManager(void)
 	while (mBulletList.forward())
 		delete mBulletList.getData();
 	mBulletList.clear();
+
+	mExplodeSprites.start();
+	while (mExplodeSprites.forward())
+		delete mExplodeSprites.getData();
+	mExplodeSprites.clear();
+
+	mExplodeNodes.start();
+	while (mExplodeNodes.forward())
+		mExplodeNodes.getData()->getParentSceneNode()->removeAndDestroyChild(mExplodeNodes.getData()->getName());
+	mExplodeNodes.clear();
+
 }
 
 void BulletManager::add( Bullet* bullet )
@@ -26,7 +38,7 @@ void BulletManager::fly( float timeSinceLastFrame, const Ogre::Vector3& gravity 
 		mBulletList.getData()->fly(timeSinceLastFrame, gravity);
 }
 
-std::vector<NameValueList> BulletManager::getAndRemoveExplodedBullets(float floor)
+std::vector<NameValueList> BulletManager::getAndRemoveExplodedBullets(float floor, SceneManager* sceneMgr)
 {
 	std::vector<NameValueList> exploded;
 
@@ -35,6 +47,20 @@ std::vector<NameValueList> BulletManager::getAndRemoveExplodedBullets(float floo
 		if (mBulletList.getData()->getPosition().y < floor)
 		{
 			Bullet* bul = mBulletList.getData();
+			// 增加爆炸动画
+			BillboardSet* explode = sceneMgr->createBillboardSet();
+			explode->setMaterialName("Glass/SpriteExplode");
+			explode->createBillboard(0, 0, 0);
+			SceneNode* expNode = sceneMgr->getRootSceneNode()->createChildSceneNode();
+			expNode->setPosition(bul->getPosition());
+			expNode->attachObject(explode);
+			BillboardSprite* bs = new BillboardSprite(explode, 5, 4, 192, 192);
+			BillboardSpriteAnimator* bsani = new BillboardSpriteAnimator(0);
+			bsani->start(bs);
+			bs->addAnimator(bsani);
+			mExplodeNodes.insertAhead(expNode);
+			mExplodeSprites.insertAhead(bs);
+
 			// 将爆炸节点的信息储存
 			NameValueList nvl;
 			nvl.insert(std::make_pair("appendDamage", convertToString(bul->getAppendDamage())));
@@ -53,4 +79,16 @@ std::vector<NameValueList> BulletManager::getAndRemoveExplodedBullets(float floo
 		}
 
 	return exploded;
+}
+
+void BulletManager::runExplodeAnimator( float timeSinceLastFrame )
+{
+	mExplodeNodes.start();
+	mExplodeSprites.start();
+	while (mExplodeNodes.forward() && mExplodeSprites.forward())
+	{
+		BillboardSprite* bs = mExplodeSprites.getData();
+		bs->animate(timeSinceLastFrame, bs);
+			0;// todo
+	}
 }

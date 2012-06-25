@@ -8,7 +8,7 @@
           damage="10"
 		  appendDamage="10"
           range="200"
-          ammo="100"
+          ammo="10"
           spell="fire"
 		  time="8"
           />
@@ -20,7 +20,7 @@
           damage="10"
 		  appendDamage="10"
           range="200"
-          ammo="100"
+          ammo="10"
           spell="ice"
 		  time="2"
           />
@@ -32,7 +32,7 @@
           damage="1000"
 		  appendDamage="0"
           range="1000"
-          ammo="100"
+          ammo="10"
           spell="normal"
 		  time="0"
           />
