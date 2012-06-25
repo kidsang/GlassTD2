@@ -28,8 +28,6 @@ Maze::Maze(SceneManager* sceneManager, int* map, int width, int height, Ogre::Ve
 	this->mHarmSpikeweed = (float)(atof((*cellParams)["spikeweed"].c_str()));	
 	this->mHarmSwamp = (float)(atof((*cellParams)["swamp"].c_str()));	
 
-
-	//this->mSceneNode = sceneManager->getRootSceneNode()->createChildSceneNode("mapSenenNode");
 	this->mSceneNode = sceneManager->getRootSceneNode()->createChildSceneNode();
 	this->pZones = new Cell*[mWidth * mHeight];
 	this->pMapInfo = new int[mWidth * mHeight];
@@ -46,6 +44,7 @@ Maze::Maze(SceneManager* sceneManager, int* map, int width, int height, Ogre::Ve
 				this->pZones[j * width + i] = new Cell(sceneManager, mSceneNode, new Ogre::Vector2(Real(i),Real(j)));
 				break;
 			case 1:
+				//int numRandom = Ogre::Math::RangeRandom(0, 9.99);
 				this->pZones[j * width + i] = new Cell(sceneManager, mSceneNode,this->mWall, new Ogre::Vector2(Real(i),Real(j)), map[j * width + i], 0.0f );
 				break;
 			case 2:
