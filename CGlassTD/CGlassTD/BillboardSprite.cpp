@@ -1,8 +1,9 @@
 #include "BillboardSprite.h"
 
 
-BillboardSprite::BillboardSprite(BillboardSet* bs, int row, int col, int unitWidth, int unitHeight)
-	: mBillboards(bs), mRow(row), mCol(col), mUnitWidth(unitWidth), mUnitHeight(unitHeight)
+BillboardSprite::BillboardSprite(SceneNode* node, BillboardSet* bs, int row, int col, int unitWidth, int unitHeight)
+	: mNode(node), mBillboards(bs), mRow(row), mCol(col), mUnitWidth(unitWidth), mUnitHeight(unitHeight),
+	mIsFinished(false)
 {
 	mWidth = row * unitWidth;
 	mHeight = col * unitHeight;
@@ -16,6 +17,10 @@ BillboardSprite::~BillboardSprite(void)
 		mBillboards->clear();
 		delete mBillboards;
 		mBillboards = 0;
+	}
+	if (mNode)
+	{
+		mNode->getParentSceneNode()->removeAndDestroyChild(mNode->getName());
 	}
 }
 

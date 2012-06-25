@@ -11,6 +11,11 @@
 #include "BillboardSprite.h"
 using namespace Ogre;
 
+void DestoryExplodeSprite(BillboardSprite* bs)
+{
+	bs->setFinish(true);
+}
+
 class BillboardSpriteAnimator : public Animator<BillboardSprite>
 {
 private:
@@ -20,7 +25,7 @@ public:
 	BillboardSpriteAnimator(float timeInterval)
 		: Animator(timeInterval), mCurrRow(0), mCurrCol(0)
 	{
-
+		this->addOnStopCallback(DestoryExplodeSprite);
 	}
 
 	virtual void runImpl( float timeSinceLastFrame, BillboardSprite* object ) 

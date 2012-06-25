@@ -18,12 +18,6 @@ BulletManager::~BulletManager(void)
 	while (mExplodeSprites.forward())
 		delete mExplodeSprites.getData();
 	mExplodeSprites.clear();
-
-	mExplodeNodes.start();
-	while (mExplodeNodes.forward())
-		mExplodeNodes.getData()->getParentSceneNode()->removeAndDestroyChild(mExplodeNodes.getData()->getName());
-	mExplodeNodes.clear();
-
 }
 
 void BulletManager::add( Bullet* bullet )
@@ -54,11 +48,10 @@ std::vector<NameValueList> BulletManager::getAndRemoveExplodedBullets(float floo
 			SceneNode* expNode = sceneMgr->getRootSceneNode()->createChildSceneNode();
 			expNode->setPosition(bul->getPosition());
 			expNode->attachObject(explode);
-			BillboardSprite* bs = new BillboardSprite(explode, 5, 4, 192, 192);
+			BillboardSprite* bs = new BillboardSprite(expNode, explode, 5, 4, 192, 192);
 			BillboardSpriteAnimator* bsani = new BillboardSpriteAnimator(0);
 			bsani->start(bs);
 			bs->addAnimator(bsani);
-			mExplodeNodes.insertAhead(expNode);
 			mExplodeSprites.insertAhead(bs);
 
 			// 将爆炸节点的信息储存
@@ -83,12 +76,15 @@ std::vector<NameValueList> BulletManager::getAndRemoveExplodedBullets(float floo
 
 void BulletManager::runExplodeAnimator( float timeSinceLastFrame )
 {
-	mExplodeNodes.start();
 	mExplodeSprites.start();
-	while (mExplodeNodes.forward() && mExplodeSprites.forward())
+	while (mExplodeSprites.forward())
 	{
 		BillboardSprite* bs = mExplodeSprites.getData();
 		bs->animate(timeSinceLastFrame, bs);
-			0;// todo
+		if (bs->getFinish())
+		{
+			delete bs;
+			mExplodeSprites.deleteCurrentNode();
+		}
 	}
 }

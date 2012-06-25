@@ -12,7 +12,6 @@ class BulletManager
 {
 private:
 	MyList<Bullet*> mBulletList;
-	MyList<SceneNode*> mExplodeNodes;
 	MyList<BillboardSprite*> mExplodeSprites;
 
 public:

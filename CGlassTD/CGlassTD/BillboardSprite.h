@@ -16,6 +16,7 @@ class BillboardSprite
 {
 private:
 	BillboardSet* mBillboards;
+	SceneNode* mNode;
 	Animatalbe<BillboardSprite> mAniMgr;
 
 	int mRow;
@@ -24,6 +25,8 @@ private:
 	int mUnitHeight;
 	int mWidth;
 	int mHeight;
+
+	bool mIsFinished;
 public:
 	/// 构造函数
 	/// @param bs billboard
@@ -31,7 +34,7 @@ public:
 	/// @param col 每列几个
 	/// @param unitWidth 每单元宽度
 	/// @param unitHeight 每单元高度
-	BillboardSprite(BillboardSet* bs, int row, int col, int unitWidth, int unitHeight);
+	BillboardSprite(SceneNode* node, BillboardSet* bs, int row, int col, int unitWidth, int unitHeight);
 	~BillboardSprite(void);
 
 	/// 添加动画
@@ -41,6 +44,16 @@ public:
 	void animate( float timeSinceLastFrame, BillboardSprite* object );
 
 public:
+	void setFinish(bool isFinished)
+	{
+		mIsFinished = isFinished;
+	}
+
+	bool getFinish()
+	{
+		return mIsFinished;
+	}
+
 	/// 返回billboard set
 	BillboardSet* getBillboardSet()
 	{
