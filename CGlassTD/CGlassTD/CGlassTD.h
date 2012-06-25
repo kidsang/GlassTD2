@@ -8,7 +8,6 @@
 #include "StageManager.h"
 #include "SceneManagerContainer.h"
 #include "StartStage.h"
-
 /**
  * 文件：CGlassTD
  * 日期：2012/05/31

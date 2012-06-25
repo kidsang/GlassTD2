@@ -70,7 +70,7 @@
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <TargetMachine>MachineX86</TargetMachine>
       <AdditionalLibraryDirectories>..\..\lib\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>OgreMain_d.lib;OIS_d.lib;MyGUIEngine_d.lib;MyGUI.OgrePlatform_d.lib;irrKlang.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OgreMain_d.lib;OIS_d.lib;MyGUIEngine_d.lib;MyGUI.OgrePlatform_d.lib;irrKlang.lib;Strmiids.lib;Quartz.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Message>
@@ -119,6 +119,8 @@
     <ClInclude Include="Animatable.h" />
     <ClInclude Include="Animator.h" />
     <ClInclude Include="BaseApplication.h" />
+    <ClInclude Include="BillboardSprite.h" />
+    <ClInclude Include="BillboardSpriteAnimator.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletManager.h" />
     <ClInclude Include="CameraStep02Step1Animator.h" />
@@ -127,9 +129,11 @@
     <ClInclude Include="CellType.h" />
     <ClInclude Include="CGlassTD.h" />
     <ClInclude Include="Common.h" />
+    <ClInclude Include="cutScenes.h" />
+    <ClInclude Include="CVDShowUtil.h" />
     <ClInclude Include="Direction.h" />
     <ClInclude Include="CheckMethod.h" />
-    <ClInclude Include="HelpStage.h" />
+    <ClInclude Include="h-genutils.h" />
     <ClInclude Include="LevelStage.h" />
     <ClInclude Include="Maze.h" />
     <ClInclude Include="Money.h" />
@@ -161,6 +165,8 @@
     <ClInclude Include="tinystr.h" />
     <ClInclude Include="tinyxml.h" />
     <ClInclude Include="UFO.h" />
+    <ClInclude Include="UtilsOgreDshow.h" />
+    <ClInclude Include="UtilsOgreDshow_private.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
@@ -171,6 +177,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseApplication.cpp" />
+    <ClCompile Include="BillboardSprite.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="BulletManager.cpp" />
     <ClCompile Include="Cannon.cpp" />
@@ -178,7 +185,8 @@
     <ClCompile Include="CGlassTD.cpp" />
     <ClCompile Include="Common.cpp" />
     <ClCompile Include="CheckMethod.cpp" />
-    <ClCompile Include="HelpStage.cpp" />
+    <ClCompile Include="CVDShowUtil.cpp" />
+    <ClCompile Include="h-genutils.cpp" />
     <ClCompile Include="LevelStage.cpp" />
     <ClCompile Include="Maze.cpp" />
     <ClCompile Include="Money.cpp" />
@@ -208,6 +216,7 @@
     <ClCompile Include="tinyxmlerror.cpp" />
     <ClCompile Include="tinyxmlparser.cpp" />
     <ClCompile Include="UFO.cpp" />
+    <ClCompile Include="UtilsOgreDshow.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
