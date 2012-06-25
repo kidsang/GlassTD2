@@ -64,7 +64,43 @@ material Glass/FireBall
     }
 }
 
-material Glass/SpriteExplode
+material Glass/FireBulletExplode
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            depth_write off
+            scene_blend add
+
+            texture_unit
+            {
+                texture explode.png
+            }
+        }
+    }
+}
+
+material Glass/NormalBulletExplode
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            depth_write off
+            scene_blend add
+
+            texture_unit
+            {
+                texture explode.png
+            }
+        }
+    }
+}
+
+material Glass/IceBulletExplode
 {
     technique
     {
