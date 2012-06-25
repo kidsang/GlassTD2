@@ -129,6 +129,7 @@
     <ClInclude Include="Common.h" />
     <ClInclude Include="Direction.h" />
     <ClInclude Include="CheckMethod.h" />
+    <ClInclude Include="HelpStage.h" />
     <ClInclude Include="LevelStage.h" />
     <ClInclude Include="Maze.h" />
     <ClInclude Include="Money.h" />
@@ -177,6 +178,7 @@
     <ClCompile Include="CGlassTD.cpp" />
     <ClCompile Include="Common.cpp" />
     <ClCompile Include="CheckMethod.cpp" />
+    <ClCompile Include="HelpStage.cpp" />
     <ClCompile Include="LevelStage.cpp" />
     <ClCompile Include="Maze.cpp" />
     <ClCompile Include="Money.cpp" />

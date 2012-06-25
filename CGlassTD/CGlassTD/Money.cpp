@@ -51,7 +51,7 @@ void Money::display()
 	mImageBox->setImageTexture("money.png");
 	mTextBox = static_cast<MyGUI::TextBox*>( mGui->createWidgetT("TextBox", "TextBox", 80, 40, 100, 100, MyGUI::Align::Default, "Main") );
 	mTextBox->setTextColour(MyGUI::Colour::White);
-	mTextBox->setCaption(std::string("Money: ") + this->getAmountStr());
+	mTextBox->setCaption(std::string("") + this->getAmountStr());
 }
 
 void Money::unDisplay()
@@ -115,7 +115,7 @@ bool Money::placeTrap(Money::TrapType type)
 	else
 	{
 		mAmount -= cost;
-		mTextBox->setCaption(std::string("Money: ") + this->getAmountStr());
+		mTextBox->setCaption(std::string("") + this->getAmountStr());
 		return true;
 	}
 }

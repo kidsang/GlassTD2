@@ -2,10 +2,13 @@
 #include "StageSelect.h"
 #include "Sound.h"
 #include "SettingStage.h"
+#include "Money.h"
+#include "HelpStage.h"
 
 StartStage::StartStage(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui)
 	: Stage(sceneManager, stageManager, gui)
 {
+	Money::getInstance()->unDisplay();
 	flag = 0;
 	preFlag = -1;
 	quitFlag = false;
@@ -56,7 +59,7 @@ void StartStage::notifyMouseMove( MyGUI::Widget* _sender, int _left, int _top )
 		}
 		else if(preFlag == 5)
 		{
-			helpBtn->setImageTexture("quit.png");
+			helpBtn->setImageTexture("help.png");
 		}
 
 	}
@@ -86,7 +89,7 @@ void StartStage::notifyMouseMove( MyGUI::Widget* _sender, int _left, int _top )
 	}
 	else if(_sender == helpBtn)
 	{
-		helpBtn->setImageTexture("quitMove.png");
+		helpBtn->setImageTexture("helpMove.png");
 		preFlag = flag;
 		flag = 5;
 	}
@@ -119,7 +122,7 @@ void StartStage::notifyMouseButtonPress( MyGUI::Widget* _sender, int _left, int 
 	}
 	else if(_sender == helpBtn)
 	{
-		helpBtn->setImageTexture("quitPress.png");
+		helpBtn->setImageTexture("helpPress.png");
 	}
 }
 void StartStage::notifyMouseButtonRelease( MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id )
@@ -149,7 +152,9 @@ void StartStage::notifyMouseButtonRelease( MyGUI::Widget* _sender, int _left, in
 	}
 	else if(_sender == helpBtn)
 	{
+		Stage* nextStage = new HelpStage(this->mSceneManager, this->mStageManager, this->mGui);
 		helpBtn->setImageTexture("quit.png");
+		this->jumpToNextStage(nextStage);
 	}
 }
 
