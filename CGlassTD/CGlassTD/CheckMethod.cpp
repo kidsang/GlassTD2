@@ -19,12 +19,12 @@ void CheckMethod::fireHarmCheck( float& harm, float& time, float& blood, float t
 		harm = 0;
 }
 
-void CheckMethod::iceHarmCheck( float& harm, float& time, float& speed, float speedTemp, float timeSinceLastFrame )
+void CheckMethod::iceHarmCheck( float& harm, float& time, float& speedPre, float& speedCurrent, float speedTemp, float timeSinceLastFrame )
 {
 	/// ±ùÊôÐÔÉËº¦ÔË×÷
 	if(harm != 0 && time > 0)
 	{
-		speed = speedTemp * harm;
+		speedCurrent = speedPre * harm;
 		time -= timeSinceLastFrame;
 	}
 	else
@@ -38,9 +38,10 @@ void CheckMethod::spikeweedHarmCheck( float& harm, float& blood, float timeSince
 	blood -= harm * timeSinceLastFrame;
 }
 
-void CheckMethod::swampHarmCheck( float& harm, float& speed, float speedTemp )
+void CheckMethod::swampHarmCheck( float& harm, float& speedPre, float& speedCurrent, float speedTemp )
 {
-	speed = speedTemp * harm;
+	if(speedPre == speedTemp)
+		speedCurrent = speedPre * harm;
 }
 
 bool CheckMethod::checkIsDead( float blood )
@@ -71,12 +72,18 @@ void CheckMethod::caughtByTrapCheck( float& blood )
 	blood = 0.0f;
 }
 
-void CheckMethod::speedRecover( float& speed, float speedTemp )
+void CheckMethod::speedRecover( std::string bulletType, int terrainType, float& speedPre, float& speedCurrent, float speedTemp )
 {
-	speed = speedTemp;
+	if(bulletType != "ice" && terrainType != SWAMP)
+	{	
+		speedPre = speedTemp;
+		speedCurrent = speedTemp;
+	}
+	else if(bulletType != "ice" || terrainType != SWAMP)
+		speedPre = speedTemp;
 }
 
-void CheckMethod::bulletHarmCheck( std::string bulletType, float harm, float& time, float& blood, float& speed, float speedTemp, float timeSinceLastFrame )
+void CheckMethod::bulletHarmCheck( std::string bulletType, float harm, float& time, float& blood, float& speedPre, float& speedCurrent, float speedTemp, float timeSinceLastFrame )
 {
 	if(bulletType == "normal" || bulletType == "attributeImmune")
 	{
@@ -84,7 +91,7 @@ void CheckMethod::bulletHarmCheck( std::string bulletType, float harm, float& ti
 	}
 	if(bulletType == "ice")
 	{
-		iceHarmCheck(harm, time, speed, speedTemp, timeSinceLastFrame);
+		iceHarmCheck(harm, time, speedPre, speedCurrent, speedTemp, timeSinceLastFrame);
 	}
 	if(bulletType == "fire")
 	{
@@ -92,13 +99,13 @@ void CheckMethod::bulletHarmCheck( std::string bulletType, float harm, float& ti
 	}
 }
 
-void CheckMethod::terrainHarmCheck( int terrainType, float harm, float& blood, float& speed, float speedTemp, float timeSinceLastFrame )
+void CheckMethod::terrainHarmCheck( int terrainType, float harm, float& blood, float& speedPre, float& speedCurrent, float speedTemp, float timeSinceLastFrame )
 {
 	switch(terrainType)
 	{
 	case FREE: return;
 	case SPIKEWEED: spikeweedHarmCheck(harm, blood, timeSinceLastFrame); break;
-	case SWAMP: swampHarmCheck(harm, speed, speedTemp); break;
+	case SWAMP: swampHarmCheck(harm, speedPre, speedCurrent, speedTemp); break;
 	case TRAP: caughtByTrapCheck(blood); break;
 	default: break;
 	}
