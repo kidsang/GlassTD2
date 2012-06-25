@@ -76,7 +76,7 @@ material Glass/FireBulletExplode
 
             texture_unit
             {
-                texture explode.png
+                texture fireExplode.png
             }
         }
     }
@@ -94,7 +94,7 @@ material Glass/NormalBulletExplode
 
             texture_unit
             {
-                texture explode.png
+                texture normalExplode.png
             }
         }
     }
@@ -112,7 +112,7 @@ material Glass/IceBulletExplode
 
             texture_unit
             {
-                texture explode.png
+                texture iceExplode.png
             }
         }
     }
