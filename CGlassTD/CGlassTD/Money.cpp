@@ -53,7 +53,7 @@ void Money::display()
 void Money::correctAnswer()
 {
 	mAmount += 10;
-	mTextBox->setCaption(std::string("Money: ") + this->getAmountStr());
+	mTextBox->setCaption(this->getAmountStr());
 }
 
 bool Money::enough(Money::TrapType type)
