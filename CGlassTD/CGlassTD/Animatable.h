@@ -22,6 +22,12 @@ private:
 	AnimatorList mRemoveList;
 
 public:
+	~Animatalbe()
+	{
+		for (auto iter = mAnimatorList.begin(); iter != mAnimatorList.end(); ++iter)
+			delete (*iter);
+	}
+
 	/// 运行动画列表
 	/// @param timeSinceLastFrame 上一帧(游戏循环)持续的时间
 	/// @param object 被动画作用的物体
