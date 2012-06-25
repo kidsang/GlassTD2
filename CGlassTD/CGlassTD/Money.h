@@ -28,6 +28,9 @@ public:
 	
 	/// 显示金钱
 	void display();
+	
+	/// 取消金钱显示
+	void unDisplay();
 
 	/// 答题正确会获得金钱
 	void correctAnswer();

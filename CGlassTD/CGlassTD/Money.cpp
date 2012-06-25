@@ -42,12 +42,22 @@ Money::~Money()
 
 void Money::display()
 {
-	if (mTextBox != 0) return;
+	if (mTextBox != 0) 
+	{
+		mTextBox->setVisible(true);
+		return;
+	}
 	mImageBox = static_cast<MyGUI::ImageBox*>(mGui->createWidgetT("ImageBox", "ImageBox", 30, 20, 50, 50, MyGUI::Align::Default, "Main"));
 	mImageBox->setImageTexture("money.png");
 	mTextBox = static_cast<MyGUI::TextBox*>( mGui->createWidgetT("TextBox", "TextBox", 80, 40, 100, 100, MyGUI::Align::Default, "Main") );
 	mTextBox->setTextColour(MyGUI::Colour::White);
 	mTextBox->setCaption(std::string("Money: ") + this->getAmountStr());
+}
+
+void Money::unDisplay()
+{
+	if (mTextBox == 0) return;
+	mTextBox->setVisible(false);
 }
 
 void Money::correctAnswer()
