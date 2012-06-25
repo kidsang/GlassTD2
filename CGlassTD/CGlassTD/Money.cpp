@@ -45,6 +45,7 @@ void Money::display()
 	if (mTextBox != 0) 
 	{
 		mTextBox->setVisible(true);
+		mImageBox->setVisible(true);
 		return;
 	}
 	mImageBox = static_cast<MyGUI::ImageBox*>(mGui->createWidgetT("ImageBox", "ImageBox", 30, 20, 50, 50, MyGUI::Align::Default, "Main"));
@@ -58,6 +59,7 @@ void Money::unDisplay()
 {
 	if (mTextBox == 0) return;
 	mTextBox->setVisible(false);
+	mImageBox->setVisible(false);
 }
 
 void Money::correctAnswer()
