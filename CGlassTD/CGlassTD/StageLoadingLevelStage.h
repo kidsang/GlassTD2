@@ -16,7 +16,7 @@ public:
 		mCount(60)
 	{
 		mImageBox = mGui->createWidget<MyGUI::ImageBox>("ImageBox", 0, 0, 1024, 768, MyGUI::Align::Center, "Main");
-		mImageBox->setImageTexture("loading.png");
+		mImageBox->setImageTexture("loading.gif");
 	}
 	~StageLoadingLevelStage(void)
 	{

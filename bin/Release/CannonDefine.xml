@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Cannons>
+   <Cannon name="NormalBullet"
+          gunMesh="cannon.mesh"
+          tireMesh="tire.mesh"
+          position="0 200 1300"
+          strength="1000"
+          offset="0 75 400"
+          angle="0.78 0.50"
+          colddown="0.5"
+          />
+</Cannons>

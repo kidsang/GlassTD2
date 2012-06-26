@@ -44,7 +44,8 @@ std::vector<NameValueList> BulletManager::getAndRemoveExplodedBullets(float floo
 			// Ôö¼Ó±¬Õ¨¶¯»­
 			BillboardSet* explode = sceneMgr->createBillboardSet(2U);
 			explode->setDefaultDimensions(800, 800);
-			explode->setMaterialName("Glass/SpriteExplode");
+			std::string mtlName = "Glass/" + bul->getType() + "Explode";
+			explode->setMaterialName(mtlName);
 			explode->createBillboard(0, 0, 0);
 			SceneNode* expNode = sceneMgr->getRootSceneNode()->createChildSceneNode();
 			expNode->setPosition(bul->getPosition());

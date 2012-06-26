@@ -1,0 +1,63 @@
+material sunFlower_21
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.243137 0.580392 0.298039 1
+			diffuse 0.243137 0.580392 0.298039 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture sunFlower_leg.jpg
+			}
+		}
+
+	}
+
+}
+
+
+
+material sunFlower_22
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588 0.588 0.588 1
+			diffuse 0.588 0.588 0.588 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture sunFlower_lian.jpg
+			}
+		}
+
+	}
+
+}
+
+
+
+material sunFlower_23
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.956863 0.866667 0.25098 1
+			diffuse 0.956863 0.866667 0.25098 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture sunFlower_red.jpg
+			}
+		}
+
+	}
+
+}

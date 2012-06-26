@@ -24,4 +24,9 @@
          startPos="0 0 12 0 0 4"
          finalPos="31 0 8"
           />
+  <WallType
+  			wall1="yellowBox.mesh"
+  			wall2="normalHouse.mesh"
+  			wall3="tree.mesh"
+  			/>
 </Mazes>
