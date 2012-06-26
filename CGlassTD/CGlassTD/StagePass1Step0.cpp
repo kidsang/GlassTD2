@@ -58,7 +58,11 @@ bool StagePass1Step0::onKeyPressed(const OIS::KeyEvent& arg)
 		{
 			MyGUI::PointerManager::getInstance().setVisible(false);
 			// ³óÂªµÄ´úÂëby kid
+#ifdef _DEBUG
 			CameraStep02Step1Animator* ani = new CameraStep02Step1Animator(0);
+#else
+			CameraStep02Step1Animator* ani = new CameraStep02Step1Animator(0.02f);
+#endif
 			ani->start(mStagePass1->getCamera());
 			mStagePass1->addCameraAnimator(ani);
 			//mStagePass1->jumpToStep(new StagePass1Step1(mStagePass1));
