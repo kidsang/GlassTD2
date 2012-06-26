@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Cells>
+  <mesh
+    wall="cubess.mesh"
+    swamp="swamp.mesh"
+    spikeweed="spikeweed.mesh"
+    trap="trap.mesh"
+    shadowSwamp="shadon_swamp.mesh"
+    shadowSpikeweed="shadow_spikeweed.mesh"
+    shadowTrap="shadow_trap.mesh"
+     />
+  <size
+    width="100"
+    height="100"
+    length="100"
+    />
+  <harmValue
+    swamp="0.4"
+    spikeweed="10.0"
+    />
+</Cells>
