@@ -62,6 +62,10 @@ LevelStage::~LevelStage()
 		mMonsterManager->release();
 	for (auto iter = mCameraAnimatorList.begin(); iter != mCameraAnimatorList.end(); ++iter)
 		delete (*iter);
+	if(mWallType)
+	{
+		delete[] mWallType;
+	}
 }
 
 void LevelStage::jumpToStep(Step* step)
@@ -201,7 +205,15 @@ void LevelStage::initializeMaze( const std::string& mazeDefine, const std::strin
 
 	}
 
-	mMaze = new Maze(mSceneManager, map, mapWidth, mapHeight,start1, start2, end, cellDefine);
+	mWallType = new String[3];
+	mazeParams = mazeParser.getNext();
+	if (mazeParams->find("wall1") != mazeParams->end())
+		mWallType[0] = (*mazeParams)["wall1"];
+	if (mazeParams->find("wall2") != mazeParams->end())
+		mWallType[1] = (*mazeParams)["wall2"];
+	if (mazeParams->find("wall3") != mazeParams->end())
+		mWallType[2] = (*mazeParams)["wall3"];
+	mMaze = new Maze(mSceneManager, map, mapWidth, mapHeight,start1, start2, end, cellDefine,mWallType);
 }
 
 void LevelStage::initializeUFO( const std::string& ufoDefine )

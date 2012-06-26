@@ -5,10 +5,11 @@ Maze::Maze(void)
 {
 }
 
-Maze::Maze(SceneManager* sceneManager, int* map, int width, int height, Ogre::Vector3 start1, Ogre::Vector3 start2, Ogre::Vector3 final, std::string cellDefine)
+Maze::Maze(SceneManager* sceneManager, int* map, int width, int height, Ogre::Vector3 start1, Ogre::Vector3 start2, Ogre::Vector3 final, std::string cellDefine, String* cellTypes)
 	: mWidth(width), mHeight(height), mSceneManager(sceneManager), 
 	mMap(0), pMapInfo(0)
 {	
+	mWallType = cellTypes;
 	ParamParser cellParser = ParamParser(cellDefine);
 	cellParser.parse();
 	cellParser.moveToFirst();
@@ -38,14 +39,14 @@ Maze::Maze(SceneManager* sceneManager, int* map, int width, int height, Ogre::Ve
 	{
 		for(int i = 0; i < width; ++i)
 		{
+			int numRandom = Ogre::Math::RangeRandom(0, 2.99);
 			switch(map[j * width + i])
 			{
 			case 0:
 				this->pZones[j * width + i] = new Cell(sceneManager, mSceneNode, new Ogre::Vector2(Real(i),Real(j)));
 				break;
-			case 1:
-				//int numRandom = Ogre::Math::RangeRandom(0, 9.99);
-				this->pZones[j * width + i] = new Cell(sceneManager, mSceneNode,this->mWall, new Ogre::Vector2(Real(i),Real(j)), map[j * width + i], 0.0f );
+			case 1:						
+				this->pZones[j * width + i] = new Cell(sceneManager, mSceneNode,mWallType[numRandom], new Ogre::Vector2(Real(i),Real(j)), map[j * width + i], 0.0f );
 				break;
 			case 2:
 				this->pZones[j * width + i] = new Cell(sceneManager, mSceneNode,this->mSpikeweed, new Ogre::Vector2(Real(i),Real(j)), map[j * width + i], this->mHarmSpikeweed );
@@ -67,6 +68,7 @@ Maze::Maze(SceneManager* sceneManager, int* map, int width, int height, Ogre::Ve
 	this->startPos.push_back(start1);
 	this->startPos.push_back(start2);
 	this->finalPos = final; 
+	
 }
 
 

@@ -12,6 +12,8 @@ class Cell;
 class Maze
 {
 private:
+	/// 场的类型
+	String* mWallType;
 	/// 场景管理指针
 	SceneManager* mSceneManager;
 	/// 地图的场景节点指针
@@ -54,7 +56,7 @@ public:
 	/// @param map 地图数组指针
 	/// @param width 地图的宽
 	/// @param height 地图的高
-	Maze(SceneManager* sceneManager, int* map, int width, int height, Ogre::Vector3 start1, Ogre::Vector3 start2,Ogre::Vector3 end, std::string cellDefine);
+	Maze(SceneManager* sceneManager, int* map, int width, int height, Ogre::Vector3 start1, Ogre::Vector3 start2,Ogre::Vector3 end, std::string cellDefine, String* cellTypes);
 	/// 获取当前地图的信息
 	/// @return 返回一维数组
 	Cell** getMazeInfo();
