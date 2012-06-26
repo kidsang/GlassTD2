@@ -270,7 +270,8 @@ void MonsterManager::initialize( Maze* maze, const std::string& monsterDefine )
 	mNewMonsterTime = atof((*monsterParams)["newMonsterTime"].c_str());
 	while (monsterParser.hasNext())
 	{
-		mMonsterFactoryList.push_back(new MonsterFactory(*monsterParser.getNext()));
+		MonsterFactory* mf = new MonsterFactory(*monsterParser.getNext());
+		mMonsterFactoryList.push_back(mf);
 	}
 	if(mMonsterFactoryList.size() != 0)
 		mCurrentMonsterFactory = mMonsterFactoryList.at(0);

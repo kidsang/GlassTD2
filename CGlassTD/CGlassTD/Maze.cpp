@@ -39,15 +39,16 @@ Maze::Maze(SceneManager* sceneManager, int* map, int width, int height, Ogre::Ve
 	{
 		for(int i = 0; i < width; ++i)
 		{
+			int numRadom = Ogre::Math::RangeRandom(0,9.99);
 			switch(map[j * width + i])
 			{
 			case 0:
 				this->pZones[j * width + i] = new Cell(sceneManager, mSceneNode, new Ogre::Vector2(Real(i),Real(j)));
 				break;
-			//case 1:						
-			//	/*this->pZones[j * width + i] = new Cell(sceneManager, mSceneNode,mWallType[numRandom], new Ogre::Vector2(Real(i),Real(j)), map[j * width + i], 0.0f );*/
-			//	break;
-			case 2:
+			case 10:
+				this->pZones[j * width + i] = new Cell(sceneManager, mSceneNode,mWallType[numRadom], new Ogre::Vector2(Real(i),Real(j)), 1, 0.0f );
+				break;
+			/*case 2:
 				this->pZones[j * width + i] = new Cell(sceneManager, mSceneNode,this->mSpikeweed, new Ogre::Vector2(Real(i),Real(j)), map[j * width + i], this->mHarmSpikeweed );
 				break;
 			case 3:
@@ -55,9 +56,9 @@ Maze::Maze(SceneManager* sceneManager, int* map, int width, int height, Ogre::Ve
 				break;
 			case 4:
 				this->pZones[j * width + i] = new Cell(sceneManager, mSceneNode,this->mTrap, new Ogre::Vector2(Real(i),Real(j)), map[j * width + i], 0.0f );
-				break;
+				break;*/
 			default:
-				this->pZones[j * width + i] = new Cell(sceneManager, mSceneNode,mWallType[map[j * width + i] - 5], new Ogre::Vector2(Real(i),Real(j)), 1, 0.0f );
+				this->pZones[j * width + i] = new Cell(sceneManager, mSceneNode,mWallType[map[j * width + i] - 1], new Ogre::Vector2(Real(i),Real(j)), 1, 0.0f );
 				break;
 			}
 		}

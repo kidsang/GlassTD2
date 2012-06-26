@@ -294,7 +294,7 @@ private:
 
 };
 
-
+#include "SceneManagerContainer.h"
 class MonsterFactory
 {
 	NameValueList mParams;
@@ -305,6 +305,8 @@ public:
 		:mParams(params)
 	{
 		mType = params["name"];
+		// Ô¤×°ÔØÄ£ÐÍ
+		delete SceneManagerContainer::getSceneManager()->createEntity(mParams["mesh"]);
 	}
 	~MonsterFactory()
 	{

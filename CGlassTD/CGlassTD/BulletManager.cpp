@@ -51,7 +51,12 @@ std::vector<NameValueList> BulletManager::getAndRemoveExplodedBullets(float floo
 			expNode->setPosition(bul->getPosition());
 			expNode->attachObject(explode);
 			BillboardSprite* bs = new BillboardSprite(expNode, explode, 5, 4, 192, 192);
+#ifdef _DEBUG
 			BillboardSpriteAnimator* bsani = new BillboardSpriteAnimator(0);
+#else
+
+			BillboardSpriteAnimator* bsani = new BillboardSpriteAnimator(0.02f);
+#endif
 			bsani->start(bs);
 			bs->addAnimator(bsani);
 			mExplodeSprites.insertAhead(bs);
