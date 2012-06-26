@@ -34,6 +34,9 @@ public:
 
 	/// 答题正确会获得金钱
 	void correctAnswer();
+	
+	/// 打错扣钱
+	void wrongAnswer();
 
 	/// 判断金钱是否足以放置某个陷阱
 	bool enough(TrapType);

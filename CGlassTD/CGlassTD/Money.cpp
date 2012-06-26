@@ -68,6 +68,12 @@ void Money::correctAnswer()
 	mTextBox->setCaption(this->getAmountStr());
 }
 
+void Money::wrongAnswer()
+{
+	mAmount -= 5;
+	mTextBox->setCaption(this->getAmountStr());
+}
+
 bool Money::enough(Money::TrapType type)
 {
 	int cost = 0;
