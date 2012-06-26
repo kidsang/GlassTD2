@@ -40,7 +40,11 @@ void StagePass1Step0::init()
 bool StagePass1Step0::run(float timeSinceLastFrame)
 {
 	// ¾í¶¯»­Ãæ
+#ifdef _DEBUG
 	int moveStep = 60;
+#else
+	int moveStep = 5;
+#endif
 	mStagePass1->getCamera()->move(Ogre::Vector3(moveStep * mRollX, 0, moveStep * mRollY));
 	return true;
 }
