@@ -1,0 +1,19 @@
+<scene formatVersion="1.0" upAxis="y" unitsPerMeter="1000" unitType="millimeters" minOgreVersion="1.7" ogreMaxVersion="2.4.3" author="OgreMax Scene Exporter (www.ogremax.com)" application="3DS Max">
+    <environment>
+        <colourAmbient r="0.333333" g="0.333333" b="0.333333" />
+        <colourBackground r="0" g="0" b="0" />
+        <clipping near="0" far="100000" />
+    </environment>
+    <nodes>
+        <node name="stone">
+            <position x="26.3933" y="12.7199" z="-4.96094" />
+            <scale x="0.0344047" y="0.0479199" z="0.0344047" />
+            <rotation qx="0" qy="0.00254678" qz="-1.11323e-010" qw="0.999997" />
+            <entity name="stone" castShadows="true" receiveShadows="true" meshFile="stone.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone_31" />
+                </subentities>
+            </entity>
+        </node>
+    </nodes>
+</scene>

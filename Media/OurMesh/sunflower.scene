@@ -1,0 +1,21 @@
+<scene formatVersion="1.0" upAxis="y" unitsPerMeter="1000" unitType="millimeters" minOgreVersion="1.7" ogreMaxVersion="2.4.3" author="OgreMax Scene Exporter (www.ogremax.com)" application="3DS Max">
+    <environment>
+        <colourAmbient r="0.333333" g="0.333333" b="0.333333" />
+        <colourBackground r="0" g="0" b="0" />
+        <clipping near="0" far="2.54e+006" />
+    </environment>
+    <nodes>
+        <node name="sunflower">
+            <position x="0.00780899" y="-0.147278" z="7.6159" />
+            <scale x="0.695609" y="1.0481" z="0.167918" />
+            <rotation qx="0.000684578" qy="-0.703275" qz="0.710917" qw="4.0356e-005" />
+            <entity name="sunflower" castShadows="true" receiveShadows="true" meshFile="sunflower.mesh">
+                <subentities>
+                    <subentity index="0" materialName="sunflower_21" />
+                    <subentity index="1" materialName="sunflower_22" />
+                    <subentity index="2" materialName="sunflower_23" />
+                </subentities>
+            </entity>
+        </node>
+    </nodes>
+</scene>
