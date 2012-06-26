@@ -7,6 +7,9 @@ BillboardSprite::BillboardSprite(SceneNode* node, BillboardSet* bs, int row, int
 {
 	mWidth = row * unitWidth;
 	mHeight = col * unitHeight;
+	Billboard* b = mBillboards->getBillboard(0);
+	if (b)
+		b->setTexcoordRect(0, 0, 1 / (float)mRow, 1 / (float)mCol);
 }
 
 
