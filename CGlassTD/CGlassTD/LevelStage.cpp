@@ -205,14 +205,23 @@ void LevelStage::initializeMaze( const std::string& mazeDefine, const std::strin
 
 	}
 
-	mWallType = new String[3];
-	mazeParams = mazeParser.getNext();
+	mWallType = new String[9];
+	mWallType[0] = "yellowBox.mesh";
+	mWallType[1] = "normalHouse.mesh";
+	mWallType[2] = "tree.mesh";
+	mWallType[3] = "mushroomHouse.mesh";
+	mWallType[4] = "sunflower.mesh";
+	mWallType[5] = "tree.mesh";
+	mWallType[6] = "whiteHouse1.mesh";
+	mWallType[7] = "whiteHouse2.mesh";
+	mWallType[8] = "whiteHouse3.mesh";
+	/*mazeParams = mazeParser.getNext();
 	if (mazeParams->find("wall1") != mazeParams->end())
 		mWallType[0] = (*mazeParams)["wall1"];
 	if (mazeParams->find("wall2") != mazeParams->end())
 		mWallType[1] = (*mazeParams)["wall2"];
 	if (mazeParams->find("wall3") != mazeParams->end())
-		mWallType[2] = (*mazeParams)["wall3"];
+		mWallType[2] = (*mazeParams)["wall3"];*/
 	mMaze = new Maze(mSceneManager, map, mapWidth, mapHeight,start1, start2, end, cellDefine,mWallType);
 }
 
