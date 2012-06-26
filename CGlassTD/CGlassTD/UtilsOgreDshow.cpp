@@ -49,15 +49,15 @@ namespace OgreUtils
         for (twoSquared=2; mTexWidth==0 || mTexHeight==0; twoSquared*=2)
         {
             if (mTexWidth==0 && twoSquared>=width)
-                mTexWidth=twoSquared;
+				mTexWidth = static_cast<Ogre::Real>(twoSquared);
             if (mTexHeight==0 && twoSquared>=height)
-                mTexHeight=twoSquared;
+				mTexHeight = static_cast<Ogre::Real>(twoSquared);
         }
         if (dontModifyDimensions)
         {
             // back to the original dimensions
-            mTexWidth=width;
-            mTexHeight=height;
+            mTexWidth=static_cast<Ogre::Real>(width);
+            mTexHeight=static_cast<Ogre::Real>(height);
         }
 
         // log it
@@ -182,7 +182,7 @@ namespace OgreUtils
         dsdata->videoHeight=vih->bmiHeader.biHeight;
  
         
-        ResetSize(dsdata->videoWidth,dsdata->videoHeight);
+        ResetSize(static_cast<Ogre::Real>(dsdata->videoWidth),static_cast<Ogre::Real>(dsdata->videoHeight));
         //纹理的创建现在修改到了这里,原来在构造函数中
         //放在这里可以根据视频的大小来生成纹理的大小
         //这样可以让视频完全平铺到面片上
@@ -190,8 +190,8 @@ namespace OgreUtils
             "DirectShowManualTexture",// name
             Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
             Ogre::TEX_TYPE_2D,// texture type
-            mTexWidth,
-            mTexHeight,
+            static_cast<Ogre::uint>(mTexWidth),
+            static_cast<Ogre::uint>(mTexHeight),
 			0,// number of mipmaps
             Ogre::PF_BYTE_BGRA,// pixel format
             Ogre::TU_DYNAMIC_WRITE_ONLY_DISCARDABLE// usage
@@ -230,7 +230,7 @@ namespace OgreUtils
 
     Ogre::Vector2 DirectShowMovieTexture::getMovieDimensions()
     {
-        return Ogre::Vector2(dsdata->videoWidth, dsdata->videoHeight);
+        return Ogre::Vector2(static_cast<Ogre::Real>(dsdata->videoWidth), static_cast<Ogre::Real>(dsdata->videoHeight));
     }
 
     void DirectShowMovieTexture::unloadMovie()
@@ -374,7 +374,7 @@ namespace OgreUtils
         }
 
         // go set all bits...
-        for (i=0; i<(dsdata->videoWidth*dsdata->videoHeight*3); i+=3){
+        for (i=0; static_cast<int>(i) < (dsdata->videoWidth*dsdata->videoHeight*3); i+=3){
             idx=(x*4)+y*pixelBox.rowPitch*4;
 
             // paint
@@ -545,7 +545,7 @@ namespace OgreUtils
             (Ogre::OverlayManager::getSingleton().createOverlayElement("Panel", "Ogre/DebugTexPanel" +mName));
 
         mContainer->setMetricsMode(Ogre::GMM_PIXELS);
-        mContainer->setDimensions(mVp->getActualWidth(),mVp->getActualHeight());
+        mContainer->setDimensions(static_cast<Ogre::Real>(mVp->getActualWidth()),static_cast<Ogre::Real>(mVp->getActualHeight()));
         mContainer->setMaterialName(mMaterial->getName());
         mOverlay->add2D(mContainer);
         mOverlay->show();
@@ -627,9 +627,7 @@ namespace OgreUtils
             if(con)
             {
                 con->mDirectshowTexture->updateMovieTexture();
-                
-				if(!con->mDirectshowTexture->isPlayingMovie())//循环放
-				;
+      
             }
         }
 

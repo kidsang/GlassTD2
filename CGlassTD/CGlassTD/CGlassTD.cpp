@@ -46,9 +46,9 @@ void CGlassTD::createScene(void)
 	// ´´½¨³¡¾°
 	mpStageManager = new StageManager(mSceneMgr);
 	//mpStageManager->setStage(new StagePass1(mSceneMgr, mpStageManager, mGui));
-	//mpStageManager->setStage(new StartStage(mSceneMgr, mpStageManager, mGui)); 
+	mpStageManager->setStage(new StartStage(mSceneMgr, mpStageManager, mGui)); 
 	//mpStageManager->setStage(new StageSelect(mSceneMgr, mpStageManager, mGui)); 
-	mpStageManager->setStage(new cutScenes(mSceneMgr, mpStageManager, mGui));
+	//mpStageManager->setStage(new cutScenes(mSceneMgr, mpStageManager, mGui));
 }
 
 bool CGlassTD::frameRenderingQueued( const Ogre::FrameEvent& evt )

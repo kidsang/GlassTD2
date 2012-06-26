@@ -10,7 +10,7 @@ public :
 	cutScenes(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui): Stage(sceneManager, stageManager, gui)
 	{
 		Ogre::Root::getSingleton().addFrameListener(new OgreUtils::DirectShowManager(mCamera->getViewport()));
-		mDirectshowControl = OgreUtils::DirectShowManager::getSingleton().createDirectshowControl("test","E:\Logo_800.avi",800,340);
+		mDirectshowControl = OgreUtils::DirectShowManager::getSingleton().createDirectshowControl("test","../Media/1.avi",1024,768);
 	};
 	~cutScenes(){
 		Ogre::OverlayManager::getSingleton().destroyAll();
