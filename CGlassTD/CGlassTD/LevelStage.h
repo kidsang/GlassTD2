@@ -175,6 +175,8 @@ protected:
 	/// 场景是否在运行
 	bool mIsRunning;
 
+	/// 平行光
+	Light* mLight;
 
 	///GUI
 public:
