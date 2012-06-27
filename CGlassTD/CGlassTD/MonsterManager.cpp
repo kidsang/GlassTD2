@@ -75,6 +75,7 @@ void MonsterManager::monsterGenerate(Ogre::SceneManager* sceneManager, float tim
 		mNewMonsterTime = Ogre::Math::RangeRandom(mCurrentWave.timeInteval1, mCurrentWave.timeInteval2);
 		if(mWaveIsBegin)
 			Stage::playSound("../Media/Sound/nextWave.wav", false);
+		mWaveIsBegin = false;
 		
 	}
 }
