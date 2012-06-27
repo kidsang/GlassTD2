@@ -3,6 +3,7 @@
 #include "StagePass1Step0.h"
 #include "StartStage.h"
 #include "Money.h"
+#include "GameResource.h"
 
 LevelStage::LevelStage(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui, int level)
 	: Stage(sceneManager, stageManager, gui),
@@ -462,23 +463,9 @@ void LevelStage::showEscMenu()
 	mKeyboardControl = false;
 	setRunning(false);
 	MyGUI::ImageBox* stages = getGUI()->findWidget<MyGUI::ImageBox>("esc_word_of_stages");
-	switch(getLevel())
-	{
-	case 1:
-		stages->setImageTexture("word_stage1.png");
-		break;
-	case 2:
-		stages->setImageTexture("word_stage2.png");
-		break;
-	case 3:
-		stages->setImageTexture("word_stage3.png");
-		break;
-	default:
-		stages->setImageTexture("word_stage1.png");
-		break;
-	}
+	stages->setImageTexture(GameResource::WORD_OF_STAGE[getLevel() - 1]);
 	MyGUI::ImageBox* result = getGUI()->findWidget<MyGUI::ImageBox>("esc_result_of_play");
-	result->setImageTexture("fail.png");
+	result->setImageTexture(GameResource::WORD_RESULT_PAUSE);
 	getGUI()->findWidget<MyGUI::Window>("esc_window")->setVisible(true);
 }
 void LevelStage::unShowEscMenu()
