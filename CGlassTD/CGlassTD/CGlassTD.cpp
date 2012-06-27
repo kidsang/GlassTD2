@@ -39,6 +39,10 @@ void CGlassTD::createScene(void)
 	Questions::init(mGui);
 	Money::init(mGui);
 
+	Ogre::Camera* camera = mSceneMgr->getCamera("PlayerCam");
+	Ogre::CompositorManager::getSingleton().addCompositor(camera->getViewport(), "Bloom");
+	Ogre::CompositorManager::getSingleton().setCompositorEnabled(camera->getViewport(), "Bloom", true);
+
 	// test gui
 	//MyGUI::ButtonPtr button = mGui->createWidget<MyGUI::Button>("Button", 10, 10, 300, 26, MyGUI::Align::Default, "Main");
 	//button->setCaption("exit");

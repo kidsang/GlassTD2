@@ -22,6 +22,7 @@ bool StagePass1Step1::run(float timeSinceLastFrame)
 	// 飞船爆了，要弹出一个框框，上面有两个按钮：返回主菜单和重玩
 	if (mStagePass1->isRunning() && mStagePass1->getUFO()->isDestroy())
 	{
+		mStagePass1->setEnd(true);
 		// 如果正处于答题阶段，强制终止答题先
 		if (Questions::getInstance()->isAnswering())
 			Questions::getInstance()->giveUp();
@@ -56,6 +57,8 @@ bool StagePass1Step1::run(float timeSinceLastFrame)
 	// 游戏胜利
 	else if (mStagePass1->isRunning() && monsterManager->isWinGame())
 	{
+		mStagePass1->setEnd(true);
+	
 		// 如果正处于答题阶段，强制终止答题先
 		if (Questions::getInstance()->isAnswering())
 			Questions::getInstance()->giveUp();
@@ -137,7 +140,7 @@ bool StagePass1Step1::onKeyPressed(const OIS::KeyEvent& arg)
 		mStagePass1->getCannon()->changeBullet(arg.key - OIS::KC_1);
 	}
 	// 答题
-	else if (arg.key == OIS::KC_Q)
+	else if (arg.key == OIS::KC_Q && !mStagePass1->isEnd())
 		Questions::getInstance()->popUpQuestion();
 	// test by kid
 	else if (arg.key == OIS::KC_L)

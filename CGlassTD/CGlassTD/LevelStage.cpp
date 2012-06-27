@@ -7,7 +7,8 @@
 LevelStage::LevelStage(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui, int level)
 	: Stage(sceneManager, stageManager, gui),
 	mCurrentStep(0), mCannon(0), mMaze(0), mMonsterManager(0), mUFO(0),
-	mGravity(Vector3(0, -200, 0)), mIsRunning(true),mLevel(level)
+	mGravity(Vector3(0, -200, 0)), mIsRunning(true),mLevel(level),
+	mLight(0), mIsEnd(false)
 {
 	if (Money::getInstance() == 0)
 		Money::init(gui);
@@ -30,12 +31,28 @@ LevelStage::LevelStage(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	mGui->findWidget<MyGUI::Window>("ed_window")->setVisible(false);
 
 	levelStageLayout = MyGUI::LayoutManager::getInstance().loadLayout("my.layout");
+
+	// 增加光源
+	mSceneManager->setAmbientLight(ColourValue(0.6, 0.6, 0.6));
+	mLight = mSceneManager->createLight();
+	mLight->setType(Ogre::Light::LT_DIRECTIONAL);
+	mLight->setDiffuseColour(Ogre::ColourValue());
+	mLight->setDirection(Vector3(-1, -1, 1));
+	mLight->setVisible(true);
+	// 设置阴影
+	//mSceneManager->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 }
 
 LevelStage::~LevelStage()
 {
 	MyGUI::LayoutManager::getInstance().unloadLayout(mEdLayout);
 	MyGUI::LayoutManager::getInstance().unloadLayout(levelStageLayout);
+	mSceneManager->setShadowTechnique(Ogre::SHADOWTYPE_NONE);
+	if (mLight)
+	{
+		mSceneManager->destroyLight(mLight);
+		mLight = 0;
+	}
 	if (mCurrentStep)
 	{
 		delete mCurrentStep;
@@ -96,6 +113,9 @@ bool LevelStage::run(float timeSinceLastFrame)
 
 bool LevelStage::onKeyPressed(const OIS::KeyEvent &arg)
 {
+	// 测试光源
+	if (arg.key == OIS::KC_O)
+		mLight->setVisible(!mLight->getVisible());
 	return mCurrentStep->onKeyPressed(arg);
 }
 
