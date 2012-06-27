@@ -58,7 +58,7 @@ bool StagePass1Step0::run(float timeSinceLastFrame)
 	else if (campos.z > zlimit) campos.z = zlimit;
 	mStagePass1->getCamera()->setPosition(campos);
 
-	return true;
+	return (!mStagePass1->getQuitFlag());
 }
 
 bool StagePass1Step0::onKeyPressed(const OIS::KeyEvent& arg)
@@ -81,6 +81,9 @@ bool StagePass1Step0::onKeyPressed(const OIS::KeyEvent& arg)
 			mStagePass1->change0to1();
 		}
 		break;
+	case OIS::KC_ESCAPE:
+		mStagePass1->showEscMenu();
+		break;
 	// 暂时
 	// 按 A 键地刺, 按 B 键沼泽， 按 C 键捕兽夹
 	case OIS::KC_A:
@@ -92,6 +95,7 @@ bool StagePass1Step0::onKeyPressed(const OIS::KeyEvent& arg)
 	case OIS::KC_C:
 		mCurrentState = WITH_TRAP;
 		break;
+	
 	}
 	
 	return true;
@@ -162,6 +166,9 @@ bool StagePass1Step0::onMouseMoved(const OIS::MouseEvent& arg)
 
 bool StagePass1Step0::onMousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
 {
+
+	if(!mStagePass1->getKeyboardController())
+		return false;
 	if (id != OIS::MB_Left) return true;  // 暂时让只有左键才会生效
 	if (mCurrentState == NOTHING) return true;  // 用户没有选中任何陷阱
 

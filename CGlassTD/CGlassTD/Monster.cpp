@@ -9,7 +9,7 @@
 #define HAS_STEP 2
 #define SET_MARK 3
 
-Monster::Monster(SceneNode* node, Maze* maze, MonsterManager* monsterMgr)
+Monster::Monster(SceneNode* node, Entity* entity, Maze* maze, MonsterManager* monsterMgr)
 	:
 	mMonsterManager(monsterMgr),
 	mSpeedPre(1),
@@ -30,10 +30,12 @@ Monster::Monster(SceneNode* node, Maze* maze, MonsterManager* monsterMgr)
 	mBulletHarmValue(0),
 	mTerrainHarmvalue(0),
 	mHealthHUD(0),
-	mIsGetUFO(false)
+	mIsGetUFO(false),
+	mNode(node),
+	mEntity(entity),
+	mMaze(maze),
+	mFrozenPs(0), mBurnPs(0)
 {
-	mNode = node;
-	mMaze = maze;
 	mCheckMethod = new CheckMethod();
 	mMonsterState = new MonsterState();
 
@@ -43,6 +45,7 @@ Monster::Monster(SceneNode* node, Maze* maze, MonsterManager* monsterMgr)
 	fromPos = startPos[i];
 	findPath(fromPos);
 	this->transPos();
+
 }
 
 Monster::~Monster(void)
@@ -57,8 +60,9 @@ Monster::~Monster(void)
 		delete (*iter);*/
 	if(mNode)
 	{
-		MovableObject* obj = mNode->getAttachedObject(0);
-		delete obj;
+		mNode->detachObject(mEntity);
+		delete mEntity;
+		mEntity = 0;
 		mNode->getParentSceneNode()->removeAndDestroyChild(mNode->getName());
 		mNode = 0;
 	}
@@ -159,9 +163,7 @@ void Monster::setMesh( Ogre::String mesh )
 
 void Monster::setAnimate(std::string animateName, bool isLoop)
 {
-	Ogre::Entity* entity;
-	entity = (Ogre::Entity*)mNode->getAttachedObject(0);
-	mAnimationState = entity->getAnimationState(animateName);
+	mAnimationState = mEntity->getAnimationState(animateName);
 	mAnimationState->setLoop(isLoop);
 	mAnimationState->setEnabled(true);
 }
@@ -211,6 +213,27 @@ void Monster::harmCheck(float timeSinceLastFrame)
 	ColourValue minHealthCol = ColourValue(1, 0, 0);
 	ColourValue currHealthCol = maxHealthCol * healthPer + minHealthCol * (1 - healthPer);
 	health->setColour(currHealthCol);
+
+	// 设置是否显示着火和冰冻
+	if (!mFrozenPs)
+		mFrozenPs = (ParticleSystem*)mNode->getAttachedObject(mNode->getName() + "frozen");
+	if (!mBurnPs)
+		mBurnPs = (ParticleSystem*)mNode->getAttachedObject(mNode->getName() + "burn");
+	if (mMonsterState->getBulletState() == "ice")
+	{
+		mBurnPs->setVisible(false);
+		mFrozenPs->setVisible(true);
+	}
+	else if (mMonsterState->getBulletState() == "fire")
+	{
+		mBurnPs->setVisible(true);
+		mFrozenPs->setVisible(false);
+	}
+	else
+	{
+		mBurnPs->setVisible(false);
+		mFrozenPs->setVisible(false);
+	}
 }
 
 bool Monster::isMonsterDead()
@@ -624,10 +647,10 @@ Monster* MonsterFactory::createInstance(SceneManager* sceneMgr, Maze* maze, Mons
 {
 	Ogre::SceneNode* monsterNode = sceneMgr->getRootSceneNode()->createChildSceneNode();
 	Ogre::Entity* entity = sceneMgr->createEntity(mParams["mesh"]);
-	entity->setCastShadows(true);
+	//entity->setCastShadows(true);
 	monsterNode->attachObject(entity);
 	Monster* mon;
-	mon = new Monster(monsterNode, maze, monsterMgr);
+	mon = new Monster(monsterNode, entity, maze, monsterMgr);
 	if (mParams.find("radius") != mParams.end())
 		mon->setRadius((float)atof(mParams["radius"].c_str()));
 
@@ -664,6 +687,15 @@ Monster* MonsterFactory::createInstance(SceneManager* sceneMgr, Maze* maze, Mons
 	//b->setColour(ColourValue(0, 0.75f, 0));
 	//b->setDimensions(96, 12);
 	mon->setHealthHUD(healthHUD);
+
+	// 测试粒子by kid
+    Ogre::ParticleSystem* ps = sceneMgr->createParticleSystem(monsterNode->getName() + "frozen", "Glass/MonsterFrozen");
+	monsterNode->attachObject(ps);
+	ps->setVisible(false);
+    ps = sceneMgr->createParticleSystem(monsterNode->getName() + "burn", "Glass/MonsterBurn");
+	monsterNode->attachObject(ps);
+	ps->setVisible(false);
+
 	return mon;
 }
 

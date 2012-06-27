@@ -4,7 +4,12 @@ material Glass/Red
     {
         pass
         {
-            ambient 1 0 0
+            ambient 1 1 1 
+
+            texture_unit
+            {
+                texture redball.jpg
+            }
         }
     }
 }
@@ -15,7 +20,12 @@ material Glass/Blue
     {
         pass
         {
-            ambient 0 0 1
+            ambient 1 1 1 
+
+            texture_unit
+            {
+                texture blueball.jpg
+            }
         }
     }
 }
@@ -50,11 +60,6 @@ material Glass/FireBall
         pass
         {
             ambient 1 1 1 
-
-            fragment_program_ref Glass/testglsl
-            {
-                param_named diffuseMap int 0
-            }
 
             texture_unit
             {
