@@ -1,5 +1,5 @@
-#include "StagePass3.h"
-#include "StagePass4.h"
+#include "StagePass5.h"
+#include "StagePass6.h"
 #include "StagePass1Step1.h"
 #include "StagePass1Step0.h"
 #include "StageLoadingLevelStage.h"
@@ -7,8 +7,8 @@
 #include "UFO.h"
 #include "ParamParser.h"
 
-StagePass3::StagePass3(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui)
-	: LevelStage(sceneManager, stageManager, gui, 3)
+StagePass5::StagePass5(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui)
+	: LevelStage(sceneManager, stageManager, gui, 5)
 {
 	/// 初始化大炮
 	initializeCannon("CannonDefine.xml", "BulletDefine.xml");
@@ -30,22 +30,22 @@ StagePass3::StagePass3(Ogre::SceneManager* sceneManager, StageManager* stageMana
 
 	/// 设置天空盒
 	//mSceneManager->setSkyBox(true, "Examples/EveSpaceSkyBox");
-	
+
 	mCurrentStep = new StagePass1Step0(this);
 	mCurrentStep->init();
 }
 
 
-StagePass3::~StagePass3(void)
+StagePass5::~StagePass5(void)
 {
 }
 
-void StagePass3::onEdReplayBtnClick( MyGUI::Widget* sender )
+void StagePass5::onEdReplayBtnClick( MyGUI::Widget* sender )
 {
-	this->jumpToNextStage(new StageLoadingLevelStage<StagePass3>(mSceneManager, mStageManager, mGui));
+	this->jumpToNextStage(new StageLoadingLevelStage<StagePass5>(mSceneManager, mStageManager, mGui));
 }
 
-void StagePass3::onEdNextBtnClick( MyGUI::Widget* sender )
+void StagePass5::onEdNextBtnClick( MyGUI::Widget* sender )
 {
-	this->jumpToNextStage(new StageLoadingLevelStage<StagePass4>(mSceneManager, mStageManager, mGui));
+	this->jumpToNextStage(new StageLoadingLevelStage<StagePass6>(mSceneManager, mStageManager, mGui));
 }

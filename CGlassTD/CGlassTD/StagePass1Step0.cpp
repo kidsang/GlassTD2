@@ -41,11 +41,23 @@ bool StagePass1Step0::run(float timeSinceLastFrame)
 {
 	// 卷动画面
 #ifdef _DEBUG
-	int moveStep = 60;
+	const int moveStep = 60;
 #else
-	int moveStep = 5;
+	const int moveStep = 5;
 #endif
 	mStagePass1->getCamera()->move(Ogre::Vector3(moveStep * mRollX, 0, moveStep * mRollY));
+
+	// 限制照相机在某个范围内
+	// 丑陋的代码by kid
+	Vector3 campos = mStagePass1->getCamera()->getPosition();
+	const int xlimit = 1000;
+	const int zlimit = 1100;
+	if (campos.x < -xlimit) campos.x = -xlimit;
+	else if (campos.x > xlimit) campos.x = xlimit;
+	if (campos.z < zlimit * .2f) campos.z = zlimit * .2f;
+	else if (campos.z > zlimit) campos.z = zlimit;
+	mStagePass1->getCamera()->setPosition(campos);
+
 	return true;
 }
 
