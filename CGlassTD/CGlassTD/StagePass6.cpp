@@ -20,7 +20,7 @@ StagePass6::StagePass6(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	MonsterManager::initialize(mMaze, "MonsterDefine.xml");
 	mMonsterManager = MonsterManager::getMonsterManager();
 	/// 初始化一波一波怪物的参数,每层的波数不一样
-	mMonsterManager->setMonsterWave("monsterWave.xml");
+	mMonsterManager->setMonsterWave("monsterWave6.xml");
 	mMonsterManager->setUFO(mUFO);
 
 	// 为结束画面菜单增加回调
