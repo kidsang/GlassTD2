@@ -6,7 +6,7 @@
 
 LevelStage::LevelStage(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui, int level)
 	: Stage(sceneManager, stageManager, gui),
-	mCurrentStep(0), mCannon(0), mMaze(0), mMonsterManager(0), mUFO(0),
+	mCurrentStep(0), mCannon(0), mMaze(0), mMonsterManager(0), mUFO(0),mKeyboardControl(true),quitFlag(false),
 	mGravity(Vector3(0, -200, 0)), mIsRunning(true),mLevel(level)
 {
 	if (Money::getInstance() == 0)
@@ -28,6 +28,21 @@ LevelStage::LevelStage(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	palyAgain->eventMouseButtonReleased += MyGUI::newDelegate(this, &LevelStage::onEdReplayBtnRelease);
 	mGui->findWidget<MyGUI::Window>("ed_window")->setPosition(270,200);
 	mGui->findWidget<MyGUI::Window>("ed_window")->setVisible(false);
+	// 按下Esc键弹出画面
+	mEdEscLayout = MyGUI::LayoutManager::getInstance().loadLayout("esc.layout");
+	MyGUI::ImageBox* resumeBtn;
+	MyGUI::ImageBox* exitBtn;
+	backToMenu = mGui->findWidget<MyGUI::ImageBox>("esc_back_to_menu");
+	backToMenu->eventMouseButtonPressed += MyGUI::newDelegate(this, &LevelStage::onEdEscBackToMenuBtnPress);
+	backToMenu->eventMouseButtonReleased += MyGUI::newDelegate(this, &LevelStage::onEdEscBackToMenuBtnRelease);
+	resumeBtn = mGui->findWidget<MyGUI::ImageBox>("esc_resume_game");
+	resumeBtn->eventMouseButtonPressed += MyGUI::newDelegate(this, &LevelStage::onEdEscResumeBtnPress);
+	resumeBtn->eventMouseButtonReleased += MyGUI::newDelegate(this, &LevelStage::onEdEscResumeBtnRelease);
+	exitBtn = mGui->findWidget<MyGUI::ImageBox>("esc_exit_game");
+	exitBtn->eventMouseButtonPressed += MyGUI::newDelegate(this, &LevelStage::onEdEscExitBtnPress);
+	exitBtn->eventMouseButtonReleased += MyGUI::newDelegate(this, &LevelStage::onEdEscExitBtnRelease);
+	mGui->findWidget<MyGUI::Window>("esc_window")->setPosition(270,200);
+	mGui->findWidget<MyGUI::Window>("esc_window")->setVisible(false);
 
 	levelStageLayout = MyGUI::LayoutManager::getInstance().loadLayout("my.layout");
 }
@@ -36,6 +51,7 @@ LevelStage::~LevelStage()
 {
 	MyGUI::LayoutManager::getInstance().unloadLayout(mEdLayout);
 	MyGUI::LayoutManager::getInstance().unloadLayout(levelStageLayout);
+	MyGUI::LayoutManager::getInstance().unloadLayout(mEdEscLayout);
 	if (mCurrentStep)
 	{
 		delete mCurrentStep;
@@ -418,4 +434,97 @@ void LevelStage::onEdBackToMenuBtnRelease( MyGUI::Widget* _sender, int _left, in
 int LevelStage::getLevel()
 {
 	return mLevel;
+}
+
+void LevelStage::showEscMenu()
+{
+	MyGUI::PointerManager::getInstance().setVisible(true);
+	mKeyboardControl = false;
+	setRunning(false);
+	MyGUI::ImageBox* stages = getGUI()->findWidget<MyGUI::ImageBox>("esc_word_of_stages");
+	switch(getLevel())
+	{
+	case 1:
+		stages->setImageTexture("word_stage1.png");
+		break;
+	case 2:
+		stages->setImageTexture("word_stage2.png");
+		break;
+	case 3:
+		stages->setImageTexture("word_stage3.png");
+		break;
+	default:
+		stages->setImageTexture("word_stage1.png");
+		break;
+	}
+	MyGUI::ImageBox* result = getGUI()->findWidget<MyGUI::ImageBox>("esc_result_of_play");
+	result->setImageTexture("fail.png");
+	getGUI()->findWidget<MyGUI::Window>("esc_window")->setVisible(true);
+}
+void LevelStage::unShowEscMenu()
+{
+	MyGUI::PointerManager::getInstance().setVisible(false);
+	mKeyboardControl = true;
+	getGUI()->findWidget<MyGUI::Window>("esc_window")->setVisible(false);
+}
+
+void LevelStage::onEdEscBackToMenuBtnPress( MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id )
+{
+	if(_id.toValue() != 0)
+		return;
+	MyGUI::ImageBox* backToMenu = mGui->findWidget<MyGUI::ImageBox>("esc_back_to_menu");
+	backToMenu->setImageTexture("backToMenuPress.png");
+}
+
+void LevelStage::onEdEscBackToMenuBtnRelease( MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id )
+{
+	if(_id.toValue() != 0)
+		return;
+	MyGUI::ImageBox* backToMenu = mGui->findWidget<MyGUI::ImageBox>("esc_back_to_menu");
+	backToMenu->setImageTexture("backToMenu.png");
+	onEdHomeBtnClick(_sender);
+}
+
+void LevelStage::onEdEscResumeBtnPress( MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id )
+{
+	if(_id.toValue() != 0)
+		return;
+	MyGUI::ImageBox* backToMenu = mGui->findWidget<MyGUI::ImageBox>("esc_resume_game");
+	backToMenu->setImageTexture("resumeGamePress.png");
+
+}
+
+void LevelStage::onEdEscResumeBtnRelease( MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id )
+{
+	if(_id.toValue() != 0)
+		return;
+	MyGUI::ImageBox* backToMenu = mGui->findWidget<MyGUI::ImageBox>("esc_resume_game");
+	backToMenu->setImageTexture("resumeGame.png");
+	setRunning(true);
+	unShowEscMenu();
+	
+}
+
+void LevelStage::onEdEscExitBtnPress( MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id )
+{
+	if(_id.toValue() != 0)
+		return;
+	MyGUI::ImageBox* backToMenu = mGui->findWidget<MyGUI::ImageBox>("esc_exit_game");
+	backToMenu->setImageTexture("exitGamePress.png");
+}
+
+void LevelStage::onEdEscExitBtnRelease( MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id )
+{
+	if(_id.toValue() != 0)
+		return;
+	MyGUI::ImageBox* backToMenu = mGui->findWidget<MyGUI::ImageBox>("esc_exit_game");
+	backToMenu->setImageTexture("exitGame.png");
+	unShowEscMenu();
+	//退出动作
+	quitFlag = true;
+}
+
+bool LevelStage::getKeyboardController()
+{
+	return mKeyboardControl;
 }

@@ -19,6 +19,8 @@ class LevelStage : public Stage
 private:
 	int mLevel;
 	String* mWallType;
+	bool mKeyboardControl;
+	bool quitFlag;
 public:
 	/// 构造函数
 	LevelStage(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui, int level);
@@ -29,6 +31,11 @@ public:
 	/// 获取当前关卡
 	int getLevel();
 
+	bool getQuitFlag()
+	{
+		return quitFlag;
+	}
+	bool getKeyboardController();
 	/// 跳到第i个步骤
 	void jumpToStep(Step* step);
 
@@ -188,10 +195,17 @@ public:
 	static const int imageSize = 40;
 	MyGUI::ImageBox* bulletImage[imageCount];
 	MyGUI::TextBox* bulletCount[imageCount];
+
+	/// 显示Esc弹出菜单
+	void showEscMenu();
+	/// 注销显示Esc菜单
+	void unShowEscMenu();
 	/// 结束画面根
 	MyGUI::VectorWidgetPtr mEdLayout;
-
 	// 结束画面回调函数
+
+	/// Esc画面根
+	MyGUI::VectorWidgetPtr mEdEscLayout;
 protected:
 	/// 回主菜单
 	void onEdHomeBtnClick(MyGUI::Widget* sender);
@@ -216,6 +230,17 @@ protected:
 
 	void onEdNextBtnRelease(MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id);
 
+	void onEdEscBackToMenuBtnPress(MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id);
+
+	void onEdEscBackToMenuBtnRelease(MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id);
+
+	void onEdEscResumeBtnPress(MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id);
+
+	void onEdEscResumeBtnRelease(MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id);
+
+	void onEdEscExitBtnPress(MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id);
+
+	void onEdEscExitBtnRelease(MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id);
 };
 
 
