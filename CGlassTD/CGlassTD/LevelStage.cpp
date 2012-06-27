@@ -8,7 +8,7 @@ LevelStage::LevelStage(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	: Stage(sceneManager, stageManager, gui),
 	mCurrentStep(0), mCannon(0), mMaze(0), mMonsterManager(0), mUFO(0),
 	mGravity(Vector3(0, -200, 0)), mIsRunning(true),mLevel(level),
-	mLight(0)
+	mLight(0), mIsEnd(false)
 {
 	if (Money::getInstance() == 0)
 		Money::init(gui);
@@ -231,7 +231,7 @@ void LevelStage::initializeMaze( const std::string& mazeDefine, const std::strin
 	mWallType[2] = "tree.mesh";
 	mWallType[3] = "mushroomHouse.mesh";
 	mWallType[4] = "sunflower.mesh";
-	mWallType[5] = "tree.mesh";
+	mWallType[5] = "stone.mesh";
 	mWallType[6] = "whiteHouse1.mesh";
 	mWallType[7] = "whiteHouse2.mesh";
 	mWallType[8] = "whiteHouse3.mesh";

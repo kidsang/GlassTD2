@@ -2,7 +2,7 @@
 <UFOs>
     <UFO
         mesh="ship.mesh"
-        position="800 0 -50"
+        position="1800 0 -700"
         blood="100"
         />
 </UFOs>
