@@ -302,7 +302,7 @@ void MonsterManager::setMonsterWave( String fileName )
 		wave.smallFireMonster = (atoi((*waveParams)["smallFireMonster"].c_str()));
 		wave.bigNormalMonster = (atoi((*waveParams)["bigNormalMonster"].c_str()));
 		wave.bigIceMonster = (atoi((*waveParams)["bigIceMonster"].c_str()));
-		wave.bigFireMonster = (atoi((*waveParams)["smallFireMonster"].c_str()));
+		wave.bigFireMonster = (atoi((*waveParams)["bigFireMonster"].c_str()));
 		wave.timeInteval1 = (atof((*waveParams)["timeInterval1"].c_str()));
 		wave.timeInteval2  = (atof((*waveParams)["timeInterval2"].c_str()));
 		mMonsterWave.push_back(wave);
