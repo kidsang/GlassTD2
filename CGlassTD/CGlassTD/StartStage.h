@@ -46,6 +46,7 @@ private:
 	MyGUI::ImageBox* lifeBtn;
 	MyGUI::ImageBox* settingBtn;
 	MyGUI::ImageBox* quitBtn;
+	MyGUI::ImageBox* helpBtn;
 	MyGUI::VectorWidgetPtr mLayout;
 	int flag;
 	int preFlag;

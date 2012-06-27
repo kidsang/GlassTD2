@@ -18,6 +18,7 @@ class LevelStage : public Stage
 {
 private:
 	int mLevel;
+	String* mWallType;
 public:
 	/// ¹¹Ôìº¯Êı
 	LevelStage(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui, int level);

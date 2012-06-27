@@ -111,7 +111,9 @@ protected:
 	/// 地形的伤害值
 	float mTerrainHarmvalue;
 	/// 怪兽的速度
-	float mSpeed;
+	float mSpeedPre;
+	/// 怪兽当前的速度
+	float mSpeedCurrent;
 	/// 怪兽的速度备份，以便还原速度
 	float mSpeedTemp;
 	/// 怪物的血量
@@ -223,6 +225,8 @@ public:
 
 	/// 状态恢复
 	void stateRecover();
+	/// 检测怪物状态是否改变
+	void checkMonsterIsChange();
 
 	/// 是否触碰到UFO
 	bool isGetUFO()
@@ -290,7 +294,7 @@ private:
 
 };
 
-
+#include "SceneManagerContainer.h"
 class MonsterFactory
 {
 	NameValueList mParams;
@@ -301,6 +305,8 @@ public:
 		:mParams(params)
 	{
 		mType = params["name"];
+		// 预装载模型
+		delete SceneManagerContainer::getSceneManager()->createEntity(mParams["mesh"]);
 	}
 	~MonsterFactory()
 	{

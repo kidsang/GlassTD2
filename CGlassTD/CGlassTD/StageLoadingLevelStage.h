@@ -7,7 +7,7 @@
 template <typename T>
 class StageLoadingLevelStage : public Stage
 {
-	MyGUI::TextBox* mWarnText;
+	MyGUI::ImageBox* mImageBox;
 	int mCount;
 
 public:
@@ -15,16 +15,12 @@ public:
 		: Stage(sceneManager, stageManager, gui),
 		mCount(60)
 	{
-		// test by kid
-		mWarnText = mGui->createWidget<MyGUI::TextBox>("TextBox", 0, 0, 600, 300, MyGUI::Align::Center, "Main");
-		mWarnText->setCaption("loading...");
-		mWarnText->setAlign(MyGUI::Align::Center);
-		mWarnText->setTextColour(MyGUI::Colour::White);
-		mWarnText->setFontHeight(100);
+		mImageBox = mGui->createWidget<MyGUI::ImageBox>("ImageBox", 0, 0, 1024, 768, MyGUI::Align::Center, "Main");
+		mImageBox->setImageTexture("loading.gif");
 	}
 	~StageLoadingLevelStage(void)
 	{
-		mGui->destroyWidget(mWarnText);
+		mGui->destroyWidget(mImageBox);
 	}
 
 	virtual bool run( float timeSinceLastFrame )

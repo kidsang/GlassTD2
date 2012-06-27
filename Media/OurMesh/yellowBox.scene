@@ -1,0 +1,20 @@
+<scene formatVersion="1.0" upAxis="y" unitsPerMeter="1000" unitType="millimeters" minOgreVersion="1.7" ogreMaxVersion="2.4.3" author="OgreMax Scene Exporter (www.ogremax.com)" application="3DS Max">
+    <environment>
+        <colourAmbient r="0.333333" g="0.333333" b="0.333333" />
+        <colourBackground r="0" g="0" b="0" />
+        <clipping near="0" far="2.54e+006" />
+    </environment>
+    <nodes>
+        <node name="yellowBox">
+            <position x="0.404578" y="0.701936" z="1.64442" />
+            <scale x="0.877033" y="0.530005" z="0.877033" />
+            <rotation qx="0" qy="0" qz="0" qw="1" />
+            <entity name="yellowBox" castShadows="true" receiveShadows="true" meshFile="yellowBox.mesh">
+                <subentities>
+                    <subentity index="0" materialName="yellowBox_Material#01" />
+                    <subentity index="1" materialName="yellowBox_Material#02" />
+                </subentities>
+            </entity>
+        </node>
+    </nodes>
+</scene>

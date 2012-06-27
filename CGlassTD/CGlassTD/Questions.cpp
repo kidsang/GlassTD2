@@ -155,9 +155,9 @@ void Questions::handUpAnswer()
 		answer = "d";
 		
 	if (answer.compare(mCorrectAnswer) == 0)
-	{
 		Money::getInstance()->correctAnswer();
-	}
+	else
+		Money::getInstance()->wrongAnswer();
 }
 
 void Questions::giveUp()

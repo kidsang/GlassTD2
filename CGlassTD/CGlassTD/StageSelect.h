@@ -50,6 +50,9 @@ private:
 	MyGUI::ImageBox* stage1Btn;
 	MyGUI::ImageBox* stage2Btn;
 	MyGUI::ImageBox* stage3Btn;
+	MyGUI::ImageBox* stage4Btn;
+	MyGUI::ImageBox* stage5Btn;
+	MyGUI::ImageBox* stage6Btn;
 	MyGUI::ImageBox* backBtn;
 	MyGUI::VectorWidgetPtr mLayout;
 	int preFlag;

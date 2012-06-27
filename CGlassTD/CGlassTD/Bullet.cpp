@@ -45,6 +45,8 @@ Bullet* BulletFactory::createInstance( SceneManager* mgr )
 	node->attachObject((MovableObject*)entity);
 
 	Bullet* bullet = new Bullet(mgr, node, entity);
+	
+	bullet->setType(mType);
 
 	if (mParams.find("scale") != mParams.end())
 		node->setScale(Vector3((float)atof(mParams["scale"].c_str())));

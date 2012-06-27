@@ -1,8 +1,6 @@
 #include "StagePass1Step1.h"
 #include "Questions.h"
-
 #include "Sound.h"
-
 
 StagePass1Step1::StagePass1Step1(LevelStage* stagePass1)
 	: mStagePass1(stagePass1)
@@ -15,7 +13,6 @@ void StagePass1Step1::init()
 
 	mStagePass1->getCamera()->setPosition(Vector3(0, 1000, 1800));
 	mStagePass1->getCamera()->lookAt(Vector3(0, 0, 0));
-	//mStagePass1->getCamera()->setDirection(Vector3(0, -500, -1000));
 }
 
 bool StagePass1Step1::run(float timeSinceLastFrame)
@@ -25,10 +22,15 @@ bool StagePass1Step1::run(float timeSinceLastFrame)
 	// 飞船爆了，要弹出一个框框，上面有两个按钮：返回主菜单和重玩
 	if (mStagePass1->isRunning() && mStagePass1->getUFO()->isDestroy())
 	{
+		// 如果正处于答题阶段，强制终止答题先
+		if (Questions::getInstance()->isAnswering())
+			Questions::getInstance()->giveUp();
+		
 		MyGUI::PointerManager::getInstance().setVisible(true);
 		mStagePass1->setRunning(false);
 		Stage::playSound("../Media/Sound/lose.wav", false);
 		MyGUI::ImageBox* stages = mStagePass1->getGUI()->findWidget<MyGUI::ImageBox>("word_of_stages");
+		//stages->setImageTexture(GameResource::WORD_OF_STAGE[mStagePass1->getLevel() - 1]);
 		switch(mStagePass1->getLevel())
 		{
 		case 1:
@@ -54,24 +56,29 @@ bool StagePass1Step1::run(float timeSinceLastFrame)
 	// 游戏胜利
 	else if (mStagePass1->isRunning() && monsterManager->isWinGame())
 	{
+		// 如果正处于答题阶段，强制终止答题先
+		if (Questions::getInstance()->isAnswering())
+			Questions::getInstance()->giveUp();
+	
 		MyGUI::PointerManager::getInstance().setVisible(true);
 		mStagePass1->setRunning(false);
 		Stage::playSound("../Media/Sound/win.wav", false);
 		MyGUI::ImageBox* stages = mStagePass1->getGUI()->findWidget<MyGUI::ImageBox>("word_of_stages");
+		//stages->setImageTexture(GameResource::WORD_OF_STAGE[mStagePass1->getLevel() - 1]);
 		switch(mStagePass1->getLevel())
 		{
 		case 1:
-			stages->setImageTexture("word_stage1.png");
-			break;
+		stages->setImageTexture("word_stage1.png");
+		break;
 		case 2:
-			stages->setImageTexture("word_stage2.png");
-			break;
+		stages->setImageTexture("word_stage2.png");
+		break;
 		case 3:
-			stages->setImageTexture("word_stage3.png");
-			break;
+		stages->setImageTexture("word_stage3.png");
+		break;
 		default:
-			stages->setImageTexture("word_stage1.png");
-			break;
+		stages->setImageTexture("word_stage1.png");
+		break;
 		}
 		MyGUI::ImageBox* result = mStagePass1->getGUI()->findWidget<MyGUI::ImageBox>("result_of_play");
 		result->setImageTexture("sucess.png");
@@ -85,12 +92,14 @@ bool StagePass1Step1::run(float timeSinceLastFrame)
 		bulletManager.fly(timeSinceLastFrame, gravity);
 
 		Maze* maze = mStagePass1->getMaze();
-		std::vector<NameValueList> explodedBullets = bulletManager.getAndRemoveExplodedBullets(maze->getHorizon());
+		std::vector<NameValueList> explodedBullets = bulletManager.getAndRemoveExplodedBullets(maze->getHorizon(), SceneManagerContainer::getSceneManager());
 		monsterManager->updateState(
 			explodedBullets,
 			timeSinceLastFrame,
 			SceneManagerContainer::getSceneManager()
 			);
+
+		bulletManager.runExplodeAnimator(timeSinceLastFrame);
 	}
 	
 		

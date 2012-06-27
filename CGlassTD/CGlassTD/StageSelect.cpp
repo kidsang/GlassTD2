@@ -2,18 +2,26 @@
 #include "StagePass1.h"
 #include "StagePass2.h"
 #include "StagePass3.h"
+#include "StagePass4.h"
+#include "StagePass5.h"
+#include "StagePass6.h"
 #include "StartStage.h"
 #include "StageLoadingLevelStage.h"
 #include "Sound.h"
+#include "Money.h"
 
 StageSelect::StageSelect(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui)
 	: Stage(sceneManager, stageManager, gui),preFlag(-1),flag(0)
 {
+	Money::getInstance()->unDisplay();
 	mLayout = MyGUI::LayoutManager::getInstance().loadLayout("SelectStage.layout");
 	stageBG = this->getGUI()->findWidget<MyGUI::ImageBox>("stageBG");
 	stage1Btn = this->getGUI()->findWidget<MyGUI::ImageBox>("stage1"); 
 	stage2Btn = this->getGUI()->findWidget<MyGUI::ImageBox>("stage2"); 
 	stage3Btn = this->getGUI()->findWidget<MyGUI::ImageBox>("stage3"); 
+	stage4Btn = this->getGUI()->findWidget<MyGUI::ImageBox>("stage4"); 
+	stage5Btn = this->getGUI()->findWidget<MyGUI::ImageBox>("stage5"); 
+	stage6Btn = this->getGUI()->findWidget<MyGUI::ImageBox>("stage6"); 
 	backBtn = this->getGUI()->findWidget<MyGUI::ImageBox>("back"); 
 	
 	stageBG->eventMouseMove += MyGUI::newDelegate(this, &StageSelect::notifyMouseButtonMove);
@@ -30,7 +38,19 @@ StageSelect::StageSelect(Ogre::SceneManager* sceneManager, StageManager* stageMa
 	stage3Btn->eventMouseButtonPressed += MyGUI::newDelegate(this, &StageSelect::notifyMouseButtonPress);
 	stage3Btn->eventMouseButtonReleased += MyGUI::newDelegate(this, &StageSelect::notifyMouseButtonRelease);
 	
+	stage4Btn->eventMouseMove += MyGUI::newDelegate(this, &StageSelect::notifyMouseButtonMove);
+	stage4Btn->eventMouseButtonPressed += MyGUI::newDelegate(this, &StageSelect::notifyMouseButtonPress);
+	stage4Btn->eventMouseButtonReleased += MyGUI::newDelegate(this, &StageSelect::notifyMouseButtonRelease);
+
+	stage5Btn->eventMouseMove += MyGUI::newDelegate(this, &StageSelect::notifyMouseButtonMove);
+	stage5Btn->eventMouseButtonPressed += MyGUI::newDelegate(this, &StageSelect::notifyMouseButtonPress);
+	stage5Btn->eventMouseButtonReleased += MyGUI::newDelegate(this, &StageSelect::notifyMouseButtonRelease);
+
+	stage6Btn->eventMouseMove += MyGUI::newDelegate(this, &StageSelect::notifyMouseButtonMove);
+	stage6Btn->eventMouseButtonPressed += MyGUI::newDelegate(this, &StageSelect::notifyMouseButtonPress);
+	stage6Btn->eventMouseButtonReleased += MyGUI::newDelegate(this, &StageSelect::notifyMouseButtonRelease);
 	backBtn->eventMouseMove += MyGUI::newDelegate(this, &StageSelect::notifyMouseButtonMove);
+
 	backBtn->eventMouseButtonPressed += MyGUI::newDelegate(this, &StageSelect::notifyMouseButtonPress);
 	backBtn->eventMouseButtonReleased += MyGUI::newDelegate(this, &StageSelect::notifyMouseButtonRelease);
 }
@@ -49,6 +69,15 @@ void StageSelect::notifyMouseButtonMove( MyGUI::Widget* _sender, int _left, int 
 			break;
 		case 3:
 			stage3Btn->setImageTexture("stage3.png");
+			break;
+		case 5:
+			stage4Btn->setImageTexture("stage4.png");
+			break;
+		case 6:
+			stage5Btn->setImageTexture("stage5.png");
+			break;
+		case 7:
+			stage6Btn->setImageTexture("stage6.png");
 			break;
 		case 4:
 			backBtn->setImageTexture("back.png");
@@ -79,6 +108,23 @@ void StageSelect::notifyMouseButtonMove( MyGUI::Widget* _sender, int _left, int 
 		backBtn->setImageTexture("backMove.png");
 		preFlag = flag;
 		flag = 4;
+	}else if(_sender == stage4Btn)
+	{
+		stage4Btn->setImageTexture("stage4Move.png");
+		preFlag = flag;
+		flag = 5;
+	}
+	else if(_sender == stage5Btn)
+	{
+		stage5Btn->setImageTexture("stage5Move.png");
+		preFlag = flag;
+		flag = 6;
+	}
+	else if(_sender == stage6Btn)
+	{
+		stage6Btn->setImageTexture("stage6Move.png");
+		preFlag = flag;
+		flag = 7;
 	}
 	else 
 	{
@@ -103,6 +149,18 @@ void StageSelect::notifyMouseButtonPress( MyGUI::Widget* _sender, int _left, int
 	else if(_sender == stage3Btn)
 	{
 		stage3Btn->setImageTexture("stage3Press.png");
+	}
+	else if(_sender == stage4Btn)
+	{
+		stage4Btn->setImageTexture("stage4Press.png");
+	}
+	else if(_sender == stage5Btn)
+	{
+		stage5Btn->setImageTexture("stage5Press.png");
+	}
+	else if(_sender == stage6Btn)
+	{
+		stage6Btn->setImageTexture("stage6Press.png");
 	}
 	else if(_sender == backBtn)
 	{
@@ -133,6 +191,24 @@ void StageSelect::notifyMouseButtonRelease( MyGUI::Widget* _sender, int _left, i
 		stage3Btn->setImageTexture("stage3.png");
 		//Stage* nextStage = new StagePass3(this->mSceneManager, this->mStageManager, this->mGui);
 		Stage* nextStage = new StageLoadingLevelStage<StagePass3>(this->mSceneManager, this->mStageManager, this->mGui);
+		this->jumpToNextStage(nextStage);
+	}
+	else if(_sender == stage4Btn)
+	{
+		stage4Btn->setImageTexture("stage4.png");
+		Stage* nextStage = new StageLoadingLevelStage<StagePass4>(this->mSceneManager, this->mStageManager, this->mGui);
+		this->jumpToNextStage(nextStage);
+	}
+	else if(_sender == stage5Btn)
+	{
+		stage5Btn->setImageTexture("stage5.png");
+		Stage* nextStage = new StageLoadingLevelStage<StagePass5>(this->mSceneManager, this->mStageManager, this->mGui);
+		this->jumpToNextStage(nextStage);
+	}
+	else if(_sender == stage6Btn)
+	{
+		stage6Btn->setImageTexture("stage6.png");
+		Stage* nextStage = new StageLoadingLevelStage<StagePass6>(this->mSceneManager, this->mStageManager, this->mGui);
 		this->jumpToNextStage(nextStage);
 	}
 	else if(_sender == backBtn)

@@ -44,7 +44,7 @@ BaseApplication::~BaseApplication(void)
     //Remove ourself as a Window listener
     Ogre::WindowEventUtilities::removeWindowEventListener(mWindow, this);
     windowClosed(mWindow);
-    delete mRoot;
+	//delete mRoot;
 }
 
 //-------------------------------------------------------------------------------------

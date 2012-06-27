@@ -3,7 +3,7 @@
 
 Money* Money::instance = 0;
 
-Money::Money(MyGUI::Gui* gui) : mAmount(20), mTextBox(0), mGui(gui)
+Money::Money(MyGUI::Gui* gui) : mAmount(50), mTextBox(0), mGui(gui)
 {
 }
 
@@ -34,21 +34,44 @@ Money::~Money()
 	{
 		mGui->destroyWidget(mTextBox);
 	}
+	if(mImageBox != 0)
+	{
+		mGui->destroyWidget(mImageBox);
+	}
 }
 
 void Money::display()
 {
-	if (mTextBox != 0) return;
-
-	mTextBox = static_cast<MyGUI::TextBox*>( mGui->createWidgetT("TextBox", "TextBox", 30, 20, 180, 180, MyGUI::Align::Default, "Main") );
+	if (mTextBox != 0) 
+	{
+		mTextBox->setVisible(true);
+		mImageBox->setVisible(true);
+		return;
+	}
+	mImageBox = static_cast<MyGUI::ImageBox*>(mGui->createWidgetT("ImageBox", "ImageBox", 30, 20, 50, 50, MyGUI::Align::Default, "Main"));
+	mImageBox->setImageTexture("money.png");
+	mTextBox = static_cast<MyGUI::TextBox*>( mGui->createWidgetT("TextBox", "TextBox", 80, 40, 100, 100, MyGUI::Align::Default, "Main") );
 	mTextBox->setTextColour(MyGUI::Colour::White);
-	mTextBox->setCaption(std::string("Money: ") + this->getAmountStr());
+	mTextBox->setCaption(std::string("") + this->getAmountStr());
+}
+
+void Money::unDisplay()
+{
+	if (mTextBox == 0) return;
+	mTextBox->setVisible(false);
+	mImageBox->setVisible(false);
 }
 
 void Money::correctAnswer()
 {
 	mAmount += 10;
-	mTextBox->setCaption(std::string("Money: ") + this->getAmountStr());
+	mTextBox->setCaption(this->getAmountStr());
+}
+
+void Money::wrongAnswer()
+{
+	mAmount -= 3;
+	mTextBox->setCaption(this->getAmountStr());
 }
 
 bool Money::enough(Money::TrapType type)
@@ -100,7 +123,7 @@ bool Money::placeTrap(Money::TrapType type)
 	else
 	{
 		mAmount -= cost;
-		mTextBox->setCaption(std::string("Money: ") + this->getAmountStr());
+		mTextBox->setCaption(std::string("") + this->getAmountStr());
 		return true;
 	}
 }

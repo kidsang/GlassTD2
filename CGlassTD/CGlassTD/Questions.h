@@ -26,6 +26,9 @@ public:
 
 	/// 是否处在答题状态
 	bool isAnswering();
+
+	/// 放弃答题
+	void giveUp();
 	
 private:
 	void onRadioClick(MyGUI::Widget* _sender);
@@ -36,9 +39,6 @@ private:
 	
 	/// 提交答案
 	void handUpAnswer();
-	
-	/// 放弃答题
-	void giveUp();
 	
 private:
 	MyGUI::Gui* mGUI;

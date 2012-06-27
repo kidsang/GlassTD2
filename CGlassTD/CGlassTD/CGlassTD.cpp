@@ -3,6 +3,7 @@
 #include "Questions.h"
 #include "StartStage.h"
 #include "StageSelect.h"
+#include "cutScenes.h"
 #include "Money.h"
 
 //-------------------------------------------------------------------------------------
@@ -47,6 +48,7 @@ void CGlassTD::createScene(void)
 	//mpStageManager->setStage(new StagePass1(mSceneMgr, mpStageManager, mGui));
 	mpStageManager->setStage(new StartStage(mSceneMgr, mpStageManager, mGui)); 
 	//mpStageManager->setStage(new StageSelect(mSceneMgr, mpStageManager, mGui)); 
+	//mpStageManager->setStage(new cutScenes(mSceneMgr, mpStageManager, mGui));
 }
 
 bool CGlassTD::frameRenderingQueued( const Ogre::FrameEvent& evt )

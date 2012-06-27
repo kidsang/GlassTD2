@@ -1,4 +1,5 @@
 #include "StagePass3.h"
+#include "StagePass4.h"
 #include "StagePass1Step1.h"
 #include "StagePass1Step0.h"
 #include "StageLoadingLevelStage.h"
@@ -46,4 +47,5 @@ void StagePass3::onEdReplayBtnClick( MyGUI::Widget* sender )
 
 void StagePass3::onEdNextBtnClick( MyGUI::Widget* sender )
 {
+	this->jumpToNextStage(new StageLoadingLevelStage<StagePass4>(mSceneManager, mStageManager, mGui));
 }

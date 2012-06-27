@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Monsters>
+  <Time
+    newMonsterTime="1.0"
+     />
+   <Monster name="SmallNormalMonster"
+          mesh="normalMonster.mesh"
+          blood="100"
+          speed="200"
+          radius="10"
+          spell="normal"
+		  scale="1"
+          />
+	<Monster name="SmallIceMonster"
+          mesh="iceMonster.mesh"
+          blood="100"
+          speed="200"
+          radius="10"
+          spell="ice"
+		  scale="0.6"
+          />
+   <Monster name="SmallFireMonster"
+          mesh="fireMonster.mesh"
+          blood="100"
+          speed="200"
+          radius="10"
+          spell="fire"
+		  scale="0.6"
+          />
+   
+   <Monster name="BigNormalMonster"
+          mesh="normalMonster.mesh"
+          blood="100"
+          speed="200"
+          radius="10"
+          spell="normal"
+		  scale="2"
+          />
+   <Monster name="BigIceMonster"
+          mesh="iceMonster.mesh"
+          blood="100"
+          speed="200"
+          radius="10"
+          spell="ice"
+		  scale="1"
+          />
+   <Monster name="BigFireMonster"
+          mesh="fireMonster.mesh"
+          blood="100"
+          speed="200"
+          radius="10"
+          spell="fire"
+		  scale="1"
+          />
+</Monsters>
