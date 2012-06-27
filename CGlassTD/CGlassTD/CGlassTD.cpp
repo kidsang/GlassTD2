@@ -39,9 +39,14 @@ void CGlassTD::createScene(void)
 	Questions::init(mGui);
 	Money::init(mGui);
 
+	// 全屏幕泛光
 	Ogre::Camera* camera = mSceneMgr->getCamera("PlayerCam");
 	Ogre::CompositorManager::getSingleton().addCompositor(camera->getViewport(), "Bloom");
 	Ogre::CompositorManager::getSingleton().setCompositorEnabled(camera->getViewport(), "Bloom", true);
+
+	// 粒子系统
+    //Ogre::ParticleSystem* ps = mSceneMgr->createParticleSystem("Fireworks", "Examples/GreenyNimbus");
+	//mSceneMgr->getRootSceneNode()->attachObject(ps);
 
 	// test gui
 	//MyGUI::ButtonPtr button = mGui->createWidget<MyGUI::Button>("Button", 10, 10, 300, 26, MyGUI::Align::Default, "Main");
