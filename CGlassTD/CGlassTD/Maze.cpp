@@ -34,6 +34,8 @@ Maze::Maze(SceneManager* sceneManager, int* map, int width, int height, Ogre::Ve
 	this->pMapInfo = new int[mWidth * mHeight];
 	this->startPos = std::vector<Ogre::Vector3>();
 	this->mSceneNode->setPosition(Ogre::Vector3(-mWidth / 2.0f * this->mCellWidth, 0, -mHeight / 2.0f * this->mCellHeight));
+	this->mFloor = ObjectFactory::createEntity(sceneManager,"floor.mesh");
+	this->mFloorNode = ObjectFactory::createSceneNode(this->mSceneNode,this->mFloor, Vector3(0,Real(-180), 0));
 
 	for(int j = 0; j < height; ++j)
 	{

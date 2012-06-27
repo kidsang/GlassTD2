@@ -31,7 +31,6 @@ bool StagePass1Step1::run(float timeSinceLastFrame)
 		mStagePass1->setRunning(false);
 		Stage::playSound("../Media/Sound/lose.wav", false);
 		MyGUI::ImageBox* stages = mStagePass1->getGUI()->findWidget<MyGUI::ImageBox>("word_of_stages");
-		//stages->setImageTexture(GameResource::WORD_OF_STAGE[mStagePass1->getLevel() - 1]);
 		switch(mStagePass1->getLevel())
 		{
 		case 1:
@@ -106,11 +105,13 @@ bool StagePass1Step1::run(float timeSinceLastFrame)
 	}
 	
 		
-	return true;
+	return (!mStagePass1->getQuitFlag());
 }
 
 bool StagePass1Step1::onKeyPressed(const OIS::KeyEvent& arg)
 {
+	if(!mStagePass1->getKeyboardController())
+		return true;
 	// 处于答题阶段时无法进行操作
 	if (Questions::getInstance()->isAnswering()) return true;
 
@@ -145,12 +146,17 @@ bool StagePass1Step1::onKeyPressed(const OIS::KeyEvent& arg)
 	// test by kid
 	else if (arg.key == OIS::KC_L)
 		mStagePass1->getUFO()->setBlood(-1);
-		
+	else if(arg.key == OIS::KC_ESCAPE)
+	{
+		mStagePass1->showEscMenu();
+	}
 	return true;
 }
 
 bool StagePass1Step1::onMouseMoved(const OIS::MouseEvent& arg)
 {
+	if(!mStagePass1->getKeyboardController())
+		return true;
 	// 处于答题阶段时无法进行操作
 	if (Questions::getInstance()->isAnswering()) return true;
 

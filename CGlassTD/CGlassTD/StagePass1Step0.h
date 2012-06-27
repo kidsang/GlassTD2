@@ -49,7 +49,6 @@ private:
 	int mRollX;
 	/// 画面卷动鼠标Y方向标志位
 	int mRollY;
-
 	// debug
 	//MyGUI::StaticTextPtr debugText;
 };
