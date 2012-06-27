@@ -20,6 +20,7 @@ std::vector<int> MonsterManager::mMonsterFactoryRandom = std::vector<int>();
 int MonsterManager::mCurrentMonsterFactoryNum = 0;
 int MonsterManager::mCurrentWaveNum = 0;
 bool MonsterManager::mIsStopGenerateMonster = false;
+bool MonsterManager::mWaveIsBegin = false;
 
 MonsterManager::MonsterManager()
 {
@@ -72,6 +73,8 @@ void MonsterManager::monsterGenerate(Ogre::SceneManager* sceneManager, float tim
 		mMonsterMgr->MonsterNumPlus();
 		mMonsterMgr->setTimeCount(0.0f);
 		mNewMonsterTime = Ogre::Math::RangeRandom(mCurrentWave.timeInteval1, mCurrentWave.timeInteval2);
+		if(mWaveIsBegin)
+			Stage::playSound("../Media/Sound/nextWave.wav", false);
 		
 	}
 }
@@ -329,10 +332,14 @@ void MonsterManager::waveBegin()
 	/// 对当前波的怪物数量进行判断，等于0的时候就进行下一波
 	if(mCurrentWave.totalMonster == 0)
 	{
+		/// 这一波的开始标志
+		mWaveIsBegin = true;
+
 		++mCurrentWaveNum;
 		if((unsigned int)mCurrentWaveNum == mMonsterWave.size() || (unsigned int)mCurrentWaveNum > mMonsterWave.size())
 		{
 			mIsStopGenerateMonster = true;
+			mWaveIsBegin = false;
 			return;
 		}
 		mCurrentWave = mMonsterWave[mCurrentWaveNum];
@@ -342,6 +349,8 @@ void MonsterManager::waveBegin()
 		mMonsterFactoryRandom.clear();
 		for(unsigned int i = 0; i < mMonsterFactoryList.size(); i++)
 			mMonsterFactoryRandom.push_back(i);
+
+		
 
 	}
 	if(mCurrentWave.smallNormalMonster == 0)
