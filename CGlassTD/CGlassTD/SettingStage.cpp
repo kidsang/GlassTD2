@@ -1,9 +1,12 @@
 #include "SettingStage.h"
 #include "StartStage.h"
+#include "Stage.h"
 
 SettingStage::SettingStage(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui)
-	: Stage(sceneManager, stageManager, gui),musicFlag(true),soundFlag(true)
+	: Stage(sceneManager, stageManager, gui)
 {
+	musicFlag = Stage::getMusicFlag();
+	soundFlag = Stage::getSoundFlag();
 	mLayout = MyGUI::LayoutManager::getInstance().loadLayout("setting.layout");
 	sound = this->getGUI()->findWidget<MyGUI::ImageBox>("yinxiao");
 	music = this->getGUI()->findWidget<MyGUI::ImageBox>("yinyue"); 
