@@ -12,12 +12,12 @@ particle_system Glass/RedFlare
     emitter Box
     {
         angle           30
-        emission_rate   100
-        time_to_live    0.7
-        direction       0 1 0
+        emission_rate   150
+        time_to_live    0.3
+        direction       0 -1 0
         velocity    	0
         colour_range_start  1 0 0
-        colour_range_end    0.5 0.6 0.1
+        colour_range_end    0.5 0.8 0.2
         width           80
         height          80
         depth           60
@@ -36,6 +36,7 @@ particle_system Glass/RedFlare
         red -0.25
         green -0.25
         blue -0.25
+        alpha -0.25
     }
 }
 
@@ -53,9 +54,9 @@ particle_system Glass/BlueFlare
     emitter Box
     {
         angle           30
-        emission_rate   100
-        time_to_live    0.7
-        direction       0 1 0
+        emission_rate   150
+        time_to_live    0.3
+        direction       0 -1 0
         velocity    	0
         colour_range_start  0 0.2 1
         colour_range_end    0.6 0.6 0.3
@@ -77,6 +78,7 @@ particle_system Glass/BlueFlare
         red -0.25
         green -0.25
         blue -0.25
+        alpha -0.25
     }
 }
 
@@ -94,9 +96,9 @@ particle_system Glass/GreenFlare
     emitter Box
     {
         angle           30
-        emission_rate   100
-        time_to_live    0.7
-        direction       0 1 0
+        emission_rate   150
+        time_to_live    0.3
+        direction       0 -1 0
         velocity    	0
         colour_range_start  1 1 0
         colour_range_end    0.3 1 0.3
@@ -118,5 +120,6 @@ particle_system Glass/GreenFlare
         red -0.25
         green -0.25
         blue -0.25
+        alpha -0.25
     }
 }
