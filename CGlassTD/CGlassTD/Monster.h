@@ -125,6 +125,7 @@ protected:
 	/// 怪物的种类
 	std::string mType;
 	Ogre::SceneNode* mNode;
+	Entity* mEntity;
 	Ogre::String mMesh;
 	Ogre::AnimationState* mAnimationState;
 	/// 怪兽的半径范围
@@ -149,7 +150,7 @@ protected:
 public:
 	Monster(){}
 	//Monster(SceneNode* node);
-	Monster(SceneNode* node, Maze* maze, MonsterManager* monsterMgr);
+	Monster(SceneNode* node, Entity* entity, Maze* maze, MonsterManager* monsterMgr);
 	//Monster(SceneNode* node, Maze* maze);
 	//Monster(Ogre::SceneManager* sceneMgr, Ogre::SceneNode* parentNode, MonsterManager* monsterMgr);
 	~Monster(void);
