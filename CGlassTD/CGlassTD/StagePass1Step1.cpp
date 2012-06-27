@@ -3,7 +3,8 @@
 #include "Sound.h"
 
 StagePass1Step1::StagePass1Step1(LevelStage* stagePass1)
-	: mStagePass1(stagePass1)
+	: mStagePass1(stagePass1),
+	mCameraZoom(0)
 {
 	this->mStagePass1->createGUI1();
 }
@@ -160,7 +161,21 @@ bool StagePass1Step1::onMouseMoved(const OIS::MouseEvent& arg)
 	// 处于答题阶段时无法进行操作
 	if (Questions::getInstance()->isAnswering()) return true;
 
-	//StagePass1->getCannon()->rotate(-arg.state.X.rel, arg.state.Y.rel);
+	// 鼠标滚轮拉远拉近
+	int zoom = arg.state.Z.rel;
+	mCameraZoom += zoom;
+	if (mCameraZoom < -1000)
+	{
+		zoom += -1000 - mCameraZoom;
+		mCameraZoom = -1000;
+	}
+	else if (mCameraZoom > 0)
+	{
+		zoom += 0 - mCameraZoom;
+		mCameraZoom = 0;
+	}
+	mStagePass1->getCamera()->move(Vector3(0, zoom*0.6, zoom));
+	// 控制大炮
 	mStagePass1->getCannon()->rotate(-arg.state.X.rel, arg.state.Y.rel, mStagePass1->getCamera());
 	return true;
 }
