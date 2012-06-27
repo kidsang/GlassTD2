@@ -12,9 +12,9 @@ StagePass6::StagePass6(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	/// 初始化大炮
 	initializeCannon("CannonDefine.xml", "BulletDefine.xml");
 	/// 初始化迷宫
-	initializeMaze("MazeDefine3.xml", "CellDefine.xml");
+	initializeMaze("M6.xml", "CellDefine.xml");
 	/// 初始化飞船
-	initializeUFO("UFODefine3.xml");
+	initializeUFO("UFODefine6.xml");
 
 	/// 新增一个monster管理器
 	MonsterManager::initialize(mMaze, "MonsterDefine.xml");

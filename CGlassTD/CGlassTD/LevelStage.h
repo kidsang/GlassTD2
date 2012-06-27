@@ -97,6 +97,16 @@ public:
 		return mIsRunning;
 	}
 
+	bool isEnd()
+	{
+		return mIsEnd;
+	}
+
+	void setEnd(bool isEnd)
+	{
+		mIsEnd = isEnd;
+	}
+
 	void setRunning(bool isRunning)
 	{
 		mIsRunning = isRunning;
@@ -181,7 +191,12 @@ protected:
 	Vector3 mGravity;
 	/// 场景是否在运行
 	bool mIsRunning;
+	
+	// 游戏是否结束
+	bool mIsEnd;
 
+	/// 平行光
+	Light* mLight;
 
 	///GUI
 public:

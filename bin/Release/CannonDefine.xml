@@ -4,9 +4,9 @@
           gunMesh="cannon.mesh"
           tireMesh="tire.mesh"
           position="0 200 1300"
-          strength="1000"
+          strength="1500"
           offset="0 75 400"
-          angle="0.78 0.50"
+          angle="1.0 0.50"
           colddown="0.5"
           />
 </Cannons>

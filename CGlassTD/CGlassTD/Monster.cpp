@@ -624,6 +624,7 @@ Monster* MonsterFactory::createInstance(SceneManager* sceneMgr, Maze* maze, Mons
 {
 	Ogre::SceneNode* monsterNode = sceneMgr->getRootSceneNode()->createChildSceneNode();
 	Ogre::Entity* entity = sceneMgr->createEntity(mParams["mesh"]);
+	entity->setCastShadows(true);
 	monsterNode->attachObject(entity);
 	Monster* mon;
 	mon = new Monster(monsterNode, maze, monsterMgr);
