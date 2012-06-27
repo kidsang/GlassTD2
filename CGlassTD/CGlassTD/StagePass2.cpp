@@ -13,7 +13,7 @@ StagePass2::StagePass2(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	/// 初始化大炮
 	initializeCannon("CannonDefine.xml", "BulletDefine.xml");
 	/// 初始化迷宫
-	initializeMaze("MazeDefine2.xml", "CellDefine.xml");
+	initializeMaze("MX.xml", "CellDefine.xml");
 	/// 初始化飞船
 	initializeUFO("UFODefine2.xml");
 
