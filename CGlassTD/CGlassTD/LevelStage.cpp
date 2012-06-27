@@ -7,7 +7,8 @@
 LevelStage::LevelStage(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui, int level)
 	: Stage(sceneManager, stageManager, gui),
 	mCurrentStep(0), mCannon(0), mMaze(0), mMonsterManager(0), mUFO(0),
-	mGravity(Vector3(0, -200, 0)), mIsRunning(true),mLevel(level), mIsEnd(false)
+	mGravity(Vector3(0, -200, 0)), mIsRunning(true),mLevel(level),
+	mLight(0), mIsEnd(false)
 {
 	if (Money::getInstance() == 0)
 		Money::init(gui);
@@ -30,12 +31,28 @@ LevelStage::LevelStage(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	mGui->findWidget<MyGUI::Window>("ed_window")->setVisible(false);
 
 	levelStageLayout = MyGUI::LayoutManager::getInstance().loadLayout("my.layout");
+
+	// 增加光源
+	mSceneManager->setAmbientLight(ColourValue(0.6, 0.6, 0.6));
+	mLight = mSceneManager->createLight();
+	mLight->setType(Ogre::Light::LT_DIRECTIONAL);
+	mLight->setDiffuseColour(Ogre::ColourValue());
+	mLight->setDirection(Vector3(-1, -1, 1));
+	mLight->setVisible(true);
+	// 设置阴影
+	//mSceneManager->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 }
 
 LevelStage::~LevelStage()
 {
 	MyGUI::LayoutManager::getInstance().unloadLayout(mEdLayout);
 	MyGUI::LayoutManager::getInstance().unloadLayout(levelStageLayout);
+	mSceneManager->setShadowTechnique(Ogre::SHADOWTYPE_NONE);
+	if (mLight)
+	{
+		mSceneManager->destroyLight(mLight);
+		mLight = 0;
+	}
 	if (mCurrentStep)
 	{
 		delete mCurrentStep;
@@ -96,6 +113,9 @@ bool LevelStage::run(float timeSinceLastFrame)
 
 bool LevelStage::onKeyPressed(const OIS::KeyEvent &arg)
 {
+	// 测试光源
+	if (arg.key == OIS::KC_O)
+		mLight->setVisible(!mLight->getVisible());
 	return mCurrentStep->onKeyPressed(arg);
 }
 
@@ -361,7 +381,6 @@ void LevelStage::change0to1()
 
 void LevelStage::onEdHomeBtnClick( MyGUI::Widget* sender )
 {
-	mIsEnd = false;
 	this->jumpToNextStage(new StartStage(mSceneManager, mStageManager, mGui));
 }
 
@@ -369,8 +388,6 @@ void LevelStage::onEdReplayBtnPress( MyGUI::Widget* _sender, int _left, int _top
 {
 	if(_id.toValue() != 0)
 		return;
-	
-	mIsEnd = false;
 	MyGUI::ImageBox* temp = mGui->findWidget<MyGUI::ImageBox>("play_it_again");
 	temp->setImageTexture("againPress.png");
 }
@@ -379,8 +396,6 @@ void LevelStage::onEdReplayBtnRelease( MyGUI::Widget* _sender, int _left, int _t
 {
 	if(_id.toValue() != 0)
 		return;
-	
-	mIsEnd = false;
 	MyGUI::ImageBox* temp = mGui->findWidget<MyGUI::ImageBox>("play_it_again");
 	temp->setImageTexture("again.png");
 	onEdReplayBtnClick(_sender);
@@ -390,8 +405,6 @@ void LevelStage::onEdNextBtnPress( MyGUI::Widget* _sender, int _left, int _top, 
 {
 	if(_id.toValue() != 0)
 		return;
-	
-	mIsEnd = false;
 	MyGUI::ImageBox* temp = mGui->findWidget<MyGUI::ImageBox>("next_one");
 	temp->setImageTexture("nextStagePress.png");
 }
@@ -400,8 +413,6 @@ void LevelStage::onEdNextBtnRelease( MyGUI::Widget* _sender, int _left, int _top
 {
 	if(_id.toValue() != 0)
 		return;
-	
-	mIsEnd = false;
 	MyGUI::ImageBox* temp = mGui->findWidget<MyGUI::ImageBox>("next_one");
 	temp->setImageTexture("nextStage.png");
 	onEdNextBtnClick(_sender);
@@ -411,8 +422,6 @@ void LevelStage::onEdBackToMenuBtnPress( MyGUI::Widget* _sender, int _left, int 
 {
 	if(_id.toValue() != 0)
 		return;
-	
-	mIsEnd = false;
 	MyGUI::ImageBox* backToMenu = mGui->findWidget<MyGUI::ImageBox>("back_to_menu");
 	backToMenu->setImageTexture("backToMenuPress.png");
 }
@@ -421,8 +430,6 @@ void LevelStage::onEdBackToMenuBtnRelease( MyGUI::Widget* _sender, int _left, in
 {
 	if(_id.toValue() != 0)
 		return;
-	
-	mIsEnd = false;
 	MyGUI::ImageBox* backToMenu = mGui->findWidget<MyGUI::ImageBox>("back_to_menu");
 	backToMenu->setImageTexture("backToMenu.png");
 	onEdHomeBtnClick(_sender);

@@ -188,6 +188,8 @@ protected:
 	// 游戏是否结束
 	bool mIsEnd;
 
+	/// 平行光
+	Light* mLight;
 
 	///GUI
 public:
