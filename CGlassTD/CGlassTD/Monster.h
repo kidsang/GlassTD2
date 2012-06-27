@@ -127,6 +127,8 @@ protected:
 	Ogre::SceneNode* mNode;
 	Entity* mEntity;
 	Ogre::String mMesh;
+	ParticleSystem* mFrozenPs;
+	ParticleSystem* mBurnPs;
 	Ogre::AnimationState* mAnimationState;
 	/// ¹ÖÊÞµÄ°ë¾¶·¶Î§
 	float mRadius;

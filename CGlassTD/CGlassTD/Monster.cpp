@@ -33,7 +33,8 @@ Monster::Monster(SceneNode* node, Entity* entity, Maze* maze, MonsterManager* mo
 	mIsGetUFO(false),
 	mNode(node),
 	mEntity(entity),
-	mMaze(maze)
+	mMaze(maze),
+	mFrozenPs(0), mBurnPs(0)
 {
 	mCheckMethod = new CheckMethod();
 	mMonsterState = new MonsterState();
@@ -212,6 +213,27 @@ void Monster::harmCheck(float timeSinceLastFrame)
 	ColourValue minHealthCol = ColourValue(1, 0, 0);
 	ColourValue currHealthCol = maxHealthCol * healthPer + minHealthCol * (1 - healthPer);
 	health->setColour(currHealthCol);
+
+	// 设置是否显示着火和冰冻
+	if (!mFrozenPs)
+		mFrozenPs = (ParticleSystem*)mNode->getAttachedObject(mNode->getName() + "frozen");
+	if (!mBurnPs)
+		mBurnPs = (ParticleSystem*)mNode->getAttachedObject(mNode->getName() + "burn");
+	if (mMonsterState->getBulletState() == "ice")
+	{
+		mBurnPs->setVisible(false);
+		mFrozenPs->setVisible(true);
+	}
+	else if (mMonsterState->getBulletState() == "fire")
+	{
+		mBurnPs->setVisible(true);
+		mFrozenPs->setVisible(false);
+	}
+	else
+	{
+		mBurnPs->setVisible(false);
+		mFrozenPs->setVisible(false);
+	}
 }
 
 bool Monster::isMonsterDead()
@@ -672,6 +694,7 @@ Monster* MonsterFactory::createInstance(SceneManager* sceneMgr, Maze* maze, Mons
 	ps->setVisible(false);
     ps = sceneMgr->createParticleSystem(monsterNode->getName() + "burn", "Glass/MonsterBurn");
 	monsterNode->attachObject(ps);
+	ps->setVisible(false);
 
 	return mon;
 }
