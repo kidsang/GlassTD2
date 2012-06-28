@@ -155,9 +155,15 @@ void Questions::handUpAnswer()
 		answer = "d";
 		
 	if (answer.compare(mCorrectAnswer) == 0)
+	{
 		Money::getInstance()->correctAnswer();
+		Stage::playSound("../Media/Sound/getMoney.wav", false);
+	}
 	else
+	{
 		Money::getInstance()->wrongAnswer();
+		Stage::playSound("../Media/Sound/loseMoney.wav", false);
+	}
 }
 
 void Questions::giveUp()

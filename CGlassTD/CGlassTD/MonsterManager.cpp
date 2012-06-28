@@ -321,6 +321,8 @@ void MonsterManager::setMonsterWave( String fileName )
 	for(unsigned int i = 0; i < mMonsterFactoryList.size(); i++)
 		mMonsterFactoryRandom.push_back(i);
 
+	mWaveIsBegin = true;
+
 }
 
 void MonsterManager::setUFO( UFO* ufo )
