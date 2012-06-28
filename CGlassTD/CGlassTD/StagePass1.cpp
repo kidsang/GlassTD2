@@ -30,7 +30,8 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 
 
 	/// ÉèÖÃÌì¿ÕºĞ
-	//mSceneManager->setSkyBox(true, "Examples/EveSpaceSkyBox");
+	mSceneManager->setSkyBox(true, "Glass/Skybox");
+	//mSceneManager->setSkyBoxEnabled(true);
 	
 	mCurrentStep = new StagePass1Step0(this);
 	mCurrentStep->init();
