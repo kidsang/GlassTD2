@@ -28,7 +28,7 @@ StagePass6::StagePass6(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	//mGui->findWidget<MyGUI::Button>("ed_next_btn")->eventMouseButtonClick += MyGUI::newDelegate(this, &StagePass3::onEdNextBtnClick);
 
 	/// ÉèÖÃÌì¿ÕºÐ
-	//mSceneManager->setSkyBox(true, "Examples/EveSpaceSkyBox");
+	mSceneManager->setSkyBox(true, "Glass/Skybox");
 
 	mCurrentStep = new StagePass1Step0(this);
 	mCurrentStep->init();

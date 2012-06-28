@@ -6,7 +6,8 @@ public:
 	SettingStage(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui);
 
 	~SettingStage(void);
-
+	void notifyMouseButtonPress(MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id);
+	void notifyMouseButtonRelease(MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id);
 	void notifyMouseButtonClick(MyGUI::Widget* _sender);
 	/// 场景的运行逻辑
 	/// @param timeSinceLastFrame 从上一帧到现在流逝的时间

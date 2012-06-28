@@ -186,6 +186,7 @@ bool StagePass1Step0::onMousePressed(const OIS::MouseEvent &arg, OIS::MouseButto
 			if (maze->editMaze(position, SWAMP))
 			{
 				money->placeTrap(Money::SWAMP);
+				Stage::playSound("../Media/Sound/trap.mp3", false);
 			}
 		}
 		break;
@@ -195,6 +196,7 @@ bool StagePass1Step0::onMousePressed(const OIS::MouseEvent &arg, OIS::MouseButto
 			if (maze->editMaze(position, SPIKEWEED))
 			{
 				money->placeTrap(Money::SPIKEWEED);
+				Stage::playSound("../Media/Sound/trap.mp3", false);
 			}
 		}
 		break;
@@ -204,6 +206,7 @@ bool StagePass1Step0::onMousePressed(const OIS::MouseEvent &arg, OIS::MouseButto
 			if (maze->editMaze(position, TRAP))
 			{
 				money->placeTrap(Money::TRAP);
+				Stage::playSound("../Media/Sound/trap.mp3", false);
 			}
 		}
 		break;
