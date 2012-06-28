@@ -8,6 +8,9 @@ Stage::Stage(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI
 	: mSceneManager(sceneManager), mStageManager(stageManager), mGui(gui)
 {
 	mCamera = mSceneManager->getCamera("PlayerCam");
+
+	// ÖÕÖ¹ËùÓĞÉùÒô
+	Stage::stopAllSounds();
 }
 
 Stage::~Stage(void)

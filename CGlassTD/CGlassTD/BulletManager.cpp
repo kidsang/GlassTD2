@@ -1,5 +1,6 @@
 #include "BulletManager.h"
 #include "BillboardSpriteAnimator.h"
+#include "Stage.h"
 
 
 BulletManager::BulletManager(void)
@@ -41,6 +42,10 @@ std::vector<NameValueList> BulletManager::getAndRemoveExplodedBullets(float floo
 		if (mBulletList.getData()->getPosition().y < floor)
 		{
 			Bullet* bul = mBulletList.getData();
+			
+			// ²¥·Å±¬Õ¨ÉùÒô
+			Stage::playSound("../Media/Sound/explode.mp3", false);
+			
 			// Ôö¼Ó±¬Õ¨¶¯»­
 			BillboardSet* explode = sceneMgr->createBillboardSet(2U);
 			explode->setDefaultDimensions(800, 800);

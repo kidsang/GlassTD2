@@ -11,6 +11,7 @@
           ammo="20"
           spell="fire"
 		  time="6"
+          flare="Glass/RedFlare"
           />
 	<Bullet name="IceBullet"
           mesh="sphere.mesh"
@@ -23,6 +24,7 @@
           ammo="20"
           spell="ice"
 		  time="8"
+          flare="Glass/BlueFlare"
           />
 	<Bullet name="NormalBullet"
           mesh="sphere.mesh"
@@ -35,6 +37,7 @@
           ammo="50"
           spell="normal"
 		  time="0"
+          flare="Glass/GreenFlare"
           />
 	
 	
