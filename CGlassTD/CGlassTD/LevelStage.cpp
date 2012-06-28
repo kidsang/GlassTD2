@@ -4,6 +4,7 @@
 #include "StartStage.h"
 #include "Money.h"
 #include "GameResource.h"
+#include "TracerBulletFactory.h"
 
 LevelStage::LevelStage(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui, int level)
 	: Stage(sceneManager, stageManager, gui),
@@ -133,6 +134,8 @@ bool LevelStage::onKeyPressed(const OIS::KeyEvent &arg)
 	// 测试光源
 	if (arg.key == OIS::KC_O)
 		mLight->setVisible(!mLight->getVisible());
+	else if (arg.key == OIS::KC_I)
+		mCannon->setTracerEnable(!mCannon->hasTracer());
 	return mCurrentStep->onKeyPressed(arg);
 }
 
@@ -192,6 +195,13 @@ void LevelStage::initializeCannon( const std::string& cannonDefine, const std::s
 	bulletParser.moveToFirst();
 	while (bulletParser.hasNext())
 		mCannon->addBulletFactory(new BulletFactory(*bulletParser.getNext()));
+
+	// 增加曳光弹
+	NameValueList tracerParams;
+	tracerParams.insert(std::make_pair("name", "tracer"));
+	tracerParams.insert(std::make_pair("flare", "Glass/Tracer"));
+	mCannon->setTracer(new TracerBulletFactory(tracerParams));
+
 }
 
 void LevelStage::initializeMaze( const std::string& mazeDefine, const std::string& cellDefine )
@@ -343,6 +353,8 @@ void LevelStage::createGUI1()
 	bulletImage[0]->setVisible(true);
 	bulletImage[1]->setVisible(true);
 	bulletImage[2]->setVisible(true);
+
+	mGui->findWidget<MyGUI::ImageBox>("bq")->setVisible(true);
 }
 
 
@@ -390,6 +402,7 @@ void LevelStage::change0to1()
 	cellImage[0]->setVisible(false);
 	cellImage[1]->setVisible(false);
 	cellImage[2]->setVisible(false);
+	mGui->findWidget<MyGUI::ImageBox>("bg")->setVisible(false);
 }
 
 

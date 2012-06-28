@@ -5,6 +5,7 @@
 #include "Bullet.h"
 #include "OgreQuaternion.h"
 #include <time.h>
+class TracerBulletFactory;
 
 /// 炮台类
 /// @author: LiaoNanhao
@@ -17,6 +18,15 @@ private:
 	BulletFactoryList mBulletFactoryList;
 	/// 当前选择的弹药类型
 	unsigned int mCurrentBullet;
+
+	/// 曳光弹
+	TracerBulletFactory* mTarcerBulletFactory;
+	/// 是否开启曳光弹
+	bool mHasTracer;
+	/// 曳光弹发射间隔
+	float mTracerInterval;
+	/// 曳光弹上次发射时间
+	clock_t mTracerLastTime;
 
 	/// 大炮发射力度
 	float mFireStrength;
@@ -58,6 +68,10 @@ public:
 	/// @note 外部的某个管理类应该接手发射出去的炮弹的管理工作，
 	///		  比如调用其fly()函数，释放资源等
 	Bullet* fire(SceneManager* mgr);
+	
+	/// 发射曳光弹
+	/// @return 返回发射的炮弹，如果发射失败(比如cd)则返回NULL
+	Bullet* fireTracer(SceneManager* mgr);
 
 	/// 更改当前装备的炮弹
 	/// @param index 第几号炮弹
@@ -73,6 +87,24 @@ public:
 
 	// Get/Set
 public:
+	/// 设置曳光弹
+	void setTracer(TracerBulletFactory* tbf)
+	{
+		mTarcerBulletFactory = tbf;
+	}
+
+	/// 返回是否启用曳光弹
+	bool hasTracer()
+	{
+		return mHasTracer;
+	}
+
+	/// 设置是否启用曳光弹
+	void setTracerEnable(bool isEnable)
+	{
+		mHasTracer = isEnable;
+	}
+
 	/// 返回炮弹工厂列表
 	const BulletFactoryList& getBulletFactories()
 	{
