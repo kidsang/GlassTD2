@@ -13,7 +13,7 @@
         timeInterval2="4.0"
         />
     <wave
-        newWaveTime="40"
+        newWaveTime="10"
         total="10"
         smallNormalMonster="0"
         smallIceMonster="10"
@@ -25,7 +25,7 @@
         timeInterval2="4.0"
         />
     <wave
-        newWaveTime="40"
+        newWaveTime="10"
         total="10"
         smallNormalMonster="0"
         smallIceMonster="0"
