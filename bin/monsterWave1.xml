@@ -2,7 +2,7 @@
  <waves>
     <wave
         newWaveTime="2"
-        total="1"
+        total="3"
         smallNormalMonster="1"
         smallIceMonster="1"
         smallFireMonster="1"
@@ -14,10 +14,10 @@
         />
     <wave
         newWaveTime="10"
-        total="3"
-        smallNormalMonster="3"
-        smallIceMonster="3"
-        smallFireMonster="3"
+        total="6"
+        smallNormalMonster="2"
+        smallIceMonster="2"
+        smallFireMonster="2"
         bigNormalMonster="0"
         bigIceMonster="0"
         bigFireMonster="0"
@@ -25,11 +25,11 @@
         timeInterval2="4.0"
         />
     <wave
-        newWaveTime="20"
-        total="5"
-        smallNormalMonster="5"
-        smallIceMonster="5"
-        smallFireMonster="5"
+        newWaveTime="10"
+        total="9"
+        smallNormalMonster="3"
+        smallIceMonster="3"
+        smallFireMonster="3"
         bigNormalMonster="0"
         bigIceMonster="0"
         bigFireMonste="0"

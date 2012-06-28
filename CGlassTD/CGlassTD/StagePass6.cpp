@@ -10,7 +10,7 @@ StagePass6::StagePass6(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	: LevelStage(sceneManager, stageManager, gui, 6)
 {
 	/// 初始化大炮
-	initializeCannon("CannonDefine.xml", "BulletDefine.xml");
+	initializeCannon("CannonDefine.xml", "BulletDefine6.xml");
 	/// 初始化迷宫
 	initializeMaze("M6.xml", "CellDefine.xml");
 	/// 初始化飞船

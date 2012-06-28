@@ -3,6 +3,6 @@
     <UFO
         mesh="ship.mesh"
         position="1600 0 -50"
-        blood="100"
+        blood="60"
         />
 </UFOs>
