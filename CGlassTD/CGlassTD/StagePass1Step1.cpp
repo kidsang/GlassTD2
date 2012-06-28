@@ -151,6 +151,12 @@ bool StagePass1Step1::onKeyPressed(const OIS::KeyEvent& arg)
 	{
 		mStagePass1->showEscMenu();
 	}
+	// Ò»¼üÊ¤Àû by neng
+	else if(arg.key == OIS::KC_K)
+	{
+		MonsterManager* monsterManager = mStagePass1->getMonsterManager();
+		monsterManager->setWinGame();
+	}
 	return true;
 }
 

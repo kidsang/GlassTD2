@@ -21,6 +21,7 @@ int MonsterManager::mCurrentMonsterFactoryNum = 0;
 int MonsterManager::mCurrentWaveNum = 0;
 bool MonsterManager::mIsStopGenerateMonster = false;
 bool MonsterManager::mWaveIsBegin = false;
+bool MonsterManager::mWinGame = false;
 
 MonsterManager::MonsterManager()
 {
@@ -211,7 +212,8 @@ void MonsterManager::updateState( std::vector<NameValueList> explodedBullets, fl
 	}
 	mMonsterRemoveList.clear();
 
-
+	// 更新胜利条件
+	updateIsWin();
 	
 }
 
@@ -282,6 +284,7 @@ void MonsterManager::initialize( Maze* maze, const std::string& monsterDefine )
 	
 	mMaze = maze;
 	isInitialized = true;
+	mWinGame = false;
 }
 
 void MonsterManager::setMonsterWave( String fileName )
