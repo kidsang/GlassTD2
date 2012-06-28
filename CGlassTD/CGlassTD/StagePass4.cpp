@@ -11,7 +11,7 @@ StagePass4::StagePass4(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	: LevelStage(sceneManager, stageManager, gui, 4)
 {
 	/// 初始化大炮
-	initializeCannon("CannonDefine.xml", "BulletDefine.xml");
+	initializeCannon("CannonDefine.xml", "BulletDefine4.xml");
 	/// 初始化迷宫
 	initializeMaze("M4.xml", "CellDefine.xml");
 	/// 初始化飞船
