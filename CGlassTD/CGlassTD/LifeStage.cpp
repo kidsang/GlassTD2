@@ -10,9 +10,9 @@ LifeStage::LifeStage(Ogre::SceneManager* sceneManager, StageManager* stageManage
 	: LevelStage(sceneManager, stageManager, gui, 2)
 {
 	/// 初始化大炮
-	initializeCannon("CannonDefine.xml", "BulletDefine2.xml");
+	initializeCannon("CannonDefine.xml", "LifeBulletDefine.xml");
 	/// 初始化迷宫
-	initializeMaze("M2.xml", "CellDefine.xml");
+	initializeMaze("M.xml", "CellDefine.xml");
 	/// 初始化飞船
 	initializeUFO("UFODefine2.xml");
 
@@ -20,7 +20,7 @@ LifeStage::LifeStage(Ogre::SceneManager* sceneManager, StageManager* stageManage
 	MonsterManager::initialize(mMaze, "MonsterDefine.xml");
 	mMonsterManager = MonsterManager::getMonsterManager();
 	/// 初始化一波一波怪物的参数,每层的波数不一样
-	mMonsterManager->setMonsterWave("monsterWave2.xml");
+	mMonsterManager->setMonsterWave("LifeMonsterWave.xml");
 	mMonsterManager->setUFO(mUFO);
 
 	// 为结束画面菜单增加回调
