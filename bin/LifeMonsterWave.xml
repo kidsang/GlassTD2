@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <waves>
+    <wave
+        newWaveTime="2"
+        total="120"
+        smallNormalMonster="20"
+        smallIceMonster="20"
+        smallFireMonster="20"
+        bigNormalMonster="20"
+        bigIceMonster="20"
+        bigFireMonster="20"
+        timeInterval1="0.5"
+        timeInterval2="1.0"
+        />
+  </waves>

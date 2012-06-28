@@ -45,6 +45,7 @@
     <IntDir>obj\$(Configuration)\</IntDir>
     <OutDir>..\..\bin\Release\</OutDir>
     <LinkIncremental>false</LinkIncremental>
+    <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -111,8 +112,10 @@
       <AdditionalDependencies>OgreMain.lib;OIS.lib;MyGUIEngine.lib;MyGUI.OgrePlatform.lib;irrKlang.lib;Strmiids.lib;Quartz.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Message>Copying exe to samples bin directory ...</Message>
-      <Command>copy "$(OutDir)\$(TargetFileName)" "$(OGRE_HOME)\Bin\$(Configuration)"</Command>
+      <Message>
+      </Message>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -133,9 +136,11 @@
     <ClInclude Include="CVDShowUtil.h" />
     <ClInclude Include="Direction.h" />
     <ClInclude Include="CheckMethod.h" />
+    <ClInclude Include="GameResource.h" />
     <ClInclude Include="h-genutils.h" />
     <ClInclude Include="HelpStage.h" />
     <ClInclude Include="LevelStage.h" />
+    <ClInclude Include="LifeStage.h" />
     <ClInclude Include="Maze.h" />
     <ClInclude Include="Money.h" />
     <ClInclude Include="Monster.h" />
@@ -168,6 +173,7 @@
     <ClInclude Include="Step.h" />
     <ClInclude Include="tinystr.h" />
     <ClInclude Include="tinyxml.h" />
+    <ClInclude Include="TracerBulletFactory.h" />
     <ClInclude Include="UFO.h" />
     <ClInclude Include="UtilsOgreDshow.h" />
     <ClInclude Include="UtilsOgreDshow_private.h" />
@@ -190,9 +196,11 @@
     <ClCompile Include="Common.cpp" />
     <ClCompile Include="CheckMethod.cpp" />
     <ClCompile Include="CVDShowUtil.cpp" />
+    <ClCompile Include="GameResource.cpp" />
     <ClCompile Include="h-genutils.cpp" />
     <ClCompile Include="HelpStage.cpp" />
     <ClCompile Include="LevelStage.cpp" />
+    <ClCompile Include="LifeStage.cpp" />
     <ClCompile Include="Maze.cpp" />
     <ClCompile Include="Money.cpp" />
     <ClCompile Include="Monster.cpp" />
@@ -223,6 +231,7 @@
     <ClCompile Include="tinyxml.cpp" />
     <ClCompile Include="tinyxmlerror.cpp" />
     <ClCompile Include="tinyxmlparser.cpp" />
+    <ClCompile Include="TracerBulletFactory.cpp" />
     <ClCompile Include="UFO.cpp" />
     <ClCompile Include="UtilsOgreDshow.cpp" />
   </ItemGroup>

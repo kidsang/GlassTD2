@@ -167,7 +167,7 @@ public:
 /// 炮弹工厂类
 class BulletFactory
 {
-private:
+protected:
 	/// 工厂类所需要的参数列表
 	NameValueList mParams;
 	/// 工厂的类型，其实就是所生产的炮弹种类的名称
@@ -179,19 +179,25 @@ public:
 	/// 构造函数
 	/// @param params 构造子弹所需要的属性参数
 	BulletFactory(NameValueList params);
-	~BulletFactory()
+	virtual ~BulletFactory()
 	{
 	}
 
 	/// 创建一个子弹的实例
 	/// @param mgr 场景管理类
 	/// @return 返回创建好的子类，如果失败则返回NULL
-	Bullet* createInstance(SceneManager* mgr);
+	virtual Bullet* createInstance(SceneManager* mgr);
 
 	/// 返回工厂的类型
 	const std::string& getType()
 	{
 		return mType;
+	}
+
+	/// 返回该工厂的参数
+	const NameValueList& getParams()
+	{
+		return mParams;
 	}
 
 	/// 返回弹药余量

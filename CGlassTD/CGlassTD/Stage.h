@@ -9,6 +9,7 @@
 #include <OISKeyboard.h>
 #include <OISMouse.h>
 #include <MyGUI/MyGUI.h>
+#include "Sound.h"
 
 /// 舞台抽象类，负责场景的管理
 /// @author: LiaoNanhao
@@ -81,6 +82,11 @@ public:
 	static bool getMusicFlag()
 	{
 		return mMusicEnabled;
+	}
+
+	static void stopAllSounds()
+	{
+		Sound::getInstance()->stop();
 	}
 
 protected:
