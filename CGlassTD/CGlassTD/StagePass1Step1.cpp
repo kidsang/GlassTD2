@@ -1,6 +1,7 @@
 #include "StagePass1Step1.h"
 #include "Questions.h"
 #include "Sound.h"
+#include "GameResource.h"
 
 StagePass1Step1::StagePass1Step1(LevelStage* stagePass1)
 	: mStagePass1(stagePass1),
@@ -52,23 +53,9 @@ bool StagePass1Step1::run(float timeSinceLastFrame)
 		mStagePass1->setRunning(false);
 		Stage::playSound("../Media/Sound/lose.wav", false);
 		MyGUI::ImageBox* stages = mStagePass1->getGUI()->findWidget<MyGUI::ImageBox>("word_of_stages");
-		switch(mStagePass1->getLevel())
-		{
-		case 1:
-			stages->setImageTexture("word_stage1.png");
-			break;
-		case 2:
-			stages->setImageTexture("word_stage2.png");
-			break;
-		case 3:
-			stages->setImageTexture("word_stage3.png");
-			break;
-		default:
-			stages->setImageTexture("word_stage1.png");
-			break;
-		}
+		stages->setImageTexture(GameResource::WORD_OF_STAGE[mStagePass1->getLevel() - 1]);
 		MyGUI::ImageBox* result = mStagePass1->getGUI()->findWidget<MyGUI::ImageBox>("result_of_play");
-		result->setImageTexture("fail.png");
+		result->setImageTexture(GameResource::WORD_RESULT_FAIL);
 		mStagePass1->getGUI()->findWidget<MyGUI::Window>("ed_window")->setVisible(true);
 		mStagePass1->getGUI()->findWidget<MyGUI::ImageBox>("next_one")->setImageTexture("nextStageUnuse.png");
 		mStagePass1->getGUI()->findWidget<MyGUI::ImageBox>("next_one")->setEnabled(false);
@@ -90,24 +77,9 @@ bool StagePass1Step1::run(float timeSinceLastFrame)
 		mStagePass1->setRunning(false);
 		Stage::playSound("../Media/Sound/win.wav", false);
 		MyGUI::ImageBox* stages = mStagePass1->getGUI()->findWidget<MyGUI::ImageBox>("word_of_stages");
-		//stages->setImageTexture(GameResource::WORD_OF_STAGE[mStagePass1->getLevel() - 1]);
-		switch(mStagePass1->getLevel())
-		{
-		case 1:
-		stages->setImageTexture("word_stage1.png");
-		break;
-		case 2:
-		stages->setImageTexture("word_stage2.png");
-		break;
-		case 3:
-		stages->setImageTexture("word_stage3.png");
-		break;
-		default:
-		stages->setImageTexture("word_stage1.png");
-		break;
-		}
+		stages->setImageTexture(GameResource::WORD_OF_STAGE[mStagePass1->getLevel() - 1]);
 		MyGUI::ImageBox* result = mStagePass1->getGUI()->findWidget<MyGUI::ImageBox>("result_of_play");
-		result->setImageTexture("sucess.png");
+		result->setImageTexture(GameResource::WORD_RESULT_SUCCESS);
 		mStagePass1->getGUI()->findWidget<MyGUI::Window>("ed_window")->setVisible(true);
 	}
 
