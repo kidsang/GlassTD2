@@ -353,6 +353,8 @@ void LevelStage::createGUI1()
 	bulletImage[0]->setVisible(true);
 	bulletImage[1]->setVisible(true);
 	bulletImage[2]->setVisible(true);
+
+	mGui->findWidget<MyGUI::ImageBox>("bq")->setVisible(true);
 }
 
 
@@ -400,6 +402,7 @@ void LevelStage::change0to1()
 	cellImage[0]->setVisible(false);
 	cellImage[1]->setVisible(false);
 	cellImage[2]->setVisible(false);
+	mGui->findWidget<MyGUI::ImageBox>("bg")->setVisible(false);
 }
 
 

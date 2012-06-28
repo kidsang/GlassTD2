@@ -5,7 +5,7 @@ Cannon::Cannon(SceneNode* gunNode, Entity* gun, SceneNode* swampNode, Entity* ti
 	: mGunNode(gunNode), mGun(gun), mTireNode(swampNode), mTire(tire), 
 	mCurrentBullet(0),mFireOffset(Vector3(0.f)), mFireStrength(0), mColdDown(0), mFireAngle(Vector2(0.f)),
 	mCurrentFireAngle(Vector2(0.f)), 
-	mTarcerBulletFactory(0), mHasTracer(true), mTracerInterval(0.1f)
+	mTarcerBulletFactory(0), mHasTracer(false), mTracerInterval(0.1f)
 {
 	/// ·­×ª´óÅÚ³¯Ïò
 	mTireNode->setOrientation(0, 0, 1, 0);
