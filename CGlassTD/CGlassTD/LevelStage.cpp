@@ -4,6 +4,7 @@
 #include "StartStage.h"
 #include "Money.h"
 #include "GameResource.h"
+#include "TracerBulletFactory.h"
 
 LevelStage::LevelStage(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui, int level)
 	: Stage(sceneManager, stageManager, gui),
@@ -192,6 +193,13 @@ void LevelStage::initializeCannon( const std::string& cannonDefine, const std::s
 	bulletParser.moveToFirst();
 	while (bulletParser.hasNext())
 		mCannon->addBulletFactory(new BulletFactory(*bulletParser.getNext()));
+
+	// Ôö¼ÓÒ·¹âµ¯
+	NameValueList tracerParams;
+	tracerParams.insert(std::make_pair("name", "tracer"));
+	tracerParams.insert(std::make_pair("flare", "Glass/Tracer"));
+	mCannon->setTracer(new TracerBulletFactory(tracerParams));
+
 }
 
 void LevelStage::initializeMaze( const std::string& mazeDefine, const std::string& cellDefine )

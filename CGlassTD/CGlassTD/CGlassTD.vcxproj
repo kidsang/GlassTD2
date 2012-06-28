@@ -169,6 +169,7 @@
     <ClInclude Include="Step.h" />
     <ClInclude Include="tinystr.h" />
     <ClInclude Include="tinyxml.h" />
+    <ClInclude Include="TracerBulletFactory.h" />
     <ClInclude Include="UFO.h" />
     <ClInclude Include="UtilsOgreDshow.h" />
     <ClInclude Include="UtilsOgreDshow_private.h" />
@@ -225,6 +226,7 @@
     <ClCompile Include="tinyxml.cpp" />
     <ClCompile Include="tinyxmlerror.cpp" />
     <ClCompile Include="tinyxmlparser.cpp" />
+    <ClCompile Include="TracerBulletFactory.cpp" />
     <ClCompile Include="UFO.cpp" />
     <ClCompile Include="UtilsOgreDshow.cpp" />
   </ItemGroup>

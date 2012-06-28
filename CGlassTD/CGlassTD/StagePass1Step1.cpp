@@ -87,6 +87,10 @@ bool StagePass1Step1::run(float timeSinceLastFrame)
 	{
 		BulletManager& bulletManager = mStagePass1->getBulletManager();
 		Vector3 gravity = mStagePass1->getGravity();
+		// ·¢ÉäÒ·¹âµ¯
+		Bullet* tracer = mStagePass1->getCannon()->fireTracer(SceneManagerContainer::getSceneManager());
+		if (tracer)
+			bulletManager.add(tracer);
 		bulletManager.fly(timeSinceLastFrame, gravity);
 
 		Maze* maze = mStagePass1->getMaze();

@@ -1,14 +1,16 @@
 #include "Cannon.h"
+#include "TracerBulletFactory.h"
 
 Cannon::Cannon(SceneNode* gunNode, Entity* gun, SceneNode* swampNode, Entity* tire)
 	: mGunNode(gunNode), mGun(gun), mTireNode(swampNode), mTire(tire), 
 	mCurrentBullet(0),mFireOffset(Vector3(0.f)), mFireStrength(0), mColdDown(0), mFireAngle(Vector2(0.f)),
-	mCurrentFireAngle(Vector2(0.f))
+	mCurrentFireAngle(Vector2(0.f)), 
+	mTarcerBulletFactory(0), mHasTracer(true), mTracerInterval(0.1f)
 {
 	/// 翻转大炮朝向
 	mTireNode->setOrientation(0, 0, 1, 0);
 	/// 初始化计时器
-	mLastTime = clock();
+	mTracerLastTime = mLastTime = clock();
 	// 初始化炮口
 	mFirePositionNode = mGunNode->createChildSceneNode();
 }
@@ -18,6 +20,8 @@ Cannon::~Cannon()
 	// 清空炮弹工厂列表
 	for (auto iter = mBulletFactoryList.begin(); iter != mBulletFactoryList.end(); ++iter)
 		delete (*iter);
+	if (mTarcerBulletFactory)
+		delete mTarcerBulletFactory;
 	//
 	delete mGunNode->getAttachedObject(0);
 	delete mTireNode->getAttachedObject(0);
@@ -43,15 +47,37 @@ Bullet* Cannon::fire(SceneManager* mgr)
 		return NULL;
 	// 根据当前所选类型创建炮弹
 	Bullet* bul = bf->createInstance(mgr);
-	//bul->fire(mTireNode->getPosition() + mFireOffset,zAxis * mFireStrength);
 	bul->fire(mFirePositionNode->_getDerivedPosition(), zAxis * mFireStrength);
-	//bul->fire(Ogre::Vector3(-397,100,400),zAxis * mFireStrength);
 
 	mLastTime = clock();
 	bf->setAmmoCount(bf->getAmmoCount() - 1);
 
 	return bul;
-	return NULL;
+}
+
+Bullet* Cannon::fireTracer( SceneManager* mgr )
+{
+	// 没有曳光弹
+	if (!mHasTracer || !mTarcerBulletFactory)
+		return NULL;
+
+	if (clock() < mTracerLastTime + mTracerInterval * 1000)
+		return NULL;
+	
+	// 计算发射方向
+	Vector3 xAxis, yAxis, zAxis;
+	mGunNode->_getDerivedOrientation().ToAxes(xAxis, yAxis, zAxis);
+
+	// 获取当前类型的炮弹工厂
+	BulletFactory* bf = mBulletFactoryList.at(mCurrentBullet);
+
+	// 根据当前炮弹发射曳光弹 
+	Bullet* bul = mTarcerBulletFactory->createInstance(mgr, bf);
+	bul->fire(mFirePositionNode->_getDerivedPosition(), zAxis * mFireStrength);
+
+	mTracerLastTime = clock();
+
+	return bul;
 }
 
 void Cannon::changeBullet( unsigned int index )
@@ -102,3 +128,4 @@ void Cannon::rotate( int yaw, int pitch, Ogre::Camera* cam)
 	mGunNode->pitch(Ogre::Radian(fpitch));
 	cam->yaw(Ogre::Radian(fyaw));
 }
+
