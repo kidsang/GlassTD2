@@ -134,6 +134,8 @@ bool LevelStage::onKeyPressed(const OIS::KeyEvent &arg)
 	// ²âÊÔ¹âÔ´
 	if (arg.key == OIS::KC_O)
 		mLight->setVisible(!mLight->getVisible());
+	else if (arg.key == OIS::KC_I)
+		mCannon->setTracerEnable(!mCannon->hasTracer());
 	return mCurrentStep->onKeyPressed(arg);
 }
 

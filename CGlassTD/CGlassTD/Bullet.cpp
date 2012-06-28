@@ -19,11 +19,11 @@ Bullet::~Bullet(void)
 		delete mFlare;
 	}*/
 	// É¾³ýÅÚµ¯mesh
-	if (mEntity)
+	while (mNode->numAttachedObjects() > 0)
 	{
-		mNode->detachObject(mEntity);
-		delete mEntity;
-		mEntity = 0;
+		MovableObject* obj = mNode->getAttachedObject(0);
+		mNode->detachObject(obj);
+		delete obj;
 	}
 	// É¾³ýÅÚµ¯µÄ³¡¾°½Úµã
 	mNode->getParentSceneNode()->removeAndDestroyChild(mNode->getName());

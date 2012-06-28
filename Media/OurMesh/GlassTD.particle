@@ -232,15 +232,14 @@ particle_system Glass/Tracer
     // Area emitter
     emitter Box
     {
-        emission_rate   40
-        time_to_live    0.4
+        emission_rate   80
+        time_to_live    0.2
         direction       0 0 0
         velocity    	0
-        colour_range_start  0.2 0.3 1
-        colour_range_end    0.6 0.6 0.3
-        width           10
-        height          10
-        depth           10
+        colour_range_start  0.1 0.2 0.5
+        colour_range_end    0.2 0.3 0.1
+        width           1
+        height          1
     }
 
 
@@ -252,11 +251,5 @@ particle_system Glass/Tracer
         blue -0.25
         alpha -0.3
     }
-
-    affector Scaler
-    {
-        rate 0.1
-    }
-
 }
 
