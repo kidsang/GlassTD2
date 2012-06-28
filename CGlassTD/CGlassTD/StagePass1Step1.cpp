@@ -22,6 +22,7 @@ void StagePass1Step1::init()
 		Stage::playMusic("../Media/Sound/pass1.mp3", true);
 		break;
 	case 2:
+		Stage::playMusic("../Media/Sound/pass2.mp3", true);
 		break;
 	case 3:
 		break;
