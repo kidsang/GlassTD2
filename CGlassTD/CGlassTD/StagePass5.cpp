@@ -11,7 +11,7 @@ StagePass5::StagePass5(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	: LevelStage(sceneManager, stageManager, gui, 5)
 {
 	/// 初始化大炮
-	initializeCannon("CannonDefine.xml", "BulletDefine.xml");
+	initializeCannon("CannonDefine.xml", "BulletDefine5.xml");
 	/// 初始化迷宫
 	initializeMaze("M5.xml", "CellDefine.xml");
 	/// 初始化飞船
@@ -21,7 +21,7 @@ StagePass5::StagePass5(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	MonsterManager::initialize(mMaze, "MonsterDefine.xml");
 	mMonsterManager = MonsterManager::getMonsterManager();
 	/// 初始化一波一波怪物的参数,每层的波数不一样
-	mMonsterManager->setMonsterWave("monsterWave.xml");
+	mMonsterManager->setMonsterWave("monsterWave5.xml");
 	mMonsterManager->setUFO(mUFO);
 
 	// 为结束画面菜单增加回调
