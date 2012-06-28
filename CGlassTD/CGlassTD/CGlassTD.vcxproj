@@ -133,6 +133,7 @@
     <ClInclude Include="CVDShowUtil.h" />
     <ClInclude Include="Direction.h" />
     <ClInclude Include="CheckMethod.h" />
+    <ClInclude Include="GameResource.h" />
     <ClInclude Include="h-genutils.h" />
     <ClInclude Include="HelpStage.h" />
     <ClInclude Include="LevelStage.h" />
@@ -190,6 +191,7 @@
     <ClCompile Include="Common.cpp" />
     <ClCompile Include="CheckMethod.cpp" />
     <ClCompile Include="CVDShowUtil.cpp" />
+    <ClCompile Include="GameResource.cpp" />
     <ClCompile Include="h-genutils.cpp" />
     <ClCompile Include="HelpStage.cpp" />
     <ClCompile Include="LevelStage.cpp" />
