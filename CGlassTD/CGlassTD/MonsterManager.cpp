@@ -20,6 +20,8 @@ std::vector<int> MonsterManager::mMonsterFactoryRandom = std::vector<int>();
 int MonsterManager::mCurrentMonsterFactoryNum = 0;
 int MonsterManager::mCurrentWaveNum = 0;
 bool MonsterManager::mIsStopGenerateMonster = false;
+bool MonsterManager::mWaveIsBegin = false;
+bool MonsterManager::mWinGame = false;
 
 MonsterManager::MonsterManager()
 {
@@ -72,6 +74,9 @@ void MonsterManager::monsterGenerate(Ogre::SceneManager* sceneManager, float tim
 		mMonsterMgr->MonsterNumPlus();
 		mMonsterMgr->setTimeCount(0.0f);
 		mNewMonsterTime = Ogre::Math::RangeRandom(mCurrentWave.timeInteval1, mCurrentWave.timeInteval2);
+		if(mWaveIsBegin)
+			Stage::playSound("../Media/Sound/nextWave.wav", false);
+		mWaveIsBegin = false;
 		
 	}
 }
@@ -207,7 +212,8 @@ void MonsterManager::updateState( std::vector<NameValueList> explodedBullets, fl
 	}
 	mMonsterRemoveList.clear();
 
-
+	// 更新胜利条件
+	updateIsWin();
 	
 }
 
@@ -278,6 +284,7 @@ void MonsterManager::initialize( Maze* maze, const std::string& monsterDefine )
 	
 	mMaze = maze;
 	isInitialized = true;
+	mWinGame = false;
 }
 
 void MonsterManager::setMonsterWave( String fileName )
@@ -298,7 +305,7 @@ void MonsterManager::setMonsterWave( String fileName )
 		wave.smallFireMonster = (atoi((*waveParams)["smallFireMonster"].c_str()));
 		wave.bigNormalMonster = (atoi((*waveParams)["bigNormalMonster"].c_str()));
 		wave.bigIceMonster = (atoi((*waveParams)["bigIceMonster"].c_str()));
-		wave.bigFireMonster = (atoi((*waveParams)["smallFireMonster"].c_str()));
+		wave.bigFireMonster = (atoi((*waveParams)["bigFireMonster"].c_str()));
 		wave.timeInteval1 = (atof((*waveParams)["timeInterval1"].c_str()));
 		wave.timeInteval2  = (atof((*waveParams)["timeInterval2"].c_str()));
 		mMonsterWave.push_back(wave);
@@ -317,6 +324,8 @@ void MonsterManager::setMonsterWave( String fileName )
 	for(unsigned int i = 0; i < mMonsterFactoryList.size(); i++)
 		mMonsterFactoryRandom.push_back(i);
 
+	mWaveIsBegin = true;
+
 }
 
 void MonsterManager::setUFO( UFO* ufo )
@@ -329,10 +338,14 @@ void MonsterManager::waveBegin()
 	/// 对当前波的怪物数量进行判断，等于0的时候就进行下一波
 	if(mCurrentWave.totalMonster == 0)
 	{
+		/// 这一波的开始标志
+		mWaveIsBegin = true;
+
 		++mCurrentWaveNum;
 		if((unsigned int)mCurrentWaveNum == mMonsterWave.size() || (unsigned int)mCurrentWaveNum > mMonsterWave.size())
 		{
 			mIsStopGenerateMonster = true;
+			mWaveIsBegin = false;
 			return;
 		}
 		mCurrentWave = mMonsterWave[mCurrentWaveNum];
@@ -342,6 +355,8 @@ void MonsterManager::waveBegin()
 		mMonsterFactoryRandom.clear();
 		for(unsigned int i = 0; i < mMonsterFactoryList.size(); i++)
 			mMonsterFactoryRandom.push_back(i);
+
+		
 
 	}
 	if(mCurrentWave.smallNormalMonster == 0)

@@ -8,6 +8,7 @@
 #include "Maze.h"
 #include <vector>
 #include "UFO.h"
+#include "Stage.h"
 
 
 struct Wave
@@ -84,6 +85,10 @@ private:
 	/// 是否停止产生怪物
 	static bool mIsStopGenerateMonster;
 
+	/// 这一波的开始标志
+	static bool mWaveIsBegin;
+
+	static bool mWinGame;
 
 //protected:
 //	
@@ -148,12 +153,21 @@ public:
 	/// add by kid
 	void release();
 
+	void setWinGame(bool misWin = true)
+	{
+		mWinGame = misWin;
+	}
+
+	void updateIsWin()
+	{
+		// 更新胜利条件
+		if(mCurrentWaveNum == mMonsterWave.size() && mMonstersList.size() == 0)
+			mWinGame = true;
+	}
+
 	bool isWinGame()
 	{
-		if(mCurrentWaveNum == mMonsterWave.size() && mMonstersList.size() == 0)
-			return true;
-		else 
-			return false;
+		return mWinGame;
 	}
 };
 

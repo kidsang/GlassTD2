@@ -1,5 +1,6 @@
 #include "BulletManager.h"
 #include "BillboardSpriteAnimator.h"
+#include "Stage.h"
 
 
 BulletManager::BulletManager(void)
@@ -41,38 +42,47 @@ std::vector<NameValueList> BulletManager::getAndRemoveExplodedBullets(float floo
 		if (mBulletList.getData()->getPosition().y < floor)
 		{
 			Bullet* bul = mBulletList.getData();
-			// 增加爆炸动画
-			BillboardSet* explode = sceneMgr->createBillboardSet(2U);
-			explode->setDefaultDimensions(800, 800);
-			std::string mtlName = "Glass/" + bul->getType() + "Explode";
-			explode->setMaterialName(mtlName);
-			explode->createBillboard(0, 0, 0);
-			SceneNode* expNode = sceneMgr->getRootSceneNode()->createChildSceneNode();
-			expNode->setPosition(bul->getPosition());
-			expNode->attachObject(explode);
-			BillboardSprite* bs = new BillboardSprite(expNode, explode, 5, 4, 192, 192);
+
+			// tracer hack by kid
+			if (bul->getType() != "tracer")
+			{
+				// 播放爆炸声音
+				Stage::playSound("../Media/Sound/explode.mp3", false);
+
+				// 增加爆炸动画
+				BillboardSet* explode = sceneMgr->createBillboardSet(2U);
+				explode->setDefaultDimensions(800, 800);
+				std::string mtlName = "Glass/" + bul->getType() + "Explode";
+				explode->setMaterialName(mtlName);
+				explode->createBillboard(0, 0, 0);
+				SceneNode* expNode = sceneMgr->getRootSceneNode()->createChildSceneNode();
+				expNode->setPosition(bul->getPosition());
+				expNode->attachObject(explode);
+				BillboardSprite* bs = new BillboardSprite(expNode, explode, 5, 4, 192, 192);
 #ifdef _DEBUG
-			BillboardSpriteAnimator* bsani = new BillboardSpriteAnimator(0);
+				BillboardSpriteAnimator* bsani = new BillboardSpriteAnimator(0);
 #else
 
-			BillboardSpriteAnimator* bsani = new BillboardSpriteAnimator(0.02f);
+				BillboardSpriteAnimator* bsani = new BillboardSpriteAnimator(0.02f);
 #endif
-			bsani->start(bs);
-			bs->addAnimator(bsani);
-			mExplodeSprites.insertAhead(bs);
+				bsani->start(bs);
+				bs->addAnimator(bsani);
+				mExplodeSprites.insertAhead(bs);
 
-			// 将爆炸节点的信息储存
-			NameValueList nvl;
-			nvl.insert(std::make_pair("appendDamage", convertToString(bul->getAppendDamage())));
-			nvl.insert(std::make_pair("damage", convertToString(bul->getDamage())));
-			nvl.insert(std::make_pair("range", convertToString(bul->getRange())));
-			nvl.insert(std::make_pair("time", convertToString(bul->getEffectTime())));
-			nvl.insert(std::make_pair("spell", bul->getSpell()));
-			nvl.insert(std::make_pair("position",
-				convertToString(bul->getPosition().x)
-				+ " " + convertToString(bul->getPosition().y)
-				+ " " + convertToString(bul->getPosition().z)));
-			exploded.push_back(nvl);
+				// 将爆炸节点的信息储存
+				NameValueList nvl;
+				nvl.insert(std::make_pair("appendDamage", convertToString(bul->getAppendDamage())));
+				nvl.insert(std::make_pair("damage", convertToString(bul->getDamage())));
+				nvl.insert(std::make_pair("range", convertToString(bul->getRange())));
+				nvl.insert(std::make_pair("time", convertToString(bul->getEffectTime())));
+				nvl.insert(std::make_pair("spell", bul->getSpell()));
+				nvl.insert(std::make_pair("position",
+					convertToString(bul->getPosition().x)
+					+ " " + convertToString(bul->getPosition().y)
+					+ " " + convertToString(bul->getPosition().z)));
+				exploded.push_back(nvl);
+			}
+			
 			// 删除爆炸的节点
 			delete bul;
 			mBulletList.deleteCurrentNode();

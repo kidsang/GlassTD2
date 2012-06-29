@@ -17,6 +17,15 @@
             <Widget type="ImageBox" skin="ImageBox" position="55 600 120 96" name="back">
                 <Property key="ImageTexture" value="back.png"/>
             </Widget>
+            <Widget type="ImageBox" skin="ImageBox" position="205 275 160 160" name="stage4">
+                <Property key="ImageTexture" value="stage4.png"/>
+            </Widget>
+            <Widget type="ImageBox" skin="ImageBox" position="480 150 160 160" name="stage5">
+                <Property key="ImageTexture" value="stage5.png"/>
+            </Widget>
+            <Widget type="ImageBox" skin="ImageBox" position="290 65 160 160" name="stage6">
+                <Property key="ImageTexture" value="stage6.png"/>
+            </Widget>
         </Widget>
     </Widget>
 </MyGUI>

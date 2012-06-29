@@ -34,4 +34,11 @@
         <Property key="ImageTexture" value="trap.png"/>
         <Property key="Visible" value="false"/>
     </Widget>
+    <Widget type="ImageBox" skin="ImageBox" position="20 70 298 50" align="Default" layer="Main" name="bq">
+        <Property key="ImageTexture" value="Q.png"/>
+        <Property key="Visible" value="false"/>
+    </Widget>
+    <Widget type="ImageBox" skin="ImageBox" position="20 70 298 50" align="Default" layer="Main" name="bg">
+        <Property key="ImageTexture" value="G.png"/>
+    </Widget>
 </MyGUI>

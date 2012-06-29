@@ -16,6 +16,7 @@ public:
 public:
 	~Sound();
 	void play(const char* fileName, bool loop);
+	void stop();
 
 private:
 	irrklang::ISoundEngine* mEngine;

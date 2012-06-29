@@ -70,7 +70,7 @@ void Money::correctAnswer()
 
 void Money::wrongAnswer()
 {
-	mAmount -= 5;
+	mAmount -= 3;
 	mTextBox->setCaption(this->getAmountStr());
 }
 

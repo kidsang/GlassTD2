@@ -28,3 +28,8 @@ void Sound::play(const char* fileName, bool loop)
 {
 	mEngine->play2D(fileName, loop);
 }
+
+void Sound::stop()
+{
+	mEngine->stopAllSounds();
+}

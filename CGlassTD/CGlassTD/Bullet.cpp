@@ -1,5 +1,6 @@
 #include "Bullet.h"
 #include <OgreEntity.h>
+#include <Ogre.h>
 
 Bullet::Bullet(SceneManager* manager, SceneNode* node, Entity* entity)
 	: mSceneManager(manager), mNode(node), mEntity(entity),
@@ -11,9 +12,19 @@ Bullet::Bullet(SceneManager* manager, SceneNode* node, Entity* entity)
 
 Bullet::~Bullet(void)
 {
+	// É¾³ýÎ²Ñæ
+	/*if (mFlare)
+	{
+		mNode->detachObject(mFlare);
+		delete mFlare;
+	}*/
 	// É¾³ýÅÚµ¯mesh
-	mNode->detachObject(mEntity);
-	delete mEntity;
+	while (mNode->numAttachedObjects() > 0)
+	{
+		MovableObject* obj = mNode->getAttachedObject(0);
+		mNode->detachObject(obj);
+		delete obj;
+	}
 	// É¾³ýÅÚµ¯µÄ³¡¾°½Úµã
 	mNode->getParentSceneNode()->removeAndDestroyChild(mNode->getName());
 }
@@ -42,7 +53,7 @@ Bullet* BulletFactory::createInstance( SceneManager* mgr )
 	Entity* entity = mgr->createEntity(mParams["mesh"]);
 	if (mParams.find("material") != mParams.end())
 		entity->setMaterialName(mParams["material"]);
-	node->attachObject((MovableObject*)entity);
+	node->attachObject(entity);
 
 	Bullet* bullet = new Bullet(mgr, node, entity);
 	
@@ -68,6 +79,12 @@ Bullet* BulletFactory::createInstance( SceneManager* mgr )
 
 	if (mParams.find("time") != mParams.end())
 		bullet->setEffectTime((float)atof(mParams["time"].c_str()));
+
+	if (mParams.find("flare") != mParams.end())
+	{
+		ParticleSystem* ps = mgr->createParticleSystem(node->getName() + "Flare", mParams["flare"]);
+		node->attachObject(ps);
+	}
 
 	return bullet;
 }

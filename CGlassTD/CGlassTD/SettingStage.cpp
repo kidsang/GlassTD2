@@ -1,9 +1,12 @@
 #include "SettingStage.h"
 #include "StartStage.h"
+#include "Stage.h"
 
 SettingStage::SettingStage(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui)
-	: Stage(sceneManager, stageManager, gui),musicFlag(true),soundFlag(true)
+	: Stage(sceneManager, stageManager, gui)
 {
+	musicFlag = Stage::getMusicFlag();
+	soundFlag = Stage::getSoundFlag();
 	mLayout = MyGUI::LayoutManager::getInstance().loadLayout("setting.layout");
 	sound = this->getGUI()->findWidget<MyGUI::ImageBox>("yinxiao");
 	music = this->getGUI()->findWidget<MyGUI::ImageBox>("yinyue"); 
@@ -27,7 +30,9 @@ SettingStage::SettingStage(Ogre::SceneManager* sceneManager, StageManager* stage
 	
 	sound->eventMouseButtonClick += MyGUI::newDelegate(this, &SettingStage::notifyMouseButtonClick);
 	music->eventMouseButtonClick += MyGUI::newDelegate(this, &SettingStage::notifyMouseButtonClick);
-	back->eventMouseButtonClick += MyGUI::newDelegate(this, &SettingStage::notifyMouseButtonClick);
+
+	back->eventMouseButtonPressed += MyGUI::newDelegate(this, &SettingStage::notifyMouseButtonPress);
+	back->eventMouseButtonReleased += MyGUI::newDelegate(this, &SettingStage::notifyMouseButtonRelease);
 }
 
 
@@ -96,4 +101,16 @@ bool SettingStage::onMousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonI
 bool SettingStage::onMouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
 {
 	return true;
+}
+
+void SettingStage::notifyMouseButtonPress( MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id )
+{
+	back->setImageTexture("backPress.png");
+}
+
+void SettingStage::notifyMouseButtonRelease( MyGUI::Widget* _sender, int _left, int _top, MyGUI::MouseButton _id )
+{
+	back->setImageTexture("backPress.png");
+	Stage* nextStage = new StartStage(this->mSceneManager, this->mStageManager, this->mGui);
+	this->jumpToNextStage(nextStage);
 }

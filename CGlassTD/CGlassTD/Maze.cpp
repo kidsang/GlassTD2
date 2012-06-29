@@ -1,6 +1,7 @@
 #include "Maze.h"
 #include "Cell.h"
 #include "ParamParser.h"
+#include "Ogre.h"
 Maze::Maze(void)
 {
 }
@@ -35,11 +36,23 @@ Maze::Maze(SceneManager* sceneManager, int* map, int width, int height, Ogre::Ve
 	this->startPos = std::vector<Ogre::Vector3>();
 	this->mSceneNode->setPosition(Ogre::Vector3(-mWidth / 2.0f * this->mCellWidth, 0, -mHeight / 2.0f * this->mCellHeight));
 
+	int floorWidth = mWidth * 100 + 500;
+	int floorHeight = mHeight * 100 + 500;
+	Ogre::MeshManager::getSingleton().createPlane("myground", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+		Ogre::Plane(Ogre::Vector3::UNIT_Y, 0), floorWidth, floorHeight, 20, 20, true, 1, 1, 1, Ogre::Vector3::UNIT_Z);
+	mFloor = mSceneManager->createEntity("myground");
+	mFloor->setMaterialName("Glass/GrassGround");
+	mFloorNode = mSceneNode->createChildSceneNode();
+	mFloorNode->attachObject(mFloor);
+	mFloorNode->translate(floorWidth / 2 - 200, -60, floorHeight / 2 - 200);
+	//this->mFloor = ObjectFactory::createEntity(sceneManager,"floor.mesh");
+	//this->mFloorNode = ObjectFactory::createSceneNode(this->mSceneNode,this->mFloor, Vector3(0,Real(-180), 0));
+
 	for(int j = 0; j < height; ++j)
 	{
 		for(int i = 0; i < width; ++i)
 		{
-			int numRadom = Ogre::Math::RangeRandom(0,9.99);
+			int numRadom = (int)Ogre::Math::RangeRandom(0,9.99);
 			switch(map[j * width + i])
 			{
 			case 0:

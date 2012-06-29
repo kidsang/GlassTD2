@@ -18,6 +18,10 @@ private:
 	SceneManager* mSceneManager;
 	/// 地图的场景节点指针
 	SceneNode* mSceneNode;
+	/// 地板的地板实体
+	Entity* mFloor;
+	/// 地板的场景节点
+	SceneNode* mFloorNode;
 	/// 地图所拥有的空间一维数组
 	Cell** pZones;
 	/// 地图信息的一维数组
