@@ -5,7 +5,7 @@
 #include <OgreLogManager.h>
 #include "UFO.h"
 #include "ParamParser.h"
-
+#include "cutScenes.h"
 StagePass6::StagePass6(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui)
 	: LevelStage(sceneManager, stageManager, gui, 6)
 {
@@ -46,4 +46,5 @@ void StagePass6::onEdReplayBtnClick( MyGUI::Widget* sender )
 
 void StagePass6::onEdNextBtnClick( MyGUI::Widget* sender )
 {
+	this->jumpToNextStage(new cutScenes(this->mSceneManager,  this->mStageManager, this->mGui, 4));
 }

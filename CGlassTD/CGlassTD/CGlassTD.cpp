@@ -57,7 +57,7 @@ void CGlassTD::createScene(void)
 	//mpStageManager->setStage(new StagePass1(mSceneMgr, mpStageManager, mGui));
 	//mpStageManager->setStage(new StartStage(mSceneMgr, mpStageManager, mGui)); 
 	//mpStageManager->setStage(new StageSelect(mSceneMgr, mpStageManager, mGui)); 
-	mpStageManager->setStage(new cutScenes(mSceneMgr, mpStageManager, mGui));
+	mpStageManager->setStage(new cutScenes(mSceneMgr, mpStageManager, mGui, 1));
 }
 
 bool CGlassTD::frameRenderingQueued( const Ogre::FrameEvent& evt )

@@ -9,6 +9,7 @@
 #include "StageLoadingLevelStage.h"
 #include "Sound.h"
 #include "Money.h"
+#include "cutScenes.h"
 
 StageSelect::StageSelect(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui)
 	: Stage(sceneManager, stageManager, gui),preFlag(-1),flag(0)
@@ -176,7 +177,7 @@ void StageSelect::notifyMouseButtonRelease( MyGUI::Widget* _sender, int _left, i
 	{
 		stage1Btn->setImageTexture("stage1.png");
 		//Stage* nextStage = new StagePass1(this->mSceneManager, this->mStageManager, this->mGui);
-		Stage* nextStage = new StageLoadingLevelStage<StagePass1>(this->mSceneManager, this->mStageManager, this->mGui);
+		Stage* nextStage = new cutScenes(this->mSceneManager,  this->mStageManager, this->mGui, 2);
 		this->jumpToNextStage(nextStage);
 	}
 	else if(_sender == stage2Btn)
@@ -196,7 +197,7 @@ void StageSelect::notifyMouseButtonRelease( MyGUI::Widget* _sender, int _left, i
 	else if(_sender == stage4Btn)
 	{
 		stage4Btn->setImageTexture("stage4.png");
-		Stage* nextStage = new StageLoadingLevelStage<StagePass4>(this->mSceneManager, this->mStageManager, this->mGui);
+		Stage* nextStage = new cutScenes(this->mSceneManager,  this->mStageManager, this->mGui, 3);
 		this->jumpToNextStage(nextStage);
 	}
 	else if(_sender == stage5Btn)

@@ -139,6 +139,7 @@ namespace OgreUtils
         Ogre::String mFilename;
         Ogre::String mName;
         Ogre::Overlay *mOverlay;
+		Ogre::OverlayContainer *mContainer;
         bool isOverlay;
         Ogre::Viewport *mVp;
 

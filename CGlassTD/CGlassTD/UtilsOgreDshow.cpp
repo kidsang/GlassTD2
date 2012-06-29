@@ -520,7 +520,7 @@ namespace OgreUtils
 
  
     DirectShowControl::DirectShowControl(Ogre::String name,Ogre::String filename, int width,int height,Ogre::Viewport *vp,bool overlay/*=true*/ ):isOverlay(overlay),
-        mName(name),mWidth(width),mHeight(height),mFilename(filename),mVp(vp)
+        mName(name),mWidth(width),mHeight(height),mFilename(filename),mVp(vp),mOverlay(0),mContainer(0)
     {
         mDirectshowTexture = new DirectShowMovieTexture(mWidth,mHeight,false);
         mDirectshowTexture->loadMovie(mFilename);
@@ -535,13 +535,26 @@ namespace OgreUtils
 
     DirectShowControl::~DirectShowControl()
     {
-
+		if (mOverlay)
+		{
+			Ogre::OverlayManager::getSingleton().destroy(mOverlay->getName());
+			//delete mOverlay;
+			mOverlay = 0;
+		}
+		if (mContainer)
+		{
+			Ogre::OverlayManager::getSingleton().destroyOverlayElement(mContainer->getName());
+			//delete mContainer;
+			mContainer = 0;
+		}
+		Ogre::MaterialManager::getSingleton().remove(mMaterial->getName());
     }
+
     void DirectShowControl::createOverlay()
     {
         mOverlay = Ogre::OverlayManager::getSingleton().create(mName);
 
-        Ogre::OverlayContainer *mContainer = (Ogre::OverlayContainer*)
+        mContainer = (Ogre::OverlayContainer*)
             (Ogre::OverlayManager::getSingleton().createOverlayElement("Panel", "Ogre/DebugTexPanel" +mName));
 
         mContainer->setMetricsMode(Ogre::GMM_PIXELS);
@@ -642,6 +655,7 @@ namespace OgreUtils
             DirectShowControl *con=*(it);
             if(con)
                 con->Destroy();
+			delete con;
         }
         mDirectCtrlList.clear();
     }

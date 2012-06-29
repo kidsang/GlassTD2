@@ -1,37 +1,36 @@
+#ifndef __cutScenes_h_
+#define __cutScenes_h_
+
+
 #include "Stage.h"
 #include "UtilsOgreDshow.h"
+#include "StartStage.h"
+#include "StageLoadingLevelStage.h"
+#include "StagePass1.h"
+#include "StagePass4.h"
 
 class cutScenes : public Stage
 {
+private:
+	OgreUtils::DirectShowManager* mShowManager;
 	//Ogre::String name, Ogre::String filename, int VWight, int VHeight
 public :
 	OgreUtils::DirectShowControl* mDirectshowControl;
+	int state;
+	cutScenes(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui, int s);
+	~cutScenes();
 
-	cutScenes(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui): Stage(sceneManager, stageManager, gui)
-	{
-		Ogre::Root::getSingleton().addFrameListener(new OgreUtils::DirectShowManager(mCamera->getViewport()));
-		mDirectshowControl = OgreUtils::DirectShowManager::getSingleton().createDirectshowControl("test","../Media/1.avi",1024,768);
-	};
-	~cutScenes(){
-		Ogre::OverlayManager::getSingleton().destroyAll();
-	};
+	bool run(float timeSinceLastFrame);
 
-	bool run(float timeSinceLastFrame){ 
-		if(!mDirectshowControl->mDirectshowTexture->isPlayingMovie())
-		{
-			Stage* next = new StartStage(this->mSceneManager, this->mStageManager, this->mGui);
-			this->jumpToNextStage(next);
-		}
-		
-		return true;
-	};
+	bool onKeyPressed(const OIS::KeyEvent &arg);
 
-	bool onKeyPressed(const OIS::KeyEvent &arg){return true;};
+	bool onMouseMoved(const OIS::MouseEvent &arg);
 
-	bool onMouseMoved(const OIS::MouseEvent &arg){return true;};
+	bool onMousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 
-	bool onMousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id){return true;};
-
-	bool onMouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id){return true;};
+	bool onMouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 	
+	void gotoNext();
 };
+
+#endif

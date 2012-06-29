@@ -195,6 +195,7 @@
     <ClCompile Include="CGlassTD.cpp" />
     <ClCompile Include="Common.cpp" />
     <ClCompile Include="CheckMethod.cpp" />
+    <ClCompile Include="cutScenes.cpp" />
     <ClCompile Include="CVDShowUtil.cpp" />
     <ClCompile Include="GameResource.cpp" />
     <ClCompile Include="h-genutils.cpp" />
