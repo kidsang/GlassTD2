@@ -211,7 +211,7 @@ void LevelStage::initializeMaze( const std::string& mazeDefine, const std::strin
 	mWallType[2] = "tree.mesh";
 	mWallType[3] = "mushroomHouse.mesh";
 	mWallType[4] = "sunflower.mesh";
-	mWallType[5] = "tree.mesh";
+	mWallType[5] = "stone.mesh";
 	mWallType[6] = "whiteHouse1.mesh";
 	mWallType[7] = "whiteHouse2.mesh";
 	mWallType[8] = "whiteHouse3.mesh";
