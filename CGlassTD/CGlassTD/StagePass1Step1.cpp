@@ -25,12 +25,16 @@ void StagePass1Step1::init()
 		Stage::playMusic("../Media/Sound/pass2.mp3", true);
 		break;
 	case 3:
+		Stage::playMusic("../Media/Sound/pass3.mp3", true);
 		break;
 	case 4:
+		Stage::playMusic("../Media/Sound/pass3.mp3", true);
 		break;
 	case 5:
+		Stage::playMusic("../Media/Sound/pass3.mp3", true);
 		break;
 	case 6:
+		Stage::playMusic("../Media/Sound/pass3.mp3", true);
 		break;
 	}
 }
