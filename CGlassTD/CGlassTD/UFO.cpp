@@ -9,18 +9,7 @@ UFO::UFO(Ogre::SceneNode* node, Ogre::Entity* entity, int blood)
 
 UFO::~UFO(void)
 {
-	if (mHealthHUD)
-	{
-		mHealthHUD->clear();
-		delete mHealthHUD;
-		mHealthHUD = 0;
-	}
-	if(mNode)
-	{
-		delete mEntity;
-		mNode->getParentSceneNode()->removeAndDestroyChild(mNode->getName());
-		mNode = 0;
-	}
+
 }
 
 void UFO::setBlood( int blood )

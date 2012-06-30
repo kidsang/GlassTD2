@@ -7,7 +7,7 @@
 #include "TracerBulletFactory.h"
 
 LevelStage::LevelStage(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI::Gui* gui, int level)
-	: Stage(sceneManager, stageManager, gui),
+	: Stage(sceneManager, stageManager, gui), mBulletManager(0),
 	mCurrentStep(0), mCannon(0), mMaze(0), mMonsterManager(0), mUFO(0),mKeyboardControl(true),quitFlag(false),
 	mGravity(Vector3(0, -200, 0)), mIsRunning(true),mLevel(level),
 	mLight(0), mIsEnd(false)
@@ -15,6 +15,8 @@ LevelStage::LevelStage(Ogre::SceneManager* sceneManager, StageManager* stageMana
 	if (Money::getInstance() == 0)
 		Money::init(gui);
 	Money::getInstance()->display();
+	//
+	mBulletManager = new BulletManager();
 	// ½áÊø»­Ãæ
 	MyGUI::ImageBox* backToMenu;
 	MyGUI::ImageBox* palyAgain;
@@ -66,11 +68,7 @@ LevelStage::~LevelStage()
 	MyGUI::LayoutManager::getInstance().unloadLayout(levelStageLayout);
 	MyGUI::LayoutManager::getInstance().unloadLayout(mEdEscLayout);
 	//mSceneManager->setShadowTechnique(Ogre::SHADOWTYPE_NONE);
-	if (mLight)
-	{
-		mSceneManager->destroyLight(mLight);
-		mLight = 0;
-	}
+
 	if (mCurrentStep)
 	{
 		delete mCurrentStep;
@@ -92,6 +90,11 @@ LevelStage::~LevelStage()
 		delete mMaze;
 		mMaze = 0;
 	}
+	if (mBulletManager)
+	{
+		delete mBulletManager;
+		mBulletManager = 0;
+	}
 	// µ¥Àý
 	if (mMonsterManager)
 		mMonsterManager->release();
@@ -101,13 +104,8 @@ LevelStage::~LevelStage()
 	{
 		delete[] mWallType;
 	}
-	SceneNode* rootNode = mSceneManager->getRootSceneNode();
-	while (rootNode->numAttachedObjects() > 0)
-	{
-		MovableObject* obj = rootNode->getAttachedObject(0);
-		rootNode->detachObject(obj);
-		delete obj;
-	}
+
+	mSceneManager->clearScene();
 }
 
 void LevelStage::jumpToStep(Step* step)

@@ -16,6 +16,9 @@ void DestoryExplodeSprite(BillboardSprite* bs)
 	bs->setFinish(true);
 }
 
+/// 精灵动画
+/// 按照某个时间间隔来播放动画
+/// 通过不断改变纹理的坐标来实现
 class BillboardSpriteAnimator : public Animator<BillboardSprite>
 {
 private:

@@ -12,6 +12,7 @@
 #include "Ogre.h"
 using namespace Ogre;
 
+/// Billboard¾«ÁéÀà
 class BillboardSprite
 {
 private:

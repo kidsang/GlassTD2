@@ -22,10 +22,6 @@ Cannon::~Cannon()
 		delete (*iter);
 	if (mTarcerBulletFactory)
 		delete mTarcerBulletFactory;
-	//
-	delete mGunNode->getAttachedObject(0);
-	delete mTireNode->getAttachedObject(0);
-	mTireNode->getParentSceneNode()->removeAndDestroyChild(mTireNode->getName());
 }
 
 void Cannon::addBulletFactory( BulletFactory* bulletFactory )

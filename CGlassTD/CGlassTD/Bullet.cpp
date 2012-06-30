@@ -12,21 +12,12 @@ Bullet::Bullet(SceneManager* manager, SceneNode* node, Entity* entity)
 
 Bullet::~Bullet(void)
 {
-	// É¾³ýÎ²Ñæ
-	/*if (mFlare)
-	{
-		mNode->detachObject(mFlare);
-		delete mFlare;
-	}*/
 	// É¾³ýÅÚµ¯mesh
-	while (mNode->numAttachedObjects() > 0)
-	{
-		MovableObject* obj = mNode->getAttachedObject(0);
-		mNode->detachObject(obj);
-		delete obj;
-	}
+	auto objIter = mNode->getAttachedObjectIterator();
+	while (objIter.hasMoreElements())
+		mSceneManager->destroyMovableObject(objIter.getNext());
 	// É¾³ýÅÚµ¯µÄ³¡¾°½Úµã
-	mNode->getParentSceneNode()->removeAndDestroyChild(mNode->getName());
+	mSceneManager->destroySceneNode(mNode);
 }
 
 void Bullet::fire(const Vector3& position, const Vector3& velocity)

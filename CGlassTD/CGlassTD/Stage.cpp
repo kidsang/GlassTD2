@@ -15,6 +15,7 @@ Stage::Stage(Ogre::SceneManager* sceneManager, StageManager* stageManager, MyGUI
 
 Stage::~Stage(void)
 {
+	//mSceneManager->clearScene();
 }
 
 Ogre::Camera* Stage::getCamera()

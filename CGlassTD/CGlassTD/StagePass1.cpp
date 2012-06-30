@@ -33,6 +33,7 @@ StagePass1::StagePass1(Ogre::SceneManager* sceneManager, StageManager* stageMana
 
 StagePass1::~StagePass1(void)
 {
+	//mSceneManager->clearScene();
 }
 
 void StagePass1::onEdReplayBtnClick( MyGUI::Widget* sender )
