@@ -68,7 +68,12 @@ Cell::~Cell(void)
 {
 	if(mSceneNode)
 	{
-		delete mEntity;
+		while (mSceneNode->numAttachedObjects() > 0)
+		{
+			MovableObject* obj = mSceneNode->getAttachedObject(0);
+			mSceneNode->detachObject(obj);
+			delete obj;
+		}
 		mSceneNode->getParentSceneNode()->removeAndDestroyChild(mSceneNode->getName());
 		mSceneNode = 0;
 	}
@@ -100,7 +105,13 @@ bool Cell::setCellType( CellType type, Ogre::String mesh, float harmValue )
 	
 	if(this->mSceneNode != NULL)
 	{
-		this->mSceneNode->detachAllObjects();
+		while (mSceneNode->numAttachedObjects() > 0)
+		{
+			MovableObject* obj = mSceneNode->getAttachedObject(0);
+			mSceneNode->detachObject(obj);
+			delete obj;
+		}
+		//this->mSceneNode->detachAllObjects();
 		this->mEntity = ObjectFactory::createEntity(mSceneManager,mesh);
 		this->mSceneNode->attachObject(this->mEntity);
 	}
@@ -122,7 +133,12 @@ bool Cell::setCellType( CellType type )
 {
 	if(this->mSceneNode != NULL)
 	{
-		this->mSceneNode->detachAllObjects();
+		while (mSceneNode->numAttachedObjects() > 0)
+		{
+			MovableObject* obj = mSceneNode->getAttachedObject(0);
+			mSceneNode->detachObject(obj);
+			delete obj;
+		}
 	}
 	this->mType = type;
 	this->mHarmValue = 0.0f;

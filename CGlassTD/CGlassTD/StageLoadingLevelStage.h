@@ -15,6 +15,7 @@ public:
 		: Stage(sceneManager, stageManager, gui),
 		mCount(60)
 	{
+		// 创建装载画面
 		mImageBox = mGui->createWidget<MyGUI::ImageBox>("ImageBox", 0, 0, 1024, 768, MyGUI::Align::Center, "Main");
 		mImageBox->setImageTexture("loading.gif");
 	}

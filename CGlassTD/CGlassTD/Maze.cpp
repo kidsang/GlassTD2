@@ -102,6 +102,12 @@ Maze::~Maze(void)
 	delete[] pZones;
 	if (mSceneNode)
 	{
+		while (mSceneNode->numAttachedObjects() > 0)
+		{
+			MovableObject* obj = mSceneNode->getAttachedObject(0);
+			mSceneNode->detachObject(obj);
+			delete obj;
+		}
 		mSceneNode->getParentSceneNode()->removeAndDestroyChild(mSceneNode->getName());
 		mSceneNode = 0;
 	}

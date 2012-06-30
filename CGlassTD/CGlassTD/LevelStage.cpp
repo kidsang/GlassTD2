@@ -65,7 +65,7 @@ LevelStage::~LevelStage()
 	MyGUI::LayoutManager::getInstance().unloadLayout(mEdLayout);
 	MyGUI::LayoutManager::getInstance().unloadLayout(levelStageLayout);
 	MyGUI::LayoutManager::getInstance().unloadLayout(mEdEscLayout);
-	mSceneManager->setShadowTechnique(Ogre::SHADOWTYPE_NONE);
+	//mSceneManager->setShadowTechnique(Ogre::SHADOWTYPE_NONE);
 	if (mLight)
 	{
 		mSceneManager->destroyLight(mLight);
@@ -100,6 +100,13 @@ LevelStage::~LevelStage()
 	if(mWallType)
 	{
 		delete[] mWallType;
+	}
+	SceneNode* rootNode = mSceneManager->getRootSceneNode();
+	while (rootNode->numAttachedObjects() > 0)
+	{
+		MovableObject* obj = rootNode->getAttachedObject(0);
+		rootNode->detachObject(obj);
+		delete obj;
 	}
 }
 

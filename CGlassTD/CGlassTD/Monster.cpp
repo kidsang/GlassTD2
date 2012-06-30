@@ -60,9 +60,12 @@ Monster::~Monster(void)
 		delete (*iter);*/
 	if(mNode)
 	{
-		mNode->detachObject(mEntity);
-		delete mEntity;
-		mEntity = 0;
+		while (mNode->numAttachedObjects() > 0)
+		{
+			MovableObject* obj = mNode->getAttachedObject(0);
+			mNode->detachObject(obj);
+			delete obj;
+		}
 		mNode->getParentSceneNode()->removeAndDestroyChild(mNode->getName());
 		mNode = 0;
 	}
