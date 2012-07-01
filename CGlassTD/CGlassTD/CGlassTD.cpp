@@ -44,24 +44,18 @@ void CGlassTD::createScene(void)
 	Ogre::CompositorManager::getSingleton().addCompositor(camera->getViewport(), "Bloom");
 	Ogre::CompositorManager::getSingleton().setCompositorEnabled(camera->getViewport(), "Bloom", true);
 
-	// 粒子系统
-    //Ogre::ParticleSystem* ps = mSceneMgr->createParticleSystem("Fireworks", "Examples/GreenyNimbus");
-	//mSceneMgr->getRootSceneNode()->attachObject(ps);
-
-	// test gui
-	//MyGUI::ButtonPtr button = mGui->createWidget<MyGUI::Button>("Button", 10, 10, 300, 26, MyGUI::Align::Default, "Main");
-	//button->setCaption("exit");
-
 	// 创建场景
 	mpStageManager = new StageManager(mSceneMgr);
-	mpStageManager->setStage(new StagePass1(mSceneMgr, mpStageManager, mGui));
-	//mpStageManager->setStage(new StartStage(mSceneMgr, mpStageManager, mGui)); 
-	//mpStageManager->setStage(new StageSelect(mSceneMgr, mpStageManager, mGui)); 
-	//mpStageManager->setStage(new cutScenes(mSceneMgr, mpStageManager, mGui, 1));
+	//mpStageManager->setStage(new StagePass1(mSceneMgr, mpStageManager, mGui));
+	mpStageManager->setStage(new cutScenes(mSceneMgr, mpStageManager, mGui, 1));
 }
 
 bool CGlassTD::frameRenderingQueued( const Ogre::FrameEvent& evt )
 {
+	// 显示FPS
+	HWND hwnd;
+	mWindow->getCustomAttribute("WINDOW", (void*)&hwnd);
+	SetWindowTextA(hwnd, ("FPS: " + convertToString(mWindow->getLastFPS())).c_str());
 	//
 	if (!BaseApplication::frameRenderingQueued(evt))
 		return false;
