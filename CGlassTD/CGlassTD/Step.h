@@ -29,6 +29,8 @@ public:
 	/// @param arg 事件的信息
 	virtual bool onKeyPressed(const OIS::KeyEvent &arg) = 0;
 
+	virtual bool onKeyReleased(const OIS::KeyEvent &arg) = 0;
+
 	/// 鼠标移动触发此函数
 	/// @param arg 事件的信息
 	virtual bool onMouseMoved(const OIS::MouseEvent &arg) = 0;

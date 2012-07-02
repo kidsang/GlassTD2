@@ -101,6 +101,11 @@ bool StagePass1Step0::onKeyPressed(const OIS::KeyEvent& arg)
 	return true;
 }
 
+bool StagePass1Step0::onKeyReleased(const OIS::KeyEvent &arg)
+{
+	return true;
+}
+
 
 bool StagePass1Step0::onMouseMoved(const OIS::MouseEvent& arg)
 {

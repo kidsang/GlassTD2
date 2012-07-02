@@ -139,6 +139,11 @@ bool LevelStage::onKeyPressed(const OIS::KeyEvent &arg)
 	return mCurrentStep->onKeyPressed(arg);
 }
 
+bool LevelStage::onKeyReleased(const OIS::KeyEvent &arg)
+{
+	return mCurrentStep->onKeyReleased(arg);
+}
+
 bool LevelStage::onMouseMoved(const OIS::MouseEvent &arg)
 {
 	return mCurrentStep->onMouseMoved(arg);

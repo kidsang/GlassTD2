@@ -5,7 +5,7 @@
 
 StagePass1Step1::StagePass1Step1(LevelStage* stagePass1)
 	: mStagePass1(stagePass1),
-	mCameraZoom(0)
+	mCameraZoom(0), mIsMoving(0)
 {
 	this->mStagePass1->createGUI1();
 }
@@ -107,6 +107,17 @@ bool StagePass1Step1::run(float timeSinceLastFrame)
 			);
 
 		bulletManager.runExplodeAnimator(timeSinceLastFrame);
+
+		if (mIsMoving == 1)
+		{
+			mStagePass1->getCannon()->move(Ogre::Vector3(-10, 0, 0));
+			mStagePass1->getCamera()->move(Ogre::Vector3(-10, 0, 0));
+		}
+		if (mIsMoving == 2)
+		{
+			mStagePass1->getCannon()->move(Ogre::Vector3(10, 0, 0));
+			mStagePass1->getCamera()->move(Ogre::Vector3(10, 0, 0));
+		}
 	}
 	
 		
@@ -161,6 +172,20 @@ bool StagePass1Step1::onKeyPressed(const OIS::KeyEvent& arg)
 		MonsterManager* monsterManager = mStagePass1->getMonsterManager();
 		monsterManager->setWinGame();
 	}
+	else if(arg.key == OIS::KC_LEFT)
+	{
+		mIsMoving = 1;
+	}
+	else if(arg.key == OIS::KC_RIGHT)
+	{
+		mIsMoving = 2;
+	}
+	return true;
+}
+
+bool StagePass1Step1::onKeyReleased(const OIS::KeyEvent &arg)
+{
+	mIsMoving = 0;
 	return true;
 }
 

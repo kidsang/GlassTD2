@@ -22,6 +22,7 @@ public:
 	void init();
 	bool run(float timeSinceLastFrame);
 	bool onKeyPressed(const OIS::KeyEvent &arg);
+	bool onKeyReleased(const OIS::KeyEvent &arg);
 	bool onMouseMoved(const OIS::MouseEvent &arg);
 	bool onMousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 	bool onMouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);

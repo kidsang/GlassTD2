@@ -34,6 +34,8 @@ public:
 	/// 按下键盘触发此函数
 	/// @param arg 事件的信息
 	virtual bool onKeyPressed(const OIS::KeyEvent &arg) = 0;
+	
+	virtual bool onKeyReleased(const OIS::KeyEvent &arg);
 
 	/// 鼠标移动触发此函数
 	/// @param arg 事件的信息

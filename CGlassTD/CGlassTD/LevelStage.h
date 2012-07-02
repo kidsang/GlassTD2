@@ -50,6 +50,8 @@ public:
 	/// @param arg 事件的信息
 	/// @note 应该只由框架调用
 	bool onKeyPressed(const OIS::KeyEvent &arg);
+	
+	bool onKeyReleased(const OIS::KeyEvent &arg);
 
 	/// 鼠标移动触发此函数
 	/// @param arg 事件的信息

@@ -39,3 +39,8 @@ void Stage::playMusic(const char* fileName, bool loop)
 	if (mMusicEnabled)
 		Sound::getInstance()->play(fileName, loop);
 }
+
+bool Stage::onKeyReleased(const OIS::KeyEvent &arg)
+{
+	return true;
+}

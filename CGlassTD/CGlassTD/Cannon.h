@@ -85,8 +85,16 @@ public:
 	/// 修改炮台朝向
 	void rotate(int yaw, int pitch, Ogre::Camera* cam);
 
+	void move( Ogre::Vector3 v )
+	{
+		mTireNode->translate(v);
+	}
+
 	// Get/Set
 public:
+
+
+
 	/// 设置曳光弹
 	void setTracer(TracerBulletFactory* tbf)
 	{
