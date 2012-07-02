@@ -309,7 +309,8 @@ public:
 	{
 		mType = params["name"];
 		// Ô¤×°ÔØÄ£ÐÍ
-		delete SceneManagerContainer::getSceneManager()->createEntity(mParams["mesh"]);
+		Ogre::Entity* ent =  SceneManagerContainer::getSceneManager()->createEntity(mParams["mesh"]);
+		//ent->_getCreator()->destroyInstance(ent);
 	}
 	~MonsterFactory()
 	{

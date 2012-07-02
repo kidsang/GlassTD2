@@ -4,6 +4,7 @@
 #include "MonsterHurtAnimator.h"
 #include "Sound.h"
 #include "Stage.h"
+#include "SceneManagerContainer.h"
 #define CAN_STEP 0
 #define NOT_STEP 1
 #define HAS_STEP 2
@@ -50,20 +51,12 @@ Monster::Monster(SceneNode* node, Entity* entity, Maze* maze, MonsterManager* mo
 
 Monster::~Monster(void)
 {
-	if (mHealthHUD)
-	{
-		mHealthHUD->clear();
-		delete mHealthHUD;
-		mHealthHUD = 0;
-	}
-	/*for (auto iter = mAnimatorList.begin(); iter != mAnimatorList.end(); ++iter)
-		delete (*iter);*/
 	if(mNode)
 	{
-		mNode->detachObject(mEntity);
-		delete mEntity;
-		mEntity = 0;
-		mNode->getParentSceneNode()->removeAndDestroyChild(mNode->getName());
+		SceneManager* mgr = SceneManagerContainer::getSceneManager();
+		auto objIter = mNode->getAttachedObjectIterator();
+		while (objIter.hasMoreElements())
+			mgr->destroyMovableObject(objIter.getNext());
 		mNode = 0;
 	}
 	if (mCheckMethod)

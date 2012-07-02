@@ -1,4 +1,5 @@
 #include "BillboardSprite.h"
+#include "SceneManagerContainer.h"
 
 
 BillboardSprite::BillboardSprite(SceneNode* node, BillboardSet* bs, int row, int col, int unitWidth, int unitHeight)
@@ -15,15 +16,13 @@ BillboardSprite::BillboardSprite(SceneNode* node, BillboardSet* bs, int row, int
 
 BillboardSprite::~BillboardSprite(void)
 {
-	if (mBillboards)
-	{
-		mBillboards->clear();
-		delete mBillboards;
-		mBillboards = 0;
-	}
 	if (mNode)
 	{
-		mNode->getParentSceneNode()->removeAndDestroyChild(mNode->getName());
+		auto objIter = mNode->getAttachedObjectIterator();
+		SceneManager* mgr = SceneManagerContainer::getSceneManager();
+		while (objIter.hasMoreElements())
+			mgr->destroyMovableObject(objIter.getNext());
+		mgr->destroySceneNode(mNode);
 	}
 }
 

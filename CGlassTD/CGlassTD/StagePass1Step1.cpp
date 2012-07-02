@@ -90,23 +90,23 @@ bool StagePass1Step1::run(float timeSinceLastFrame)
 
 	else if (mStagePass1->isRunning())
 	{
-		BulletManager& bulletManager = mStagePass1->getBulletManager();
+		BulletManager* bulletManager = mStagePass1->getBulletManager();
 		Vector3 gravity = mStagePass1->getGravity();
 		// ·¢ÉäÒ·¹âµ¯
 		Bullet* tracer = mStagePass1->getCannon()->fireTracer(SceneManagerContainer::getSceneManager());
 		if (tracer)
-			bulletManager.add(tracer);
-		bulletManager.fly(timeSinceLastFrame, gravity);
+			bulletManager->add(tracer);
+		bulletManager->fly(timeSinceLastFrame, gravity);
 
 		Maze* maze = mStagePass1->getMaze();
-		std::vector<NameValueList> explodedBullets = bulletManager.getAndRemoveExplodedBullets(maze->getHorizon(), SceneManagerContainer::getSceneManager());
+		std::vector<NameValueList> explodedBullets = bulletManager->getAndRemoveExplodedBullets(maze->getHorizon(), SceneManagerContainer::getSceneManager());
 		monsterManager->updateState(
 			explodedBullets,
 			timeSinceLastFrame,
 			SceneManagerContainer::getSceneManager()
 			);
 
-		bulletManager.runExplodeAnimator(timeSinceLastFrame);
+		bulletManager->runExplodeAnimator(timeSinceLastFrame);
 
 		if (mIsMoving == 1)
 		{
@@ -137,7 +137,7 @@ bool StagePass1Step1::onKeyPressed(const OIS::KeyEvent& arg)
 		Bullet* bullet = mStagePass1->getCannon()->fire(SceneManagerContainer::getSceneManager());
 		if (bullet)
 		{
-			mStagePass1->getBulletManager().add(bullet);
+			mStagePass1->getBulletManager()->add(bullet);
 			Stage::playSound("../Media/Sound/fire.wav", false);
 			mStagePass1->updateCount();
 		}

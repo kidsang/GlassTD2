@@ -100,11 +100,6 @@ Maze::~Maze(void)
 	for (int num = mHeight * mWidth - 1; num >= 0; num--)
 		delete pZones[num];
 	delete[] pZones;
-	if (mSceneNode)
-	{
-		mSceneNode->getParentSceneNode()->removeAndDestroyChild(mSceneNode->getName());
-		mSceneNode = 0;
-	}
 }
 
 Cell** Maze::getMazeInfo()

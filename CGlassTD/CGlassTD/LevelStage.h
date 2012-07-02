@@ -134,7 +134,7 @@ public:
 		return mMonsterManager;
 	}
 
-	BulletManager& getBulletManager()
+	BulletManager* getBulletManager()
 	{
 		return mBulletManager;
 	}
@@ -185,7 +185,7 @@ protected:
 	MonsterManager* mMonsterManager;
 
 	/// 炮弹管理类
-	BulletManager mBulletManager;
+	BulletManager* mBulletManager;
 	/// 摄像机动画列表
 	std::deque<Animator<Ogre::Camera>*> mCameraAnimatorList;
 

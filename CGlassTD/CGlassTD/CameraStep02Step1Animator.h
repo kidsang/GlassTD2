@@ -1,12 +1,18 @@
 #ifndef CameraStep02Step1Animator_h__
 #define CameraStep02Step1Animator_h__
 
+/**
+ * 文件：CameraStep02Step1Animator
+ * 日期：2012/06/30
+ * 作者：kid
+ */
+
 #include "Animator.h"
 #include "OgreCamera.h"
 using namespace Ogre;
 
-
-
+/// 从Step0到Step1的镜头移动动画
+/// 该类为硬编码，十分丑陋
 class CameraStep02Step1Animator : public Animator<Camera>
 {
 public:
