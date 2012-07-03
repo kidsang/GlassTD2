@@ -21,6 +21,9 @@
             <Widget type="ImageBox" skin="ImageBox" position="735 600 120 120" name="help">
                 <Property key="ImageTexture" value="help.png"/>
             </Widget>
+            <Widget type="ImageBox" skin="ImageBox" position="595 595 120 120" name="about">
+                <Property key="ImageTexture" value="about.png"/>
+            </Widget>
         </Widget>
     </Widget>
 </MyGUI>

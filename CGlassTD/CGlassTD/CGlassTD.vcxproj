@@ -119,6 +119,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AboutStage.h" />
     <ClInclude Include="Animatable.h" />
     <ClInclude Include="Animator.h" />
     <ClInclude Include="BaseApplication.h" />
@@ -187,6 +188,7 @@
     <ResourceCompile Include="res\CGlassTD.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AboutStage.cpp" />
     <ClCompile Include="BaseApplication.cpp" />
     <ClCompile Include="BillboardSprite.cpp" />
     <ClCompile Include="Bullet.cpp" />

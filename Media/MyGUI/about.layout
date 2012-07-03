@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="Widget" skin="skin_Default" position="0 0 1024 736" align="Stretch" layer="Back" name="_Main">
+        <Property key="Enabled" value="true"/>
+        <UserString key="LE_TargetWidgetType" value="Window"/>
+        <Widget type="ImageBox" skin="ImageBox" position="0 0 1024 768" name="background">
+            <Property key="ImageTexture" value="aboutBG.png"/>
+            <Widget type="ImageBox" skin="ImageBox" position="55 600 120 120" name="back">
+                <Property key="ImageTexture" value="back.png"/>
+            </Widget>
+        </Widget>
+    </Widget>
+</MyGUI>
