@@ -2,6 +2,8 @@
 #define CheckMethod_h__
 #include <string>
 #include "CellType.h"
+
+/// 用以检查怪物收到的伤害情况
 class CheckMethod
 {
 private:

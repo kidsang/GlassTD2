@@ -52,6 +52,19 @@ private:
 	int mRollY;
 	// debug
 	//MyGUI::StaticTextPtr debugText;
+
+	/// 初始镜头动画是否已经结束
+	bool mIsIniAniOver;
+	/// 镜头结束位置
+	Ogre::Vector3 mCamEndPos;
+	/// 镜头开始位置
+	Ogre::Vector3 mCamBeginPos;
+	/// 镜头开始视点
+	Ogre::Vector3 mCamBeginFocus;
+	/// 镜头结束视点
+	Ogre::Vector3 mCamEndFocus;
+	/// 动画播放时间
+	float mCamAniTime;
 };
 
 

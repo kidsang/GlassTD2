@@ -5,6 +5,8 @@
 #include <Ogre.h>
 using namespace Ogre;
 
+/// UFO类
+/// 定义了凹凸曼星人的总部
 class UFO
 {
 private:

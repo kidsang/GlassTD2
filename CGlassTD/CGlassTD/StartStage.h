@@ -4,6 +4,7 @@
 
 #include "Stage.h"
 
+/// 关卡选择菜单场景
 class StartStage : public Stage
 {
 public:

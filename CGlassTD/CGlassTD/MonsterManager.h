@@ -10,7 +10,7 @@
 #include "UFO.h"
 #include "Stage.h"
 
-
+/// 定义了每一波怪物的信息
 struct Wave
 {
 	float newWaveTime;
@@ -35,7 +35,8 @@ struct ExplodedBulletsStruct
 	float bulletPos[3];
 };
 
-
+/// 怪物管理类
+/// 负责管理场景中怪物的创建、运动和销毁
 class MonsterManager
 {
 private:

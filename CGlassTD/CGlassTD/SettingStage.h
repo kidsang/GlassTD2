@@ -1,5 +1,7 @@
 #pragma once
 #include "stage.h"
+
+/// …Ë÷√≤Àµ•≥°æ∞
 class SettingStage : public Stage
 {
 public:

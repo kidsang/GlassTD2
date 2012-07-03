@@ -3,7 +3,7 @@
 
 #include "LevelStage.h"
 
-/// 第一关场景
+/// 第五关场景
 class StagePass5 : public LevelStage
 {
 private:

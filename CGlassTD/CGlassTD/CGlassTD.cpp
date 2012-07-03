@@ -1,5 +1,6 @@
 #include "CGlassTD.h"
 #include "StagePass1.h"
+#include "StagePass2.h"
 #include "Questions.h"
 #include "StartStage.h"
 #include "StageSelect.h"
@@ -46,7 +47,7 @@ void CGlassTD::createScene(void)
 
 	// ´´½¨³¡¾°
 	mpStageManager = new StageManager(mSceneMgr);
-	//mpStageManager->setStage(new StagePass1(mSceneMgr, mpStageManager, mGui));
+	//mpStageManager->setStage(new StagePass2(mSceneMgr, mpStageManager, mGui));
 	mpStageManager->setStage(new cutScenes(mSceneMgr, mpStageManager, mGui, 1));
 }
 

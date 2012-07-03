@@ -1,6 +1,7 @@
 #ifndef __Position_h_
 #define __Position_h_
 
+/// 弃之不用的类
 class Position
 {
 private :

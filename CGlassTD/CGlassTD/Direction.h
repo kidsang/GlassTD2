@@ -1,7 +1,7 @@
 #ifndef __Direction_h_
 #define __Direction_h_
 
-
+/// 弃之不用的类
 class Direction
 {
 public:

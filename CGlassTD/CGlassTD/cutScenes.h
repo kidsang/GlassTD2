@@ -9,6 +9,7 @@
 #include "StagePass1.h"
 #include "StagePass4.h"
 
+/// 过场动画场景
 class cutScenes : public Stage
 {
 private:

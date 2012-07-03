@@ -6,6 +6,7 @@ using namespace Ogre;
 #ifndef __ObjectFactory_h_
 #define __ObjectFactory_h_
 
+/// 一个帮助类，用以创建场景节点和实体
 class ObjectFactory
 {
 public:

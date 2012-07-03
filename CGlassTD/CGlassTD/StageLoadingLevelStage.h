@@ -4,6 +4,7 @@
 #include "Stage.h"
 #include <MyGUI/MyGUI.h>
 
+/// Loading»­Ãæ³¡¾°
 template <typename T>
 class StageLoadingLevelStage : public Stage
 {

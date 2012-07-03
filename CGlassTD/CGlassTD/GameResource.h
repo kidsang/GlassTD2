@@ -4,7 +4,7 @@
 
 #include "OgreString.h"
 
-
+/// ...
 class GameResource
 {
 public:

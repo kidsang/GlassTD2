@@ -3,7 +3,7 @@
 
 #include "LevelStage.h"
 
-/// 第一关场景
+/// 生存模式场景
 class LifeStage : public LevelStage
 {
 private:

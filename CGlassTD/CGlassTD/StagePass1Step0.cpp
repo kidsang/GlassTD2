@@ -17,12 +17,21 @@ bool equal(Cell* firstCell, Cell* secondCell)
 
 StagePass1Step0::StagePass1Step0(LevelStage* stagePass1)
 	: mStagePass1(stagePass1), mCurrentState(WITH_SWAMP), mCurrentCell(NULL),
-	mRollX(0), mRollY(0)
+	mRollX(0), mRollY(0),
+	mIsIniAniOver(false), mCamAniTime(0)
 {
 	mRaySceneQuery = SceneManagerContainer::getSceneManager()->createRayQuery(Ogre::Ray());
 
 	this->mStagePass1->createGUI0();
 	setNotify();
+
+	mCamBeginPos = Ogre::Vector3(-500, 200, 500);
+	mCamEndPos = Ogre::Vector3(0, 2000, 1000);
+	mCamBeginFocus = Ogre::Vector3(0, 200, 1300);
+	mCamEndFocus = Ogre::Vector3(0, 0, 0);
+
+	mStagePass1->getCamera()->setPosition(mCamBeginPos);
+	mStagePass1->getCamera()->lookAt(mCamBeginFocus);
 }
 
 StagePass1Step0::~StagePass1Step0()
@@ -33,12 +42,27 @@ StagePass1Step0::~StagePass1Step0()
 void StagePass1Step0::init()
 {
 	/// 改变镜头视角
-	mStagePass1->getCamera()->setPosition(Vector3(0, 2000, 1000));
-	mStagePass1->getCamera()->lookAt(Vector3(0, 0, 0));
+	//mStagePass1->getCamera()->setPosition(Vector3(0, 2000, 1000));
+	//mStagePass1->getCamera()->lookAt(Vector3(0, 0, 0));
 }
 
 bool StagePass1Step0::run(float timeSinceLastFrame)
 {
+	if (!mIsIniAniOver)
+	{
+		mCamAniTime += timeSinceLastFrame;
+		if (mCamAniTime >= 2.f)
+		{
+			mCamAniTime = 2.f;
+			mIsIniAniOver = true;
+		}
+
+		mStagePass1->getCamera()->setPosition(mCamBeginPos + (mCamEndPos - mCamBeginPos) / 2.f * mCamAniTime);
+		mStagePass1->getCamera()->lookAt(mCamBeginFocus + (mCamEndFocus - mCamBeginFocus) / 2.f * mCamAniTime);
+
+		return true;
+	}
+	
 	// 卷动画面
 #ifdef _DEBUG
 	const int moveStep = 60;
@@ -63,6 +87,9 @@ bool StagePass1Step0::run(float timeSinceLastFrame)
 
 bool StagePass1Step0::onKeyPressed(const OIS::KeyEvent& arg)
 {
+	if (!mIsIniAniOver)
+		return true;
+
 	switch (arg.key)
 	{
 	// 按 G 结束布局阶段，开始打怪阶段
@@ -109,6 +136,9 @@ bool StagePass1Step0::onKeyReleased(const OIS::KeyEvent &arg)
 
 bool StagePass1Step0::onMouseMoved(const OIS::MouseEvent& arg)
 {
+	if (!mIsIniAniOver)
+		return true;
+
 	if (mCurrentState == NOTHING) return true;  // 用户并没有选中要布置的陷阱
 	
 	// 将屏幕坐标转换成场景中的三维坐标
@@ -171,6 +201,8 @@ bool StagePass1Step0::onMouseMoved(const OIS::MouseEvent& arg)
 
 bool StagePass1Step0::onMousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
 {
+	if (!mIsIniAniOver)
+		return true;
 
 	if(!mStagePass1->getKeyboardController())
 		return false;

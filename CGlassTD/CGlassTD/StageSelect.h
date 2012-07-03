@@ -5,6 +5,7 @@
 
 #include "Stage.h"
 
+/// 游戏主菜单场景
 class StageSelect: public Stage
 {
 public:
