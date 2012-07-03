@@ -9,7 +9,7 @@
 using namespace std;
 using namespace Ogre;
 
-
+/// 表示了迷宫中每一格子中的物体，可以是墙、道路或陷阱
 class Cell
 {
 private:

@@ -27,7 +27,7 @@ class MonsterManager;
 //const float SPIKEWEED_HARM_BLOOD = 20.0f;  /// 地刺伤害的血量值
 //const float SWAMP_HARM_SPEED = 0.4f;  /// 沼泽影响的速度值
 
-
+/// ...
 struct Pos
 {
 	int x;
@@ -40,6 +40,7 @@ struct Pos
 	Pos(){}
 };
 
+/// ...
 struct CellNode
 {
 	Pos pare;
@@ -47,12 +48,14 @@ struct CellNode
 	int dist;
 };
 
+/// ...
 struct Judge
 {
 	CellNode node;
 	Judge* next;
 };
 
+/// ...
 struct Vect
 {
 	int dx;
@@ -94,6 +97,7 @@ struct Vect
 //		fireHarmTime(FIRE_HARM_TIME){};
 //};
 
+/// 定义了场景中出现的怪物
 class Monster : public Animatalbe<Monster>
 {
 protected:
@@ -298,6 +302,8 @@ private:
 };
 
 #include "SceneManagerContainer.h"
+/// 怪物工厂类
+/// 根据参数创建不同种类的怪物
 class MonsterFactory
 {
 	NameValueList mParams;

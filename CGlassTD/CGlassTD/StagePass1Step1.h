@@ -24,6 +24,7 @@ private:
 	LevelStage* mStagePass1;
 	int mCameraZoom;
 	int mIsMoving;
+	int mAutoLimit;
 	
 };
 

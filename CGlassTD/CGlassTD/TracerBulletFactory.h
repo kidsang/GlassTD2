@@ -9,6 +9,8 @@
 
 #include "Bullet.h"
 
+/// 曳光弹工厂类
+/// 创建用于帮助玩家瞄准的曳光弹
 class TracerBulletFactory : public BulletFactory
 {
 public:

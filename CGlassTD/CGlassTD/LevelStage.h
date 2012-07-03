@@ -14,6 +14,8 @@ using std::vector;
 #include "Animator.h"
 #include "Money.h"
 
+/// 游戏关卡场景
+/// 所有游戏关卡的父类
 class LevelStage : public Stage
 {
 private:

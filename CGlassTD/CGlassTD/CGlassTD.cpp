@@ -1,5 +1,6 @@
 #include "CGlassTD.h"
 #include "StagePass1.h"
+#include "StagePass2.h"
 #include "Questions.h"
 #include "StartStage.h"
 #include "StageSelect.h"
@@ -46,7 +47,7 @@ void CGlassTD::createScene(void)
 
 	// ´´½¨³¡¾°
 	mpStageManager = new StageManager(mSceneMgr);
-	//mpStageManager->setStage(new StartStage(mSceneMgr, mpStageManager, mGui));
+	//mpStageManager->setStage(new StagePass2(mSceneMgr, mpStageManager, mGui));
 	mpStageManager->setStage(new cutScenes(mSceneMgr, mpStageManager, mGui, 1));
 }
 
@@ -78,19 +79,22 @@ bool CGlassTD::keyReleased( const OIS::KeyEvent &arg )
 
 bool CGlassTD::mouseMoved(const OIS::MouseEvent &arg)
 {
-	MyGUI::InputManager::getInstance().injectMouseMove(arg.state.X.abs, arg.state.Y.abs, arg.state.Z.abs);
+	if (MyGUI::InputManager::getInstance().injectMouseMove(arg.state.X.abs, arg.state.Y.abs, arg.state.Z.abs))
+		return true;
 	return mpStageManager->getStage()->onMouseMoved(arg);
 }
 
 bool CGlassTD::mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
 {
-	MyGUI::InputManager::getInstance().injectMousePress(arg.state.X.abs, arg.state.Y.abs, MyGUI::MouseButton::Enum(id));
+	if (MyGUI::InputManager::getInstance().injectMousePress(arg.state.X.abs, arg.state.Y.abs, MyGUI::MouseButton::Enum(id)))
+		return true;
 	return mpStageManager->getStage()->onMousePressed(arg, id);
 }
 
 bool CGlassTD::mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
 {
-	MyGUI::InputManager::getInstance().injectMouseRelease(arg.state.X.abs, arg.state.Y.abs, MyGUI::MouseButton::Enum(id));
+	if (MyGUI::InputManager::getInstance().injectMouseRelease(arg.state.X.abs, arg.state.Y.abs, MyGUI::MouseButton::Enum(id)))
+		return true;
 	return mpStageManager->getStage()->onMouseReleased(arg, id);
 }
 

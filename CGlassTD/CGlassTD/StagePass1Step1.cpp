@@ -5,7 +5,8 @@
 
 StagePass1Step1::StagePass1Step1(LevelStage* stagePass1)
 	: mStagePass1(stagePass1),
-	mCameraZoom(0), mIsMoving(0)
+	mCameraZoom(0), mIsMoving(0),
+	mAutoLimit(0)
 {
 	this->mStagePass1->createGUI1();
 }
@@ -88,7 +89,7 @@ bool StagePass1Step1::run(float timeSinceLastFrame)
 		mStagePass1->getGUI()->findWidget<MyGUI::Window>("ed_window")->setVisible(true);
 	}
 
-	else if (mStagePass1->isRunning())
+	else if (!Questions::getInstance()->isAnswering() && mStagePass1->isRunning())
 	{
 		BulletManager* bulletManager = mStagePass1->getBulletManager();
 		Vector3 gravity = mStagePass1->getGravity();
@@ -112,11 +113,17 @@ bool StagePass1Step1::run(float timeSinceLastFrame)
 		{
 			mStagePass1->getCannon()->move(Ogre::Vector3(-10, 0, 0));
 			mStagePass1->getCamera()->move(Ogre::Vector3(-10, 0, 0));
+			/*mAutoLimit -= 10;
+			if (mAutoLimit < -1200)
+				mIsMoving = 2;*/
 		}
 		if (mIsMoving == 2)
 		{
 			mStagePass1->getCannon()->move(Ogre::Vector3(10, 0, 0));
 			mStagePass1->getCamera()->move(Ogre::Vector3(10, 0, 0));
+			/*mAutoLimit += 10;
+			if (mAutoLimit > 1200)
+				mIsMoving = 1;*/
 		}
 	}
 	
@@ -172,11 +179,11 @@ bool StagePass1Step1::onKeyPressed(const OIS::KeyEvent& arg)
 		MonsterManager* monsterManager = mStagePass1->getMonsterManager();
 		monsterManager->setWinGame();
 	}
-	else if(arg.key == OIS::KC_LEFT)
+	else if(arg.key == OIS::KC_A)
 	{
 		mIsMoving = 1;
 	}
-	else if(arg.key == OIS::KC_RIGHT)
+	else if(arg.key == OIS::KC_D)
 	{
 		mIsMoving = 2;
 	}
@@ -185,7 +192,9 @@ bool StagePass1Step1::onKeyPressed(const OIS::KeyEvent& arg)
 
 bool StagePass1Step1::onKeyReleased(const OIS::KeyEvent &arg)
 {
-	mIsMoving = 0;
+	if (mIsMoving == 1 && arg.key == OIS::KC_A
+		|| mIsMoving == 2 && arg.key == OIS::KC_D)
+		mIsMoving = 0;
 	return true;
 }
 

@@ -1,6 +1,7 @@
 #ifndef MonsterState_h__
 #define MonsterState_h__
 
+/// 定义了怪物当前所受的状态，如冰冻、燃烧等
 class MonsterState
 {
 protected:

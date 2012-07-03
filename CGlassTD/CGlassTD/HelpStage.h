@@ -4,6 +4,7 @@
 #include "stage.h"
 #include "StartStage.h"
 
+/// °ïÖú²Ëµ¥³¡¾°
 class HelpStage :
 	public Stage
 {

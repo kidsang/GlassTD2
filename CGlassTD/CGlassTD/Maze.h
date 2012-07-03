@@ -9,6 +9,8 @@ using namespace Ogre;
 
 class Cell;
 
+/// 迷宫类
+/// 迷宫定义了游戏地图
 class Maze
 {
 private:
